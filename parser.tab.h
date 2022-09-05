@@ -58,7 +58,10 @@ extern int yydebug;
     NUMCONST = 259,                /* NUMCONST  */
     CHARCONST = 260,               /* CHARCONST  */
     STRINGCONST = 261,             /* STRINGCONST  */
-    BOOLCONST = 262                /* BOOLCONST  */
+    BOOLCONST = 262,               /* BOOLCONST  */
+    BOOL = 263,                    /* BOOL  */
+    INT = 264,                     /* INT  */
+    CHAR = 265                     /* CHAR  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -72,7 +75,7 @@ union YYSTYPE
     TokenData *tokenData;
     double value;
 
-#line 76 "parser.tab.h"
+#line 79 "parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

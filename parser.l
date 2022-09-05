@@ -40,6 +40,7 @@ static int setValue(int linenum, int tokenClass, char *svalue){
             yylval.tokenData->nvalue = 1;
         }
     }
+    
     //return the token class
     return tokenClass;
 
@@ -50,14 +51,17 @@ static int setValue(int linenum, int tokenClass, char *svalue){
 %option noyywrap
 
 %%
-[a-zA-Z][a-zA-Z0-9]*        {/*printf("ID LEXER\n");*/ return setValue(line, ID, yytext); }
-[0-9]+                      {/*printf("NUMCONST LEXER\n");*/return setValue(line, NUMCONST, yytext); }
-\'.*\'                      {/*printf("CHARCONST LEXER\n");*/return setValue(line, CHARCONST, yytext);}
-["].+["]                    {/*printf("STRINGCONST LEXER\n");*/return setValue(line, STRINGCONST, yytext);}
-[ \t]                       {/*printf("TAB\n");*/}
-\/\/.*                      {/*printf("Comment LOL\n");*/}
-\n                          {/*printf("NEWLINE LEXER\n");*/ line++; /*return setValue(line, yytext[0], yytext)*/; }
-[=><+-/\*]                  { return setValue(line, ID, yytext); }
-"true"|"false"              { return setValue(line, BOOLCONST, yytext); }
+"int"                       {return setValue(line, INT, yytext);}
+"bool"                      {return setValue(line, BOOL, yytext);}
+"char"                      {return setValue(line, CHAR, yytext);}
+"true"|"false"              {return setValue(line, BOOLCONST, yytext); }
+[a-zA-Z][a-zA-Z0-9]*        {return setValue(line, ID, yytext); }
+[0-9]+                      {return setValue(line, NUMCONST, yytext); }
+\'.*\'                      {return setValue(line, CHARCONST, yytext);}
+["].+["]                    {return setValue(line, STRINGCONST, yytext);}
+[ \t]                       ;
+\/\/.*                      ;
+\n                          {line++;}
+[\[\]{}=><+-/\*]            { return setValue(line, ID, yytext); }
 .                           { printf("ERROR(%d): Invalid or misplaced input character: '%c'. Character Ignored.\n", numErrors, yytext[0]); numErrors++;}
 %%

@@ -123,9 +123,12 @@ enum yysymbol_kind_t
   YYSYMBOL_CHARCONST = 5,                  /* CHARCONST  */
   YYSYMBOL_STRINGCONST = 6,                /* STRINGCONST  */
   YYSYMBOL_BOOLCONST = 7,                  /* BOOLCONST  */
-  YYSYMBOL_YYACCEPT = 8,                   /* $accept  */
-  YYSYMBOL_tokenList = 9,                  /* tokenList  */
-  YYSYMBOL_token = 10                      /* token  */
+  YYSYMBOL_BOOL = 8,                       /* BOOL  */
+  YYSYMBOL_INT = 9,                        /* INT  */
+  YYSYMBOL_CHAR = 10,                      /* CHAR  */
+  YYSYMBOL_YYACCEPT = 11,                  /* $accept  */
+  YYSYMBOL_tokenList = 12,                 /* tokenList  */
+  YYSYMBOL_token = 13                      /* token  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -451,21 +454,21 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  8
+#define YYFINAL  11
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   6
+#define YYLAST   9
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  8
+#define YYNTOKENS  11
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  3
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  8
+#define YYNRULES  11
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  10
+#define YYNSTATES  13
 
 /* YYMAXUTOK -- Last valid token kind.  */
-#define YYMAXUTOK   262
+#define YYMAXUTOK   265
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -505,14 +508,15 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7
+       5,     6,     7,     8,     9,    10
 };
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    32,    32,    33,    36,    37,    38,    39,    40
+       0,    32,    32,    33,    36,    37,    38,    39,    40,    41,
+      42,    43
 };
 #endif
 
@@ -529,7 +533,8 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
 static const char *const yytname[] =
 {
   "\"end of file\"", "error", "\"invalid token\"", "ID", "NUMCONST",
-  "CHARCONST", "STRINGCONST", "BOOLCONST", "$accept", "tokenList", "token", YY_NULLPTR
+  "CHARCONST", "STRINGCONST", "BOOLCONST", "BOOL", "INT", "CHAR",
+  "$accept", "tokenList", "token", YY_NULLPTR
 };
 
 static const char *
@@ -553,7 +558,8 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -3,    -4,    -4,    -4,    -4,    -4,     5,    -3,    -4,    -4
+      -3,    -4,    -4,    -4,    -4,    -4,    -4,    -4,    -4,     8,
+      -3,    -4,    -4
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -561,7 +567,8 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     4,     5,     6,     7,     8,     0,     3,     1,     2
+       0,     4,     5,     6,     7,     8,     9,    10,    11,     0,
+       3,     1,     2
 };
 
 /* YYPGOTO[NTERM-NUM].  */
@@ -573,7 +580,7 @@ static const yytype_int8 yypgoto[] =
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     6,     7
+       0,     9,    10
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -581,31 +588,34 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       1,     2,     3,     4,     5,     8,     9
+       1,     2,     3,     4,     5,     6,     7,     8,    11,    12
 };
 
 static const yytype_int8 yycheck[] =
 {
-       3,     4,     5,     6,     7,     0,     7
+       3,     4,     5,     6,     7,     8,     9,    10,     0,    10
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     3,     4,     5,     6,     7,     9,    10,     0,     9
+       0,     3,     4,     5,     6,     7,     8,     9,    10,    12,
+      13,     0,    12
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,     8,     9,     9,    10,    10,    10,    10,    10
+       0,    11,    12,    12,    13,    13,    13,    13,    13,    13,
+      13,    13
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     2,     1,     1,     1,     1,     1,     1
+       0,     2,     2,     1,     1,     1,     1,     1,     1,     1,
+       1,     1
 };
 
 
@@ -1071,35 +1081,53 @@ yyreduce:
   case 4: /* token: ID  */
 #line 36 "parser.y"
                         {printf("Line %d Token: ID value: %s \n", (yyvsp[0].tokenData)->linenum, (yyvsp[0].tokenData)->svalue); }
-#line 1075 "parser.tab.c"
+#line 1085 "parser.tab.c"
     break;
 
   case 5: /* token: NUMCONST  */
 #line 37 "parser.y"
                         {printf("Line %d Token: NUMCONST Value: %d Input: %s\n", (yyvsp[0].tokenData)->linenum, (yyvsp[0].tokenData)->nvalue, (yyvsp[0].tokenData)->tokenstr);}
-#line 1081 "parser.tab.c"
+#line 1091 "parser.tab.c"
     break;
 
   case 6: /* token: CHARCONST  */
 #line 38 "parser.y"
                         {printf("Line %d Token: CHARCONST Value: '%c' Input: %s \n", (yyvsp[0].tokenData)->linenum, (yyvsp[0].tokenData)->cvalue, (yyvsp[0].tokenData)->svalue);}
-#line 1087 "parser.tab.c"
+#line 1097 "parser.tab.c"
     break;
 
   case 7: /* token: STRINGCONST  */
 #line 39 "parser.y"
                         {printf("Line %d Token: STRINGCONST Value: \"%s\" Len: %d Input: %s \n", (yyvsp[0].tokenData)->linenum, (yyvsp[0].tokenData)->svalue, strlen((yyvsp[0].tokenData)->svalue), (yyvsp[0].tokenData)->svalue);}
-#line 1093 "parser.tab.c"
+#line 1103 "parser.tab.c"
     break;
 
   case 8: /* token: BOOLCONST  */
 #line 40 "parser.y"
-                        {printf("Line %d Token: BOOLCONST Value: %d Input: %s", (yyvsp[0].tokenData)->linenum, (yyvsp[0].tokenData)->nvalue, (yyvsp[0].tokenData)->tokenstr);}
-#line 1099 "parser.tab.c"
+                        {printf("Line %d Token: BOOLCONST Value: %d Input: %s \n", (yyvsp[0].tokenData)->linenum, (yyvsp[0].tokenData)->nvalue, (yyvsp[0].tokenData)->tokenstr);}
+#line 1109 "parser.tab.c"
+    break;
+
+  case 9: /* token: BOOL  */
+#line 41 "parser.y"
+                        {printf("Line %d Token: BOOL\n", (yyvsp[0].tokenData)->linenum);}
+#line 1115 "parser.tab.c"
+    break;
+
+  case 10: /* token: INT  */
+#line 42 "parser.y"
+                       {printf("Line %d Token: INT\n", (yyvsp[0].tokenData)->linenum);}
+#line 1121 "parser.tab.c"
+    break;
+
+  case 11: /* token: CHAR  */
+#line 43 "parser.y"
+                        {printf("Line %d Token: CHAR\n", (yyvsp[0].tokenData)->linenum);}
+#line 1127 "parser.tab.c"
     break;
 
 
-#line 1103 "parser.tab.c"
+#line 1131 "parser.tab.c"
 
       default: break;
     }
@@ -1292,7 +1320,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 42 "parser.y"
+#line 45 "parser.y"
 
 extern int yydebug;
 int main(int argc, char *argv[]){

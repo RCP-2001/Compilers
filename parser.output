@@ -10,6 +10,9 @@ Grammar
     5      | CHARCONST
     6      | STRINGCONST
     7      | BOOLCONST
+    8      | BOOL
+    9      | INT
+   10      | CHAR
 
 
 Terminals, with rules where they appear
@@ -21,17 +24,20 @@ Terminals, with rules where they appear
     CHARCONST <tokenData> (260) 5
     STRINGCONST <tokenData> (261) 6
     BOOLCONST <tokenData> (262) 7
+    BOOL <tokenData> (263) 8
+    INT <tokenData> (264) 9
+    CHAR <tokenData> (265) 10
 
 
 Nonterminals, with rules where they appear
 
-    $accept (8)
+    $accept (11)
         on left: 0
-    tokenList (9)
+    tokenList (12)
         on left: 1 2
         on right: 0 1
-    token (10)
-        on left: 3 4 5 6 7
+    token (13)
+        on left: 3 4 5 6 7 8 9 10
         on right: 1 2
 
 
@@ -44,9 +50,12 @@ State 0
     CHARCONST    shift, and go to state 3
     STRINGCONST  shift, and go to state 4
     BOOLCONST    shift, and go to state 5
+    BOOL         shift, and go to state 6
+    INT          shift, and go to state 7
+    CHAR         shift, and go to state 8
 
-    tokenList  go to state 6
-    token      go to state 7
+    tokenList  go to state 9
+    token      go to state 10
 
 
 State 1
@@ -86,12 +95,33 @@ State 5
 
 State 6
 
-    0 $accept: tokenList • $end
+    8 token: BOOL •
 
-    $end  shift, and go to state 8
+    $default  reduce using rule 8 (token)
 
 
 State 7
+
+    9 token: INT •
+
+    $default  reduce using rule 9 (token)
+
+
+State 8
+
+   10 token: CHAR •
+
+    $default  reduce using rule 10 (token)
+
+
+State 9
+
+    0 $accept: tokenList • $end
+
+    $end  shift, and go to state 11
+
+
+State 10
 
     1 tokenList: token • tokenList
     2          | token •
@@ -101,21 +131,24 @@ State 7
     CHARCONST    shift, and go to state 3
     STRINGCONST  shift, and go to state 4
     BOOLCONST    shift, and go to state 5
+    BOOL         shift, and go to state 6
+    INT          shift, and go to state 7
+    CHAR         shift, and go to state 8
 
     $default  reduce using rule 2 (tokenList)
 
-    tokenList  go to state 9
-    token      go to state 7
+    tokenList  go to state 12
+    token      go to state 10
 
 
-State 8
+State 11
 
     0 $accept: tokenList $end •
 
     $default  accept
 
 
-State 9
+State 12
 
     1 tokenList: token tokenList •
 
