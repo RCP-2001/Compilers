@@ -1,0 +1,122 @@
+Grammar
+
+    0 $accept: tokenList $end
+
+    1 tokenList: token tokenList
+    2          | token
+
+    3 token: ID
+    4      | NUMCONST
+    5      | CHARCONST
+    6      | STRINGCONST
+    7      | BOOLCONST
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    ID <tokenData> (258) 3
+    NUMCONST <tokenData> (259) 4
+    CHARCONST <tokenData> (260) 5
+    STRINGCONST <tokenData> (261) 6
+    BOOLCONST <tokenData> (262) 7
+
+
+Nonterminals, with rules where they appear
+
+    $accept (8)
+        on left: 0
+    tokenList (9)
+        on left: 1 2
+        on right: 0 1
+    token (10)
+        on left: 3 4 5 6 7
+        on right: 1 2
+
+
+State 0
+
+    0 $accept: • tokenList $end
+
+    ID           shift, and go to state 1
+    NUMCONST     shift, and go to state 2
+    CHARCONST    shift, and go to state 3
+    STRINGCONST  shift, and go to state 4
+    BOOLCONST    shift, and go to state 5
+
+    tokenList  go to state 6
+    token      go to state 7
+
+
+State 1
+
+    3 token: ID •
+
+    $default  reduce using rule 3 (token)
+
+
+State 2
+
+    4 token: NUMCONST •
+
+    $default  reduce using rule 4 (token)
+
+
+State 3
+
+    5 token: CHARCONST •
+
+    $default  reduce using rule 5 (token)
+
+
+State 4
+
+    6 token: STRINGCONST •
+
+    $default  reduce using rule 6 (token)
+
+
+State 5
+
+    7 token: BOOLCONST •
+
+    $default  reduce using rule 7 (token)
+
+
+State 6
+
+    0 $accept: tokenList • $end
+
+    $end  shift, and go to state 8
+
+
+State 7
+
+    1 tokenList: token • tokenList
+    2          | token •
+
+    ID           shift, and go to state 1
+    NUMCONST     shift, and go to state 2
+    CHARCONST    shift, and go to state 3
+    STRINGCONST  shift, and go to state 4
+    BOOLCONST    shift, and go to state 5
+
+    $default  reduce using rule 2 (tokenList)
+
+    tokenList  go to state 9
+    token      go to state 7
+
+
+State 8
+
+    0 $accept: tokenList $end •
+
+    $default  accept
+
+
+State 9
+
+    1 tokenList: token tokenList •
+
+    $default  reduce using rule 1 (tokenList)
