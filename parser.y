@@ -39,7 +39,7 @@ token     : ID          {printf("Line %d Token: ID value: %s \n", $1->linenum, $
           | STRINGCONST {printf("Line %d Token: STRINGCONST Value: \"%s\" Len: %d Input: %s \n", $1->linenum, $1->svalue, strlen($1->svalue), $1->svalue);}
           | BOOLCONST   {printf("Line %d Token: BOOLCONST Value: %d Input: %s \n", $1->linenum, $1->nvalue, $1->tokenstr);}
           | BOOL        {printf("Line %d Token: BOOL\n", $1->linenum);}
-          | INT        {printf("Line %d Token: INT\n", $1->linenum);}
+          | INT         {printf("Line %d Token: INT\n", $1->linenum);}
           | CHAR        {printf("Line %d Token: CHAR\n", $1->linenum);}
           ;
 %%
