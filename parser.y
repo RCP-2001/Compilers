@@ -23,7 +23,7 @@ void yyerror(const char *msg){
     double value;
 }
 
-%token <tokenData> ID NUMCONST CHARCONST STRINGCONST BOOLCONST BOOL INT CHAR
+%token <tokenData> ID NUMCONST CHARCONST STRINGCONST BOOLCONST BOOL INT CHAR IF THEN ELSE
 
 // This is where my brain breaks
 //temp for shizzle 

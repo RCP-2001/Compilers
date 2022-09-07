@@ -51,17 +51,36 @@ static int setValue(int linenum, int tokenClass, char *svalue){
 %option noyywrap
 
 %%
+"if"                        {return setValue(line, IF, yytext);}
+"then"                      {return setValue(line, THEN, yytext);}
+"else"                      {return setValue(line, ELSE, yytext);}
+
+"while"                     {return setValue(line, WHILE, yytext);}
+"for"                       {return setValue(line, FOR, yytext);}
+"do"                        {return setValue(line, DO, yytext);}
+"to"                        {return setValue(line, TO, yytext);}
+"by"                        {return setValue(line, BY, yytext);}
+
+"return"                    {return setValue(line, RETURN, yytext);}
+"break"                     {return setValue(line, BREAK, yytext);}
+
+"or"                        {return setValue(line, OR, yytext);}
+"and"                       {return setValue(line, AND, yytext );}
+"not"                       {return setValue(line, NOT, yytext );}
+
+"static"                    {return setValue(line, STATIC, yytext);}
 "int"                       {return setValue(line, INT, yytext);}
 "bool"                      {return setValue(line, BOOL, yytext);}
 "char"                      {return setValue(line, CHAR, yytext);}
 "true"|"false"              {return setValue(line, BOOLCONST, yytext); }
+
 [a-zA-Z][a-zA-Z0-9]*        {return setValue(line, ID, yytext); }
 [0-9]+                      {return setValue(line, NUMCONST, yytext); }
 \'.*\'                      {return setValue(line, CHARCONST, yytext);}
-["].+["]                    {return setValue(line, STRINGCONST, yytext);}
+["].*["]                    {return setValue(line, STRINGCONST, yytext);}
 [ \t]                       ;
 \/\/.*                      ;
 \n                          {line++;}
-[\[\]{}=><+-/\*]            { return setValue(line, ID, yytext); }
-.                           { printf("ERROR(%d): Invalid or misplaced input character: '%c'. Character Ignored.\n", numErrors, yytext[0]); numErrors++;}
+[\[\]{}=><+-/\*]            { return setValue(line, ASSOP, yytext); }
+.                           { printf("ERROR(%d): Invalid or misplaced input character: '%c'. Character Ignored.\n", line, yytext[0]); numErrors++;}
 %%
