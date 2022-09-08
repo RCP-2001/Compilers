@@ -13,6 +13,48 @@ Grammar
     8      | BOOL
     9      | INT
    10      | CHAR
+   11      | IF
+   12      | THEN
+   13      | ELSE
+   14      | WHILE
+   15      | FOR
+   16      | DO
+   17      | TO
+   18      | BY
+   19      | RETURN
+   20      | BREAK
+   21      | OR
+   22      | AND
+   23      | NOT
+   24      | STATIC
+   25      | SEMI
+   26      | COMMA
+   27      | COLON
+   28      | LBRACK
+   29      | RBRACK
+   30      | LCURL
+   31      | RCURL
+   32      | INC
+   33      | DEC
+   34      | ADDASS
+   35      | DECASS
+   36      | MULASS
+   37      | DIVASS
+   38      | LEQ
+   39      | GEQ
+   40      | LESS
+   41      | GREATER
+   42      | EQ
+   43      | NEQ
+   44      | ADD
+   45      | SUB
+   46      | MUL
+   47      | DIV
+   48      | MOD
+   49      | QMARK
+   50      | ASSIGN
+   51      | LPAREN
+   52      | RPAREN
 
 
 Terminals, with rules where they appear
@@ -27,17 +69,59 @@ Terminals, with rules where they appear
     BOOL <tokenData> (263) 8
     INT <tokenData> (264) 9
     CHAR <tokenData> (265) 10
+    IF <tokenData> (266) 11
+    THEN <tokenData> (267) 12
+    ELSE <tokenData> (268) 13
+    WHILE <tokenData> (269) 14
+    FOR <tokenData> (270) 15
+    DO <tokenData> (271) 16
+    TO <tokenData> (272) 17
+    BY <tokenData> (273) 18
+    RETURN <tokenData> (274) 19
+    BREAK <tokenData> (275) 20
+    OR <tokenData> (276) 21
+    AND <tokenData> (277) 22
+    NOT <tokenData> (278) 23
+    STATIC <tokenData> (279) 24
+    SEMI <tokenData> (280) 25
+    COMMA <tokenData> (281) 26
+    COLON <tokenData> (282) 27
+    LBRACK <tokenData> (283) 28
+    RBRACK <tokenData> (284) 29
+    LCURL <tokenData> (285) 30
+    RCURL <tokenData> (286) 31
+    INC <tokenData> (287) 32
+    DEC <tokenData> (288) 33
+    ADDASS <tokenData> (289) 34
+    DECASS <tokenData> (290) 35
+    MULASS <tokenData> (291) 36
+    DIVASS <tokenData> (292) 37
+    LEQ <tokenData> (293) 38
+    GEQ <tokenData> (294) 39
+    LESS <tokenData> (295) 40
+    GREATER <tokenData> (296) 41
+    EQ <tokenData> (297) 42
+    NEQ <tokenData> (298) 43
+    ADD <tokenData> (299) 44
+    SUB <tokenData> (300) 45
+    MUL <tokenData> (301) 46
+    DIV <tokenData> (302) 47
+    MOD <tokenData> (303) 48
+    QMARK <tokenData> (304) 49
+    ASSIGN <tokenData> (305) 50
+    LPAREN <tokenData> (306) 51
+    RPAREN <tokenData> (307) 52
 
 
 Nonterminals, with rules where they appear
 
-    $accept (11)
+    $accept (53)
         on left: 0
-    tokenList (12)
+    tokenList (54)
         on left: 1 2
         on right: 0 1
-    token (13)
-        on left: 3 4 5 6 7 8 9 10
+    token (55)
+        on left: 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52
         on right: 1 2
 
 
@@ -53,9 +137,51 @@ State 0
     BOOL         shift, and go to state 6
     INT          shift, and go to state 7
     CHAR         shift, and go to state 8
+    IF           shift, and go to state 9
+    THEN         shift, and go to state 10
+    ELSE         shift, and go to state 11
+    WHILE        shift, and go to state 12
+    FOR          shift, and go to state 13
+    DO           shift, and go to state 14
+    TO           shift, and go to state 15
+    BY           shift, and go to state 16
+    RETURN       shift, and go to state 17
+    BREAK        shift, and go to state 18
+    OR           shift, and go to state 19
+    AND          shift, and go to state 20
+    NOT          shift, and go to state 21
+    STATIC       shift, and go to state 22
+    SEMI         shift, and go to state 23
+    COMMA        shift, and go to state 24
+    COLON        shift, and go to state 25
+    LBRACK       shift, and go to state 26
+    RBRACK       shift, and go to state 27
+    LCURL        shift, and go to state 28
+    RCURL        shift, and go to state 29
+    INC          shift, and go to state 30
+    DEC          shift, and go to state 31
+    ADDASS       shift, and go to state 32
+    DECASS       shift, and go to state 33
+    MULASS       shift, and go to state 34
+    DIVASS       shift, and go to state 35
+    LEQ          shift, and go to state 36
+    GEQ          shift, and go to state 37
+    LESS         shift, and go to state 38
+    GREATER      shift, and go to state 39
+    EQ           shift, and go to state 40
+    NEQ          shift, and go to state 41
+    ADD          shift, and go to state 42
+    SUB          shift, and go to state 43
+    MUL          shift, and go to state 44
+    DIV          shift, and go to state 45
+    MOD          shift, and go to state 46
+    QMARK        shift, and go to state 47
+    ASSIGN       shift, and go to state 48
+    LPAREN       shift, and go to state 49
+    RPAREN       shift, and go to state 50
 
-    tokenList  go to state 9
-    token      go to state 10
+    tokenList  go to state 51
+    token      go to state 52
 
 
 State 1
@@ -116,12 +242,306 @@ State 8
 
 State 9
 
-    0 $accept: tokenList • $end
+   11 token: IF •
 
-    $end  shift, and go to state 11
+    $default  reduce using rule 11 (token)
 
 
 State 10
+
+   12 token: THEN •
+
+    $default  reduce using rule 12 (token)
+
+
+State 11
+
+   13 token: ELSE •
+
+    $default  reduce using rule 13 (token)
+
+
+State 12
+
+   14 token: WHILE •
+
+    $default  reduce using rule 14 (token)
+
+
+State 13
+
+   15 token: FOR •
+
+    $default  reduce using rule 15 (token)
+
+
+State 14
+
+   16 token: DO •
+
+    $default  reduce using rule 16 (token)
+
+
+State 15
+
+   17 token: TO •
+
+    $default  reduce using rule 17 (token)
+
+
+State 16
+
+   18 token: BY •
+
+    $default  reduce using rule 18 (token)
+
+
+State 17
+
+   19 token: RETURN •
+
+    $default  reduce using rule 19 (token)
+
+
+State 18
+
+   20 token: BREAK •
+
+    $default  reduce using rule 20 (token)
+
+
+State 19
+
+   21 token: OR •
+
+    $default  reduce using rule 21 (token)
+
+
+State 20
+
+   22 token: AND •
+
+    $default  reduce using rule 22 (token)
+
+
+State 21
+
+   23 token: NOT •
+
+    $default  reduce using rule 23 (token)
+
+
+State 22
+
+   24 token: STATIC •
+
+    $default  reduce using rule 24 (token)
+
+
+State 23
+
+   25 token: SEMI •
+
+    $default  reduce using rule 25 (token)
+
+
+State 24
+
+   26 token: COMMA •
+
+    $default  reduce using rule 26 (token)
+
+
+State 25
+
+   27 token: COLON •
+
+    $default  reduce using rule 27 (token)
+
+
+State 26
+
+   28 token: LBRACK •
+
+    $default  reduce using rule 28 (token)
+
+
+State 27
+
+   29 token: RBRACK •
+
+    $default  reduce using rule 29 (token)
+
+
+State 28
+
+   30 token: LCURL •
+
+    $default  reduce using rule 30 (token)
+
+
+State 29
+
+   31 token: RCURL •
+
+    $default  reduce using rule 31 (token)
+
+
+State 30
+
+   32 token: INC •
+
+    $default  reduce using rule 32 (token)
+
+
+State 31
+
+   33 token: DEC •
+
+    $default  reduce using rule 33 (token)
+
+
+State 32
+
+   34 token: ADDASS •
+
+    $default  reduce using rule 34 (token)
+
+
+State 33
+
+   35 token: DECASS •
+
+    $default  reduce using rule 35 (token)
+
+
+State 34
+
+   36 token: MULASS •
+
+    $default  reduce using rule 36 (token)
+
+
+State 35
+
+   37 token: DIVASS •
+
+    $default  reduce using rule 37 (token)
+
+
+State 36
+
+   38 token: LEQ •
+
+    $default  reduce using rule 38 (token)
+
+
+State 37
+
+   39 token: GEQ •
+
+    $default  reduce using rule 39 (token)
+
+
+State 38
+
+   40 token: LESS •
+
+    $default  reduce using rule 40 (token)
+
+
+State 39
+
+   41 token: GREATER •
+
+    $default  reduce using rule 41 (token)
+
+
+State 40
+
+   42 token: EQ •
+
+    $default  reduce using rule 42 (token)
+
+
+State 41
+
+   43 token: NEQ •
+
+    $default  reduce using rule 43 (token)
+
+
+State 42
+
+   44 token: ADD •
+
+    $default  reduce using rule 44 (token)
+
+
+State 43
+
+   45 token: SUB •
+
+    $default  reduce using rule 45 (token)
+
+
+State 44
+
+   46 token: MUL •
+
+    $default  reduce using rule 46 (token)
+
+
+State 45
+
+   47 token: DIV •
+
+    $default  reduce using rule 47 (token)
+
+
+State 46
+
+   48 token: MOD •
+
+    $default  reduce using rule 48 (token)
+
+
+State 47
+
+   49 token: QMARK •
+
+    $default  reduce using rule 49 (token)
+
+
+State 48
+
+   50 token: ASSIGN •
+
+    $default  reduce using rule 50 (token)
+
+
+State 49
+
+   51 token: LPAREN •
+
+    $default  reduce using rule 51 (token)
+
+
+State 50
+
+   52 token: RPAREN •
+
+    $default  reduce using rule 52 (token)
+
+
+State 51
+
+    0 $accept: tokenList • $end
+
+    $end  shift, and go to state 53
+
+
+State 52
 
     1 tokenList: token • tokenList
     2          | token •
@@ -134,21 +554,63 @@ State 10
     BOOL         shift, and go to state 6
     INT          shift, and go to state 7
     CHAR         shift, and go to state 8
+    IF           shift, and go to state 9
+    THEN         shift, and go to state 10
+    ELSE         shift, and go to state 11
+    WHILE        shift, and go to state 12
+    FOR          shift, and go to state 13
+    DO           shift, and go to state 14
+    TO           shift, and go to state 15
+    BY           shift, and go to state 16
+    RETURN       shift, and go to state 17
+    BREAK        shift, and go to state 18
+    OR           shift, and go to state 19
+    AND          shift, and go to state 20
+    NOT          shift, and go to state 21
+    STATIC       shift, and go to state 22
+    SEMI         shift, and go to state 23
+    COMMA        shift, and go to state 24
+    COLON        shift, and go to state 25
+    LBRACK       shift, and go to state 26
+    RBRACK       shift, and go to state 27
+    LCURL        shift, and go to state 28
+    RCURL        shift, and go to state 29
+    INC          shift, and go to state 30
+    DEC          shift, and go to state 31
+    ADDASS       shift, and go to state 32
+    DECASS       shift, and go to state 33
+    MULASS       shift, and go to state 34
+    DIVASS       shift, and go to state 35
+    LEQ          shift, and go to state 36
+    GEQ          shift, and go to state 37
+    LESS         shift, and go to state 38
+    GREATER      shift, and go to state 39
+    EQ           shift, and go to state 40
+    NEQ          shift, and go to state 41
+    ADD          shift, and go to state 42
+    SUB          shift, and go to state 43
+    MUL          shift, and go to state 44
+    DIV          shift, and go to state 45
+    MOD          shift, and go to state 46
+    QMARK        shift, and go to state 47
+    ASSIGN       shift, and go to state 48
+    LPAREN       shift, and go to state 49
+    RPAREN       shift, and go to state 50
 
     $default  reduce using rule 2 (tokenList)
 
-    tokenList  go to state 12
-    token      go to state 10
+    tokenList  go to state 54
+    token      go to state 52
 
 
-State 11
+State 53
 
     0 $accept: tokenList $end •
 
     $default  accept
 
 
-State 12
+State 54
 
     1 tokenList: token tokenList •
 

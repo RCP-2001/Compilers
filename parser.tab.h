@@ -61,7 +61,49 @@ extern int yydebug;
     BOOLCONST = 262,               /* BOOLCONST  */
     BOOL = 263,                    /* BOOL  */
     INT = 264,                     /* INT  */
-    CHAR = 265                     /* CHAR  */
+    CHAR = 265,                    /* CHAR  */
+    IF = 266,                      /* IF  */
+    THEN = 267,                    /* THEN  */
+    ELSE = 268,                    /* ELSE  */
+    WHILE = 269,                   /* WHILE  */
+    FOR = 270,                     /* FOR  */
+    DO = 271,                      /* DO  */
+    TO = 272,                      /* TO  */
+    BY = 273,                      /* BY  */
+    RETURN = 274,                  /* RETURN  */
+    BREAK = 275,                   /* BREAK  */
+    OR = 276,                      /* OR  */
+    AND = 277,                     /* AND  */
+    NOT = 278,                     /* NOT  */
+    STATIC = 279,                  /* STATIC  */
+    SEMI = 280,                    /* SEMI  */
+    COMMA = 281,                   /* COMMA  */
+    COLON = 282,                   /* COLON  */
+    LBRACK = 283,                  /* LBRACK  */
+    RBRACK = 284,                  /* RBRACK  */
+    LCURL = 285,                   /* LCURL  */
+    RCURL = 286,                   /* RCURL  */
+    INC = 287,                     /* INC  */
+    DEC = 288,                     /* DEC  */
+    ADDASS = 289,                  /* ADDASS  */
+    DECASS = 290,                  /* DECASS  */
+    MULASS = 291,                  /* MULASS  */
+    DIVASS = 292,                  /* DIVASS  */
+    LEQ = 293,                     /* LEQ  */
+    GEQ = 294,                     /* GEQ  */
+    LESS = 295,                    /* LESS  */
+    GREATER = 296,                 /* GREATER  */
+    EQ = 297,                      /* EQ  */
+    NEQ = 298,                     /* NEQ  */
+    ADD = 299,                     /* ADD  */
+    SUB = 300,                     /* SUB  */
+    MUL = 301,                     /* MUL  */
+    DIV = 302,                     /* DIV  */
+    MOD = 303,                     /* MOD  */
+    QMARK = 304,                   /* QMARK  */
+    ASSIGN = 305,                  /* ASSIGN  */
+    LPAREN = 306,                  /* LPAREN  */
+    RPAREN = 307                   /* RPAREN  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -75,7 +117,7 @@ union YYSTYPE
     TokenData *tokenData;
     double value;
 
-#line 79 "parser.tab.h"
+#line 121 "parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

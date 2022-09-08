@@ -78,9 +78,43 @@ static int setValue(int linenum, int tokenClass, char *svalue){
 [0-9]+                      {return setValue(line, NUMCONST, yytext); }
 \'.*\'                      {return setValue(line, CHARCONST, yytext);}
 ["].*["]                    {return setValue(line, STRINGCONST, yytext);}
+
+;                           {return setValue(line, SEMI, yytext);}
+,                           {return setValue(line, COMMA, yytext);}
+:                           {return setValue(line, COLON, yytext);}
+\[                          {return setValue(line, LBRACK, yytext);}  
+]                           {return setValue(line, RBRACK, yytext);} 
+\{                          {return setValue(line, LCURL, yytext);}
+\}                          {return setValue(line, RCURL, yytext);}
+\(                          {return setValue(line, LPAREN, yytext);}
+\)                           {return setValue(line, RPAREN, yytext);}
+
+"++"                        {return setValue(line, INC, yytext);}
+"--"                        {return setValue(line, DEC, yytext);}
+"+="                        {return setValue(line, ADDASS, yytext);}
+"-="                        {return setValue(line, DECASS, yytext);}
+"*="                        {return setValue(line, MULASS, yytext);}
+"/="                        {return setValue(line, DIVASS, yytext);}
+
+"<="                        {return setValue(line, LEQ, yytext);}
+">="                        {return setValue(line, GEQ, yytext);}
+\<                           {return setValue(line, LESS, yytext);}
+>                           {return setValue(line, GREATER, yytext);}
+"=="                        {return setValue(line, EQ, yytext);}
+"!="                        {return setValue(line, NEQ, yytext);}
+\+                          {return setValue(line, ADD, yytext);}
+-                           {return setValue(line, SUB, yytext);}
+\*                          {return setValue(line, MUL, yytext);}   
+\/                          {return setValue(line, DIV, yytext);}
+%                           {return setValue(line, MOD, yytext);}
+\?                          {return setValue(line, QMARK, yytext);}
+=                           {return setValue(line, ASSIGN, yytext);}
+
+
+
 [ \t]                       ;
 \/\/.*                      ;
 \n                          {line++;}
-[\[\]{}=><+-/\*]            { return setValue(line, ASSOP, yytext); }
+
 .                           { printf("ERROR(%d): Invalid or misplaced input character: '%c'. Character Ignored.\n", line, yytext[0]); numErrors++;}
 %%
