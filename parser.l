@@ -21,7 +21,8 @@ static int setValue(int linenum, int tokenClass, char *svalue){
     }
     else if(tokenClass == ID){
         //printf("ID Set val\n");
-        yylval.tokenData->svalue = strdup(svalue); // really dont understand this KEKW
+ 
+        yylval.tokenData->svalue = strdup(svalue); 
 
     }
     else if(tokenClass == CHARCONST){
@@ -30,7 +31,15 @@ static int setValue(int linenum, int tokenClass, char *svalue){
     }
     else if(tokenClass == STRINGCONST){
         //printf("Stringconst Set val\n");
-        yylval.tokenData->svalue = strdup(svalue);
+       //yylval.tokenData->svalue = strdup(svalue);
+        yylval.tokenData->svalue = (char*) malloc((sizeof(char) * (strlen(svalue))) + 1);
+        int size = sprintf(yylval.tokenData->svalue, svalue);
+        //printf("%s \n\n\n\n\n", yylval.tokenData->svalue);
+        if(size == -1){
+            printf("copying in a bad way (FIX!!) \n\n\n");
+            yylval.tokenData->svalue = strdup(svalue);
+        }
+
     }
     else if(tokenClass == BOOLCONST){
         if(strcmp(svalue, "false") == 0){
@@ -77,7 +86,7 @@ static int setValue(int linenum, int tokenClass, char *svalue){
 [a-zA-Z][a-zA-Z0-9]*        {return setValue(line, ID, yytext); }
 [0-9]+                      {return setValue(line, NUMCONST, yytext); }
 \'.*\'                      {return setValue(line, CHARCONST, yytext);}
-["].*["]                    {return setValue(line, STRINGCONST, yytext);}
+L?\"(\\.|[^\\"])*\"         {return setValue(line, STRINGCONST, yytext);}
 
 ;                           {return setValue(line, SEMI, yytext);}
 ,                           {return setValue(line, COMMA, yytext);}

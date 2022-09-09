@@ -1177,13 +1177,13 @@ yyreduce:
 
   case 6: /* token: CHARCONST  */
 #line 38 "parser.y"
-                        {printf("Line %d Token: CHARCONST Value: '%c' Input: %s \n", (yyvsp[0].tokenData)->linenum, (yyvsp[0].tokenData)->cvalue, (yyvsp[0].tokenData)->svalue);}
+                        {printf("Line %d Token: CHARCONST Value: '%c' Input: %s \n", (yyvsp[0].tokenData)->linenum, (yyvsp[0].tokenData)->cvalue, (yyvsp[0].tokenData)->tokenstr);}
 #line 1182 "parser.tab.c"
     break;
 
   case 7: /* token: STRINGCONST  */
 #line 39 "parser.y"
-                        {printf("Line %d Token: STRINGCONST Value: \"%s\" Len: %d Input: %s \n", (yyvsp[0].tokenData)->linenum, (yyvsp[0].tokenData)->svalue, strlen((yyvsp[0].tokenData)->svalue), (yyvsp[0].tokenData)->svalue);}
+                        {printf("Line %d Token: STRINGCONST Value: \"%s\" Len: %d Input: %s \n", (yyvsp[0].tokenData)->linenum, (yyvsp[0].tokenData)->svalue, strlen((yyvsp[0].tokenData)->svalue), (yyvsp[0].tokenData)->tokenstr);}
 #line 1188 "parser.tab.c"
     break;
 
@@ -1677,6 +1677,6 @@ int main(int argc, char *argv[]){
         numErrors = 0;
         yyparse();
 
-        printf("Number of errors: %d\n", numErrors);
+        //printf("Number of errors: %d\n", numErrors);
     
 }

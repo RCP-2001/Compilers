@@ -35,8 +35,8 @@ tokenList : token tokenList
 
 token     : ID          {printf("Line %d Token: ID value: %s \n", $1->linenum, $1->svalue); } 
           | NUMCONST    {printf("Line %d Token: NUMCONST Value: %d Input: %s\n", $1->linenum, $1->nvalue, $1->tokenstr);}
-          | CHARCONST   {printf("Line %d Token: CHARCONST Value: '%c' Input: %s \n", $1->linenum, $1->cvalue, $1->svalue);}
-          | STRINGCONST {printf("Line %d Token: STRINGCONST Value: \"%s\" Len: %d Input: %s \n", $1->linenum, $1->svalue, strlen($1->svalue), $1->svalue);}
+          | CHARCONST   {printf("Line %d Token: CHARCONST Value: '%c' Input: %s \n", $1->linenum, $1->cvalue, $1->tokenstr);}
+          | STRINGCONST {printf("Line %d Token: STRINGCONST Value: \"%s\" Len: %d Input: %s \n", $1->linenum, $1->svalue, strlen($1->svalue), $1->tokenstr);}
           | BOOLCONST   {printf("Line %d Token: BOOLCONST Value: %d Input: %s \n", $1->linenum, $1->nvalue, $1->tokenstr);}
           | BOOL        {printf("Line %d Token: BOOL\n", $1->linenum);}
           | INT         {printf("Line %d Token: INT\n", $1->linenum);}
