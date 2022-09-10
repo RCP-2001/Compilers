@@ -154,8 +154,8 @@ static int setValue(int linenum, int tokenClass, char *svalue){
 
 [a-zA-Z][a-zA-Z0-9]*        {return setValue(line, ID, yytext); }
 [0-9]+                      {return setValue(line, NUMCONST, yytext); }
-L?'(\\.|[^\\'])+'	        {return setValue(line, CHARCONST, yytext);}
-L?\"(\\.|[^\\"])*\"         {return setValue(line, STRINGCONST, yytext);}
+L?'(\\.|[^\\'\n])+'	        {return setValue(line, CHARCONST, yytext);}
+L?\"(\\.|[^\\"\n])*\"       {return setValue(line, STRINGCONST, yytext);}
 
 ;                           {return setValue(line, SEMI, yytext);}
 ,                           {return setValue(line, COMMA, yytext);}
