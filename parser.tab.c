@@ -1171,25 +1171,25 @@ yyreduce:
 
   case 5: /* token: NUMCONST  */
 #line 37 "parser.y"
-                        {printf("Line %d Token: NUMCONST Value: %d Input: %s\n", (yyvsp[0].tokenData)->linenum, (yyvsp[0].tokenData)->nvalue, (yyvsp[0].tokenData)->tokenstr);}
+                        {printf("Line %d Token: NUMCONST Value: %d  Input: %s\n", (yyvsp[0].tokenData)->linenum, (yyvsp[0].tokenData)->nvalue, (yyvsp[0].tokenData)->tokenstr);}
 #line 1176 "parser.tab.c"
     break;
 
   case 6: /* token: CHARCONST  */
 #line 38 "parser.y"
-                        {printf("Line %d Token: CHARCONST Value: '%c' Input: %s\n", (yyvsp[0].tokenData)->linenum, (yyvsp[0].tokenData)->cvalue, (yyvsp[0].tokenData)->tokenstr);}
+                        {printf("Line %d Token: CHARCONST Value: '%c'  Input: %s\n", (yyvsp[0].tokenData)->linenum, (yyvsp[0].tokenData)->cvalue, (yyvsp[0].tokenData)->tokenstr);}
 #line 1182 "parser.tab.c"
     break;
 
   case 7: /* token: STRINGCONST  */
 #line 39 "parser.y"
-                        {printf("Line %d Token: STRINGCONST Value: \"%s\" Len: %d Input: %s\n", (yyvsp[0].tokenData)->linenum, (yyvsp[0].tokenData)->svalue, strlen((yyvsp[0].tokenData)->svalue), (yyvsp[0].tokenData)->tokenstr);}
+                        {printf("Line %d Token: STRINGCONST Value: \"%s\"  Len: %d  Input: %s\n", (yyvsp[0].tokenData)->linenum, (yyvsp[0].tokenData)->svalue, strlen((yyvsp[0].tokenData)->svalue), (yyvsp[0].tokenData)->tokenstr);}
 #line 1188 "parser.tab.c"
     break;
 
   case 8: /* token: BOOLCONST  */
 #line 40 "parser.y"
-                        {printf("Line %d Token: BOOLCONST Value: %d Input: %s\n", (yyvsp[0].tokenData)->linenum, (yyvsp[0].tokenData)->nvalue, (yyvsp[0].tokenData)->tokenstr);}
+                        {printf("Line %d Token: BOOLCONST Value: %d  Input: %s\n", (yyvsp[0].tokenData)->linenum, (yyvsp[0].tokenData)->nvalue, (yyvsp[0].tokenData)->tokenstr);}
 #line 1194 "parser.tab.c"
     break;
 

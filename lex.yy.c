@@ -549,7 +549,7 @@ static int setValue(int linenum, int tokenClass, char *svalue){
         //printf("Charconst Set val\n");
         if(svalue[1] == '\\'){
             if(strlen(svalue) > 4){
-                printf("WARNING(%d): character is %d characters long and not a single charcter: '%s'. the first char will be used.\n", linenum, strlen(svalue)-2, svalue);
+                printf("WARNING(%d): character is %d characters long and not a single character: '%s'.  The first char will be used.\n", linenum, strlen(svalue)-2, svalue);
             }
             if(svalue[2] == 'n'){
                 yylval.tokenData->cvalue = '\n';
@@ -563,7 +563,7 @@ static int setValue(int linenum, int tokenClass, char *svalue){
         }
         else{
             if(strlen(svalue) > 3){
-                printf("WARNING(%d): character is %d characters long and not a single charcter: '%s'. the first char will be used.\n", linenum, strlen(svalue)-2, svalue);
+                printf("WARNING(%d): character is %d characters long and not a single character: '%s'.  The first char will be used.\n", linenum, strlen(svalue)-2, svalue);
             }
             yylval.tokenData->cvalue = svalue[1];
         }
