@@ -1165,7 +1165,7 @@ yyreduce:
     {
   case 4: /* token: ID  */
 #line 36 "parser.y"
-                        {printf("Line %d Token: ID value: %s \n", (yyvsp[0].tokenData)->linenum, (yyvsp[0].tokenData)->svalue); }
+                        {printf("Line %d Token: ID Value: %s\n", (yyvsp[0].tokenData)->linenum, (yyvsp[0].tokenData)->svalue); }
 #line 1170 "parser.tab.c"
     break;
 
@@ -1177,19 +1177,19 @@ yyreduce:
 
   case 6: /* token: CHARCONST  */
 #line 38 "parser.y"
-                        {printf("Line %d Token: CHARCONST Value: '%c' Input: %s \n", (yyvsp[0].tokenData)->linenum, (yyvsp[0].tokenData)->cvalue, (yyvsp[0].tokenData)->tokenstr);}
+                        {printf("Line %d Token: CHARCONST Value: '%c' Input: %s\n", (yyvsp[0].tokenData)->linenum, (yyvsp[0].tokenData)->cvalue, (yyvsp[0].tokenData)->tokenstr);}
 #line 1182 "parser.tab.c"
     break;
 
   case 7: /* token: STRINGCONST  */
 #line 39 "parser.y"
-                        {printf("Line %d Token: STRINGCONST Value: \"%s\" Len: %d Input: %s \n", (yyvsp[0].tokenData)->linenum, (yyvsp[0].tokenData)->svalue, strlen((yyvsp[0].tokenData)->svalue), (yyvsp[0].tokenData)->tokenstr);}
+                        {printf("Line %d Token: STRINGCONST Value: \"%s\" Len: %d Input: %s\n", (yyvsp[0].tokenData)->linenum, (yyvsp[0].tokenData)->svalue, strlen((yyvsp[0].tokenData)->svalue), (yyvsp[0].tokenData)->tokenstr);}
 #line 1188 "parser.tab.c"
     break;
 
   case 8: /* token: BOOLCONST  */
 #line 40 "parser.y"
-                        {printf("Line %d Token: BOOLCONST Value: %d Input: %s \n", (yyvsp[0].tokenData)->linenum, (yyvsp[0].tokenData)->nvalue, (yyvsp[0].tokenData)->tokenstr);}
+                        {printf("Line %d Token: BOOLCONST Value: %d Input: %s\n", (yyvsp[0].tokenData)->linenum, (yyvsp[0].tokenData)->nvalue, (yyvsp[0].tokenData)->tokenstr);}
 #line 1194 "parser.tab.c"
     break;
 
@@ -1297,169 +1297,169 @@ yyreduce:
 
   case 26: /* token: SEMI  */
 #line 58 "parser.y"
-                        {printf("Line %d Token: ; \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: ;\n", (yyvsp[0].tokenData)->linenum);}
 #line 1302 "parser.tab.c"
     break;
 
   case 27: /* token: COMMA  */
 #line 59 "parser.y"
-                        {printf("Line %d Token: , \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: ,\n", (yyvsp[0].tokenData)->linenum);}
 #line 1308 "parser.tab.c"
     break;
 
   case 28: /* token: COLON  */
 #line 60 "parser.y"
-                        {printf("Line %d Token: : \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: :\n", (yyvsp[0].tokenData)->linenum);}
 #line 1314 "parser.tab.c"
     break;
 
   case 29: /* token: LBRACK  */
 #line 61 "parser.y"
-                        {printf("Line %d Token: [ \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: [\n", (yyvsp[0].tokenData)->linenum);}
 #line 1320 "parser.tab.c"
     break;
 
   case 30: /* token: RBRACK  */
 #line 62 "parser.y"
-                        {printf("Line %d Token: ] \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: ]\n", (yyvsp[0].tokenData)->linenum);}
 #line 1326 "parser.tab.c"
     break;
 
   case 31: /* token: LCURL  */
 #line 63 "parser.y"
-                        {printf("Line %d Token: { \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: {\n", (yyvsp[0].tokenData)->linenum);}
 #line 1332 "parser.tab.c"
     break;
 
   case 32: /* token: RCURL  */
 #line 64 "parser.y"
-                        {printf("Line %d Token: } \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: }\n", (yyvsp[0].tokenData)->linenum);}
 #line 1338 "parser.tab.c"
     break;
 
   case 33: /* token: INC  */
 #line 65 "parser.y"
-                        {printf("Line %d Token: INC \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: INC\n", (yyvsp[0].tokenData)->linenum);}
 #line 1344 "parser.tab.c"
     break;
 
   case 34: /* token: DEC  */
 #line 66 "parser.y"
-                        {printf("Line %d Token: DEC \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: DEC\n", (yyvsp[0].tokenData)->linenum);}
 #line 1350 "parser.tab.c"
     break;
 
   case 35: /* token: ADDASS  */
 #line 67 "parser.y"
-                        {printf("Line %d Token: ADDASS \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: ADDASS\n", (yyvsp[0].tokenData)->linenum);}
 #line 1356 "parser.tab.c"
     break;
 
   case 36: /* token: DECASS  */
 #line 68 "parser.y"
-                        {printf("Line %d Token: DECASS \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: DECASS\n", (yyvsp[0].tokenData)->linenum);}
 #line 1362 "parser.tab.c"
     break;
 
   case 37: /* token: MULASS  */
 #line 69 "parser.y"
-                        {printf("Line %d Token: MULASS \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: MULASS\n", (yyvsp[0].tokenData)->linenum);}
 #line 1368 "parser.tab.c"
     break;
 
   case 38: /* token: DIVASS  */
 #line 70 "parser.y"
-                        {printf("Line %d Token: DIVASS \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: DIVASS\n", (yyvsp[0].tokenData)->linenum);}
 #line 1374 "parser.tab.c"
     break;
 
   case 39: /* token: LEQ  */
 #line 71 "parser.y"
-                        {printf("Line %d Token: LEQ \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: LEQ\n", (yyvsp[0].tokenData)->linenum);}
 #line 1380 "parser.tab.c"
     break;
 
   case 40: /* token: GEQ  */
 #line 72 "parser.y"
-                        {printf("Line %d Token: GEQ \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: GEQ\n", (yyvsp[0].tokenData)->linenum);}
 #line 1386 "parser.tab.c"
     break;
 
   case 41: /* token: LESS  */
 #line 73 "parser.y"
-                        {printf("Line %d Token: < \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: <\n", (yyvsp[0].tokenData)->linenum);}
 #line 1392 "parser.tab.c"
     break;
 
   case 42: /* token: GREATER  */
 #line 74 "parser.y"
-                        {printf("Line %d Token: > \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: >\n", (yyvsp[0].tokenData)->linenum);}
 #line 1398 "parser.tab.c"
     break;
 
   case 43: /* token: EQ  */
 #line 75 "parser.y"
-                        {printf("Line %d Token: EQ \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: EQ\n", (yyvsp[0].tokenData)->linenum);}
 #line 1404 "parser.tab.c"
     break;
 
   case 44: /* token: NEQ  */
 #line 76 "parser.y"
-                        {printf("Line %d Token: NEQ \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: NEQ\n", (yyvsp[0].tokenData)->linenum);}
 #line 1410 "parser.tab.c"
     break;
 
   case 45: /* token: ADD  */
 #line 77 "parser.y"
-                        {printf("Line %d Token: + \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: +\n", (yyvsp[0].tokenData)->linenum);}
 #line 1416 "parser.tab.c"
     break;
 
   case 46: /* token: SUB  */
 #line 78 "parser.y"
-                        {printf("Line %d Token: - \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: -\n", (yyvsp[0].tokenData)->linenum);}
 #line 1422 "parser.tab.c"
     break;
 
   case 47: /* token: MUL  */
 #line 79 "parser.y"
-                        {printf("Line %d Token: * \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: *\n", (yyvsp[0].tokenData)->linenum);}
 #line 1428 "parser.tab.c"
     break;
 
   case 48: /* token: DIV  */
 #line 80 "parser.y"
-                        {printf("Line %d Token: / \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: /\n", (yyvsp[0].tokenData)->linenum);}
 #line 1434 "parser.tab.c"
     break;
 
   case 49: /* token: MOD  */
 #line 81 "parser.y"
-                        {printf("Line %d Token: %% \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: %%\n", (yyvsp[0].tokenData)->linenum);}
 #line 1440 "parser.tab.c"
     break;
 
   case 50: /* token: QMARK  */
 #line 82 "parser.y"
-                        {printf("Line %d Token: ? \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: ?\n", (yyvsp[0].tokenData)->linenum);}
 #line 1446 "parser.tab.c"
     break;
 
   case 51: /* token: ASSIGN  */
 #line 83 "parser.y"
-                        {printf("Line %d Token: = \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: =\n", (yyvsp[0].tokenData)->linenum);}
 #line 1452 "parser.tab.c"
     break;
 
   case 52: /* token: LPAREN  */
 #line 84 "parser.y"
-                        {printf("Line %d Token: ( \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: (\n", (yyvsp[0].tokenData)->linenum);}
 #line 1458 "parser.tab.c"
     break;
 
   case 53: /* token: RPAREN  */
 #line 85 "parser.y"
-                        {printf("Line %d Token: ) \n", (yyvsp[0].tokenData)->linenum);}
+                        {printf("Line %d Token: )\n", (yyvsp[0].tokenData)->linenum);}
 #line 1464 "parser.tab.c"
     break;
 

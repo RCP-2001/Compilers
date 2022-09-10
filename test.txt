@@ -1,3 +1,5 @@
 XXXTENTACION
+integer
+int
 696969
 String = "\n\n\n " ;

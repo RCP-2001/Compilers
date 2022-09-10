@@ -33,11 +33,11 @@ tokenList : token tokenList
           | token
           ;
 
-token     : ID          {printf("Line %d Token: ID value: %s \n", $1->linenum, $1->svalue); } 
+token     : ID          {printf("Line %d Token: ID Value: %s\n", $1->linenum, $1->svalue); } 
           | NUMCONST    {printf("Line %d Token: NUMCONST Value: %d Input: %s\n", $1->linenum, $1->nvalue, $1->tokenstr);}
-          | CHARCONST   {printf("Line %d Token: CHARCONST Value: '%c' Input: %s \n", $1->linenum, $1->cvalue, $1->tokenstr);}
-          | STRINGCONST {printf("Line %d Token: STRINGCONST Value: \"%s\" Len: %d Input: %s \n", $1->linenum, $1->svalue, strlen($1->svalue), $1->tokenstr);}
-          | BOOLCONST   {printf("Line %d Token: BOOLCONST Value: %d Input: %s \n", $1->linenum, $1->nvalue, $1->tokenstr);}
+          | CHARCONST   {printf("Line %d Token: CHARCONST Value: '%c' Input: %s\n", $1->linenum, $1->cvalue, $1->tokenstr);}
+          | STRINGCONST {printf("Line %d Token: STRINGCONST Value: \"%s\" Len: %d Input: %s\n", $1->linenum, $1->svalue, strlen($1->svalue), $1->tokenstr);}
+          | BOOLCONST   {printf("Line %d Token: BOOLCONST Value: %d Input: %s\n", $1->linenum, $1->nvalue, $1->tokenstr);}
           | BOOL        {printf("Line %d Token: BOOL\n", $1->linenum);}
           | INT         {printf("Line %d Token: INT\n", $1->linenum);}
           | CHAR        {printf("Line %d Token: CHAR\n", $1->linenum);}
@@ -55,34 +55,34 @@ token     : ID          {printf("Line %d Token: ID value: %s \n", $1->linenum, $
           | AND         {printf("Line %d Token: AND\n", $1->linenum);}
           | NOT         {printf("Line %d Token: NOT\n", $1->linenum);}
           | STATIC      {printf("Line %d Token: STATIC\n", $1->linenum);}
-          | SEMI        {printf("Line %d Token: ; \n", $1->linenum);}
-          | COMMA       {printf("Line %d Token: , \n", $1->linenum);}
-          | COLON       {printf("Line %d Token: : \n", $1->linenum);}
-          | LBRACK      {printf("Line %d Token: [ \n", $1->linenum);}
-          | RBRACK      {printf("Line %d Token: ] \n", $1->linenum);}
-          | LCURL       {printf("Line %d Token: { \n", $1->linenum);}
-          | RCURL       {printf("Line %d Token: } \n", $1->linenum);}
-          | INC         {printf("Line %d Token: INC \n", $1->linenum);}
-          | DEC         {printf("Line %d Token: DEC \n", $1->linenum);}
-          | ADDASS      {printf("Line %d Token: ADDASS \n", $1->linenum);}
-          | DECASS      {printf("Line %d Token: DECASS \n", $1->linenum);}
-          | MULASS      {printf("Line %d Token: MULASS \n", $1->linenum);}
-          | DIVASS      {printf("Line %d Token: DIVASS \n", $1->linenum);}
-          | LEQ         {printf("Line %d Token: LEQ \n", $1->linenum);}
-          | GEQ         {printf("Line %d Token: GEQ \n", $1->linenum);}
-          | LESS        {printf("Line %d Token: < \n", $1->linenum);}
-          | GREATER     {printf("Line %d Token: > \n", $1->linenum);}
-          | EQ          {printf("Line %d Token: EQ \n", $1->linenum);}
-          | NEQ         {printf("Line %d Token: NEQ \n", $1->linenum);}
-          | ADD         {printf("Line %d Token: + \n", $1->linenum);}
-          | SUB         {printf("Line %d Token: - \n", $1->linenum);}
-          | MUL         {printf("Line %d Token: * \n", $1->linenum);}
-          | DIV         {printf("Line %d Token: / \n", $1->linenum);}
-          | MOD         {printf("Line %d Token: %% \n", $1->linenum);}
-          | QMARK       {printf("Line %d Token: ? \n", $1->linenum);}
-          | ASSIGN      {printf("Line %d Token: = \n", $1->linenum);}
-          | LPAREN      {printf("Line %d Token: ( \n", $1->linenum);}
-          | RPAREN      {printf("Line %d Token: ) \n", $1->linenum);}
+          | SEMI        {printf("Line %d Token: ;\n", $1->linenum);}
+          | COMMA       {printf("Line %d Token: ,\n", $1->linenum);}
+          | COLON       {printf("Line %d Token: :\n", $1->linenum);}
+          | LBRACK      {printf("Line %d Token: [\n", $1->linenum);}
+          | RBRACK      {printf("Line %d Token: ]\n", $1->linenum);}
+          | LCURL       {printf("Line %d Token: {\n", $1->linenum);}
+          | RCURL       {printf("Line %d Token: }\n", $1->linenum);}
+          | INC         {printf("Line %d Token: INC\n", $1->linenum);}
+          | DEC         {printf("Line %d Token: DEC\n", $1->linenum);}
+          | ADDASS      {printf("Line %d Token: ADDASS\n", $1->linenum);}
+          | DECASS      {printf("Line %d Token: DECASS\n", $1->linenum);}
+          | MULASS      {printf("Line %d Token: MULASS\n", $1->linenum);}
+          | DIVASS      {printf("Line %d Token: DIVASS\n", $1->linenum);}
+          | LEQ         {printf("Line %d Token: LEQ\n", $1->linenum);}
+          | GEQ         {printf("Line %d Token: GEQ\n", $1->linenum);}
+          | LESS        {printf("Line %d Token: <\n", $1->linenum);}
+          | GREATER     {printf("Line %d Token: >\n", $1->linenum);}
+          | EQ          {printf("Line %d Token: EQ\n", $1->linenum);}
+          | NEQ         {printf("Line %d Token: NEQ\n", $1->linenum);}
+          | ADD         {printf("Line %d Token: +\n", $1->linenum);}
+          | SUB         {printf("Line %d Token: -\n", $1->linenum);}
+          | MUL         {printf("Line %d Token: *\n", $1->linenum);}
+          | DIV         {printf("Line %d Token: /\n", $1->linenum);}
+          | MOD         {printf("Line %d Token: %%\n", $1->linenum);}
+          | QMARK       {printf("Line %d Token: ?\n", $1->linenum);}
+          | ASSIGN      {printf("Line %d Token: =\n", $1->linenum);}
+          | LPAREN      {printf("Line %d Token: (\n", $1->linenum);}
+          | RPAREN      {printf("Line %d Token: )\n", $1->linenum);}
 
           ;
 %%
