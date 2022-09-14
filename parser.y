@@ -24,67 +24,148 @@ void yyerror(const char *msg){
 }
 
 %token <tokenData> ID NUMCONST CHARCONST STRINGCONST BOOLCONST BOOL INT CHAR IF THEN ELSE WHILE FOR DO TO BY RETURN BREAK OR AND NOT STATIC SEMI COMMA COLON LBRACK RBRACK LCURL RCURL INC DEC ADDASS DECASS MULASS DIVASS LEQ GEQ LESS GREATER EQ NEQ ADD SUB MUL DIV MOD QMARK ASSIGN LPAREN RPAREN
-
+%type <tokenData> declist decl varDecl scopedVarDecl varDeclList varDeclInit varDeclID typeSpec funDecl params paramList stmt expStmt compoundStmt LocalDecls stmtList selectStmt itrStmt itrRange returnStmt breakStmt exp simpleExp andExp unaryRelExp relExp relop sumExp sumop mulExp mulop unaryExp unaryOp factor mutable immutable call args argList constant
 // This is where my brain breaks
 //temp for shizzle 
 
 %%
-tokenList : token tokenList
-          | token
-          ;
+program : declist 
+        ;
 
-token     : ID          {printf("Line %d Token: ID Value: %s\n", $1->linenum, $1->svalue); } 
-          | NUMCONST    {printf("Line %d Token: NUMCONST Value: %d  Input: %s\n", $1->linenum, $1->nvalue, $1->tokenstr);}
-          | CHARCONST   {printf("Line %d Token: CHARCONST Value: '%c'  Input: %s\n", $1->linenum, $1->cvalue, $1->tokenstr);}
-          | STRINGCONST {printf("Line %d Token: STRINGCONST Value: \"%s\"  Len: %d  Input: %s\n", $1->linenum, $1->svalue, strlen($1->svalue), $1->tokenstr);}
-          | BOOLCONST   {printf("Line %d Token: BOOLCONST Value: %d  Input: %s\n", $1->linenum, $1->nvalue, $1->tokenstr);}
-          | BOOL        {printf("Line %d Token: BOOL\n", $1->linenum);}
-          | INT         {printf("Line %d Token: INT\n", $1->linenum);}
-          | CHAR        {printf("Line %d Token: CHAR\n", $1->linenum);}
-          | IF          {printf("Line %d Token: IF\n", $1->linenum);}
-          | THEN        {printf("Line %d Token: THEN\n", $1->linenum);}
-          | ELSE        {printf("Line %d Token: ELSE\n", $1->linenum);}
-          | WHILE       {printf("Line %d Token: WHILE\n", $1->linenum);}
-          | FOR         {printf("Line %d Token: FOR\n", $1->linenum);}
-          | DO          {printf("Line %d Token: DO\n", $1->linenum);}
-          | TO          {printf("Line %d Token: TO\n", $1->linenum);}
-          | BY          {printf("Line %d Token: BY\n", $1->linenum);}
-          | RETURN      {printf("Line %d Token: RETURN\n", $1->linenum);}
-          | BREAK       {printf("Line %d Token: BREAK\n", $1->linenum);}
-          | OR          {printf("Line %d Token: OR\n", $1->linenum);}
-          | AND         {printf("Line %d Token: AND\n", $1->linenum);}
-          | NOT         {printf("Line %d Token: NOT\n", $1->linenum);}
-          | STATIC      {printf("Line %d Token: STATIC\n", $1->linenum);}
-          | SEMI        {printf("Line %d Token: ;\n", $1->linenum);}
-          | COMMA       {printf("Line %d Token: ,\n", $1->linenum);}
-          | COLON       {printf("Line %d Token: :\n", $1->linenum);}
-          | LBRACK      {printf("Line %d Token: [\n", $1->linenum);}
-          | RBRACK      {printf("Line %d Token: ]\n", $1->linenum);}
-          | LCURL       {printf("Line %d Token: {\n", $1->linenum);}
-          | RCURL       {printf("Line %d Token: }\n", $1->linenum);}
-          | INC         {printf("Line %d Token: INC\n", $1->linenum);}
-          | DEC         {printf("Line %d Token: DEC\n", $1->linenum);}
-          | ADDASS      {printf("Line %d Token: ADDASS\n", $1->linenum);}
-          | DECASS      {printf("Line %d Token: DECASS\n", $1->linenum);}
-          | MULASS      {printf("Line %d Token: MULASS\n", $1->linenum);}
-          | DIVASS      {printf("Line %d Token: DIVASS\n", $1->linenum);}
-          | LEQ         {printf("Line %d Token: LEQ\n", $1->linenum);}
-          | GEQ         {printf("Line %d Token: GEQ\n", $1->linenum);}
-          | LESS        {printf("Line %d Token: <\n", $1->linenum);}
-          | GREATER     {printf("Line %d Token: >\n", $1->linenum);}
-          | EQ          {printf("Line %d Token: EQ\n", $1->linenum);}
-          | NEQ         {printf("Line %d Token: NEQ\n", $1->linenum);}
-          | ADD         {printf("Line %d Token: +\n", $1->linenum);}
-          | SUB         {printf("Line %d Token: -\n", $1->linenum);}
-          | MUL         {printf("Line %d Token: *\n", $1->linenum);}
-          | DIV         {printf("Line %d Token: /\n", $1->linenum);}
-          | MOD         {printf("Line %d Token: %%\n", $1->linenum);}
-          | QMARK       {printf("Line %d Token: ?\n", $1->linenum);}
-          | ASSIGN      {printf("Line %d Token: =\n", $1->linenum);}
-          | LPAREN      {printf("Line %d Token: (\n", $1->linenum);}
-          | RPAREN      {printf("Line %d Token: )\n", $1->linenum);}
+declist : declist decl
+        | decl
+        ;
 
-          ;
+decl    : varDecl
+        | funDecl
+        ;
+
+varDecl : typeSpec varDeclList SEMI
+        ;
+
+scopedVarDecl   : STATIC typeSpec varDecl SEMI 
+                | typeSpec varDeclList SEMI
+                ;
+
+varDeclList     : varDeclList COMMA varDeclInit 
+                | varDeclInit
+                ;
+
+varDeclInit     : varDeclID 
+                | varDeclID COLON simpleExp
+                ;
+
+varDeclID       : ID | ID LBRACK NUMCONST RBRACK
+                ;
+
+typeSpec        : INT | BOOL | CHAR
+                ;
+
+funDecl         : typeSpec ID LPAREN params RPAREN compoundStmt
+                | ID LPAREN params RPAREN compoundStmt
+                ;
+
+params          : paramList | %empty    {printf("test\n");}
+                ;
+
+paramList       : paramList SEMI paramTypeList | paramTypeList  {printf("test\n");}
+
+paramTypeList   : typeSpec paramIDList
+
+paramIDList     : paramIDList COMMA paramID | paramID
+
+paramID         : ID | ID LBRACK RBRACK
+                ;
+
+stmt            : expStmt | compoundStmt | selectStmt | itrStmt | returnStmt | breakStmt
+                ;
+
+expStmt         : exp COLON
+                ;
+
+compoundStmt    : LCURL LocalDecls stmtList RCURL
+                ;
+
+LocalDecls      : LocalDecls scopedVarDecl | %empty     {printf("test\n");}
+                ;
+
+stmtList        : stmtList stmt | %empty            {printf("test\n");}
+                ;
+
+selectStmt      : IF simpleExp THEN stmt | IF simpleExp THEN stmt ELSE stmt
+                ;
+
+itrStmt         : WHILE simpleExp DO stmt | FOR ID EQ itrRange DO stmt
+                ;
+
+itrRange        : simpleExp TO simpleExp | simpleExp TO simpleExp BY simpleExp
+                ;
+
+returnStmt      : RETURN SEMI | RETURN exp SEMI
+                ;
+
+breakStmt       : BREAK SEMI
+                ;
+
+exp             : mutable assignop exp | mutable INC | mutable DEC | simpleExp
+
+assignop        : ASSIGN | ADDASS | DECASS | MULASS | DIVASS
+                ;
+
+simpleExp       : simpleExp OR simpleExp | andExp
+                ;
+
+andExp          : andExp AND unaryRelExp | unaryRelExp
+                ;
+
+unaryRelExp     : NOT unaryRelExp | relExp
+                ;
+
+relExp          : sumExp relop sumExp | sumExp
+                ;
+
+relop           : LESS | LEQ | GREATER | GEQ | EQ | NEQ
+                ;
+
+sumExp          : sumExp sumop mulExp | mulExp
+                ;
+
+sumop           : ADD | SUB
+                ;
+
+mulExp          : mulExp mulop unaryExp | unaryExp     
+                ;
+
+mulop           : MUL | DIV | MOD
+                ;
+
+unaryExp        : unaryOp unaryExp | factor
+                ;
+
+unaryOp         : SUB | MUL | QMARK
+                ;
+
+factor          : mutable | immutable
+                ;
+
+mutable         : ID | ID LBRACK exp RBRACK
+                ;
+
+immutable       : LPAREN exp RPAREN | call | constant
+                ;
+
+call            : ID LPAREN args RPAREN
+                ;
+
+args            : argList | %empty          {printf("test\n");}
+                ;
+
+argList         : argList COMMA exp | exp
+                ;
+
+constant        : NUMCONST | CHARCONST | STRINGCONST | BOOLCONST
+
+
 %%
 extern int yydebug;
 int main(int argc, char *argv[]){
