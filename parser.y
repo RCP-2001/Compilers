@@ -24,7 +24,7 @@ void yyerror(const char *msg){
 }
 
 %token <tokenData> ID NUMCONST CHARCONST STRINGCONST BOOLCONST BOOL INT CHAR IF THEN ELSE WHILE FOR DO TO BY RETURN BREAK OR AND NOT STATIC SEMI COMMA COLON LBRACK RBRACK LCURL RCURL INC DEC ADDASS DECASS MULASS DIVASS LEQ GEQ LESS GREATER EQ NEQ ADD SUB MUL DIV MOD QMARK ASSIGN LPAREN RPAREN
-%type <tokenData> declist decl varDecl scopedVarDecl varDeclList varDeclInit varDeclID typeSpec funDecl params paramList stmt expStmt compoundStmt LocalDecls stmtList selectStmt itrStmt itrRange returnStmt breakStmt exp simpleExp andExp unaryRelExp relExp relop sumExp sumop mulExp mulop unaryExp unaryOp factor mutable immutable call args argList constant matchedIf unmatchedIf
+%type <tokenData> declist decl varDecl scopedVarDecl varDeclList varDeclInit varDeclID typeSpec funDecl params paramList stmt expStmt compoundStmt LocalDecls stmtList openSelectStatement closedSelectStatement openItrStmt closedItrStmt itrRange returnStmt breakStmt exp simpleExp andExp unaryRelExp relExp relop sumExp sumop mulExp mulop unaryExp unaryOp factor mutable immutable call args argList constant openStatement closedStatement simpleStatement
 // This is where my brain breaks
 //temp for shizzle 
 
@@ -77,7 +77,21 @@ paramIDList     : paramIDList COMMA paramID | paramID
 paramID         : ID | ID LBRACK RBRACK
                 ;
 
-stmt            : expStmt | compoundStmt | selectStmt | itrStmt | returnStmt | breakStmt
+stmt            : openStatement | closedStatement
+                ;
+
+openStatement   : openItrStmt | openSelectStatement
+                ;
+
+closedStatement: closedSelectStatement | closedItrStmt | simpleStatement
+
+openSelectStatement     : IF LPAREN exp RPAREN stmt
+                        | IF LPAREN exp RPAREN closedStatement ELSE openStatement
+
+closedSelectStatement : IF LPAREN exp RPAREN closedStatement ELSE closedStatement
+                      ;
+
+simpleStatement : expStmt | compoundStmt | breakStmt | returnStmt
                 ;
 
 expStmt         : exp COLON
@@ -92,18 +106,10 @@ LocalDecls      : LocalDecls scopedVarDecl | %empty     {printf("test\n");}
 stmtList        : stmtList stmt | %empty            {printf("test\n");}
                 ;
 
-selectStmt      : matchedIf | unmatchedIf
+openItrStmt     : WHILE simpleExp DO openStatement | FOR ID EQ itrRange DO openStatement
                 ;
 
-matchedIf       : IF RPAREN simpleExp LPAREN THEN matchedIf ELSE matchedIf
-                | expStmt | compoundStmt | itrStmt | returnStmt | breakStmt
-                ;
-
-unmatchedIf     : IF RPAREN simpleExp LPAREN THEN stmt
-                | IF RPAREN simpleExp LPAREN THEN matchedIf ELSE unmatchedIf
-                ;
-
-itrStmt         : WHILE simpleExp DO stmt | FOR ID EQ itrRange DO stmt
+closedItrStmt   : WHILE simpleExp DO closedStatement | FOR ID EQ itrRange DO closedStatement
                 ;
 
 itrRange        : simpleExp TO simpleExp | simpleExp TO simpleExp BY simpleExp
