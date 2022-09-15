@@ -1,5 +1,11 @@
+State 36 conflicts: 1 shift/reduce
 State 106 conflicts: 1 shift/reduce
-State 151 conflicts: 1 shift/reduce
+State 128 conflicts: 18 reduce/reduce
+State 129 conflicts: 18 reduce/reduce
+State 133 conflicts: 18 reduce/reduce
+State 134 conflicts: 18 reduce/reduce
+State 135 conflicts: 18 reduce/reduce
+State 161 conflicts: 1 shift/reduce
 
 
 Grammar
@@ -66,148 +72,158 @@ Grammar
    39 stmtList: stmtList stmt
    40         | ε
 
-   41 selectStmt: IF simpleExp THEN stmt
-   42           | IF simpleExp THEN stmt ELSE stmt
+   41 selectStmt: matchedIf
+   42           | unmatchedIf
 
-   43 itrStmt: WHILE simpleExp DO stmt
-   44        | FOR ID EQ itrRange DO stmt
+   43 matchedIf: IF RPAREN simpleExp LPAREN THEN matchedIf ELSE matchedIf
+   44          | expStmt
+   45          | compoundStmt
+   46          | itrStmt
+   47          | returnStmt
+   48          | breakStmt
 
-   45 itrRange: simpleExp TO simpleExp
-   46         | simpleExp TO simpleExp BY simpleExp
+   49 unmatchedIf: IF RPAREN simpleExp LPAREN THEN stmt
+   50            | IF RPAREN simpleExp LPAREN THEN matchedIf ELSE unmatchedIf
 
-   47 returnStmt: RETURN SEMI
-   48           | RETURN exp SEMI
+   51 itrStmt: WHILE simpleExp DO stmt
+   52        | FOR ID EQ itrRange DO stmt
 
-   49 breakStmt: BREAK SEMI
+   53 itrRange: simpleExp TO simpleExp
+   54         | simpleExp TO simpleExp BY simpleExp
 
-   50 exp: mutable assignop exp
-   51    | mutable INC
-   52    | mutable DEC
-   53    | simpleExp
+   55 returnStmt: RETURN SEMI
+   56           | RETURN exp SEMI
 
-   54 assignop: ASSIGN
-   55         | ADDASS
-   56         | DECASS
-   57         | MULASS
-   58         | DIVASS
+   57 breakStmt: BREAK SEMI
 
-   59 simpleExp: simpleExp OR simpleExp
-   60          | andExp
+   58 exp: mutable assignop exp
+   59    | mutable INC
+   60    | mutable DEC
+   61    | simpleExp
 
-   61 andExp: andExp AND unaryRelExp
-   62       | unaryRelExp
+   62 assignop: ASSIGN
+   63         | ADDASS
+   64         | DECASS
+   65         | MULASS
+   66         | DIVASS
 
-   63 unaryRelExp: NOT unaryRelExp
-   64            | relExp
+   67 simpleExp: simpleExp OR simpleExp
+   68          | andExp
 
-   65 relExp: sumExp relop sumExp
-   66       | sumExp
+   69 andExp: andExp AND unaryRelExp
+   70       | unaryRelExp
 
-   67 relop: LESS
-   68      | LEQ
-   69      | GREATER
-   70      | GEQ
-   71      | EQ
-   72      | NEQ
+   71 unaryRelExp: NOT unaryRelExp
+   72            | relExp
 
-   73 sumExp: sumExp sumop mulExp
-   74       | mulExp
+   73 relExp: sumExp relop sumExp
+   74       | sumExp
 
-   75 sumop: ADD
-   76      | SUB
+   75 relop: LESS
+   76      | LEQ
+   77      | GREATER
+   78      | GEQ
+   79      | EQ
+   80      | NEQ
 
-   77 mulExp: mulExp mulop unaryExp
-   78       | unaryExp
+   81 sumExp: sumExp sumop mulExp
+   82       | mulExp
 
-   79 mulop: MUL
-   80      | DIV
-   81      | MOD
+   83 sumop: ADD
+   84      | SUB
 
-   82 unaryExp: unaryOp unaryExp
-   83         | factor
+   85 mulExp: mulExp mulop unaryExp
+   86       | unaryExp
 
-   84 unaryOp: SUB
-   85        | MUL
-   86        | QMARK
+   87 mulop: MUL
+   88      | DIV
+   89      | MOD
 
-   87 factor: mutable
-   88       | immutable
+   90 unaryExp: unaryOp unaryExp
+   91         | factor
 
-   89 mutable: ID
-   90        | ID LBRACK exp RBRACK
+   92 unaryOp: SUB
+   93        | MUL
+   94        | QMARK
 
-   91 immutable: LPAREN exp RPAREN
-   92          | call
-   93          | constant
+   95 factor: mutable
+   96       | immutable
 
-   94 call: ID LPAREN args RPAREN
+   97 mutable: ID
+   98        | ID LBRACK exp RBRACK
 
-   95 args: argList
-   96     | ε
+   99 immutable: LPAREN exp RPAREN
+  100          | call
+  101          | constant
 
-   97 argList: argList COMMA exp
-   98        | exp
+  102 call: ID LPAREN args RPAREN
 
-   99 constant: NUMCONST
-  100         | CHARCONST
-  101         | STRINGCONST
-  102         | BOOLCONST
+  103 args: argList
+  104     | ε
+
+  105 argList: argList COMMA exp
+  106        | exp
+
+  107 constant: NUMCONST
+  108         | CHARCONST
+  109         | STRINGCONST
+  110         | BOOLCONST
 
 
 Terminals, with rules where they appear
 
     $end (0) 0
     error (256)
-    ID <tokenData> (258) 13 14 18 19 27 28 44 89 90 94
-    NUMCONST <tokenData> (259) 14 99
-    CHARCONST <tokenData> (260) 100
-    STRINGCONST <tokenData> (261) 101
-    BOOLCONST <tokenData> (262) 102
+    ID <tokenData> (258) 13 14 18 19 27 28 52 97 98 102
+    NUMCONST <tokenData> (259) 14 107
+    CHARCONST <tokenData> (260) 108
+    STRINGCONST <tokenData> (261) 109
+    BOOLCONST <tokenData> (262) 110
     BOOL <tokenData> (263) 16
     INT <tokenData> (264) 15
     CHAR <tokenData> (265) 17
-    IF <tokenData> (266) 41 42
-    THEN <tokenData> (267) 41 42
-    ELSE <tokenData> (268) 42
-    WHILE <tokenData> (269) 43
-    FOR <tokenData> (270) 44
-    DO <tokenData> (271) 43 44
-    TO <tokenData> (272) 45 46
-    BY <tokenData> (273) 46
-    RETURN <tokenData> (274) 47 48
-    BREAK <tokenData> (275) 49
-    OR <tokenData> (276) 59
-    AND <tokenData> (277) 61
-    NOT <tokenData> (278) 63
+    IF <tokenData> (266) 43 49 50
+    THEN <tokenData> (267) 43 49 50
+    ELSE <tokenData> (268) 43 50
+    WHILE <tokenData> (269) 51
+    FOR <tokenData> (270) 52
+    DO <tokenData> (271) 51 52
+    TO <tokenData> (272) 53 54
+    BY <tokenData> (273) 54
+    RETURN <tokenData> (274) 55 56
+    BREAK <tokenData> (275) 57
+    OR <tokenData> (276) 67
+    AND <tokenData> (277) 69
+    NOT <tokenData> (278) 71
     STATIC <tokenData> (279) 7
-    SEMI <tokenData> (280) 6 7 8 22 47 48 49
-    COMMA <tokenData> (281) 9 25 97
+    SEMI <tokenData> (280) 6 7 8 22 55 56 57
+    COMMA <tokenData> (281) 9 25 105
     COLON <tokenData> (282) 12 35
-    LBRACK <tokenData> (283) 14 28 90
-    RBRACK <tokenData> (284) 14 28 90
+    LBRACK <tokenData> (283) 14 28 98
+    RBRACK <tokenData> (284) 14 28 98
     LCURL <tokenData> (285) 36
     RCURL <tokenData> (286) 36
-    INC <tokenData> (287) 51
-    DEC <tokenData> (288) 52
-    ADDASS <tokenData> (289) 55
-    DECASS <tokenData> (290) 56
-    MULASS <tokenData> (291) 57
-    DIVASS <tokenData> (292) 58
-    LEQ <tokenData> (293) 68
-    GEQ <tokenData> (294) 70
-    LESS <tokenData> (295) 67
-    GREATER <tokenData> (296) 69
-    EQ <tokenData> (297) 44 71
-    NEQ <tokenData> (298) 72
-    ADD <tokenData> (299) 75
-    SUB <tokenData> (300) 76 84
-    MUL <tokenData> (301) 79 85
-    DIV <tokenData> (302) 80
-    MOD <tokenData> (303) 81
-    QMARK <tokenData> (304) 86
-    ASSIGN <tokenData> (305) 54
-    LPAREN <tokenData> (306) 18 19 91 94
-    RPAREN <tokenData> (307) 18 19 91 94
+    INC <tokenData> (287) 59
+    DEC <tokenData> (288) 60
+    ADDASS <tokenData> (289) 63
+    DECASS <tokenData> (290) 64
+    MULASS <tokenData> (291) 65
+    DIVASS <tokenData> (292) 66
+    LEQ <tokenData> (293) 76
+    GEQ <tokenData> (294) 78
+    LESS <tokenData> (295) 75
+    GREATER <tokenData> (296) 77
+    EQ <tokenData> (297) 52 79
+    NEQ <tokenData> (298) 80
+    ADD <tokenData> (299) 83
+    SUB <tokenData> (300) 84 92
+    MUL <tokenData> (301) 87 93
+    DIV <tokenData> (302) 88
+    MOD <tokenData> (303) 89
+    QMARK <tokenData> (304) 94
+    ASSIGN <tokenData> (305) 62
+    LPAREN <tokenData> (306) 18 19 43 49 50 99 102
+    RPAREN <tokenData> (307) 18 19 43 49 50 99 102
 
 
 Nonterminals, with rules where they appear
@@ -261,13 +277,13 @@ Nonterminals, with rules where they appear
         on right: 25 26
     stmt <tokenData> (69)
         on left: 29 30 31 32 33 34
-        on right: 39 41 42 43 44
+        on right: 39 49 51 52
     expStmt <tokenData> (70)
         on left: 35
-        on right: 29
+        on right: 29 44
     compoundStmt <tokenData> (71)
         on left: 36
-        on right: 18 19 30
+        on right: 18 19 30 45
     LocalDecls <tokenData> (72)
         on left: 37 38
         on right: 36 37
@@ -277,78 +293,84 @@ Nonterminals, with rules where they appear
     selectStmt <tokenData> (74)
         on left: 41 42
         on right: 31
-    itrStmt <tokenData> (75)
-        on left: 43 44
-        on right: 32
-    itrRange <tokenData> (76)
-        on left: 45 46
-        on right: 44
-    returnStmt <tokenData> (77)
-        on left: 47 48
-        on right: 33
-    breakStmt <tokenData> (78)
-        on left: 49
-        on right: 34
-    exp <tokenData> (79)
-        on left: 50 51 52 53
-        on right: 35 48 50 90 91 97 98
-    assignop (80)
-        on left: 54 55 56 57 58
-        on right: 50
-    simpleExp <tokenData> (81)
-        on left: 59 60
-        on right: 12 41 42 43 45 46 53 59
-    andExp <tokenData> (82)
-        on left: 61 62
-        on right: 60 61
-    unaryRelExp <tokenData> (83)
-        on left: 63 64
-        on right: 61 62 63
-    relExp <tokenData> (84)
-        on left: 65 66
-        on right: 64
-    relop <tokenData> (85)
-        on left: 67 68 69 70 71 72
-        on right: 65
-    sumExp <tokenData> (86)
+    matchedIf <tokenData> (75)
+        on left: 43 44 45 46 47 48
+        on right: 41 43 50
+    unmatchedIf <tokenData> (76)
+        on left: 49 50
+        on right: 42 50
+    itrStmt <tokenData> (77)
+        on left: 51 52
+        on right: 32 46
+    itrRange <tokenData> (78)
+        on left: 53 54
+        on right: 52
+    returnStmt <tokenData> (79)
+        on left: 55 56
+        on right: 33 47
+    breakStmt <tokenData> (80)
+        on left: 57
+        on right: 34 48
+    exp <tokenData> (81)
+        on left: 58 59 60 61
+        on right: 35 56 58 98 99 105 106
+    assignop (82)
+        on left: 62 63 64 65 66
+        on right: 58
+    simpleExp <tokenData> (83)
+        on left: 67 68
+        on right: 12 43 49 50 51 53 54 61 67
+    andExp <tokenData> (84)
+        on left: 69 70
+        on right: 68 69
+    unaryRelExp <tokenData> (85)
+        on left: 71 72
+        on right: 69 70 71
+    relExp <tokenData> (86)
         on left: 73 74
-        on right: 65 66 73
-    sumop <tokenData> (87)
-        on left: 75 76
+        on right: 72
+    relop <tokenData> (87)
+        on left: 75 76 77 78 79 80
         on right: 73
-    mulExp <tokenData> (88)
-        on left: 77 78
-        on right: 73 74 77
-    mulop <tokenData> (89)
-        on left: 79 80 81
-        on right: 77
-    unaryExp <tokenData> (90)
-        on left: 82 83
-        on right: 77 78 82
-    unaryOp <tokenData> (91)
-        on left: 84 85 86
-        on right: 82
-    factor <tokenData> (92)
-        on left: 87 88
-        on right: 83
-    mutable <tokenData> (93)
-        on left: 89 90
-        on right: 50 51 52 87
-    immutable <tokenData> (94)
-        on left: 91 92 93
-        on right: 88
-    call <tokenData> (95)
-        on left: 94
-        on right: 92
-    args <tokenData> (96)
+    sumExp <tokenData> (88)
+        on left: 81 82
+        on right: 73 74 81
+    sumop <tokenData> (89)
+        on left: 83 84
+        on right: 81
+    mulExp <tokenData> (90)
+        on left: 85 86
+        on right: 81 82 85
+    mulop <tokenData> (91)
+        on left: 87 88 89
+        on right: 85
+    unaryExp <tokenData> (92)
+        on left: 90 91
+        on right: 85 86 90
+    unaryOp <tokenData> (93)
+        on left: 92 93 94
+        on right: 90
+    factor <tokenData> (94)
         on left: 95 96
-        on right: 94
-    argList <tokenData> (97)
+        on right: 91
+    mutable <tokenData> (95)
         on left: 97 98
-        on right: 95 97
-    constant <tokenData> (98)
-        on left: 99 100 101 102
-        on right: 93
+        on right: 58 59 60 95
+    immutable <tokenData> (96)
+        on left: 99 100 101
+        on right: 96
+    call <tokenData> (97)
+        on left: 102
+        on right: 100
+    args <tokenData> (98)
+        on left: 103 104
+        on right: 102
+    argList <tokenData> (99)
+        on left: 105 106
+        on right: 103 105
+    constant <tokenData> (100)
+        on left: 107 108 109 110
+        on right: 101
 
 
 State 0
@@ -707,47 +729,48 @@ State 35
 
 State 36
 
-   89 mutable: ID •
-   90        | ID • LBRACK exp RBRACK
-   94 call: ID • LPAREN args RPAREN
+   97 mutable: ID •
+   98        | ID • LBRACK exp RBRACK
+  102 call: ID • LPAREN args RPAREN
 
     LBRACK  shift, and go to state 66
     LPAREN  shift, and go to state 67
 
-    $default  reduce using rule 89 (mutable)
+    LPAREN    [reduce using rule 97 (mutable)]
+    $default  reduce using rule 97 (mutable)
 
 
 State 37
 
-   99 constant: NUMCONST •
+  107 constant: NUMCONST •
 
-    $default  reduce using rule 99 (constant)
+    $default  reduce using rule 107 (constant)
 
 
 State 38
 
-  100 constant: CHARCONST •
+  108 constant: CHARCONST •
 
-    $default  reduce using rule 100 (constant)
+    $default  reduce using rule 108 (constant)
 
 
 State 39
 
-  101 constant: STRINGCONST •
+  109 constant: STRINGCONST •
 
-    $default  reduce using rule 101 (constant)
+    $default  reduce using rule 109 (constant)
 
 
 State 40
 
-  102 constant: BOOLCONST •
+  110 constant: BOOLCONST •
 
-    $default  reduce using rule 102 (constant)
+    $default  reduce using rule 110 (constant)
 
 
 State 41
 
-   63 unaryRelExp: NOT • unaryRelExp
+   71 unaryRelExp: NOT • unaryRelExp
 
     ID           shift, and go to state 36
     NUMCONST     shift, and go to state 37
@@ -775,28 +798,28 @@ State 41
 
 State 42
 
-   84 unaryOp: SUB •
+   92 unaryOp: SUB •
 
-    $default  reduce using rule 84 (unaryOp)
+    $default  reduce using rule 92 (unaryOp)
 
 
 State 43
 
-   85 unaryOp: MUL •
+   93 unaryOp: MUL •
 
-    $default  reduce using rule 85 (unaryOp)
+    $default  reduce using rule 93 (unaryOp)
 
 
 State 44
 
-   86 unaryOp: QMARK •
+   94 unaryOp: QMARK •
 
-    $default  reduce using rule 86 (unaryOp)
+    $default  reduce using rule 94 (unaryOp)
 
 
 State 45
 
-   91 immutable: LPAREN • exp RPAREN
+   99 immutable: LPAREN • exp RPAREN
 
     ID           shift, and go to state 36
     NUMCONST     shift, and go to state 37
@@ -828,7 +851,7 @@ State 45
 State 46
 
    12 varDeclInit: varDeclID COLON simpleExp •
-   59 simpleExp: simpleExp • OR simpleExp
+   67 simpleExp: simpleExp • OR simpleExp
 
     OR  shift, and go to state 72
 
@@ -837,33 +860,33 @@ State 46
 
 State 47
 
-   60 simpleExp: andExp •
-   61 andExp: andExp • AND unaryRelExp
+   68 simpleExp: andExp •
+   69 andExp: andExp • AND unaryRelExp
 
     AND  shift, and go to state 73
 
-    $default  reduce using rule 60 (simpleExp)
+    $default  reduce using rule 68 (simpleExp)
 
 
 State 48
 
-   62 andExp: unaryRelExp •
+   70 andExp: unaryRelExp •
 
-    $default  reduce using rule 62 (andExp)
+    $default  reduce using rule 70 (andExp)
 
 
 State 49
 
-   64 unaryRelExp: relExp •
+   72 unaryRelExp: relExp •
 
-    $default  reduce using rule 64 (unaryRelExp)
+    $default  reduce using rule 72 (unaryRelExp)
 
 
 State 50
 
-   65 relExp: sumExp • relop sumExp
-   66       | sumExp •
-   73 sumExp: sumExp • sumop mulExp
+   73 relExp: sumExp • relop sumExp
+   74       | sumExp •
+   81 sumExp: sumExp • sumop mulExp
 
     LEQ      shift, and go to state 74
     GEQ      shift, and go to state 75
@@ -874,7 +897,7 @@ State 50
     ADD      shift, and go to state 80
     SUB      shift, and go to state 81
 
-    $default  reduce using rule 66 (relExp)
+    $default  reduce using rule 74 (relExp)
 
     relop  go to state 82
     sumop  go to state 83
@@ -882,28 +905,28 @@ State 50
 
 State 51
 
-   74 sumExp: mulExp •
-   77 mulExp: mulExp • mulop unaryExp
+   82 sumExp: mulExp •
+   85 mulExp: mulExp • mulop unaryExp
 
     MUL  shift, and go to state 84
     DIV  shift, and go to state 85
     MOD  shift, and go to state 86
 
-    $default  reduce using rule 74 (sumExp)
+    $default  reduce using rule 82 (sumExp)
 
     mulop  go to state 87
 
 
 State 52
 
-   78 mulExp: unaryExp •
+   86 mulExp: unaryExp •
 
-    $default  reduce using rule 78 (mulExp)
+    $default  reduce using rule 86 (mulExp)
 
 
 State 53
 
-   82 unaryExp: unaryOp • unaryExp
+   90 unaryExp: unaryOp • unaryExp
 
     ID           shift, and go to state 36
     NUMCONST     shift, and go to state 37
@@ -926,37 +949,37 @@ State 53
 
 State 54
 
-   83 unaryExp: factor •
+   91 unaryExp: factor •
 
-    $default  reduce using rule 83 (unaryExp)
+    $default  reduce using rule 91 (unaryExp)
 
 
 State 55
 
-   87 factor: mutable •
+   95 factor: mutable •
 
-    $default  reduce using rule 87 (factor)
+    $default  reduce using rule 95 (factor)
 
 
 State 56
 
-   88 factor: immutable •
+   96 factor: immutable •
 
-    $default  reduce using rule 88 (factor)
+    $default  reduce using rule 96 (factor)
 
 
 State 57
 
-   92 immutable: call •
+  100 immutable: call •
 
-    $default  reduce using rule 92 (immutable)
+    $default  reduce using rule 100 (immutable)
 
 
 State 58
 
-   93 immutable: constant •
+  101 immutable: constant •
 
-    $default  reduce using rule 93 (immutable)
+    $default  reduce using rule 101 (immutable)
 
 
 State 59
@@ -1016,7 +1039,7 @@ State 65
 
 State 66
 
-   90 mutable: ID LBRACK • exp RBRACK
+   98 mutable: ID LBRACK • exp RBRACK
 
     ID           shift, and go to state 36
     NUMCONST     shift, and go to state 37
@@ -1047,7 +1070,7 @@ State 66
 
 State 67
 
-   94 call: ID LPAREN • args RPAREN
+  102 call: ID LPAREN • args RPAREN
 
     ID           shift, and go to state 36
     NUMCONST     shift, and go to state 37
@@ -1060,7 +1083,7 @@ State 67
     QMARK        shift, and go to state 44
     LPAREN       shift, and go to state 45
 
-    $default  reduce using rule 96 (args)
+    $default  reduce using rule 104 (args)
 
     exp          go to state 94
     simpleExp    go to state 70
@@ -1082,34 +1105,34 @@ State 67
 
 State 68
 
-   63 unaryRelExp: NOT unaryRelExp •
+   71 unaryRelExp: NOT unaryRelExp •
 
-    $default  reduce using rule 63 (unaryRelExp)
+    $default  reduce using rule 71 (unaryRelExp)
 
 
 State 69
 
-   91 immutable: LPAREN exp • RPAREN
+   99 immutable: LPAREN exp • RPAREN
 
     RPAREN  shift, and go to state 97
 
 
 State 70
 
-   53 exp: simpleExp •
-   59 simpleExp: simpleExp • OR simpleExp
+   61 exp: simpleExp •
+   67 simpleExp: simpleExp • OR simpleExp
 
     OR  shift, and go to state 72
 
-    $default  reduce using rule 53 (exp)
+    $default  reduce using rule 61 (exp)
 
 
 State 71
 
-   50 exp: mutable • assignop exp
-   51    | mutable • INC
-   52    | mutable • DEC
-   87 factor: mutable •
+   58 exp: mutable • assignop exp
+   59    | mutable • INC
+   60    | mutable • DEC
+   95 factor: mutable •
 
     INC     shift, and go to state 98
     DEC     shift, and go to state 99
@@ -1119,14 +1142,14 @@ State 71
     DIVASS  shift, and go to state 103
     ASSIGN  shift, and go to state 104
 
-    $default  reduce using rule 87 (factor)
+    $default  reduce using rule 95 (factor)
 
     assignop  go to state 105
 
 
 State 72
 
-   59 simpleExp: simpleExp OR • simpleExp
+   67 simpleExp: simpleExp OR • simpleExp
 
     ID           shift, and go to state 36
     NUMCONST     shift, and go to state 37
@@ -1156,7 +1179,7 @@ State 72
 
 State 73
 
-   61 andExp: andExp AND • unaryRelExp
+   69 andExp: andExp AND • unaryRelExp
 
     ID           shift, and go to state 36
     NUMCONST     shift, and go to state 37
@@ -1184,63 +1207,63 @@ State 73
 
 State 74
 
-   68 relop: LEQ •
+   76 relop: LEQ •
 
-    $default  reduce using rule 68 (relop)
+    $default  reduce using rule 76 (relop)
 
 
 State 75
 
-   70 relop: GEQ •
+   78 relop: GEQ •
 
-    $default  reduce using rule 70 (relop)
+    $default  reduce using rule 78 (relop)
 
 
 State 76
 
-   67 relop: LESS •
+   75 relop: LESS •
 
-    $default  reduce using rule 67 (relop)
+    $default  reduce using rule 75 (relop)
 
 
 State 77
 
-   69 relop: GREATER •
+   77 relop: GREATER •
 
-    $default  reduce using rule 69 (relop)
+    $default  reduce using rule 77 (relop)
 
 
 State 78
 
-   71 relop: EQ •
+   79 relop: EQ •
 
-    $default  reduce using rule 71 (relop)
+    $default  reduce using rule 79 (relop)
 
 
 State 79
 
-   72 relop: NEQ •
+   80 relop: NEQ •
 
-    $default  reduce using rule 72 (relop)
+    $default  reduce using rule 80 (relop)
 
 
 State 80
 
-   75 sumop: ADD •
+   83 sumop: ADD •
 
-    $default  reduce using rule 75 (sumop)
+    $default  reduce using rule 83 (sumop)
 
 
 State 81
 
-   76 sumop: SUB •
+   84 sumop: SUB •
 
-    $default  reduce using rule 76 (sumop)
+    $default  reduce using rule 84 (sumop)
 
 
 State 82
 
-   65 relExp: sumExp relop • sumExp
+   73 relExp: sumExp relop • sumExp
 
     ID           shift, and go to state 36
     NUMCONST     shift, and go to state 37
@@ -1265,7 +1288,7 @@ State 82
 
 State 83
 
-   73 sumExp: sumExp sumop • mulExp
+   81 sumExp: sumExp sumop • mulExp
 
     ID           shift, and go to state 36
     NUMCONST     shift, and go to state 37
@@ -1289,28 +1312,28 @@ State 83
 
 State 84
 
-   79 mulop: MUL •
+   87 mulop: MUL •
 
-    $default  reduce using rule 79 (mulop)
+    $default  reduce using rule 87 (mulop)
 
 
 State 85
 
-   80 mulop: DIV •
+   88 mulop: DIV •
 
-    $default  reduce using rule 80 (mulop)
+    $default  reduce using rule 88 (mulop)
 
 
 State 86
 
-   81 mulop: MOD •
+   89 mulop: MOD •
 
-    $default  reduce using rule 81 (mulop)
+    $default  reduce using rule 89 (mulop)
 
 
 State 87
 
-   77 mulExp: mulExp mulop • unaryExp
+   85 mulExp: mulExp mulop • unaryExp
 
     ID           shift, and go to state 36
     NUMCONST     shift, and go to state 37
@@ -1333,9 +1356,9 @@ State 87
 
 State 88
 
-   82 unaryExp: unaryOp unaryExp •
+   90 unaryExp: unaryOp unaryExp •
 
-    $default  reduce using rule 82 (unaryExp)
+    $default  reduce using rule 90 (unaryExp)
 
 
 State 89
@@ -1378,94 +1401,94 @@ State 92
 
 State 93
 
-   90 mutable: ID LBRACK exp • RBRACK
+   98 mutable: ID LBRACK exp • RBRACK
 
     RBRACK  shift, and go to state 115
 
 
 State 94
 
-   98 argList: exp •
+  106 argList: exp •
 
-    $default  reduce using rule 98 (argList)
+    $default  reduce using rule 106 (argList)
 
 
 State 95
 
-   94 call: ID LPAREN args • RPAREN
+  102 call: ID LPAREN args • RPAREN
 
     RPAREN  shift, and go to state 116
 
 
 State 96
 
-   95 args: argList •
-   97 argList: argList • COMMA exp
+  103 args: argList •
+  105 argList: argList • COMMA exp
 
     COMMA  shift, and go to state 117
 
-    $default  reduce using rule 95 (args)
+    $default  reduce using rule 103 (args)
 
 
 State 97
 
-   91 immutable: LPAREN exp RPAREN •
+   99 immutable: LPAREN exp RPAREN •
 
-    $default  reduce using rule 91 (immutable)
+    $default  reduce using rule 99 (immutable)
 
 
 State 98
 
-   51 exp: mutable INC •
+   59 exp: mutable INC •
 
-    $default  reduce using rule 51 (exp)
+    $default  reduce using rule 59 (exp)
 
 
 State 99
 
-   52 exp: mutable DEC •
+   60 exp: mutable DEC •
 
-    $default  reduce using rule 52 (exp)
+    $default  reduce using rule 60 (exp)
 
 
 State 100
 
-   55 assignop: ADDASS •
+   63 assignop: ADDASS •
 
-    $default  reduce using rule 55 (assignop)
+    $default  reduce using rule 63 (assignop)
 
 
 State 101
 
-   56 assignop: DECASS •
+   64 assignop: DECASS •
 
-    $default  reduce using rule 56 (assignop)
+    $default  reduce using rule 64 (assignop)
 
 
 State 102
 
-   57 assignop: MULASS •
+   65 assignop: MULASS •
 
-    $default  reduce using rule 57 (assignop)
+    $default  reduce using rule 65 (assignop)
 
 
 State 103
 
-   58 assignop: DIVASS •
+   66 assignop: DIVASS •
 
-    $default  reduce using rule 58 (assignop)
+    $default  reduce using rule 66 (assignop)
 
 
 State 104
 
-   54 assignop: ASSIGN •
+   62 assignop: ASSIGN •
 
-    $default  reduce using rule 54 (assignop)
+    $default  reduce using rule 62 (assignop)
 
 
 State 105
 
-   50 exp: mutable assignop • exp
+   58 exp: mutable assignop • exp
 
     ID           shift, and go to state 36
     NUMCONST     shift, and go to state 37
@@ -1496,68 +1519,54 @@ State 105
 
 State 106
 
-   59 simpleExp: simpleExp • OR simpleExp
-   59          | simpleExp OR simpleExp •
+   67 simpleExp: simpleExp • OR simpleExp
+   67          | simpleExp OR simpleExp •
 
     OR  shift, and go to state 72
 
-    OR        [reduce using rule 59 (simpleExp)]
-    $default  reduce using rule 59 (simpleExp)
-
-    shift/reduce conflict on token OR:
-       59 simpleExp: simpleExp OR simpleExp •
-       59 simpleExp: simpleExp • OR simpleExp
-      Example: simpleExp OR simpleExp • OR simpleExp
-      Shift derivation
-        simpleExp
-        ↳ 59: simpleExp OR simpleExp
-                           ↳ 59: simpleExp • OR simpleExp
-      Reduce derivation
-        simpleExp
-        ↳ 59: simpleExp                      OR simpleExp
-              ↳ 59: simpleExp OR simpleExp •
-
+    OR        [reduce using rule 67 (simpleExp)]
+    $default  reduce using rule 67 (simpleExp)
 
 
 State 107
 
-   61 andExp: andExp AND unaryRelExp •
+   69 andExp: andExp AND unaryRelExp •
 
-    $default  reduce using rule 61 (andExp)
+    $default  reduce using rule 69 (andExp)
 
 
 State 108
 
-   65 relExp: sumExp relop sumExp •
-   73 sumExp: sumExp • sumop mulExp
+   73 relExp: sumExp relop sumExp •
+   81 sumExp: sumExp • sumop mulExp
 
     ADD  shift, and go to state 80
     SUB  shift, and go to state 81
 
-    $default  reduce using rule 65 (relExp)
+    $default  reduce using rule 73 (relExp)
 
     sumop  go to state 83
 
 
 State 109
 
-   73 sumExp: sumExp sumop mulExp •
-   77 mulExp: mulExp • mulop unaryExp
+   81 sumExp: sumExp sumop mulExp •
+   85 mulExp: mulExp • mulop unaryExp
 
     MUL  shift, and go to state 84
     DIV  shift, and go to state 85
     MOD  shift, and go to state 86
 
-    $default  reduce using rule 73 (sumExp)
+    $default  reduce using rule 81 (sumExp)
 
     mulop  go to state 87
 
 
 State 110
 
-   77 mulExp: mulExp mulop unaryExp •
+   85 mulExp: mulExp mulop unaryExp •
 
-    $default  reduce using rule 77 (mulExp)
+    $default  reduce using rule 85 (mulExp)
 
 
 State 111
@@ -1616,10 +1625,12 @@ State 114
     expStmt       go to state 128
     compoundStmt  go to state 129
     selectStmt    go to state 130
-    itrStmt       go to state 131
-    returnStmt    go to state 132
-    breakStmt     go to state 133
-    exp           go to state 134
+    matchedIf     go to state 131
+    unmatchedIf   go to state 132
+    itrStmt       go to state 133
+    returnStmt    go to state 134
+    breakStmt     go to state 135
+    exp           go to state 136
     simpleExp     go to state 70
     andExp        go to state 47
     unaryRelExp   go to state 48
@@ -1637,21 +1648,21 @@ State 114
 
 State 115
 
-   90 mutable: ID LBRACK exp RBRACK •
+   98 mutable: ID LBRACK exp RBRACK •
 
-    $default  reduce using rule 90 (mutable)
+    $default  reduce using rule 98 (mutable)
 
 
 State 116
 
-   94 call: ID LPAREN args RPAREN •
+  102 call: ID LPAREN args RPAREN •
 
-    $default  reduce using rule 94 (call)
+    $default  reduce using rule 102 (call)
 
 
 State 117
 
-   97 argList: argList COMMA • exp
+  105 argList: argList COMMA • exp
 
     ID           shift, and go to state 36
     NUMCONST     shift, and go to state 37
@@ -1664,7 +1675,7 @@ State 117
     QMARK        shift, and go to state 44
     LPAREN       shift, and go to state 45
 
-    exp          go to state 135
+    exp          go to state 137
     simpleExp    go to state 70
     andExp       go to state 47
     unaryRelExp  go to state 48
@@ -1682,9 +1693,9 @@ State 117
 
 State 118
 
-   50 exp: mutable assignop exp •
+   58 exp: mutable assignop exp •
 
-    $default  reduce using rule 50 (exp)
+    $default  reduce using rule 58 (exp)
 
 
 State 119
@@ -1695,8 +1706,8 @@ State 119
     INT   shift, and go to state 3
     CHAR  shift, and go to state 4
 
-    varDecl   go to state 136
-    typeSpec  go to state 137
+    varDecl   go to state 138
+    typeSpec  go to state 139
 
 
 State 120
@@ -1704,44 +1715,22 @@ State 120
     8 scopedVarDecl: typeSpec varDeclList • SEMI
     9 varDeclList: varDeclList • COMMA varDeclInit
 
-    SEMI   shift, and go to state 138
+    SEMI   shift, and go to state 140
     COMMA  shift, and go to state 25
 
 
 State 121
 
-   41 selectStmt: IF • simpleExp THEN stmt
-   42           | IF • simpleExp THEN stmt ELSE stmt
+   43 matchedIf: IF • RPAREN simpleExp LPAREN THEN matchedIf ELSE matchedIf
+   49 unmatchedIf: IF • RPAREN simpleExp LPAREN THEN stmt
+   50            | IF • RPAREN simpleExp LPAREN THEN matchedIf ELSE unmatchedIf
 
-    ID           shift, and go to state 36
-    NUMCONST     shift, and go to state 37
-    CHARCONST    shift, and go to state 38
-    STRINGCONST  shift, and go to state 39
-    BOOLCONST    shift, and go to state 40
-    NOT          shift, and go to state 41
-    SUB          shift, and go to state 42
-    MUL          shift, and go to state 43
-    QMARK        shift, and go to state 44
-    LPAREN       shift, and go to state 45
-
-    simpleExp    go to state 139
-    andExp       go to state 47
-    unaryRelExp  go to state 48
-    relExp       go to state 49
-    sumExp       go to state 50
-    mulExp       go to state 51
-    unaryExp     go to state 52
-    unaryOp      go to state 53
-    factor       go to state 54
-    mutable      go to state 55
-    immutable    go to state 56
-    call         go to state 57
-    constant     go to state 58
+    RPAREN  shift, and go to state 141
 
 
 State 122
 
-   43 itrStmt: WHILE • simpleExp DO stmt
+   51 itrStmt: WHILE • simpleExp DO stmt
 
     ID           shift, and go to state 36
     NUMCONST     shift, and go to state 37
@@ -1754,7 +1743,7 @@ State 122
     QMARK        shift, and go to state 44
     LPAREN       shift, and go to state 45
 
-    simpleExp    go to state 140
+    simpleExp    go to state 142
     andExp       go to state 47
     unaryRelExp  go to state 48
     relExp       go to state 49
@@ -1771,15 +1760,15 @@ State 122
 
 State 123
 
-   44 itrStmt: FOR • ID EQ itrRange DO stmt
+   52 itrStmt: FOR • ID EQ itrRange DO stmt
 
-    ID  shift, and go to state 141
+    ID  shift, and go to state 143
 
 
 State 124
 
-   47 returnStmt: RETURN • SEMI
-   48           | RETURN • exp SEMI
+   55 returnStmt: RETURN • SEMI
+   56           | RETURN • exp SEMI
 
     ID           shift, and go to state 36
     NUMCONST     shift, and go to state 37
@@ -1787,13 +1776,13 @@ State 124
     STRINGCONST  shift, and go to state 39
     BOOLCONST    shift, and go to state 40
     NOT          shift, and go to state 41
-    SEMI         shift, and go to state 142
+    SEMI         shift, and go to state 144
     SUB          shift, and go to state 42
     MUL          shift, and go to state 43
     QMARK        shift, and go to state 44
     LPAREN       shift, and go to state 45
 
-    exp          go to state 143
+    exp          go to state 145
     simpleExp    go to state 70
     andExp       go to state 47
     unaryRelExp  go to state 48
@@ -1811,9 +1800,9 @@ State 124
 
 State 125
 
-   49 breakStmt: BREAK • SEMI
+   57 breakStmt: BREAK • SEMI
 
-    SEMI  shift, and go to state 144
+    SEMI  shift, and go to state 146
 
 
 State 126
@@ -1833,15 +1822,89 @@ State 127
 State 128
 
    29 stmt: expStmt •
+   44 matchedIf: expStmt •
 
-    $default  reduce using rule 29 (stmt)
+    ID           reduce using rule 29 (stmt)
+    ID           [reduce using rule 44 (matchedIf)]
+    NUMCONST     reduce using rule 29 (stmt)
+    NUMCONST     [reduce using rule 44 (matchedIf)]
+    CHARCONST    reduce using rule 29 (stmt)
+    CHARCONST    [reduce using rule 44 (matchedIf)]
+    STRINGCONST  reduce using rule 29 (stmt)
+    STRINGCONST  [reduce using rule 44 (matchedIf)]
+    BOOLCONST    reduce using rule 29 (stmt)
+    BOOLCONST    [reduce using rule 44 (matchedIf)]
+    IF           reduce using rule 29 (stmt)
+    IF           [reduce using rule 44 (matchedIf)]
+    ELSE         reduce using rule 29 (stmt)
+    ELSE         [reduce using rule 44 (matchedIf)]
+    WHILE        reduce using rule 29 (stmt)
+    WHILE        [reduce using rule 44 (matchedIf)]
+    FOR          reduce using rule 29 (stmt)
+    FOR          [reduce using rule 44 (matchedIf)]
+    RETURN       reduce using rule 29 (stmt)
+    RETURN       [reduce using rule 44 (matchedIf)]
+    BREAK        reduce using rule 29 (stmt)
+    BREAK        [reduce using rule 44 (matchedIf)]
+    NOT          reduce using rule 29 (stmt)
+    NOT          [reduce using rule 44 (matchedIf)]
+    LCURL        reduce using rule 29 (stmt)
+    LCURL        [reduce using rule 44 (matchedIf)]
+    RCURL        reduce using rule 29 (stmt)
+    RCURL        [reduce using rule 44 (matchedIf)]
+    SUB          reduce using rule 29 (stmt)
+    SUB          [reduce using rule 44 (matchedIf)]
+    MUL          reduce using rule 29 (stmt)
+    MUL          [reduce using rule 44 (matchedIf)]
+    QMARK        reduce using rule 29 (stmt)
+    QMARK        [reduce using rule 44 (matchedIf)]
+    LPAREN       reduce using rule 29 (stmt)
+    LPAREN       [reduce using rule 44 (matchedIf)]
+    $default     reduce using rule 29 (stmt)
 
 
 State 129
 
    30 stmt: compoundStmt •
+   45 matchedIf: compoundStmt •
 
-    $default  reduce using rule 30 (stmt)
+    ID           reduce using rule 30 (stmt)
+    ID           [reduce using rule 45 (matchedIf)]
+    NUMCONST     reduce using rule 30 (stmt)
+    NUMCONST     [reduce using rule 45 (matchedIf)]
+    CHARCONST    reduce using rule 30 (stmt)
+    CHARCONST    [reduce using rule 45 (matchedIf)]
+    STRINGCONST  reduce using rule 30 (stmt)
+    STRINGCONST  [reduce using rule 45 (matchedIf)]
+    BOOLCONST    reduce using rule 30 (stmt)
+    BOOLCONST    [reduce using rule 45 (matchedIf)]
+    IF           reduce using rule 30 (stmt)
+    IF           [reduce using rule 45 (matchedIf)]
+    ELSE         reduce using rule 30 (stmt)
+    ELSE         [reduce using rule 45 (matchedIf)]
+    WHILE        reduce using rule 30 (stmt)
+    WHILE        [reduce using rule 45 (matchedIf)]
+    FOR          reduce using rule 30 (stmt)
+    FOR          [reduce using rule 45 (matchedIf)]
+    RETURN       reduce using rule 30 (stmt)
+    RETURN       [reduce using rule 45 (matchedIf)]
+    BREAK        reduce using rule 30 (stmt)
+    BREAK        [reduce using rule 45 (matchedIf)]
+    NOT          reduce using rule 30 (stmt)
+    NOT          [reduce using rule 45 (matchedIf)]
+    LCURL        reduce using rule 30 (stmt)
+    LCURL        [reduce using rule 45 (matchedIf)]
+    RCURL        reduce using rule 30 (stmt)
+    RCURL        [reduce using rule 45 (matchedIf)]
+    SUB          reduce using rule 30 (stmt)
+    SUB          [reduce using rule 45 (matchedIf)]
+    MUL          reduce using rule 30 (stmt)
+    MUL          [reduce using rule 45 (matchedIf)]
+    QMARK        reduce using rule 30 (stmt)
+    QMARK        [reduce using rule 45 (matchedIf)]
+    LPAREN       reduce using rule 30 (stmt)
+    LPAREN       [reduce using rule 45 (matchedIf)]
+    $default     reduce using rule 30 (stmt)
 
 
 State 130
@@ -1853,47 +1916,172 @@ State 130
 
 State 131
 
-   32 stmt: itrStmt •
+   41 selectStmt: matchedIf •
 
-    $default  reduce using rule 32 (stmt)
+    $default  reduce using rule 41 (selectStmt)
 
 
 State 132
 
-   33 stmt: returnStmt •
+   42 selectStmt: unmatchedIf •
 
-    $default  reduce using rule 33 (stmt)
+    $default  reduce using rule 42 (selectStmt)
 
 
 State 133
 
-   34 stmt: breakStmt •
+   32 stmt: itrStmt •
+   46 matchedIf: itrStmt •
 
-    $default  reduce using rule 34 (stmt)
+    ID           reduce using rule 32 (stmt)
+    ID           [reduce using rule 46 (matchedIf)]
+    NUMCONST     reduce using rule 32 (stmt)
+    NUMCONST     [reduce using rule 46 (matchedIf)]
+    CHARCONST    reduce using rule 32 (stmt)
+    CHARCONST    [reduce using rule 46 (matchedIf)]
+    STRINGCONST  reduce using rule 32 (stmt)
+    STRINGCONST  [reduce using rule 46 (matchedIf)]
+    BOOLCONST    reduce using rule 32 (stmt)
+    BOOLCONST    [reduce using rule 46 (matchedIf)]
+    IF           reduce using rule 32 (stmt)
+    IF           [reduce using rule 46 (matchedIf)]
+    ELSE         reduce using rule 32 (stmt)
+    ELSE         [reduce using rule 46 (matchedIf)]
+    WHILE        reduce using rule 32 (stmt)
+    WHILE        [reduce using rule 46 (matchedIf)]
+    FOR          reduce using rule 32 (stmt)
+    FOR          [reduce using rule 46 (matchedIf)]
+    RETURN       reduce using rule 32 (stmt)
+    RETURN       [reduce using rule 46 (matchedIf)]
+    BREAK        reduce using rule 32 (stmt)
+    BREAK        [reduce using rule 46 (matchedIf)]
+    NOT          reduce using rule 32 (stmt)
+    NOT          [reduce using rule 46 (matchedIf)]
+    LCURL        reduce using rule 32 (stmt)
+    LCURL        [reduce using rule 46 (matchedIf)]
+    RCURL        reduce using rule 32 (stmt)
+    RCURL        [reduce using rule 46 (matchedIf)]
+    SUB          reduce using rule 32 (stmt)
+    SUB          [reduce using rule 46 (matchedIf)]
+    MUL          reduce using rule 32 (stmt)
+    MUL          [reduce using rule 46 (matchedIf)]
+    QMARK        reduce using rule 32 (stmt)
+    QMARK        [reduce using rule 46 (matchedIf)]
+    LPAREN       reduce using rule 32 (stmt)
+    LPAREN       [reduce using rule 46 (matchedIf)]
+    $default     reduce using rule 32 (stmt)
 
 
 State 134
 
-   35 expStmt: exp • COLON
+   33 stmt: returnStmt •
+   47 matchedIf: returnStmt •
 
-    COLON  shift, and go to state 145
+    ID           reduce using rule 33 (stmt)
+    ID           [reduce using rule 47 (matchedIf)]
+    NUMCONST     reduce using rule 33 (stmt)
+    NUMCONST     [reduce using rule 47 (matchedIf)]
+    CHARCONST    reduce using rule 33 (stmt)
+    CHARCONST    [reduce using rule 47 (matchedIf)]
+    STRINGCONST  reduce using rule 33 (stmt)
+    STRINGCONST  [reduce using rule 47 (matchedIf)]
+    BOOLCONST    reduce using rule 33 (stmt)
+    BOOLCONST    [reduce using rule 47 (matchedIf)]
+    IF           reduce using rule 33 (stmt)
+    IF           [reduce using rule 47 (matchedIf)]
+    ELSE         reduce using rule 33 (stmt)
+    ELSE         [reduce using rule 47 (matchedIf)]
+    WHILE        reduce using rule 33 (stmt)
+    WHILE        [reduce using rule 47 (matchedIf)]
+    FOR          reduce using rule 33 (stmt)
+    FOR          [reduce using rule 47 (matchedIf)]
+    RETURN       reduce using rule 33 (stmt)
+    RETURN       [reduce using rule 47 (matchedIf)]
+    BREAK        reduce using rule 33 (stmt)
+    BREAK        [reduce using rule 47 (matchedIf)]
+    NOT          reduce using rule 33 (stmt)
+    NOT          [reduce using rule 47 (matchedIf)]
+    LCURL        reduce using rule 33 (stmt)
+    LCURL        [reduce using rule 47 (matchedIf)]
+    RCURL        reduce using rule 33 (stmt)
+    RCURL        [reduce using rule 47 (matchedIf)]
+    SUB          reduce using rule 33 (stmt)
+    SUB          [reduce using rule 47 (matchedIf)]
+    MUL          reduce using rule 33 (stmt)
+    MUL          [reduce using rule 47 (matchedIf)]
+    QMARK        reduce using rule 33 (stmt)
+    QMARK        [reduce using rule 47 (matchedIf)]
+    LPAREN       reduce using rule 33 (stmt)
+    LPAREN       [reduce using rule 47 (matchedIf)]
+    $default     reduce using rule 33 (stmt)
 
 
 State 135
 
-   97 argList: argList COMMA exp •
+   34 stmt: breakStmt •
+   48 matchedIf: breakStmt •
 
-    $default  reduce using rule 97 (argList)
+    ID           reduce using rule 34 (stmt)
+    ID           [reduce using rule 48 (matchedIf)]
+    NUMCONST     reduce using rule 34 (stmt)
+    NUMCONST     [reduce using rule 48 (matchedIf)]
+    CHARCONST    reduce using rule 34 (stmt)
+    CHARCONST    [reduce using rule 48 (matchedIf)]
+    STRINGCONST  reduce using rule 34 (stmt)
+    STRINGCONST  [reduce using rule 48 (matchedIf)]
+    BOOLCONST    reduce using rule 34 (stmt)
+    BOOLCONST    [reduce using rule 48 (matchedIf)]
+    IF           reduce using rule 34 (stmt)
+    IF           [reduce using rule 48 (matchedIf)]
+    ELSE         reduce using rule 34 (stmt)
+    ELSE         [reduce using rule 48 (matchedIf)]
+    WHILE        reduce using rule 34 (stmt)
+    WHILE        [reduce using rule 48 (matchedIf)]
+    FOR          reduce using rule 34 (stmt)
+    FOR          [reduce using rule 48 (matchedIf)]
+    RETURN       reduce using rule 34 (stmt)
+    RETURN       [reduce using rule 48 (matchedIf)]
+    BREAK        reduce using rule 34 (stmt)
+    BREAK        [reduce using rule 48 (matchedIf)]
+    NOT          reduce using rule 34 (stmt)
+    NOT          [reduce using rule 48 (matchedIf)]
+    LCURL        reduce using rule 34 (stmt)
+    LCURL        [reduce using rule 48 (matchedIf)]
+    RCURL        reduce using rule 34 (stmt)
+    RCURL        [reduce using rule 48 (matchedIf)]
+    SUB          reduce using rule 34 (stmt)
+    SUB          [reduce using rule 48 (matchedIf)]
+    MUL          reduce using rule 34 (stmt)
+    MUL          [reduce using rule 48 (matchedIf)]
+    QMARK        reduce using rule 34 (stmt)
+    QMARK        [reduce using rule 48 (matchedIf)]
+    LPAREN       reduce using rule 34 (stmt)
+    LPAREN       [reduce using rule 48 (matchedIf)]
+    $default     reduce using rule 34 (stmt)
 
 
 State 136
 
-    7 scopedVarDecl: STATIC typeSpec varDecl • SEMI
+   35 expStmt: exp • COLON
 
-    SEMI  shift, and go to state 146
+    COLON  shift, and go to state 147
 
 
 State 137
+
+  105 argList: argList COMMA exp •
+
+    $default  reduce using rule 105 (argList)
+
+
+State 138
+
+    7 scopedVarDecl: STATIC typeSpec varDecl • SEMI
+
+    SEMI  shift, and go to state 148
+
+
+State 139
 
     6 varDecl: typeSpec • varDeclList SEMI
 
@@ -1904,299 +2092,229 @@ State 137
     varDeclID    go to state 17
 
 
-State 138
+State 140
 
     8 scopedVarDecl: typeSpec varDeclList SEMI •
 
     $default  reduce using rule 8 (scopedVarDecl)
 
 
-State 139
-
-   41 selectStmt: IF simpleExp • THEN stmt
-   42           | IF simpleExp • THEN stmt ELSE stmt
-   59 simpleExp: simpleExp • OR simpleExp
-
-    THEN  shift, and go to state 147
-    OR    shift, and go to state 72
-
-
-State 140
-
-   43 itrStmt: WHILE simpleExp • DO stmt
-   59 simpleExp: simpleExp • OR simpleExp
-
-    DO  shift, and go to state 148
-    OR  shift, and go to state 72
-
-
 State 141
 
-   44 itrStmt: FOR ID • EQ itrRange DO stmt
+   43 matchedIf: IF RPAREN • simpleExp LPAREN THEN matchedIf ELSE matchedIf
+   49 unmatchedIf: IF RPAREN • simpleExp LPAREN THEN stmt
+   50            | IF RPAREN • simpleExp LPAREN THEN matchedIf ELSE unmatchedIf
 
-    EQ  shift, and go to state 149
+    ID           shift, and go to state 36
+    NUMCONST     shift, and go to state 37
+    CHARCONST    shift, and go to state 38
+    STRINGCONST  shift, and go to state 39
+    BOOLCONST    shift, and go to state 40
+    NOT          shift, and go to state 41
+    SUB          shift, and go to state 42
+    MUL          shift, and go to state 43
+    QMARK        shift, and go to state 44
+    LPAREN       shift, and go to state 45
+
+    simpleExp    go to state 149
+    andExp       go to state 47
+    unaryRelExp  go to state 48
+    relExp       go to state 49
+    sumExp       go to state 50
+    mulExp       go to state 51
+    unaryExp     go to state 52
+    unaryOp      go to state 53
+    factor       go to state 54
+    mutable      go to state 55
+    immutable    go to state 56
+    call         go to state 57
+    constant     go to state 58
 
 
 State 142
 
-   47 returnStmt: RETURN SEMI •
+   51 itrStmt: WHILE simpleExp • DO stmt
+   67 simpleExp: simpleExp • OR simpleExp
 
-    $default  reduce using rule 47 (returnStmt)
+    DO  shift, and go to state 150
+    OR  shift, and go to state 72
 
 
 State 143
 
-   48 returnStmt: RETURN exp • SEMI
+   52 itrStmt: FOR ID • EQ itrRange DO stmt
 
-    SEMI  shift, and go to state 150
+    EQ  shift, and go to state 151
 
 
 State 144
 
-   49 breakStmt: BREAK SEMI •
+   55 returnStmt: RETURN SEMI •
 
-    $default  reduce using rule 49 (breakStmt)
+    $default  reduce using rule 55 (returnStmt)
 
 
 State 145
+
+   56 returnStmt: RETURN exp • SEMI
+
+    SEMI  shift, and go to state 152
+
+
+State 146
+
+   57 breakStmt: BREAK SEMI •
+
+    $default  reduce using rule 57 (breakStmt)
+
+
+State 147
 
    35 expStmt: exp COLON •
 
     $default  reduce using rule 35 (expStmt)
 
 
-State 146
+State 148
 
     7 scopedVarDecl: STATIC typeSpec varDecl SEMI •
 
     $default  reduce using rule 7 (scopedVarDecl)
 
 
-State 147
-
-   41 selectStmt: IF simpleExp THEN • stmt
-   42           | IF simpleExp THEN • stmt ELSE stmt
-
-    ID           shift, and go to state 36
-    NUMCONST     shift, and go to state 37
-    CHARCONST    shift, and go to state 38
-    STRINGCONST  shift, and go to state 39
-    BOOLCONST    shift, and go to state 40
-    IF           shift, and go to state 121
-    WHILE        shift, and go to state 122
-    FOR          shift, and go to state 123
-    RETURN       shift, and go to state 124
-    BREAK        shift, and go to state 125
-    NOT          shift, and go to state 41
-    LCURL        shift, and go to state 61
-    SUB          shift, and go to state 42
-    MUL          shift, and go to state 43
-    QMARK        shift, and go to state 44
-    LPAREN       shift, and go to state 45
-
-    stmt          go to state 151
-    expStmt       go to state 128
-    compoundStmt  go to state 129
-    selectStmt    go to state 130
-    itrStmt       go to state 131
-    returnStmt    go to state 132
-    breakStmt     go to state 133
-    exp           go to state 134
-    simpleExp     go to state 70
-    andExp        go to state 47
-    unaryRelExp   go to state 48
-    relExp        go to state 49
-    sumExp        go to state 50
-    mulExp        go to state 51
-    unaryExp      go to state 52
-    unaryOp       go to state 53
-    factor        go to state 54
-    mutable       go to state 71
-    immutable     go to state 56
-    call          go to state 57
-    constant      go to state 58
-
-
-State 148
-
-   43 itrStmt: WHILE simpleExp DO • stmt
-
-    ID           shift, and go to state 36
-    NUMCONST     shift, and go to state 37
-    CHARCONST    shift, and go to state 38
-    STRINGCONST  shift, and go to state 39
-    BOOLCONST    shift, and go to state 40
-    IF           shift, and go to state 121
-    WHILE        shift, and go to state 122
-    FOR          shift, and go to state 123
-    RETURN       shift, and go to state 124
-    BREAK        shift, and go to state 125
-    NOT          shift, and go to state 41
-    LCURL        shift, and go to state 61
-    SUB          shift, and go to state 42
-    MUL          shift, and go to state 43
-    QMARK        shift, and go to state 44
-    LPAREN       shift, and go to state 45
-
-    stmt          go to state 152
-    expStmt       go to state 128
-    compoundStmt  go to state 129
-    selectStmt    go to state 130
-    itrStmt       go to state 131
-    returnStmt    go to state 132
-    breakStmt     go to state 133
-    exp           go to state 134
-    simpleExp     go to state 70
-    andExp        go to state 47
-    unaryRelExp   go to state 48
-    relExp        go to state 49
-    sumExp        go to state 50
-    mulExp        go to state 51
-    unaryExp      go to state 52
-    unaryOp       go to state 53
-    factor        go to state 54
-    mutable       go to state 71
-    immutable     go to state 56
-    call          go to state 57
-    constant      go to state 58
-
-
 State 149
 
-   44 itrStmt: FOR ID EQ • itrRange DO stmt
+   43 matchedIf: IF RPAREN simpleExp • LPAREN THEN matchedIf ELSE matchedIf
+   49 unmatchedIf: IF RPAREN simpleExp • LPAREN THEN stmt
+   50            | IF RPAREN simpleExp • LPAREN THEN matchedIf ELSE unmatchedIf
+   67 simpleExp: simpleExp • OR simpleExp
 
-    ID           shift, and go to state 36
-    NUMCONST     shift, and go to state 37
-    CHARCONST    shift, and go to state 38
-    STRINGCONST  shift, and go to state 39
-    BOOLCONST    shift, and go to state 40
-    NOT          shift, and go to state 41
-    SUB          shift, and go to state 42
-    MUL          shift, and go to state 43
-    QMARK        shift, and go to state 44
-    LPAREN       shift, and go to state 45
-
-    itrRange     go to state 153
-    simpleExp    go to state 154
-    andExp       go to state 47
-    unaryRelExp  go to state 48
-    relExp       go to state 49
-    sumExp       go to state 50
-    mulExp       go to state 51
-    unaryExp     go to state 52
-    unaryOp      go to state 53
-    factor       go to state 54
-    mutable      go to state 55
-    immutable    go to state 56
-    call         go to state 57
-    constant     go to state 58
+    OR      shift, and go to state 72
+    LPAREN  shift, and go to state 153
 
 
 State 150
 
-   48 returnStmt: RETURN exp SEMI •
+   51 itrStmt: WHILE simpleExp DO • stmt
 
-    $default  reduce using rule 48 (returnStmt)
+    ID           shift, and go to state 36
+    NUMCONST     shift, and go to state 37
+    CHARCONST    shift, and go to state 38
+    STRINGCONST  shift, and go to state 39
+    BOOLCONST    shift, and go to state 40
+    IF           shift, and go to state 121
+    WHILE        shift, and go to state 122
+    FOR          shift, and go to state 123
+    RETURN       shift, and go to state 124
+    BREAK        shift, and go to state 125
+    NOT          shift, and go to state 41
+    LCURL        shift, and go to state 61
+    SUB          shift, and go to state 42
+    MUL          shift, and go to state 43
+    QMARK        shift, and go to state 44
+    LPAREN       shift, and go to state 45
+
+    stmt          go to state 154
+    expStmt       go to state 128
+    compoundStmt  go to state 129
+    selectStmt    go to state 130
+    matchedIf     go to state 131
+    unmatchedIf   go to state 132
+    itrStmt       go to state 133
+    returnStmt    go to state 134
+    breakStmt     go to state 135
+    exp           go to state 136
+    simpleExp     go to state 70
+    andExp        go to state 47
+    unaryRelExp   go to state 48
+    relExp        go to state 49
+    sumExp        go to state 50
+    mulExp        go to state 51
+    unaryExp      go to state 52
+    unaryOp       go to state 53
+    factor        go to state 54
+    mutable       go to state 71
+    immutable     go to state 56
+    call          go to state 57
+    constant      go to state 58
 
 
 State 151
 
-   41 selectStmt: IF simpleExp THEN stmt •
-   42           | IF simpleExp THEN stmt • ELSE stmt
+   52 itrStmt: FOR ID EQ • itrRange DO stmt
 
-    ELSE  shift, and go to state 155
+    ID           shift, and go to state 36
+    NUMCONST     shift, and go to state 37
+    CHARCONST    shift, and go to state 38
+    STRINGCONST  shift, and go to state 39
+    BOOLCONST    shift, and go to state 40
+    NOT          shift, and go to state 41
+    SUB          shift, and go to state 42
+    MUL          shift, and go to state 43
+    QMARK        shift, and go to state 44
+    LPAREN       shift, and go to state 45
 
-    ELSE      [reduce using rule 41 (selectStmt)]
-    $default  reduce using rule 41 (selectStmt)
-
-    shift/reduce conflict on token ELSE:
-       41 selectStmt: IF simpleExp THEN stmt •
-       42 selectStmt: IF simpleExp THEN stmt • ELSE stmt
-      Example: IF simpleExp THEN IF simpleExp THEN stmt • ELSE stmt
-      Shift derivation
-        selectStmt
-        ↳ 41: IF simpleExp THEN stmt
-                                ↳ 31: selectStmt
-                                      ↳ 42: IF simpleExp THEN stmt • ELSE stmt
-      Reduce derivation
-        selectStmt
-        ↳ 42: IF simpleExp THEN stmt                                 ELSE stmt
-                                ↳ 31: selectStmt
-                                      ↳ 41: IF simpleExp THEN stmt •
-
+    itrRange     go to state 155
+    simpleExp    go to state 156
+    andExp       go to state 47
+    unaryRelExp  go to state 48
+    relExp       go to state 49
+    sumExp       go to state 50
+    mulExp       go to state 51
+    unaryExp     go to state 52
+    unaryOp      go to state 53
+    factor       go to state 54
+    mutable      go to state 55
+    immutable    go to state 56
+    call         go to state 57
+    constant     go to state 58
 
 
 State 152
 
-   43 itrStmt: WHILE simpleExp DO stmt •
+   56 returnStmt: RETURN exp SEMI •
 
-    $default  reduce using rule 43 (itrStmt)
+    $default  reduce using rule 56 (returnStmt)
 
 
 State 153
 
-   44 itrStmt: FOR ID EQ itrRange • DO stmt
+   43 matchedIf: IF RPAREN simpleExp LPAREN • THEN matchedIf ELSE matchedIf
+   49 unmatchedIf: IF RPAREN simpleExp LPAREN • THEN stmt
+   50            | IF RPAREN simpleExp LPAREN • THEN matchedIf ELSE unmatchedIf
 
-    DO  shift, and go to state 156
+    THEN  shift, and go to state 157
 
 
 State 154
 
-   45 itrRange: simpleExp • TO simpleExp
-   46         | simpleExp • TO simpleExp BY simpleExp
-   59 simpleExp: simpleExp • OR simpleExp
+   51 itrStmt: WHILE simpleExp DO stmt •
 
-    TO  shift, and go to state 157
-    OR  shift, and go to state 72
+    $default  reduce using rule 51 (itrStmt)
 
 
 State 155
 
-   42 selectStmt: IF simpleExp THEN stmt ELSE • stmt
+   52 itrStmt: FOR ID EQ itrRange • DO stmt
 
-    ID           shift, and go to state 36
-    NUMCONST     shift, and go to state 37
-    CHARCONST    shift, and go to state 38
-    STRINGCONST  shift, and go to state 39
-    BOOLCONST    shift, and go to state 40
-    IF           shift, and go to state 121
-    WHILE        shift, and go to state 122
-    FOR          shift, and go to state 123
-    RETURN       shift, and go to state 124
-    BREAK        shift, and go to state 125
-    NOT          shift, and go to state 41
-    LCURL        shift, and go to state 61
-    SUB          shift, and go to state 42
-    MUL          shift, and go to state 43
-    QMARK        shift, and go to state 44
-    LPAREN       shift, and go to state 45
-
-    stmt          go to state 158
-    expStmt       go to state 128
-    compoundStmt  go to state 129
-    selectStmt    go to state 130
-    itrStmt       go to state 131
-    returnStmt    go to state 132
-    breakStmt     go to state 133
-    exp           go to state 134
-    simpleExp     go to state 70
-    andExp        go to state 47
-    unaryRelExp   go to state 48
-    relExp        go to state 49
-    sumExp        go to state 50
-    mulExp        go to state 51
-    unaryExp      go to state 52
-    unaryOp       go to state 53
-    factor        go to state 54
-    mutable       go to state 71
-    immutable     go to state 56
-    call          go to state 57
-    constant      go to state 58
+    DO  shift, and go to state 158
 
 
 State 156
 
-   44 itrStmt: FOR ID EQ itrRange DO • stmt
+   53 itrRange: simpleExp • TO simpleExp
+   54         | simpleExp • TO simpleExp BY simpleExp
+   67 simpleExp: simpleExp • OR simpleExp
+
+    TO  shift, and go to state 159
+    OR  shift, and go to state 72
+
+
+State 157
+
+   43 matchedIf: IF RPAREN simpleExp LPAREN THEN • matchedIf ELSE matchedIf
+   49 unmatchedIf: IF RPAREN simpleExp LPAREN THEN • stmt
+   50            | IF RPAREN simpleExp LPAREN THEN • matchedIf ELSE unmatchedIf
 
     ID           shift, and go to state 36
     NUMCONST     shift, and go to state 37
@@ -2215,14 +2333,16 @@ State 156
     QMARK        shift, and go to state 44
     LPAREN       shift, and go to state 45
 
-    stmt          go to state 159
+    stmt          go to state 160
     expStmt       go to state 128
     compoundStmt  go to state 129
     selectStmt    go to state 130
-    itrStmt       go to state 131
-    returnStmt    go to state 132
-    breakStmt     go to state 133
-    exp           go to state 134
+    matchedIf     go to state 161
+    unmatchedIf   go to state 132
+    itrStmt       go to state 133
+    returnStmt    go to state 134
+    breakStmt     go to state 135
+    exp           go to state 136
     simpleExp     go to state 70
     andExp        go to state 47
     unaryRelExp   go to state 48
@@ -2238,66 +2358,56 @@ State 156
     constant      go to state 58
 
 
-State 157
+State 158
 
-   45 itrRange: simpleExp TO • simpleExp
-   46         | simpleExp TO • simpleExp BY simpleExp
+   52 itrStmt: FOR ID EQ itrRange DO • stmt
 
     ID           shift, and go to state 36
     NUMCONST     shift, and go to state 37
     CHARCONST    shift, and go to state 38
     STRINGCONST  shift, and go to state 39
     BOOLCONST    shift, and go to state 40
+    IF           shift, and go to state 121
+    WHILE        shift, and go to state 122
+    FOR          shift, and go to state 123
+    RETURN       shift, and go to state 124
+    BREAK        shift, and go to state 125
     NOT          shift, and go to state 41
+    LCURL        shift, and go to state 61
     SUB          shift, and go to state 42
     MUL          shift, and go to state 43
     QMARK        shift, and go to state 44
     LPAREN       shift, and go to state 45
 
-    simpleExp    go to state 160
-    andExp       go to state 47
-    unaryRelExp  go to state 48
-    relExp       go to state 49
-    sumExp       go to state 50
-    mulExp       go to state 51
-    unaryExp     go to state 52
-    unaryOp      go to state 53
-    factor       go to state 54
-    mutable      go to state 55
-    immutable    go to state 56
-    call         go to state 57
-    constant     go to state 58
-
-
-State 158
-
-   42 selectStmt: IF simpleExp THEN stmt ELSE stmt •
-
-    $default  reduce using rule 42 (selectStmt)
+    stmt          go to state 162
+    expStmt       go to state 128
+    compoundStmt  go to state 129
+    selectStmt    go to state 130
+    matchedIf     go to state 131
+    unmatchedIf   go to state 132
+    itrStmt       go to state 133
+    returnStmt    go to state 134
+    breakStmt     go to state 135
+    exp           go to state 136
+    simpleExp     go to state 70
+    andExp        go to state 47
+    unaryRelExp   go to state 48
+    relExp        go to state 49
+    sumExp        go to state 50
+    mulExp        go to state 51
+    unaryExp      go to state 52
+    unaryOp       go to state 53
+    factor        go to state 54
+    mutable       go to state 71
+    immutable     go to state 56
+    call          go to state 57
+    constant      go to state 58
 
 
 State 159
 
-   44 itrStmt: FOR ID EQ itrRange DO stmt •
-
-    $default  reduce using rule 44 (itrStmt)
-
-
-State 160
-
-   45 itrRange: simpleExp TO simpleExp •
-   46         | simpleExp TO simpleExp • BY simpleExp
-   59 simpleExp: simpleExp • OR simpleExp
-
-    BY  shift, and go to state 161
-    OR  shift, and go to state 72
-
-    $default  reduce using rule 45 (itrRange)
-
-
-State 161
-
-   46 itrRange: simpleExp TO simpleExp BY • simpleExp
+   53 itrRange: simpleExp TO • simpleExp
+   54         | simpleExp TO • simpleExp BY simpleExp
 
     ID           shift, and go to state 36
     NUMCONST     shift, and go to state 37
@@ -2310,7 +2420,7 @@ State 161
     QMARK        shift, and go to state 44
     LPAREN       shift, and go to state 45
 
-    simpleExp    go to state 162
+    simpleExp    go to state 163
     andExp       go to state 47
     unaryRelExp  go to state 48
     relExp       go to state 49
@@ -2325,11 +2435,173 @@ State 161
     constant     go to state 58
 
 
+State 160
+
+   49 unmatchedIf: IF RPAREN simpleExp LPAREN THEN stmt •
+
+    $default  reduce using rule 49 (unmatchedIf)
+
+
+State 161
+
+   41 selectStmt: matchedIf •
+   43 matchedIf: IF RPAREN simpleExp LPAREN THEN matchedIf • ELSE matchedIf
+   50 unmatchedIf: IF RPAREN simpleExp LPAREN THEN matchedIf • ELSE unmatchedIf
+
+    ELSE  shift, and go to state 164
+
+    ELSE      [reduce using rule 41 (selectStmt)]
+    $default  reduce using rule 41 (selectStmt)
+
+
 State 162
 
-   46 itrRange: simpleExp TO simpleExp BY simpleExp •
-   59 simpleExp: simpleExp • OR simpleExp
+   52 itrStmt: FOR ID EQ itrRange DO stmt •
+
+    $default  reduce using rule 52 (itrStmt)
+
+
+State 163
+
+   53 itrRange: simpleExp TO simpleExp •
+   54         | simpleExp TO simpleExp • BY simpleExp
+   67 simpleExp: simpleExp • OR simpleExp
+
+    BY  shift, and go to state 165
+    OR  shift, and go to state 72
+
+    $default  reduce using rule 53 (itrRange)
+
+
+State 164
+
+   43 matchedIf: IF RPAREN simpleExp LPAREN THEN matchedIf ELSE • matchedIf
+   50 unmatchedIf: IF RPAREN simpleExp LPAREN THEN matchedIf ELSE • unmatchedIf
+
+    ID           shift, and go to state 36
+    NUMCONST     shift, and go to state 37
+    CHARCONST    shift, and go to state 38
+    STRINGCONST  shift, and go to state 39
+    BOOLCONST    shift, and go to state 40
+    IF           shift, and go to state 121
+    WHILE        shift, and go to state 122
+    FOR          shift, and go to state 123
+    RETURN       shift, and go to state 124
+    BREAK        shift, and go to state 125
+    NOT          shift, and go to state 41
+    LCURL        shift, and go to state 61
+    SUB          shift, and go to state 42
+    MUL          shift, and go to state 43
+    QMARK        shift, and go to state 44
+    LPAREN       shift, and go to state 45
+
+    expStmt       go to state 166
+    compoundStmt  go to state 167
+    matchedIf     go to state 168
+    unmatchedIf   go to state 169
+    itrStmt       go to state 170
+    returnStmt    go to state 171
+    breakStmt     go to state 172
+    exp           go to state 136
+    simpleExp     go to state 70
+    andExp        go to state 47
+    unaryRelExp   go to state 48
+    relExp        go to state 49
+    sumExp        go to state 50
+    mulExp        go to state 51
+    unaryExp      go to state 52
+    unaryOp       go to state 53
+    factor        go to state 54
+    mutable       go to state 71
+    immutable     go to state 56
+    call          go to state 57
+    constant      go to state 58
+
+
+State 165
+
+   54 itrRange: simpleExp TO simpleExp BY • simpleExp
+
+    ID           shift, and go to state 36
+    NUMCONST     shift, and go to state 37
+    CHARCONST    shift, and go to state 38
+    STRINGCONST  shift, and go to state 39
+    BOOLCONST    shift, and go to state 40
+    NOT          shift, and go to state 41
+    SUB          shift, and go to state 42
+    MUL          shift, and go to state 43
+    QMARK        shift, and go to state 44
+    LPAREN       shift, and go to state 45
+
+    simpleExp    go to state 173
+    andExp       go to state 47
+    unaryRelExp  go to state 48
+    relExp       go to state 49
+    sumExp       go to state 50
+    mulExp       go to state 51
+    unaryExp     go to state 52
+    unaryOp      go to state 53
+    factor       go to state 54
+    mutable      go to state 55
+    immutable    go to state 56
+    call         go to state 57
+    constant     go to state 58
+
+
+State 166
+
+   44 matchedIf: expStmt •
+
+    $default  reduce using rule 44 (matchedIf)
+
+
+State 167
+
+   45 matchedIf: compoundStmt •
+
+    $default  reduce using rule 45 (matchedIf)
+
+
+State 168
+
+   43 matchedIf: IF RPAREN simpleExp LPAREN THEN matchedIf ELSE matchedIf •
+
+    $default  reduce using rule 43 (matchedIf)
+
+
+State 169
+
+   50 unmatchedIf: IF RPAREN simpleExp LPAREN THEN matchedIf ELSE unmatchedIf •
+
+    $default  reduce using rule 50 (unmatchedIf)
+
+
+State 170
+
+   46 matchedIf: itrStmt •
+
+    $default  reduce using rule 46 (matchedIf)
+
+
+State 171
+
+   47 matchedIf: returnStmt •
+
+    $default  reduce using rule 47 (matchedIf)
+
+
+State 172
+
+   48 matchedIf: breakStmt •
+
+    $default  reduce using rule 48 (matchedIf)
+
+
+State 173
+
+   54 itrRange: simpleExp TO simpleExp BY simpleExp •
+   67 simpleExp: simpleExp • OR simpleExp
 
     OR  shift, and go to state 72
 
-    $default  reduce using rule 46 (itrRange)
+    $default  reduce using rule 54 (itrRange)

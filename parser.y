@@ -24,7 +24,7 @@ void yyerror(const char *msg){
 }
 
 %token <tokenData> ID NUMCONST CHARCONST STRINGCONST BOOLCONST BOOL INT CHAR IF THEN ELSE WHILE FOR DO TO BY RETURN BREAK OR AND NOT STATIC SEMI COMMA COLON LBRACK RBRACK LCURL RCURL INC DEC ADDASS DECASS MULASS DIVASS LEQ GEQ LESS GREATER EQ NEQ ADD SUB MUL DIV MOD QMARK ASSIGN LPAREN RPAREN
-%type <tokenData> declist decl varDecl scopedVarDecl varDeclList varDeclInit varDeclID typeSpec funDecl params paramList stmt expStmt compoundStmt LocalDecls stmtList selectStmt itrStmt itrRange returnStmt breakStmt exp simpleExp andExp unaryRelExp relExp relop sumExp sumop mulExp mulop unaryExp unaryOp factor mutable immutable call args argList constant
+%type <tokenData> declist decl varDecl scopedVarDecl varDeclList varDeclInit varDeclID typeSpec funDecl params paramList stmt expStmt compoundStmt LocalDecls stmtList selectStmt itrStmt itrRange returnStmt breakStmt exp simpleExp andExp unaryRelExp relExp relop sumExp sumop mulExp mulop unaryExp unaryOp factor mutable immutable call args argList constant matchedIf unmatchedIf
 // This is where my brain breaks
 //temp for shizzle 
 
@@ -92,7 +92,15 @@ LocalDecls      : LocalDecls scopedVarDecl | %empty     {printf("test\n");}
 stmtList        : stmtList stmt | %empty            {printf("test\n");}
                 ;
 
-selectStmt      : IF simpleExp THEN stmt | IF simpleExp THEN stmt ELSE stmt
+selectStmt      : matchedIf | unmatchedIf
+                ;
+
+matchedIf       : IF RPAREN simpleExp LPAREN THEN matchedIf ELSE matchedIf
+                | expStmt | compoundStmt | itrStmt | returnStmt | breakStmt
+                ;
+
+unmatchedIf     : IF RPAREN simpleExp LPAREN THEN stmt
+                | IF RPAREN simpleExp LPAREN THEN matchedIf ELSE unmatchedIf
                 ;
 
 itrStmt         : WHILE simpleExp DO stmt | FOR ID EQ itrRange DO stmt
