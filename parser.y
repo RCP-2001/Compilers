@@ -29,155 +29,213 @@ void yyerror(const char *msg){
 //temp for shizzle 
 
 %%
-program : declist 
+program : declist       {printf("program accepted\n");}
         ;
 
-declist : declist decl
-        | decl
+declist : declist decl  {printf("declist\n");}
+        | decl          {printf("declist\n");}
         ;
 
-decl    : varDecl
-        | funDecl
+decl    : varDecl  {printf("decl \n");}
+        | funDecl  {printf("decl \n");}
         ;
 
-varDecl : typeSpec varDeclList SEMI
+varDecl : typeSpec varDeclList SEMI         {printf("varDecl\n");}
         ;
 
-scopedVarDecl   : STATIC typeSpec varDecl SEMI 
-                | typeSpec varDeclList SEMI
+scopedVarDecl   : STATIC typeSpec varDecl SEMI       {printf("scopedVardecl \n");}
+                | typeSpec varDeclList SEMI         {printf("scopedVardecl \n");}
                 ;
 
-varDeclList     : varDeclList COMMA varDeclInit 
-                | varDeclInit
+varDeclList     : varDeclList COMMA varDeclInit     {printf("VardecLList \n");}
+                | varDeclInit                       {printf("VardecLList \n");}
                 ;
 
-varDeclInit     : varDeclID 
-                | varDeclID COLON simpleExp
+varDeclInit     : varDeclID                         {printf("VardecLInnit \n");}
+                | varDeclID COLON simpleExp         {printf("VardecLInnit \n");}
                 ;
 
-varDeclID       : ID | ID LBRACK NUMCONST RBRACK
+varDeclID       : ID                                {printf("VarDecID\n");}
+                | ID LBRACK NUMCONST RBRACK         {printf("VarDecID\n");}
                 ;
 
-typeSpec        : INT | BOOL | CHAR
+typeSpec        : INT                               {printf("typespec\n");}
+                | BOOL                              {printf("typespec\n");}
+                | CHAR                              {printf("typespec\n");}
                 ;
 
-funDecl         : typeSpec ID LPAREN params RPAREN compoundStmt
-                | ID LPAREN params RPAREN compoundStmt
+funDecl         : typeSpec ID LPAREN params RPAREN compoundStmt             {printf("funDecl\n");}
+                | ID LPAREN params RPAREN compoundStmt                      {printf("funDecl\n");}
                 ;
 
-params          : paramList | %empty    {printf("test\n");}
+params          : paramList {printf("params\n");}
+                | %empty    {printf("params \n");}
                 ;
 
-paramList       : paramList SEMI paramTypeList | paramTypeList  {printf("test\n");}
-
-paramTypeList   : typeSpec paramIDList
-
-paramIDList     : paramIDList COMMA paramID | paramID
-
-paramID         : ID | ID LBRACK RBRACK
+paramList       : paramList SEMI paramTypeList      {printf("paramList\n");} 
+                | paramTypeList                     {printf("paramList\n");}
                 ;
 
-stmt            : openStatement | closedStatement
+paramTypeList   : typeSpec paramIDList              {printf("paramTypeList\n");}
                 ;
 
-openStatement   : openItrStmt | openSelectStatement
+paramIDList     : paramIDList COMMA paramID         {printf("paramIdList\n");}
+                | paramID                           {printf("paramIdList\n");}
                 ;
 
-closedStatement: closedSelectStatement | closedItrStmt | simpleStatement
 
-openSelectStatement     : IF LPAREN exp RPAREN stmt
-                        | IF LPAREN exp RPAREN closedStatement ELSE openStatement
+paramID         : ID                                {printf("ParamID\n");} 
+                | ID LBRACK RBRACK                  {printf("ParamID\n");}
+                ;
 
-closedSelectStatement : IF LPAREN exp RPAREN closedStatement ELSE closedStatement
+stmt            : openStatement     {printf("stmt\n");}
+                | closedStatement   {printf("stmt\n");}
+                ;
+
+openStatement   : openItrStmt               {printf("openStatement\n");}
+                | openSelectStatement       {printf("openStatement\n");}
+                ;
+
+closedStatement: closedSelectStatement      {printf("closedStatement\n");} 
+                | closedItrStmt             {printf("closedStatemnet\n");}
+                | simpleStatement           {printf("closedStatement\n");}
+
+
+openSelectStatement     : IF LPAREN exp RPAREN stmt         {printf("OpenSelectaStatemnet\n");}
+                        | IF LPAREN exp RPAREN closedStatement ELSE openStatement   {printf("openSelectaStatement\n");}
+
+closedSelectStatement : IF LPAREN exp RPAREN closedStatement ELSE closedStatement   {printf("closedSelctaStatement\n");}
                       ;
 
-simpleStatement : expStmt | compoundStmt | breakStmt | returnStmt
+simpleStatement : expStmt               {printf("Simpstmt\n");}
+                | compoundStmt          {printf("Simpstmt\n");}
+                | breakStmt             {printf("Simpstmt\n");}
+                | returnStmt            {printf("Simpstmt\n");}
                 ;
 
-expStmt         : exp COLON
+expStmt         : exp COLON         {printf("expStmt\n");}
                 ;
 
-compoundStmt    : LCURL LocalDecls stmtList RCURL
+compoundStmt    : LCURL LocalDecls stmtList RCURL       {printf("compound\n");}
                 ;
 
-LocalDecls      : LocalDecls scopedVarDecl | %empty     {printf("test\n");}
+LocalDecls      : LocalDecls scopedVarDecl              {printf("localDecals\n");} 
+                | %empty                                {printf("Localdecals\n");} 
                 ;
 
-stmtList        : stmtList stmt | %empty            {printf("test\n");}
+stmtList        : stmtList stmt     {printf("stmtList\n");}
+                | %empty            {printf("stmtList\n");}
                 ;
 
-openItrStmt     : WHILE simpleExp DO openStatement | FOR ID EQ itrRange DO openStatement
+openItrStmt     : WHILE simpleExp DO openStatement      {printf("OpenItrStmt\n");} 
+                | FOR ID EQ itrRange DO openStatement   {printf("OpenItrStmt\n");} 
                 ;
 
-closedItrStmt   : WHILE simpleExp DO closedStatement | FOR ID EQ itrRange DO closedStatement
+closedItrStmt   : WHILE simpleExp DO closedStatement    {printf("ClosedItrStmt\n");} 
+                | FOR ID EQ itrRange DO closedStatement {printf("ClosedItrStmt\n");} 
                 ;
 
-itrRange        : simpleExp TO simpleExp | simpleExp TO simpleExp BY simpleExp
+itrRange        : simpleExp TO simpleExp                {printf("itrRange");} 
+                | simpleExp TO simpleExp BY simpleExp   {printf("itrRange");}
                 ;
 
-returnStmt      : RETURN SEMI | RETURN exp SEMI
+returnStmt      : RETURN SEMI             {printf("returnStmt\n");}
+                | RETURN exp SEMI         {printf("returnStmt\n");}
                 ;
 
-breakStmt       : BREAK SEMI
+breakStmt       : BREAK SEMI            {printf("BreakStmt\n");}
                 ;
 
-exp             : mutable assignop exp | mutable INC | mutable DEC | simpleExp
+exp             : mutable assignop exp      {printf("mutable assignop exp\n");} 
+                | mutable INC               {printf("mutable INC exp\n");}
+                | mutable DEC               {printf("mutable DEC exp\n");}
+                | simpleExp                 {printf("Simpleexp exp\n");}
 
-assignop        : ASSIGN | ADDASS | DECASS | MULASS | DIVASS
+assignop        : ASSIGN        {printf("assignop\n");} 
+                | ADDASS        {printf("assignop\n");}
+                | DECASS        {printf("assignop\n");}
+                | MULASS        {printf("assignop\n");}
+                | DIVASS        {printf("assignop\n");}
                 ;
 
-simpleExp       : simpleExp OR simpleExp | andExp
+simpleExp       : simpleExp OR andExp   {printf("simpleExp\n");} 
+                | andExp                {printf("simpleExp\n");}
                 ;
 
-andExp          : andExp AND unaryRelExp | unaryRelExp
+andExp          : andExp AND unaryRelExp    {printf("andExp\n");} 
+                | unaryRelExp               {printf("andExp\n");}
                 ;
 
-unaryRelExp     : NOT unaryRelExp | relExp
+unaryRelExp     : NOT unaryRelExp {printf("unaryRelExp\n");} 
+                | relExp  {printf("unaryRelExp\n");}
                 ;
 
-relExp          : sumExp relop sumExp | sumExp
+relExp          : sumExp relop sumExp  {printf("relExp\n");}
+                | sumExp                {printf("relExp\n");}
                 ;
 
-relop           : LESS | LEQ | GREATER | GEQ | EQ | NEQ
+relop           : LESS {printf("relOp\n");}
+                | LEQ {printf("relOp\n");}
+                | GREATER {printf("relOp\n");}
+                | GEQ {printf("relOp\n");}
+                | EQ {printf("relOp\n");}
+                | NEQ{printf("relOp\n");}
                 ;
 
-sumExp          : sumExp sumop mulExp | mulExp
+sumExp          : sumExp sumop mulExp {printf("sumExp\n");}
+                | mulExp {printf("sumExp\n");}
                 ;
 
-sumop           : ADD | SUB
+sumop           : ADD {printf("sumOp\n");}
+                | SUB {printf("sumOp\n");}
                 ;
 
-mulExp          : mulExp mulop unaryExp | unaryExp     
+mulExp          : mulExp mulop unaryExp {printf("mulExp\n");}
+                | unaryExp     {printf("mulExp\n");}
                 ;
 
-mulop           : MUL | DIV | MOD
+mulop           : MUL {printf("mulOp\n");}
+                | DIV {printf("mulOp\n");}
+                | MOD{printf("mulOp\n");}
                 ;
 
-unaryExp        : unaryOp unaryExp | factor
+unaryExp        : unaryOp unaryExp {printf("unaryExp\n");}
+                | factor            {printf("unaryExp\n");}
                 ;
 
-unaryOp         : SUB | MUL | QMARK
+unaryOp         : SUB {printf("unaryOp\n");}
+                | MUL {printf("unaryOp\n");}
+                | QMARK {printf("unaryOp\n");}
                 ;
 
-factor          : mutable | immutable
+factor          : mutable {printf("factor\n");} 
+                | immutable {printf("factor\n");}
                 ;
 
-mutable         : ID | ID LBRACK exp RBRACK
+mutable         : ID {printf("mutable\n");}
+                | ID LBRACK exp RBRACK {printf("mutable\n");}
                 ;
 
-immutable       : LPAREN exp RPAREN | call | constant
+immutable       : LPAREN exp RPAREN {printf("immuntabe\n");}
+                | call              {printf("immuntable\n");}
+                | constant          {printf("immutable\n");}
                 ;
 
-call            : ID LPAREN args RPAREN
+call            : ID LPAREN args RPAREN {printf("call\n");}
                 ;
 
-args            : argList | %empty          {printf("test\n");}
+args            : argList           {printf("args\n");}
+                | %empty          {printf("args\n");}
                 ;
 
-argList         : argList COMMA exp | exp
+argList         : argList COMMA exp {printf("argList\n");}
+                | exp
                 ;
 
-constant        : NUMCONST | CHARCONST | STRINGCONST | BOOLCONST
+constant        : NUMCONST {printf("constant\n");}
+                | CHARCONST {printf("constant\n");}
+                | STRINGCONST {printf("constant\n");}
+                | BOOLCONST {printf("constant\n");}
 
 
 %%

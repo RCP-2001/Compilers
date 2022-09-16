@@ -3,9 +3,6 @@ Terminals unused in grammar
     THEN
 
 
-State 106 conflicts: 1 shift/reduce
-
-
 Grammar
 
     0 $accept: program $end
@@ -108,7 +105,7 @@ Grammar
    65         | MULASS
    66         | DIVASS
 
-   67 simpleExp: simpleExp OR simpleExp
+   67 simpleExp: simpleExp OR andExp
    68          | andExp
 
    69 andExp: andExp AND unaryRelExp
@@ -332,7 +329,7 @@ Nonterminals, with rules where they appear
         on right: 12 49 51 53 54 61 67
     andExp <tokenData> (87)
         on left: 69 70
-        on right: 68 69
+        on right: 67 68 69
     unaryRelExp <tokenData> (88)
         on left: 71 72
         on right: 69 70 71
@@ -860,7 +857,7 @@ State 45
 State 46
 
    12 varDeclInit: varDeclID COLON simpleExp •
-   67 simpleExp: simpleExp • OR simpleExp
+   67 simpleExp: simpleExp • OR andExp
 
     OR  shift, and go to state 72
 
@@ -1129,7 +1126,7 @@ State 69
 State 70
 
    61 exp: simpleExp •
-   67 simpleExp: simpleExp • OR simpleExp
+   67 simpleExp: simpleExp • OR andExp
 
     OR  shift, and go to state 72
 
@@ -1158,7 +1155,7 @@ State 71
 
 State 72
 
-   67 simpleExp: simpleExp OR • simpleExp
+   67 simpleExp: simpleExp OR • andExp
 
     ID           shift, and go to state 36
     NUMCONST     shift, and go to state 37
@@ -1171,8 +1168,7 @@ State 72
     QMARK        shift, and go to state 44
     LPAREN       shift, and go to state 45
 
-    simpleExp    go to state 106
-    andExp       go to state 47
+    andExp       go to state 106
     unaryRelExp  go to state 48
     relExp       go to state 49
     sumExp       go to state 50
@@ -1528,12 +1524,11 @@ State 105
 
 State 106
 
-   67 simpleExp: simpleExp • OR simpleExp
-   67          | simpleExp OR simpleExp •
+   67 simpleExp: simpleExp OR andExp •
+   69 andExp: andExp • AND unaryRelExp
 
-    OR  shift, and go to state 72
+    AND  shift, and go to state 73
 
-    OR        [reduce using rule 67 (simpleExp)]
     $default  reduce using rule 67 (simpleExp)
 
 
@@ -1986,7 +1981,7 @@ State 145
 
    49 openItrStmt: WHILE simpleExp • DO openStatement
    51 closedItrStmt: WHILE simpleExp • DO closedStatement
-   67 simpleExp: simpleExp • OR simpleExp
+   67 simpleExp: simpleExp • OR andExp
 
     DO  shift, and go to state 153
     OR  shift, and go to state 72
@@ -2209,7 +2204,7 @@ State 160
 
    53 itrRange: simpleExp • TO simpleExp
    54         | simpleExp • TO simpleExp BY simpleExp
-   67 simpleExp: simpleExp • OR simpleExp
+   67 simpleExp: simpleExp • OR andExp
 
     TO  shift, and go to state 164
     OR  shift, and go to state 72
@@ -2380,7 +2375,7 @@ State 168
 
    53 itrRange: simpleExp TO simpleExp •
    54         | simpleExp TO simpleExp • BY simpleExp
-   67 simpleExp: simpleExp • OR simpleExp
+   67 simpleExp: simpleExp • OR andExp
 
     BY  shift, and go to state 171
     OR  shift, and go to state 72
@@ -2435,7 +2430,7 @@ State 171
 State 172
 
    54 itrRange: simpleExp TO simpleExp BY simpleExp •
-   67 simpleExp: simpleExp • OR simpleExp
+   67 simpleExp: simpleExp • OR andExp
 
     OR  shift, and go to state 72
 

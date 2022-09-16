@@ -1,5 +1,4 @@
-XXXTENTACION
-integer
-int
-696969
-String = "\n\n\n " ;
+int main(){
+    bool cum;
+    cum = false;
+}
