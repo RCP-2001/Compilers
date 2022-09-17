@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <cstring>
 
-double vars[26]; // might not need? figure our what does
+double vars[26]; // this is just for caluclator lol
 
 extern int yylex();
 extern FILE *yyin;
@@ -13,6 +13,8 @@ extern int numErrors; //err count
 #define YYERROR_VERBOSE
 void yyerror(const char *msg){
     printf("ERROR(%d): %s\n", line, msg);
+    //printf("CurrentToken: %s \n", yytext);
+    //printToken(yychar, tokenString);
     numErrors++;
 }
 
@@ -24,7 +26,7 @@ void yyerror(const char *msg){
 }
 
 %token <tokenData> ID NUMCONST CHARCONST STRINGCONST BOOLCONST BOOL INT CHAR IF THEN ELSE WHILE FOR DO TO BY RETURN BREAK OR AND NOT STATIC SEMI COMMA COLON LBRACK RBRACK LCURL RCURL INC DEC ADDASS DECASS MULASS DIVASS LEQ GEQ LESS GREATER EQ NEQ ADD SUB MUL DIV MOD QMARK ASSIGN LPAREN RPAREN
-%type <tokenData> declist decl varDecl scopedVarDecl varDeclList varDeclInit varDeclID typeSpec funDecl params paramList stmt expStmt compoundStmt LocalDecls stmtList openSelectStatement closedSelectStatement openItrStmt closedItrStmt itrRange returnStmt breakStmt exp simpleExp andExp unaryRelExp relExp relop sumExp sumop mulExp mulop unaryExp unaryOp factor mutable immutable call args argList constant openStatement closedStatement simpleStatement
+%type <value> declist decl varDecl scopedVarDecl varDeclList varDeclInit varDeclID typeSpec funDecl params paramList stmt expStmt compoundStmt LocalDecls stmtList openSelectStatement closedSelectStatement openItrStmt closedItrStmt itrRange returnStmt breakStmt exp simpleExp andExp unaryRelExp relExp relop sumExp sumop mulExp mulop unaryExp unaryOp factor mutable immutable call args argList constant openStatement closedStatement simpleStatement
 // This is where my brain breaks
 //temp for shizzle 
 
@@ -43,7 +45,7 @@ decl    : varDecl  {printf("decl \n");}
 varDecl : typeSpec varDeclList SEMI         {printf("varDecl\n");}
         ;
 
-scopedVarDecl   : STATIC typeSpec varDecl SEMI       {printf("scopedVardecl \n");}
+scopedVarDecl   : STATIC typeSpec varDeclList SEMI       {printf("scopedVardecl \n");}
                 | typeSpec varDeclList SEMI         {printf("scopedVardecl \n");}
                 ;
 
@@ -101,10 +103,10 @@ closedStatement: closedSelectStatement      {printf("closedStatement\n");}
                 | simpleStatement           {printf("closedStatement\n");}
 
 
-openSelectStatement     : IF LPAREN exp RPAREN stmt         {printf("OpenSelectaStatemnet\n");}
-                        | IF LPAREN exp RPAREN closedStatement ELSE openStatement   {printf("openSelectaStatement\n");}
+openSelectStatement     : IF exp THEN stmt         {printf("OpenSelectaStatemnet\n");}
+                        | IF exp THEN closedStatement ELSE openStatement   {printf("openSelectaStatement\n");}
 
-closedSelectStatement : IF LPAREN exp RPAREN closedStatement ELSE closedStatement   {printf("closedSelctaStatement\n");}
+closedSelectStatement : IF exp THEN closedStatement ELSE closedStatement   {printf("closedSelctaStatement\n");}
                       ;
 
 simpleStatement : expStmt               {printf("Simpstmt\n");}
@@ -113,7 +115,8 @@ simpleStatement : expStmt               {printf("Simpstmt\n");}
                 | returnStmt            {printf("Simpstmt\n");}
                 ;
 
-expStmt         : exp COLON         {printf("expStmt\n");}
+expStmt         : exp SEMI
+                | SEMI         {printf("expStmt\n");}
                 ;
 
 compoundStmt    : LCURL LocalDecls stmtList RCURL       {printf("compound\n");}
@@ -128,11 +131,11 @@ stmtList        : stmtList stmt     {printf("stmtList\n");}
                 ;
 
 openItrStmt     : WHILE simpleExp DO openStatement      {printf("OpenItrStmt\n");} 
-                | FOR ID EQ itrRange DO openStatement   {printf("OpenItrStmt\n");} 
+                | FOR ID ASSIGN itrRange DO openStatement   {printf("OpenItrStmt\n");} 
                 ;
 
 closedItrStmt   : WHILE simpleExp DO closedStatement    {printf("ClosedItrStmt\n");} 
-                | FOR ID EQ itrRange DO closedStatement {printf("ClosedItrStmt\n");} 
+                | FOR ID ASSIGN itrRange DO closedStatement {printf("ClosedItrStmt\n");} 
                 ;
 
 itrRange        : simpleExp TO simpleExp                {printf("itrRange");} 
@@ -241,6 +244,8 @@ constant        : NUMCONST {printf("constant\n");}
 %%
 extern int yydebug;
 int main(int argc, char *argv[]){
+    //yydebug = 1;
+
     if(argc > 1){
         if ((yyin = fopen(argv[1], "r"))){
             //file open successful
