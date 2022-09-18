@@ -114,10 +114,11 @@ union YYSTYPE
 {
 #line 23 "parser.y"
 
+    ExpType type;
     TokenData *tokenData;
-    double value;
+    treeNode tree;
 
-#line 121 "parser.tab.h"
+#line 122 "parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
