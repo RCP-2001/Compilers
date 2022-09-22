@@ -1590,7 +1590,7 @@ yyreduce:
 
   case 47: /* LocalDecls: LocalDecls scopedVarDecl  */
 #line 130 "parser.y"
-                                                    {(yyvsp[-1].tree)->addSibling((yyvsp[0].tree)); (yyval.tree) = (yyvsp[-1].tree);}
+                                                    {(yyvsp[0].tree)->addSibling((yyvsp[-1].tree)); (yyval.tree) = (yyvsp[-1].tree);}
 #line 1595 "parser.tab.c"
     break;
 

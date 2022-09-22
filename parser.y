@@ -127,7 +127,7 @@ expStmt         : exp SEMI          {$$=$1;}
 compoundStmt    : LCURL LocalDecls stmtList RCURL   {treeNode *node = newStmtNode(CompoundK, $1, $2, $3, NULL ); $$= node;}  
                 ;
 
-LocalDecls      : LocalDecls scopedVarDecl          {$1->addSibling($2); $$ = $1;}  
+LocalDecls      : LocalDecls scopedVarDecl          {$2->addSibling($1); $$ = $1;}  
                 | %empty                             {$$= NULL;}  
                 ;
 
