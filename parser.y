@@ -44,7 +44,7 @@ declist : declist decl  {$1-> addSibling($2); $$ = $1;}
         ;
 
 decl    : varDecl  {$$=$1;}
-        | funDecl  
+        | funDecl  {$$=$1;}
         ;
 
 varDecl : typeSpec varDeclList SEMI  {$2->EType($1); $$=$2;}
