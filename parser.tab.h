@@ -112,11 +112,11 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 23 "parser.y"
+#line 25 "parser.y"
 
     ExpType type;
     TokenData *tokenData;
-    treeNode tree;
+    treeNode *tree;
 
 #line 122 "parser.tab.h"
 

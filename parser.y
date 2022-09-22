@@ -5,6 +5,8 @@
 
 double vars[26]; // this is just for caluclator lol
 
+treeNode* GLOBAL_HEAD;
+
 extern int yylex();
 extern FILE *yyin;
 extern int line; //err line number from scanner
@@ -23,223 +25,230 @@ void yyerror(const char *msg){
 %union{
     ExpType type;
     TokenData *tokenData;
-    treeNode tree;
+    treeNode *tree;
 }
 
 %token <tokenData> ID NUMCONST CHARCONST STRINGCONST BOOLCONST BOOL INT CHAR IF THEN ELSE WHILE FOR DO TO BY RETURN BREAK OR AND NOT STATIC SEMI COMMA COLON LBRACK RBRACK LCURL RCURL INC DEC ADDASS DECASS MULASS DIVASS LEQ GEQ LESS GREATER EQ NEQ ADD SUB MUL DIV MOD QMARK ASSIGN LPAREN RPAREN
-%type <tree> declist decl varDecl scopedVarDecl varDeclList varDeclInit varDeclID typeSpec funDecl params paramList stmt expStmt compoundStmt LocalDecls stmtList openSelectStatement closedSelectStatement openItrStmt closedItrStmt itrRange returnStmt breakStmt exp simpleExp andExp unaryRelExp relExp relop sumExp sumop mulExp mulop unaryExp unaryOp factor mutable immutable call args argList constant openStatement closedStatement simpleStatement
+%type <tokenData> CHSIGN SIZEOF
+%type <tree> assignop paramID paramIDList paramTypeList declist decl varDecl scopedVarDecl varDeclList varDeclInit varDeclID funDecl params paramList stmt expStmt compoundStmt LocalDecls stmtList openSelectStatement closedSelectStatement openItrStmt closedItrStmt itrRange returnStmt breakStmt exp simpleExp andExp unaryRelExp relExp relop sumExp sumop mulExp mulop unaryExp unaryOp factor mutable immutable call args argList constant openStatement closedStatement simpleStatement
+%type <type> typeSpec
 // This is where my brain breaks
 //temp for shizzle 
 
 %%
-program : declist       {printf("accept Program\n");}
+program : declist       {printf("accept Program\n"); GLOBAL_HEAD = $1;}
         ;
 
-declist : declist decl  
-        | decl          
+declist : declist decl  {$1-> addSibling($2); $$ = $1;}
+        | decl          {$$=$1;}    
         ;
 
-decl    : varDecl  
+decl    : varDecl  {$$=$1;}
         | funDecl  
         ;
 
-varDecl : typeSpec varDeclList SEMI        
+varDecl : typeSpec varDeclList SEMI  {$2->EType($1); $$=$2;}
         ;
 
-scopedVarDecl   : STATIC typeSpec varDeclList SEMI       
-                | typeSpec varDeclList SEMI         
+scopedVarDecl   : STATIC typeSpec varDeclList SEMI  {$3->EType($2); $3->BStatic(true); $$=$3;}      
+                | typeSpec varDeclList SEMI         {$2->EType($1); $$=$2; /*This might be wrong actually*/}
                 ;
 
-varDeclList     : varDeclList COMMA varDeclInit     
-                | varDeclInit                       
+varDeclList     : varDeclList COMMA varDeclInit  {$1->addSibling($3); $$ = $1;  }   
+                | varDeclInit                    {$$=$1;}    
                 ;
 
-varDeclInit     : varDeclID                        
-                | varDeclID COLON simpleExp         
+varDeclInit     : varDeclID                    {$$ = $1;}                 
+                | varDeclID COLON simpleExp    {$1->addChildren($3); $$ = $1;}     
                 ;
 
-varDeclID       : ID                               
-                | ID LBRACK NUMCONST RBRACK         
+varDeclID       : ID                            {$$ = newDeclNode(VarK, UndefinedType, $1); }                        
+                | ID LBRACK NUMCONST RBRACK     {treeNode* node = newDeclNode(VarK, UndefinedType, $1); node->isArray = true; $$ = node;}    
                 ;
 
-typeSpec        : INT                               
-                | BOOL                              
-                | CHAR                           
+typeSpec        : INT   {$$ = Integer;}                            
+                | BOOL  {$$ = boolean;}                            
+                | CHAR  {$$ = Char;}                         
                 ;
 
-funDecl         : typeSpec ID LPAREN params RPAREN compoundStmt
-                | ID LPAREN params RPAREN compoundStmt                     
+funDecl         : typeSpec ID LPAREN params RPAREN compoundStmt   {treeNode* node = newDeclNode(FuncK, $1, $2); node-> addChildren($4); node-> addChildren($6); $$= node;}
+                | ID LPAREN params RPAREN compoundStmt            {treeNode* node = newDeclNode(FuncK, Void, $1); node-> addChildren($3); node-> addChildren($5); $$= node;}
                 ;
 
-params          : paramList 
-                | %empty    
+params          : paramList     {$$ = $1;}
+                | %empty        {$$= NULL;}
                 ;
 
-paramList       : paramList SEMI paramTypeList     
-                | paramTypeList                    
+paramList       : paramList SEMI paramTypeList     {$1->addSibling($3); $$=$1;}
+                | paramTypeList                    {$$=$1;}
                 ;
 
-paramTypeList   : typeSpec paramIDList             
+paramTypeList   : typeSpec paramIDList          {$2->EType($1); $$=$2; /*This might be wrong actually*/}  
                 ;
 
-paramIDList     : paramIDList COMMA paramID         
-                | paramID                          
+paramIDList     : paramIDList COMMA paramID     {$1->addSibling($3); $$ = $1;  }    
+                | paramID                       {$$=$1;}   
                 ;
 
 
-paramID         : ID                              
-                | ID LBRACK RBRACK             
+paramID         : ID                           {$$ = newDeclNode(VarK, UndefinedType, $1); }                          
+                | ID LBRACK RBRACK             {treeNode* node = newDeclNode(VarK, UndefinedType, $1); node->isArray = true; $$ = node;} 
                 ;
 
-stmt            : openStatement     
-                | closedStatement   
+stmt            : openStatement             {$$=$1;}
+                | closedStatement           {$$=$1;}
                 ;
 
-openStatement   : openItrStmt              
-                | openSelectStatement       
+openStatement   : openItrStmt            {$$=$1;}  
+                | openSelectStatement    {$$=$1;}   
                 ;
 
-closedStatement: closedSelectStatement      
-                | closedItrStmt             
-                | simpleStatement           
+closedStatement: closedSelectStatement   {$$=$1;}   
+                | closedItrStmt          {$$=$1;}   
+                | simpleStatement        {$$=$1;}   
 
 
-openSelectStatement     : IF exp THEN stmt         
-                        | IF exp THEN closedStatement ELSE openStatement   
+openSelectStatement     : IF exp THEN stmt                                      {treeNode *node = newStmtNode(IfK, $1, $2, $4, NULL); $$=node;}
+                        | IF exp THEN closedStatement ELSE openStatement        {treeNode *node = newStmtNode(IfK, $1, $2, $4, $6); $$=node;}
 
-closedSelectStatement : IF exp THEN closedStatement ELSE closedStatement  
+closedSelectStatement : IF exp THEN closedStatement ELSE closedStatement        {treeNode *node = newStmtNode(IfK, $1, $2, $4, $6); $$=node;}
                       ;
 
-simpleStatement : expStmt              
-                | compoundStmt        
-                | breakStmt            
-                | returnStmt         
+simpleStatement : expStmt            {$$= $1;}
+                | compoundStmt       {$$= $1;}
+                | breakStmt          {$$= $1;}
+                | returnStmt         {$$= $1;}
                 ;
 
-expStmt         : exp SEMI
-                | SEMI       
+expStmt         : exp SEMI          {$$=$1;}
+                | SEMI              {$$=NULL; /*WTF this porbably will break something i am sad wtf*/}
                 ;
 
-compoundStmt    : LCURL LocalDecls stmtList RCURL     
+compoundStmt    : LCURL LocalDecls stmtList RCURL   {treeNode *node = newStmtNode(CompoundK, $1, $2, $3, NULL ); $$= node;}  
                 ;
 
-LocalDecls      : LocalDecls scopedVarDecl            
-                | %empty                                
+LocalDecls      : LocalDecls scopedVarDecl          {$1->addSibling($2); $$ = $1;}  
+                | %empty                             {$$= NULL;}  
                 ;
 
-stmtList        : stmtList stmt    
-                | %empty           
+stmtList        : stmtList stmt    {$1->addSibling($2); $$ = $1;}
+                | %empty           {$$= NULL;}  
                 ;
 
-openItrStmt     : WHILE simpleExp DO openStatement      
-                | FOR ID ASSIGN itrRange DO openStatement   
+openItrStmt     : WHILE simpleExp DO openStatement      {treeNode* node = newStmtNode(WhileK, $1, $2, $4, NULL ); $$=node;}  
+                | FOR ID ASSIGN itrRange DO openStatement   {treeNode* node = newStmtNode(ForK, $2, NULL, $4, $6); $$ = node;  /*Totally wrong lmafo*/}
                 ;
 
-closedItrStmt   : WHILE simpleExp DO closedStatement    
-                | FOR ID ASSIGN itrRange DO closedStatement 
+closedItrStmt   : WHILE simpleExp DO closedStatement     {treeNode* node = newStmtNode(WhileK, $1, $2, $4, NULL ); $$=node;}  
+                | FOR ID ASSIGN itrRange DO closedStatement {treeNode* node = newStmtNode(ForK, $2, NULL, $4, $6); $$ = node;   /*Totally wrong lmafo*/}
                 ;
 
-itrRange        : simpleExp TO simpleExp                
-                | simpleExp TO simpleExp BY simpleExp  
+itrRange        : simpleExp TO simpleExp                {treeNode* node = newStmtNode(RangeK, $2, $1, $3, NULL); $$=node;}
+                | simpleExp TO simpleExp BY simpleExp   {treeNode* node = newStmtNode(RangeK, $2, $1, $3, $5); $$=node;}
                 ;
 
-returnStmt      : RETURN SEMI           
-                | RETURN exp SEMI       
+returnStmt      : RETURN SEMI           {treeNode* node = newStmtNode(ReturnK, $1, NULL, NULL, NULL); $$=node;}
+                | RETURN exp SEMI       {treeNode* node = newStmtNode(ReturnK, $1, $2, NULL, NULL); $$=node;}
                 ;
 
-breakStmt       : BREAK SEMI           
+breakStmt       : BREAK SEMI           {treeNode* node = newStmtNode(ReturnK, $1, NULL, NULL, NULL); $$=node;}
                 ;
 
-exp             : mutable assignop exp     
-                | mutable INC               
-                | mutable DEC              
-                | simpleExp                
+exp             : mutable assignop exp    {$2->addChildren($1); $2->addChildren($3); $$=$2;}
+                | mutable INC             {treeNode* node = newExpNode(AssingK, $2, $1, NULL, NULL); $$=node; }
+                | mutable DEC             {treeNode* node = newExpNode(AssingK, $2, $1, NULL, NULL); $$=node; }
+                | simpleExp               {$$=$1; /*not sure this is right either tbh*/}
 
-assignop        : ASSIGN        
-                | ADDASS        
-                | DECASS        
-                | MULASS        
-                | DIVASS        
+assignop        : ASSIGN         {treeNode* node = newExpNode(AssingK, $1); $$=node; /*Check yourself before you wreck yourself*/}
+                | ADDASS         {treeNode* node = newExpNode(AssingK, $1); $$=node; /*Cuz bitches like you iz bad 4 my healt*/}
+                | DECASS         {treeNode* node = newExpNode(AssingK, $1); $$=node; /*Fairly certien this will give wrong tree structure*/}
+                | MULASS         {treeNode* node = newExpNode(AssingK, $1); $$=node; /*Fairly certien this will give wrong tree structure*/}
+                | DIVASS         {treeNode* node = newExpNode(AssingK, $1); $$=node; /*Fairly certien this will give wrong tree structure*/}
                 ;
 
-simpleExp       : simpleExp OR andExp   
-                | andExp                
+simpleExp       : simpleExp OR andExp   {treeNode* node = newExpNode(OpK, $2, $1, $3, NULL); $$=node; }
+                | andExp                {$$=$1;}
                 ;
 
-andExp          : andExp AND unaryRelExp    
-                | unaryRelExp              
+andExp          : andExp AND unaryRelExp    {treeNode* node = newExpNode(OpK, $2, $1, $3, NULL); $$=node; }
+                | unaryRelExp              {$$=$1;}
                 ;
 
-unaryRelExp     : NOT unaryRelExp 
-                | relExp 
+unaryRelExp     : NOT unaryRelExp       {treeNode* node = newExpNode(OpK, $1, $2, NULL, NULL); $$=node; }
+                | relExp                {$$=$1;}
                 ;
 
-relExp          : sumExp relop sumExp  
-                | sumExp               
+relExp          : sumExp relop sumExp  {$2->addChildren($1); $2->addChildren($3); $$=$2;}
+                | sumExp              {$$=$1;}   
                 ;
 
-relop           : LESS 
-                | LEQ 
-                | GREATER 
-                | GEQ 
-                | EQ
-                | NEQ
+relop           : LESS      {treeNode* node = newExpNode(OpK, $1); $$=node;}    
+                | LEQ       {treeNode* node = newExpNode(OpK, $1); $$=node;}    
+                | GREATER   {treeNode* node = newExpNode(OpK, $1); $$=node;}    
+                | GEQ       {treeNode* node = newExpNode(OpK, $1); $$=node;}    
+                | EQ        {treeNode* node = newExpNode(OpK, $1); $$=node;}    
+                | NEQ       {treeNode* node = newExpNode(OpK, $1); $$=node;}    
                 ;
 
-sumExp          : sumExp sumop mulExp 
-                | mulExp 
+sumExp          : sumExp sumop mulExp {$2->addChildren($1); $2->addChildren($3); $$=$2;}
+                | mulExp              {$$=$1;}
                 ;
 
-sumop           : ADD 
-                | SUB 
+sumop           : ADD {treeNode* node = newExpNode(OpK, $1, NULL, NULL, NULL); $$=node; }
+                | SUB {treeNode* node = newExpNode(OpK, $1, NULL, NULL, NULL); $$=node; }
                 ;
 
-mulExp          : mulExp mulop unaryExp 
-                | unaryExp     
+mulExp          : mulExp mulop unaryExp {$2->addChildren($1); $2->addChildren($3); $$=$2;}
+                | unaryExp     {$$=$1;}
                 ;
 
-mulop           : MUL 
-                | DIV 
-                | MOD
+mulop           : MUL {treeNode* node = newExpNode(OpK, $1, NULL, NULL, NULL); $$=node; }
+                | DIV {treeNode* node = newExpNode(OpK, $1, NULL, NULL, NULL); $$=node; }
+                | MOD {treeNode* node = newExpNode(OpK, $1, NULL, NULL, NULL); $$=node; }
                 ;
 
-unaryExp        : unaryOp unaryExp 
-                | factor            
+unaryExp        : unaryOp unaryExp {$1->addChildren($2); $$=$2;}
+                | factor            {$$=$1;}
                 ;
 
-unaryOp         : SUB 
-                | MUL 
-                | QMARK 
+unaryOp         : CHSIGN        {treeNode* node = newExpNode(OpK, $1, NULL, NULL, NULL); $$=node; }
+                | SIZEOF        {treeNode* node = newExpNode(OpK, $1, NULL, NULL, NULL); $$=node; }
+                | QMARK         {treeNode* node = newExpNode(OpK, $1, NULL, NULL, NULL); $$=node; }
                 ;
 
-factor          : mutable 
-                | immutable 
+CHSIGN      : SUB       {$$=$1;  /*This might be really really wrong lol*/}
+            ;
+SIZEOF      : MUL       {$$=$1;  /*This might be really really wrong lol*/}
+            ;
+
+factor          : mutable           {$$=$1;}
+                | immutable         {$$=$1;}
                 ;
 
-mutable         : ID 
-                | ID LBRACK exp RBRACK 
+mutable         : ID                         {treeNode* node = newExpNode(IdK, $1, NULL, NULL, NULL); $$=node; }
+                | ID LBRACK exp RBRACK      {treeNode* node = newExpNode(IdK, $1, NULL, NULL, NULL); $$=node; /*Something is up with this one LOL*/ }
                 ;
 
-immutable       : LPAREN exp RPAREN 
-                | call              
-                | constant          
+immutable       : LPAREN exp RPAREN         {/*figure our in sec*/}
+                | call                  {$$=$1;}
+                | constant              {$$=$1;}
                 ;
 
-call            : ID LPAREN args RPAREN 
+call            : ID LPAREN args RPAREN  {treeNode* node = newExpNode(CallK, $1, $3, NULL, NULL); $$=node;}
                 ;
 
-args            : argList           
-                | %empty          
+args            : argList   {$$=$1;}        
+                | %empty   {$$=NULL;}       
                 ;
 
-argList         : argList COMMA exp 
-                | exp
+argList         : argList COMMA exp {$1->addSibling($3); $$=$1;}
+                | exp           {$$=$1;}
                 ;
 
-constant        : NUMCONST 
-                | CHARCONST 
-                | STRINGCONST 
-                | BOOLCONST 
+constant        : NUMCONST       {treeNode* node = newExpNode(constantK, $1, NULL, NULL, NULL); $$=node; }
+                | CHARCONST      {treeNode* node = newExpNode(constantK, $1, NULL, NULL, NULL); $$=node; }
+                | STRINGCONST    {treeNode* node = newExpNode(constantK, $1, NULL, NULL, NULL); $$=node; }
+                | BOOLCONST      {treeNode* node = newExpNode(constantK, $1, NULL, NULL, NULL); $$=node; }
 
 
 %%
