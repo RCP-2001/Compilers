@@ -1,7 +1,7 @@
 #include "scanType.h"
 
 treeNode *newDeclNode(DeclKind kind, ExpType type, TokenData* token, treeNode* c0, treeNode* c1, treeNode* c2){
-    fprintf(stderr, "DECL NODE START\n"); 
+    //fprintf(stderr, "DECL NODE START\n"); 
     treeNode *node = new treeNode;
     node->child[0] = c0;
     node->child[1] = c1;
@@ -15,12 +15,12 @@ treeNode *newDeclNode(DeclKind kind, ExpType type, TokenData* token, treeNode* c
 
     node->expType = type;
 
-    fprintf(stderr, "DEC NODE  Return\n"); 
+    //fprintf(stderr, "DEC NODE  Return\n"); 
     return node;
 }
 
 treeNode *newStmtNode(StmtKind kind, TokenData* token, treeNode* c0, treeNode* c1, treeNode* c2){
-    fprintf(stderr, "STMT NODE START\n");
+   // fprintf(stderr, "STMT NODE START\n");
     treeNode *node = new treeNode;
     node->child[0] = c0;
     node->child[1] = c1;
@@ -32,7 +32,7 @@ treeNode *newStmtNode(StmtKind kind, TokenData* token, treeNode* c0, treeNode* c
     node->nodeKind = StmtK;
     node->subkind.stmt = kind;
     node->attr = token;
-    fprintf(stderr, "STMT NODE START\n");
+    //fprintf(stderr, "STMT NODE START\n");
     return node;
 }
 
@@ -53,14 +53,14 @@ treeNode *newExpNode(ExpKind kind, TokenData* token, treeNode* c0, treeNode* c1,
 }
 
 void treeNode::addSibling(treeNode* aNode){
-     fprintf(stderr, "SIBLING NODE START\n");
+    // fprintf(stderr, "SIBLING NODE START\n");
     if(sibling == NULL){
-        fprintf(stderr, "SIBLING NODE IF\n");
+        //fprintf(stderr, "SIBLING NODE IF\n");
         sibling = aNode;
         return;
     }
     else{
-        fprintf(stderr, "SIBLING NODE ELSE\n");
+     //   fprintf(stderr, "SIBLING NODE ELSE\n");
         sibling->addSibling(aNode);
     }
 }
