@@ -1,5 +1,5 @@
 int GLOBAL;
 
-main(int argv, x; bool test){
+int main(int argv, x; bool test){
     int i;
 }

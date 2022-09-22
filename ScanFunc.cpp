@@ -1,26 +1,28 @@
 #include "scanType.h"
 
-treeNode *newDeclNode(DeclKind kind, ExpType type, TokenData* token, treeNode* c0, treeNode* c1, treeNode* c2){
-    //fprintf(stderr, "DECL NODE START\n"); 
+treeNode *newDeclNode(DeclKind kind, ExpType type, TokenData *token, treeNode *c0, treeNode *c1, treeNode *c2)
+{
+    // fprintf(stderr, "DECL NODE START\n");
     treeNode *node = new treeNode;
     node->child[0] = c0;
     node->child[1] = c1;
     node->child[2] = c2;
 
     node->sibling = NULL;
-    //node.line_num = ???;
+    // node.line_num = ???;
     node->nodeKind = DeclK;
     node->subkind.decl = kind;
     node->attr = token;
 
     node->expType = type;
 
-    //fprintf(stderr, "DEC NODE  Return\n"); 
+    // fprintf(stderr, "DEC NODE  Return\n");
     return node;
 }
 
-treeNode *newStmtNode(StmtKind kind, TokenData* token, treeNode* c0, treeNode* c1, treeNode* c2){
-   // fprintf(stderr, "STMT NODE START\n");
+treeNode *newStmtNode(StmtKind kind, TokenData *token, treeNode *c0, treeNode *c1, treeNode *c2)
+{
+    // fprintf(stderr, "STMT NODE START\n");
     treeNode *node = new treeNode;
     node->child[0] = c0;
     node->child[1] = c1;
@@ -28,57 +30,113 @@ treeNode *newStmtNode(StmtKind kind, TokenData* token, treeNode* c0, treeNode* c
     printf("");
 
     node->sibling = NULL;
-    //node.line_num = ???;
+    // node.line_num = ???;
     node->nodeKind = StmtK;
     node->subkind.stmt = kind;
     node->attr = token;
-    //fprintf(stderr, "STMT NODE START\n");
+    // fprintf(stderr, "STMT NODE START\n");
     return node;
 }
 
-treeNode *newExpNode(ExpKind kind, TokenData* token, treeNode* c0, treeNode* c1, treeNode* c2){
+treeNode *newExpNode(ExpKind kind, TokenData *token, treeNode *c0, treeNode *c1, treeNode *c2)
+{
     treeNode *node = new treeNode;
     node->child[0] = c0;
     node->child[1] = c1;
     node->child[2] = c2;
 
     node->sibling = NULL;
-    //node.line_num = ???;
+    // node.line_num = ???;
     node->nodeKind = ExpK;
     node->subkind.exp = kind;
     node->attr = token;
 
     return node;
-
 }
 
-void treeNode::addSibling(treeNode* aNode){
+void treeNode::addSibling(treeNode *aNode)
+{
     // fprintf(stderr, "SIBLING NODE START\n");
-    if(sibling == NULL){
-        //fprintf(stderr, "SIBLING NODE IF\n");
+    if (sibling == NULL)
+    {
+        // fprintf(stderr, "SIBLING NODE IF\n");
         sibling = aNode;
         return;
     }
-    else{
-     //   fprintf(stderr, "SIBLING NODE ELSE\n");
+    else
+    {
+        //   fprintf(stderr, "SIBLING NODE ELSE\n");
         sibling->addSibling(aNode);
     }
 }
 
-void treeNode::EType(ExpType etype){
+void treeNode::EType(ExpType etype)
+{
     expType = etype;
 }
 
-void treeNode::BStatic(bool type){
+void treeNode::BStatic(bool type)
+{
     isStatic = type;
 }
 
-void treeNode::addChildren(treeNode *aNode){
-    for(int i = 0; i < MAX_CHILDREN; i++){
-        if(child[i] == NULL){
+void treeNode::addChildren(treeNode *aNode)
+{
+    for (int i = 0; i < MAX_CHILDREN; i++)
+    {
+        if (child[i] == NULL)
+        {
             child[i] = aNode;
             return;
         }
     }
-    fprintf(stderr, "Could not add child. IDK something off now\n"); 
+    fprintf(stderr, "Could not add child. IDK something off now\n");
+}
+
+void treeNode::printTree(int levels, int siblingNum)
+{
+    // printf("\n");
+
+    // this will almost 100% be the print sturcture, just want to make sure i got the tree mostly right
+    switch (nodeKind)
+    {
+    case DeclK:
+        printf("DeclNode, kind: %d , ETYPE= %d, [line: %d]", subkind.decl, expType, attr->linenum);
+        break;
+    case StmtK:
+        printf("StmtNode, Kind: %d,  [line: %d]", subkind.stmt, attr->linenum);
+        break;
+    case ExpK:
+        printf("ExpNode, Kind: %d,  [line: %d]", subkind.exp, attr->linenum);
+        break;;
+    default:
+        fprintf(stderr, "WTF!! nodeKind = %d\n ", nodeKind);
+        break;
+    }
+
+    for (int i = 0; i < MAX_CHILDREN; i++)
+    {
+        if (child[i] != NULL)
+        {
+            printf("\n");
+            for (int i = 0; i < levels; i++)
+            {
+                printf(".");
+            }
+
+            printf("CHILD %d :: ", i);
+            child[i]->printTree(levels + 1, 1);
+        }
+    }
+
+    if (sibling != NULL)
+    {
+        printf("\n");
+        for (int i = 1; i < levels; i++)
+        {
+            printf(".");
+        }
+        printf("SIBLINGS %d :::", siblingNum);
+        sibling->printTree(levels, siblingNum+1);
+    }
 }

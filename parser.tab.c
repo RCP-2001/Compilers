@@ -1476,13 +1476,13 @@ yyreduce:
 
   case 28: /* paramID: ID  */
 #line 94 "parser.y"
-                                               {(yyval.tree) = newDeclNode(VarK, UndefinedType, (yyvsp[0].tokenData)); }
+                                               {(yyval.tree) = newDeclNode(ParamK, UndefinedType, (yyvsp[0].tokenData)); }
 #line 1481 "parser.tab.c"
     break;
 
   case 29: /* paramID: ID LBRACK RBRACK  */
 #line 95 "parser.y"
-                                               {treeNode* node = newDeclNode(VarK, UndefinedType, (yyvsp[-2].tokenData)); node->isArray = true; (yyval.tree) = node;}
+                                               {treeNode* node = newDeclNode(ParamK, UndefinedType, (yyvsp[-2].tokenData)); node->isArray = true; (yyval.tree) = node;}
 #line 1487 "parser.tab.c"
     break;
 
@@ -1590,7 +1590,7 @@ yyreduce:
 
   case 47: /* LocalDecls: LocalDecls scopedVarDecl  */
 #line 130 "parser.y"
-                                                    {(yyvsp[0].tree)->addSibling((yyvsp[-1].tree)); (yyval.tree) = (yyvsp[-1].tree);}
+                                                    {if((yyvsp[-1].tree) == NULL){(yyval.tree)=(yyvsp[0].tree);} else{(yyvsp[-1].tree)->addSibling((yyvsp[0].tree)); (yyval.tree) = (yyvsp[-1].tree);}}
 #line 1595 "parser.tab.c"
     break;
 
@@ -1602,7 +1602,7 @@ yyreduce:
 
   case 49: /* stmtList: stmtList stmt  */
 #line 134 "parser.y"
-                                   {(yyvsp[0].tree)->addSibling((yyvsp[-1].tree)); (yyval.tree) = (yyvsp[-1].tree);}
+                                   {if((yyvsp[-1].tree) == NULL){(yyval.tree)=(yyvsp[0].tree);} else{(yyvsp[-1].tree)->addSibling((yyvsp[0].tree)); (yyval.tree) = (yyvsp[-1].tree);}}
 #line 1607 "parser.tab.c"
     break;
 
@@ -2195,7 +2195,7 @@ yyreturnlab:
 extern int yydebug;
 int main(int argc, char *argv[]){
     //yydebug = 1;
-
+    GLOBAL_HEAD = NULL;
     if(argc > 1){
         if ((yyin = fopen(argv[1], "r"))){
             //file open successful
@@ -2211,6 +2211,8 @@ int main(int argc, char *argv[]){
     }
         numErrors = 0;
         yyparse();
+
+       GLOBAL_HEAD->printTree(1,1);
 
         //printf("Number of errors: %d\n", numErrors);
     

@@ -91,8 +91,8 @@ paramIDList     : paramIDList COMMA paramID     {$1->addSibling($3); $$ = $1;  }
                 ;
 
 
-paramID         : ID                           {$$ = newDeclNode(VarK, UndefinedType, $1); }                          
-                | ID LBRACK RBRACK             {treeNode* node = newDeclNode(VarK, UndefinedType, $1); node->isArray = true; $$ = node;} 
+paramID         : ID                           {$$ = newDeclNode(ParamK, UndefinedType, $1); }                          
+                | ID LBRACK RBRACK             {treeNode* node = newDeclNode(ParamK, UndefinedType, $1); node->isArray = true; $$ = node;} 
                 ;
 
 stmt            : openStatement             {$$=$1;}
@@ -127,11 +127,11 @@ expStmt         : exp SEMI          {$$=$1;}
 compoundStmt    : LCURL LocalDecls stmtList RCURL   {treeNode *node = newStmtNode(CompoundK, $1, $2, $3, NULL ); $$= node;}  
                 ;
 
-LocalDecls      : LocalDecls scopedVarDecl          {$2->addSibling($1); $$ = $1;}  
+LocalDecls      : LocalDecls scopedVarDecl          {if($1 == NULL){$$=$2;} else{$1->addSibling($2); $$ = $1;}}
                 | %empty                             {$$= NULL;}  
                 ;
 
-stmtList        : stmtList stmt    {$2->addSibling($1); $$ = $1;}
+stmtList        : stmtList stmt    {if($1 == NULL){$$=$2;} else{$1->addSibling($2); $$ = $1;}}
                 | %empty           {$$= NULL;}  
                 ;
 
@@ -255,7 +255,7 @@ constant        : NUMCONST       {treeNode* node = newExpNode(constantK, $1, NUL
 extern int yydebug;
 int main(int argc, char *argv[]){
     //yydebug = 1;
-
+    GLOBAL_HEAD = NULL;
     if(argc > 1){
         if ((yyin = fopen(argv[1], "r"))){
             //file open successful
@@ -271,6 +271,8 @@ int main(int argc, char *argv[]){
     }
         numErrors = 0;
         yyparse();
+
+       GLOBAL_HEAD->printTree(1,1);
 
         //printf("Number of errors: %d\n", numErrors);
     

@@ -28,6 +28,7 @@ class treeNode{
     void addSibling(treeNode*);
     void addChildren(treeNode*);
 
+    void printTree(int levels, int);
 
     //node type
     int line_num;
