@@ -131,7 +131,7 @@ LocalDecls      : LocalDecls scopedVarDecl          {$2->addSibling($1); $$ = $1
                 | %empty                             {$$= NULL;}  
                 ;
 
-stmtList        : stmtList stmt    {$1->addSibling($2); $$ = $1;}
+stmtList        : stmtList stmt    {$2->addSibling($1); $$ = $1;}
                 | %empty           {$$= NULL;}  
                 ;
 
