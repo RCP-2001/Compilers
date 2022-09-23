@@ -36,7 +36,7 @@ void yyerror(const char *msg){
 //temp for shizzle 
 
 %%
-program : declist       {printf("accept Program\n"); GLOBAL_HEAD = $1;}
+program : declist       {/*printf("accept Program\n");*/ GLOBAL_HEAD = $1;}
         ;
 
 declist : declist decl  {$1-> addSibling($2); $$ = $1;}
@@ -59,7 +59,7 @@ varDeclList     : varDeclList COMMA varDeclInit  {$1->addSibling($3); $$ = $1;  
                 ;
 
 varDeclInit     : varDeclID                    {$$ = $1;}                 
-                | varDeclID COLON simpleExp    {$1->addChildren($3); $$ = $1;}     
+                | varDeclID COLON simpleExp    {$1->addChildren($3, 0); $$ = $1;}     
                 ;
 
 varDeclID       : ID                            {$$ = newDeclNode(VarK, UndefinedType, $1); }                        
@@ -71,8 +71,8 @@ typeSpec        : INT   {$$ = Integer;}
                 | CHAR  {$$ = Char;}                         
                 ;
 
-funDecl         : typeSpec ID LPAREN params RPAREN compoundStmt   {treeNode* node = newDeclNode(FuncK, $1, $2); node-> addChildren($4); node-> addChildren($6); $$= node;}
-                | ID LPAREN params RPAREN compoundStmt            {treeNode* node = newDeclNode(FuncK, Void, $1); node-> addChildren($3); node-> addChildren($5); $$= node;}
+funDecl         : typeSpec ID LPAREN params RPAREN compoundStmt   {treeNode* node = newDeclNode(FuncK, $1, $2); node-> addChildren($4, 0); node-> addChildren($6,1); $$= node;}
+                | ID LPAREN params RPAREN compoundStmt            {treeNode* node = newDeclNode(FuncK, Void, $1); node-> addChildren($3, 0); node-> addChildren($5, 1); $$= node;}
                 ;
 
 params          : paramList     {$$ = $1;}
@@ -154,7 +154,7 @@ returnStmt      : RETURN SEMI           {treeNode* node = newStmtNode(ReturnK, $
 breakStmt       : BREAK SEMI           {treeNode* node = newStmtNode(ReturnK, $1, NULL, NULL, NULL); $$=node;}
                 ;
 
-exp             : mutable assignop exp    {$2->addChildren($1); $2->addChildren($3); $$=$2;}
+exp             : mutable assignop exp    {$2->addChildren($1,0); $2->addChildren($3,1); $$=$2;}
                 | mutable INC             {treeNode* node = newExpNode(AssingK, $2, $1, NULL, NULL); $$=node; }
                 | mutable DEC             {treeNode* node = newExpNode(AssingK, $2, $1, NULL, NULL); $$=node; }
                 | simpleExp               {$$=$1; /*not sure this is right either tbh*/}
@@ -178,7 +178,7 @@ unaryRelExp     : NOT unaryRelExp       {treeNode* node = newExpNode(OpK, $1, $2
                 | relExp                {$$=$1;}
                 ;
 
-relExp          : sumExp relop sumExp  {$2->addChildren($1); $2->addChildren($3); $$=$2;}
+relExp          : sumExp relop sumExp  {$2->addChildren($1,0); $2->addChildren($3,1); $$=$2;}
                 | sumExp              {$$=$1;}   
                 ;
 
@@ -190,7 +190,7 @@ relop           : LESS      {treeNode* node = newExpNode(OpK, $1); $$=node;}
                 | NEQ       {treeNode* node = newExpNode(OpK, $1); $$=node;}    
                 ;
 
-sumExp          : sumExp sumop mulExp {$2->addChildren($1); $2->addChildren($3); $$=$2;}
+sumExp          : sumExp sumop mulExp {$2->addChildren($1,0); $2->addChildren($3,1); $$=$2;}
                 | mulExp              {$$=$1;}
                 ;
 
@@ -198,7 +198,7 @@ sumop           : ADD {treeNode* node = newExpNode(OpK, $1, NULL, NULL, NULL); $
                 | SUB {treeNode* node = newExpNode(OpK, $1, NULL, NULL, NULL); $$=node; }
                 ;
 
-mulExp          : mulExp mulop unaryExp {$2->addChildren($1); $2->addChildren($3); $$=$2;}
+mulExp          : mulExp mulop unaryExp {$2->addChildren($1,0); $2->addChildren($3,1); $$=$2;}
                 | unaryExp     {$$=$1;}
                 ;
 
@@ -207,7 +207,7 @@ mulop           : MUL {treeNode* node = newExpNode(OpK, $1, NULL, NULL, NULL); $
                 | MOD {treeNode* node = newExpNode(OpK, $1, NULL, NULL, NULL); $$=node; }
                 ;
 
-unaryExp        : unaryOp unaryExp {$1->addChildren($2); $$=$2;}
+unaryExp        : unaryOp unaryExp {$1->addChildren($2,0); $$=$2;}
                 | factor            {$$=$1;}
                 ;
 
@@ -273,6 +273,7 @@ int main(int argc, char *argv[]){
         yyparse();
 
        GLOBAL_HEAD->printTree(1,1);
+       printf("\n");
 
         //printf("Number of errors: %d\n", numErrors);
     

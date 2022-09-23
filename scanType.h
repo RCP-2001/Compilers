@@ -26,7 +26,7 @@ class treeNode{
     struct treeNode *child[MAX_CHILDREN];
     struct treeNode *sibling;
     void addSibling(treeNode*);
-    void addChildren(treeNode*);
+    void addChildren(treeNode*, int child);
 
     void printTree(int levels, int);
 
@@ -46,6 +46,37 @@ class treeNode{
 
     ExpType expType;
     void EType(ExpType);
+    const char* RetETYPE(){
+        char *c;
+        switch (expType)
+        {
+        case Void:
+            return "void";
+            break;
+        case Integer:
+            return "int";
+            break;
+        case boolean:
+            return "bool";
+            break;
+        case Char:
+            return "char";
+            break;
+        case CharInt:
+            return "CharInt";
+            break;
+        case Equal:
+            return "Equal";
+            break;
+        case UndefinedType:
+            return "UndefinedType";
+            break;
+        default:
+            return "ERRR TYPE";
+            break;
+        }
+    }
+
     bool isArray;
     bool isStatic;
     void BStatic(bool);

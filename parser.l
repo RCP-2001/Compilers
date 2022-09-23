@@ -13,6 +13,7 @@ static int setValue(int linenum, int tokenClass, char *svalue){
     yylval.tokenData = new TokenData; 
 
     //fill it up
+    yylval.tokenData->tokenclass = tokenClass;
     yylval.tokenData->linenum = linenum;
     yylval.tokenData->tokenstr = strdup(svalue);
 
