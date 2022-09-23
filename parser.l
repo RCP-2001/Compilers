@@ -3,6 +3,7 @@
 #include "scanType.h" // TokenData Type
 #include "parser.tab.h" // token definition from bison? might not need this (yet)
 
+
 int line = 1; 
 int numErrors;
 

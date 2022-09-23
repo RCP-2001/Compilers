@@ -2,6 +2,8 @@
 #include "scanType.h"
 #include <stdio.h>
 #include <cstring>
+#include <unistd.h>
+#include <getopt.h>
 
 double vars[26]; // this is just for caluclator lol
 
@@ -262,14 +264,34 @@ constant        : NUMCONST       {treeNode* node = newExpNode(constantK, $1, NUL
 %%
 extern int yydebug;
 int main(int argc, char *argv[]){
-    //yydebug = 1;
+    int Debug = 0;
+    int Print = 0;
+    int opt;
+    while((opt = getopt(argc, argv, "dp")) != -1){
+        switch (opt){
+         case 'd':
+            Debug = 1;
+            break;
+         case 'p':
+            Print = 1;
+            break;
+         default:
+            break;
+        }
+    }
+    //printf("Debug: %d, Print: %d\n", Debug, Print);
+    
+    if(Debug == 1){
+        yydebug = 1;
+    }
+
     GLOBAL_HEAD = NULL;
     if(argc > 1){
-        if ((yyin = fopen(argv[1], "r"))){
+        if ((yyin = fopen(argv[optind], "r"))){
             //file open successful
         }
         else{
-            printf("ERR: Failed to open %s \n", argv[1]);
+            printf("ERR: Failed to open %s \n", argv[optind]);
             exit(1);
         }
 
@@ -280,8 +302,10 @@ int main(int argc, char *argv[]){
         numErrors = 0;
         yyparse();
 
+    if(Print == 1){
        GLOBAL_HEAD->printTree(1,1);
        printf("\n");
+    }
 
         //printf("Number of errors: %d\n", numErrors);
     
