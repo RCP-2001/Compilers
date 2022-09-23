@@ -28,8 +28,8 @@ void yyerror(const char *msg){
     treeNode *tree;
 }
 
-%token <tokenData> ID NUMCONST CHARCONST STRINGCONST BOOLCONST BOOL INT CHAR IF THEN ELSE WHILE FOR DO TO BY RETURN BREAK OR AND NOT STATIC SEMI COMMA COLON LBRACK RBRACK LCURL RCURL INC DEC ADDASS DECASS MULASS DIVASS LEQ GEQ LESS GREATER EQ NEQ ADD SUB MUL DIV MOD QMARK ASSIGN LPAREN RPAREN
-%type <tokenData> CHSIGN SIZEOF
+%token <tokenData>SIZEOF CHSIGN ID NUMCONST CHARCONST STRINGCONST BOOLCONST BOOL INT CHAR IF THEN ELSE WHILE FOR DO TO BY RETURN BREAK OR AND NOT STATIC SEMI COMMA COLON LBRACK RBRACK LCURL RCURL INC DEC ADDASS DECASS MULASS DIVASS LEQ GEQ LESS GREATER EQ NEQ ADD SUB MUL DIV MOD QMARK ASSIGN LPAREN RPAREN
+%type <tokenData>  sizeof chsign
 %type <tree> assignop paramID paramIDList paramTypeList declist decl varDecl scopedVarDecl varDeclList varDeclInit varDeclID funDecl params paramList stmt expStmt compoundStmt LocalDecls stmtList openSelectStatement closedSelectStatement openItrStmt closedItrStmt itrRange returnStmt breakStmt exp simpleExp andExp unaryRelExp relExp relop sumExp sumop mulExp mulop unaryExp unaryOp factor mutable immutable call args argList constant openStatement closedStatement simpleStatement
 %type <type> typeSpec
 // This is where my brain breaks
@@ -136,11 +136,15 @@ stmtList        : stmtList stmt    {if($1 == NULL){$$=$2;} else{$1->addSibling($
                 ;
 
 openItrStmt     : WHILE simpleExp DO openStatement      {treeNode* node = newStmtNode(WhileK, $1, $2, $4, NULL ); $$=node;}  
-                | FOR ID ASSIGN itrRange DO openStatement   {treeNode* node = newStmtNode(ForK, $2, NULL, $4, $6); $$ = node;  /*Totally wrong lmafo*/}
+                | FOR ID ASSIGN itrRange DO openStatement   {
+                                                            treeNode* IDNode = newDeclNode(VarK, Integer, $2, NULL, NULL, NULL);
+                                                            treeNode* node = newStmtNode(ForK, $2, IDNode, $4, $6); $$ = node;  /*Totally wrong lmafo*/}
                 ;
 
 closedItrStmt   : WHILE simpleExp DO closedStatement     {treeNode* node = newStmtNode(WhileK, $1, $2, $4, NULL ); $$=node;}  
-                | FOR ID ASSIGN itrRange DO closedStatement {treeNode* node = newStmtNode(ForK, $2, NULL, $4, $6); $$ = node;   /*Totally wrong lmafo*/}
+                | FOR ID ASSIGN itrRange DO closedStatement {
+                                                            treeNode* IDNode = newDeclNode(VarK, Integer, $2, NULL, NULL, NULL);
+                                                            treeNode* node = newStmtNode(ForK, $2, IDNode, $4, $6); $$ = node;  /*Totally wrong lmafo*/}
                 ;
 
 itrRange        : simpleExp TO simpleExp                {treeNode* node = newStmtNode(RangeK, $2, $1, $3, NULL); $$=node;}
@@ -151,7 +155,7 @@ returnStmt      : RETURN SEMI           {treeNode* node = newStmtNode(ReturnK, $
                 | RETURN exp SEMI       {treeNode* node = newStmtNode(ReturnK, $1, $2, NULL, NULL); $$=node;}
                 ;
 
-breakStmt       : BREAK SEMI           {treeNode* node = newStmtNode(ReturnK, $1, NULL, NULL, NULL); $$=node;}
+breakStmt       : BREAK SEMI           {treeNode* node = newStmtNode(BreaK, $1, NULL, NULL, NULL); $$=node;}
                 ;
 
 exp             : mutable assignop exp    {$2->addChildren($1,0); $2->addChildren($3,1); $$=$2;}
@@ -207,18 +211,20 @@ mulop           : MUL {treeNode* node = newExpNode(OpK, $1, NULL, NULL, NULL); $
                 | MOD {treeNode* node = newExpNode(OpK, $1, NULL, NULL, NULL); $$=node; }
                 ;
 
-unaryExp        : unaryOp unaryExp {$1->addChildren($2,0); $$=$2;}
+unaryExp        : unaryOp unaryExp {$1->addChildren($2,0); $$=$1;}
                 | factor            {$$=$1;}
                 ;
 
-unaryOp         : CHSIGN        {treeNode* node = newExpNode(OpK, $1, NULL, NULL, NULL); $$=node; }
-                | SIZEOF        {treeNode* node = newExpNode(OpK, $1, NULL, NULL, NULL); $$=node; }
+unaryOp         : chsign        {treeNode* node = newExpNode(OpK, $1, NULL, NULL, NULL); $$=node; }
+                | sizeof        {treeNode* node = newExpNode(OpK, $1, NULL, NULL, NULL); $$=node; }
                 | QMARK         {treeNode* node = newExpNode(OpK, $1, NULL, NULL, NULL); $$=node; }
                 ;
 
-CHSIGN      : SUB       {$$=$1;  /*This might be really really wrong lol*/}
+chsign      : SUB       {   free ($1->tokenstr);
+                            $1->tokenstr=strdup("chsign"); $$=$1;  /*This might be really really wrong lol*/}
             ;
-SIZEOF      : MUL       {$$=$1;  /*This might be really really wrong lol*/}
+sizeof      : MUL       {   free ($1->tokenstr);
+                            $1->tokenstr=strdup("sizeof"); $$=$1;  /*This might be really really wrong lol*/}
             ;
 
 factor          : mutable           {$$=$1;}
@@ -226,10 +232,12 @@ factor          : mutable           {$$=$1;}
                 ;
 
 mutable         : ID                         {treeNode* node = newExpNode(IdK, $1, NULL, NULL, NULL); $$=node; }
-                | ID LBRACK exp RBRACK      {treeNode* node = newExpNode(IdK, $1, NULL, NULL, NULL); $$=node; /*Something is up with this one LOL*/ }
+                | ID LBRACK exp RBRACK      {
+                                                treeNode* IDNode = newExpNode(IdK, $1, NULL, NULL, NULL);
+                                                treeNode* node = newExpNode(OpK, $2, IDNode, $3, NULL); $$=node; /*Something is up with this one LOL*/ }
                 ;
 
-immutable       : LPAREN exp RPAREN         {/*figure our in sec*/}
+immutable       : LPAREN exp RPAREN     {$$=$2;}
                 | call                  {$$=$1;}
                 | constant              {$$=$1;}
                 ;

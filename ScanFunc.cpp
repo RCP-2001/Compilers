@@ -1,4 +1,5 @@
 #include "scanType.h"
+#include <string.h>
 
 treeNode *newDeclNode(DeclKind kind, ExpType type, TokenData *token, treeNode *c0, treeNode *c1, treeNode *c2)
 {
@@ -73,7 +74,8 @@ void treeNode::addSibling(treeNode *aNode)
 void treeNode::EType(ExpType etype)
 {
     expType = etype;
-    if(sibling != NULL){
+    if (sibling != NULL)
+    {
         sibling->EType(etype);
     }
 }
@@ -102,22 +104,53 @@ void treeNode::printTree(int levels, int siblingNum)
     {
     case DeclK:
         // printf("DeclNode, kind: %d , ETYPE= %d, [line: %d]", subkind.decl, expType, attr->linenum);
-        switch (subkind.decl)
+        char* Stat;
+        if(isStatic == true){
+            Stat = strdup(" static");
+        }
+        else{
+            Stat = strdup("\0");
+        }
 
+
+        switch (subkind.decl)
         {
         case VarK:
-            printf("Var: %s of type %s [line: %d]", attr->svalue, RetETYPE(), attr->linenum);
+            if (isArray == true)
+            {
+                printf("Var: %s of array of%s type %s [line: %d]", attr->svalue, Stat, RetETYPE(), attr->linenum);
+            }
+            else
+            {
+                printf("Var: %s of%s type %s [line: %d]", attr->svalue, Stat, RetETYPE(), attr->linenum);
+            }
             break;
         case FuncK:
-            printf("Func: %s returns type %s [line: %d]", attr->svalue, RetETYPE(), attr->linenum);;
+            if (isArray == true)
+            {
+                printf("Func: %s returns array type %s [line: %d]", attr->svalue, RetETYPE(), attr->linenum); // dont know if nesscisary
+            }
+            else
+            {
+                printf("Func: %s returns type %s [line: %d]", attr->svalue, RetETYPE(), attr->linenum);
+            }
             break;
         case ParamK:
-            printf("Parm: %s of type %s [line: %d]", attr->svalue, RetETYPE(), attr->linenum);
+            if (isArray == true)
+            {
+                printf("Parm: %s of%s array of type %s [line: %d]", attr->svalue, Stat, RetETYPE(), attr->linenum);
+            }
+            else
+            {
+                printf("Parm: %s of%s type %s [line: %d]", attr->svalue, Stat, RetETYPE(), attr->linenum);
+            }
             break;
         default:
             fprintf(stderr, "DECLK error- no valid subkind");
             break;
         }
+        free(Stat);
+        Stat = NULL;
         break;
 
     case StmtK:
@@ -155,7 +188,7 @@ void treeNode::printTree(int levels, int siblingNum)
         break;
 
     case ExpK:
-        //printf("ExpNode, Kind: %d,  [line: %d]-- Testing something: %s", subkind.exp, attr->linenum, attr->tokenstr);
+        // printf("ExpNode, Kind: %d,  [line: %d]-- Testing something: %s", subkind.exp, attr->linenum, attr->tokenstr);
         switch (subkind.exp)
         {
         case OpK:

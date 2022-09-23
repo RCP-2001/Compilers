@@ -1,3 +1,9 @@
+Terminals unused in grammar
+
+    SIZEOF
+    CHSIGN
+
+
 Grammar
 
     0 $accept: program $end
@@ -136,13 +142,13 @@ Grammar
    91 unaryExp: unaryOp unaryExp
    92         | factor
 
-   93 unaryOp: CHSIGN
-   94        | SIZEOF
+   93 unaryOp: chsign
+   94        | sizeof
    95        | QMARK
 
-   96 CHSIGN: SUB
+   96 chsign: SUB
 
-   97 SIZEOF: MUL
+   97 sizeof: MUL
 
    98 factor: mutable
    99       | immutable
@@ -172,216 +178,218 @@ Terminals, with rules where they appear
 
     $end (0) 0
     error (256)
-    ID <tokenData> (258) 13 14 18 19 27 28 51 53 100 101 105
-    NUMCONST <tokenData> (259) 14 110
-    CHARCONST <tokenData> (260) 111
-    STRINGCONST <tokenData> (261) 112
-    BOOLCONST <tokenData> (262) 113
-    BOOL <tokenData> (263) 16
-    INT <tokenData> (264) 15
-    CHAR <tokenData> (265) 17
-    IF <tokenData> (266) 36 37 38
-    THEN <tokenData> (267) 36 37 38
-    ELSE <tokenData> (268) 37 38
-    WHILE <tokenData> (269) 50 52
-    FOR <tokenData> (270) 51 53
-    DO <tokenData> (271) 50 51 52 53
-    TO <tokenData> (272) 54 55
-    BY <tokenData> (273) 55
-    RETURN <tokenData> (274) 56 57
-    BREAK <tokenData> (275) 58
-    OR <tokenData> (276) 68
-    AND <tokenData> (277) 70
-    NOT <tokenData> (278) 72
-    STATIC <tokenData> (279) 7
-    SEMI <tokenData> (280) 6 7 8 22 43 44 56 57 58
-    COMMA <tokenData> (281) 9 25 108
-    COLON <tokenData> (282) 12
-    LBRACK <tokenData> (283) 14 28 101
-    RBRACK <tokenData> (284) 14 28 101
-    LCURL <tokenData> (285) 45
-    RCURL <tokenData> (286) 45
-    INC <tokenData> (287) 60
-    DEC <tokenData> (288) 61
-    ADDASS <tokenData> (289) 64
-    DECASS <tokenData> (290) 65
-    MULASS <tokenData> (291) 66
-    DIVASS <tokenData> (292) 67
-    LEQ <tokenData> (293) 77
-    GEQ <tokenData> (294) 79
-    LESS <tokenData> (295) 76
-    GREATER <tokenData> (296) 78
-    EQ <tokenData> (297) 80
-    NEQ <tokenData> (298) 81
-    ADD <tokenData> (299) 84
-    SUB <tokenData> (300) 85 96
-    MUL <tokenData> (301) 88 97
-    DIV <tokenData> (302) 89
-    MOD <tokenData> (303) 90
-    QMARK <tokenData> (304) 95
-    ASSIGN <tokenData> (305) 51 53 63
-    LPAREN <tokenData> (306) 18 19 102 105
-    RPAREN <tokenData> (307) 18 19 102 105
+    SIZEOF <tokenData> (258)
+    CHSIGN <tokenData> (259)
+    ID <tokenData> (260) 13 14 18 19 27 28 51 53 100 101 105
+    NUMCONST <tokenData> (261) 14 110
+    CHARCONST <tokenData> (262) 111
+    STRINGCONST <tokenData> (263) 112
+    BOOLCONST <tokenData> (264) 113
+    BOOL <tokenData> (265) 16
+    INT <tokenData> (266) 15
+    CHAR <tokenData> (267) 17
+    IF <tokenData> (268) 36 37 38
+    THEN <tokenData> (269) 36 37 38
+    ELSE <tokenData> (270) 37 38
+    WHILE <tokenData> (271) 50 52
+    FOR <tokenData> (272) 51 53
+    DO <tokenData> (273) 50 51 52 53
+    TO <tokenData> (274) 54 55
+    BY <tokenData> (275) 55
+    RETURN <tokenData> (276) 56 57
+    BREAK <tokenData> (277) 58
+    OR <tokenData> (278) 68
+    AND <tokenData> (279) 70
+    NOT <tokenData> (280) 72
+    STATIC <tokenData> (281) 7
+    SEMI <tokenData> (282) 6 7 8 22 43 44 56 57 58
+    COMMA <tokenData> (283) 9 25 108
+    COLON <tokenData> (284) 12
+    LBRACK <tokenData> (285) 14 28 101
+    RBRACK <tokenData> (286) 14 28 101
+    LCURL <tokenData> (287) 45
+    RCURL <tokenData> (288) 45
+    INC <tokenData> (289) 60
+    DEC <tokenData> (290) 61
+    ADDASS <tokenData> (291) 64
+    DECASS <tokenData> (292) 65
+    MULASS <tokenData> (293) 66
+    DIVASS <tokenData> (294) 67
+    LEQ <tokenData> (295) 77
+    GEQ <tokenData> (296) 79
+    LESS <tokenData> (297) 76
+    GREATER <tokenData> (298) 78
+    EQ <tokenData> (299) 80
+    NEQ <tokenData> (300) 81
+    ADD <tokenData> (301) 84
+    SUB <tokenData> (302) 85 96
+    MUL <tokenData> (303) 88 97
+    DIV <tokenData> (304) 89
+    MOD <tokenData> (305) 90
+    QMARK <tokenData> (306) 95
+    ASSIGN <tokenData> (307) 51 53 63
+    LPAREN <tokenData> (308) 18 19 102 105
+    RPAREN <tokenData> (309) 18 19 102 105
 
 
 Nonterminals, with rules where they appear
 
-    $accept (53)
+    $accept (55)
         on left: 0
-    program (54)
+    program (56)
         on left: 1
         on right: 0
-    declist <tree> (55)
+    declist <tree> (57)
         on left: 2 3
         on right: 1 2
-    decl <tree> (56)
+    decl <tree> (58)
         on left: 4 5
         on right: 2 3
-    varDecl <tree> (57)
+    varDecl <tree> (59)
         on left: 6
         on right: 4
-    scopedVarDecl <tree> (58)
+    scopedVarDecl <tree> (60)
         on left: 7 8
         on right: 46
-    varDeclList <tree> (59)
+    varDeclList <tree> (61)
         on left: 9 10
         on right: 6 7 8 9
-    varDeclInit <tree> (60)
+    varDeclInit <tree> (62)
         on left: 11 12
         on right: 9 10
-    varDeclID <tree> (61)
+    varDeclID <tree> (63)
         on left: 13 14
         on right: 11 12
-    typeSpec <type> (62)
+    typeSpec <type> (64)
         on left: 15 16 17
         on right: 6 7 8 18 24
-    funDecl <tree> (63)
+    funDecl <tree> (65)
         on left: 18 19
         on right: 5
-    params <tree> (64)
+    params <tree> (66)
         on left: 20 21
         on right: 18 19
-    paramList <tree> (65)
+    paramList <tree> (67)
         on left: 22 23
         on right: 20 22
-    paramTypeList <tree> (66)
+    paramTypeList <tree> (68)
         on left: 24
         on right: 22 23
-    paramIDList <tree> (67)
+    paramIDList <tree> (69)
         on left: 25 26
         on right: 24 25
-    paramID <tree> (68)
+    paramID <tree> (70)
         on left: 27 28
         on right: 25 26
-    stmt <tree> (69)
+    stmt <tree> (71)
         on left: 29 30
         on right: 36 48
-    openStatement <tree> (70)
+    openStatement <tree> (72)
         on left: 31 32
         on right: 29 37 50 51
-    closedStatement <tree> (71)
+    closedStatement <tree> (73)
         on left: 33 34 35
         on right: 30 37 38 52 53
-    openSelectStatement <tree> (72)
+    openSelectStatement <tree> (74)
         on left: 36 37
         on right: 32
-    closedSelectStatement <tree> (73)
+    closedSelectStatement <tree> (75)
         on left: 38
         on right: 33
-    simpleStatement <tree> (74)
+    simpleStatement <tree> (76)
         on left: 39 40 41 42
         on right: 35
-    expStmt <tree> (75)
+    expStmt <tree> (77)
         on left: 43 44
         on right: 39
-    compoundStmt <tree> (76)
+    compoundStmt <tree> (78)
         on left: 45
         on right: 18 19 40
-    LocalDecls <tree> (77)
+    LocalDecls <tree> (79)
         on left: 46 47
         on right: 45 46
-    stmtList <tree> (78)
+    stmtList <tree> (80)
         on left: 48 49
         on right: 45 48
-    openItrStmt <tree> (79)
+    openItrStmt <tree> (81)
         on left: 50 51
         on right: 31
-    closedItrStmt <tree> (80)
+    closedItrStmt <tree> (82)
         on left: 52 53
         on right: 34
-    itrRange <tree> (81)
+    itrRange <tree> (83)
         on left: 54 55
         on right: 51 53
-    returnStmt <tree> (82)
+    returnStmt <tree> (84)
         on left: 56 57
         on right: 42
-    breakStmt <tree> (83)
+    breakStmt <tree> (85)
         on left: 58
         on right: 41
-    exp <tree> (84)
+    exp <tree> (86)
         on left: 59 60 61 62
         on right: 36 37 38 43 57 59 101 102 108 109
-    assignop <tree> (85)
+    assignop <tree> (87)
         on left: 63 64 65 66 67
         on right: 59
-    simpleExp <tree> (86)
+    simpleExp <tree> (88)
         on left: 68 69
         on right: 12 50 52 54 55 62 68
-    andExp <tree> (87)
+    andExp <tree> (89)
         on left: 70 71
         on right: 68 69 70
-    unaryRelExp <tree> (88)
+    unaryRelExp <tree> (90)
         on left: 72 73
         on right: 70 71 72
-    relExp <tree> (89)
+    relExp <tree> (91)
         on left: 74 75
         on right: 73
-    relop <tree> (90)
+    relop <tree> (92)
         on left: 76 77 78 79 80 81
         on right: 74
-    sumExp <tree> (91)
+    sumExp <tree> (93)
         on left: 82 83
         on right: 74 75 82
-    sumop <tree> (92)
+    sumop <tree> (94)
         on left: 84 85
         on right: 82
-    mulExp <tree> (93)
+    mulExp <tree> (95)
         on left: 86 87
         on right: 82 83 86
-    mulop <tree> (94)
+    mulop <tree> (96)
         on left: 88 89 90
         on right: 86
-    unaryExp <tree> (95)
+    unaryExp <tree> (97)
         on left: 91 92
         on right: 86 87 91
-    unaryOp <tree> (96)
+    unaryOp <tree> (98)
         on left: 93 94 95
         on right: 91
-    CHSIGN <tokenData> (97)
+    chsign <tokenData> (99)
         on left: 96
         on right: 93
-    SIZEOF <tokenData> (98)
+    sizeof <tokenData> (100)
         on left: 97
         on right: 94
-    factor <tree> (99)
+    factor <tree> (101)
         on left: 98 99
         on right: 92
-    mutable <tree> (100)
+    mutable <tree> (102)
         on left: 100 101
         on right: 59 60 61 98
-    immutable <tree> (101)
+    immutable <tree> (103)
         on left: 102 103 104
         on right: 99
-    call <tree> (102)
+    call <tree> (104)
         on left: 105
         on right: 103
-    args <tree> (103)
+    args <tree> (105)
         on left: 106 107
         on right: 105
-    argList <tree> (104)
+    argList <tree> (106)
         on left: 108 109
         on right: 106 108
-    constant <tree> (105)
+    constant <tree> (107)
         on left: 110 111 112 113
         on right: 104
 
@@ -654,8 +662,8 @@ State 26
     mulExp       go to state 51
     unaryExp     go to state 52
     unaryOp      go to state 53
-    CHSIGN       go to state 54
-    SIZEOF       go to state 55
+    chsign       go to state 54
+    sizeof       go to state 55
     factor       go to state 56
     mutable      go to state 57
     immutable    go to state 58
@@ -803,8 +811,8 @@ State 41
     mulExp       go to state 51
     unaryExp     go to state 52
     unaryOp      go to state 53
-    CHSIGN       go to state 54
-    SIZEOF       go to state 55
+    chsign       go to state 54
+    sizeof       go to state 55
     factor       go to state 56
     mutable      go to state 57
     immutable    go to state 58
@@ -814,16 +822,16 @@ State 41
 
 State 42
 
-   96 CHSIGN: SUB •
+   96 chsign: SUB •
 
-    $default  reduce using rule 96 (CHSIGN)
+    $default  reduce using rule 96 (chsign)
 
 
 State 43
 
-   97 SIZEOF: MUL •
+   97 sizeof: MUL •
 
-    $default  reduce using rule 97 (SIZEOF)
+    $default  reduce using rule 97 (sizeof)
 
 
 State 44
@@ -857,8 +865,8 @@ State 45
     mulExp       go to state 51
     unaryExp     go to state 52
     unaryOp      go to state 53
-    CHSIGN       go to state 54
-    SIZEOF       go to state 55
+    chsign       go to state 54
+    sizeof       go to state 55
     factor       go to state 56
     mutable      go to state 73
     immutable    go to state 58
@@ -958,8 +966,8 @@ State 53
 
     unaryExp   go to state 90
     unaryOp    go to state 53
-    CHSIGN     go to state 54
-    SIZEOF     go to state 55
+    chsign     go to state 54
+    sizeof     go to state 55
     factor     go to state 56
     mutable    go to state 57
     immutable  go to state 58
@@ -969,14 +977,14 @@ State 53
 
 State 54
 
-   93 unaryOp: CHSIGN •
+   93 unaryOp: chsign •
 
     $default  reduce using rule 93 (unaryOp)
 
 
 State 55
 
-   94 unaryOp: SIZEOF •
+   94 unaryOp: sizeof •
 
     $default  reduce using rule 94 (unaryOp)
 
@@ -1095,8 +1103,8 @@ State 68
     mulExp       go to state 51
     unaryExp     go to state 52
     unaryOp      go to state 53
-    CHSIGN       go to state 54
-    SIZEOF       go to state 55
+    chsign       go to state 54
+    sizeof       go to state 55
     factor       go to state 56
     mutable      go to state 73
     immutable    go to state 58
@@ -1130,8 +1138,8 @@ State 69
     mulExp       go to state 51
     unaryExp     go to state 52
     unaryOp      go to state 53
-    CHSIGN       go to state 54
-    SIZEOF       go to state 55
+    chsign       go to state 54
+    sizeof       go to state 55
     factor       go to state 56
     mutable      go to state 73
     immutable    go to state 58
@@ -1207,8 +1215,8 @@ State 74
     mulExp       go to state 51
     unaryExp     go to state 52
     unaryOp      go to state 53
-    CHSIGN       go to state 54
-    SIZEOF       go to state 55
+    chsign       go to state 54
+    sizeof       go to state 55
     factor       go to state 56
     mutable      go to state 57
     immutable    go to state 58
@@ -1237,8 +1245,8 @@ State 75
     mulExp       go to state 51
     unaryExp     go to state 52
     unaryOp      go to state 53
-    CHSIGN       go to state 54
-    SIZEOF       go to state 55
+    chsign       go to state 54
+    sizeof       go to state 55
     factor       go to state 56
     mutable      go to state 57
     immutable    go to state 58
@@ -1320,8 +1328,8 @@ State 84
     mulExp     go to state 51
     unaryExp   go to state 52
     unaryOp    go to state 53
-    CHSIGN     go to state 54
-    SIZEOF     go to state 55
+    chsign     go to state 54
+    sizeof     go to state 55
     factor     go to state 56
     mutable    go to state 57
     immutable  go to state 58
@@ -1346,8 +1354,8 @@ State 85
     mulExp     go to state 111
     unaryExp   go to state 52
     unaryOp    go to state 53
-    CHSIGN     go to state 54
-    SIZEOF     go to state 55
+    chsign     go to state 54
+    sizeof     go to state 55
     factor     go to state 56
     mutable    go to state 57
     immutable  go to state 58
@@ -1392,8 +1400,8 @@ State 89
 
     unaryExp   go to state 112
     unaryOp    go to state 53
-    CHSIGN     go to state 54
-    SIZEOF     go to state 55
+    chsign     go to state 54
+    sizeof     go to state 55
     factor     go to state 56
     mutable    go to state 57
     immutable  go to state 58
@@ -1557,8 +1565,8 @@ State 107
     mulExp       go to state 51
     unaryExp     go to state 52
     unaryOp      go to state 53
-    CHSIGN       go to state 54
-    SIZEOF       go to state 55
+    chsign       go to state 54
+    sizeof       go to state 55
     factor       go to state 56
     mutable      go to state 73
     immutable    go to state 58
@@ -1691,8 +1699,8 @@ State 116
     mulExp                 go to state 51
     unaryExp               go to state 52
     unaryOp                go to state 53
-    CHSIGN                 go to state 54
-    SIZEOF                 go to state 55
+    chsign                 go to state 54
+    sizeof                 go to state 55
     factor                 go to state 56
     mutable                go to state 73
     immutable              go to state 58
@@ -1738,8 +1746,8 @@ State 119
     mulExp       go to state 51
     unaryExp     go to state 52
     unaryOp      go to state 53
-    CHSIGN       go to state 54
-    SIZEOF       go to state 55
+    chsign       go to state 54
+    sizeof       go to state 55
     factor       go to state 56
     mutable      go to state 73
     immutable    go to state 58
@@ -1800,8 +1808,8 @@ State 123
     mulExp       go to state 51
     unaryExp     go to state 52
     unaryOp      go to state 53
-    CHSIGN       go to state 54
-    SIZEOF       go to state 55
+    chsign       go to state 54
+    sizeof       go to state 55
     factor       go to state 56
     mutable      go to state 73
     immutable    go to state 58
@@ -1833,8 +1841,8 @@ State 124
     mulExp       go to state 51
     unaryExp     go to state 52
     unaryOp      go to state 53
-    CHSIGN       go to state 54
-    SIZEOF       go to state 55
+    chsign       go to state 54
+    sizeof       go to state 55
     factor       go to state 56
     mutable      go to state 57
     immutable    go to state 58
@@ -1876,8 +1884,8 @@ State 126
     mulExp       go to state 51
     unaryExp     go to state 52
     unaryOp      go to state 53
-    CHSIGN       go to state 54
-    SIZEOF       go to state 55
+    chsign       go to state 54
+    sizeof       go to state 55
     factor       go to state 56
     mutable      go to state 73
     immutable    go to state 58
@@ -2127,8 +2135,8 @@ State 154
     mulExp                 go to state 51
     unaryExp               go to state 52
     unaryOp                go to state 53
-    CHSIGN                 go to state 54
-    SIZEOF                 go to state 55
+    chsign                 go to state 54
+    sizeof                 go to state 55
     factor                 go to state 56
     mutable                go to state 73
     immutable              go to state 58
@@ -2179,8 +2187,8 @@ State 155
     mulExp                 go to state 51
     unaryExp               go to state 52
     unaryOp                go to state 53
-    CHSIGN                 go to state 54
-    SIZEOF                 go to state 55
+    chsign                 go to state 54
+    sizeof                 go to state 55
     factor                 go to state 56
     mutable                go to state 73
     immutable              go to state 58
@@ -2213,8 +2221,8 @@ State 156
     mulExp       go to state 51
     unaryExp     go to state 52
     unaryOp      go to state 53
-    CHSIGN       go to state 54
-    SIZEOF       go to state 55
+    chsign       go to state 54
+    sizeof       go to state 55
     factor       go to state 56
     mutable      go to state 57
     immutable    go to state 58
@@ -2322,8 +2330,8 @@ State 164
     mulExp                 go to state 51
     unaryExp               go to state 52
     unaryOp                go to state 53
-    CHSIGN                 go to state 54
-    SIZEOF                 go to state 55
+    chsign                 go to state 54
+    sizeof                 go to state 55
     factor                 go to state 56
     mutable                go to state 73
     immutable              go to state 58
@@ -2374,8 +2382,8 @@ State 165
     mulExp                 go to state 51
     unaryExp               go to state 52
     unaryOp                go to state 53
-    CHSIGN                 go to state 54
-    SIZEOF                 go to state 55
+    chsign                 go to state 54
+    sizeof                 go to state 55
     factor                 go to state 56
     mutable                go to state 73
     immutable              go to state 58
@@ -2407,8 +2415,8 @@ State 166
     mulExp       go to state 51
     unaryExp     go to state 52
     unaryOp      go to state 53
-    CHSIGN       go to state 54
-    SIZEOF       go to state 55
+    chsign       go to state 54
+    sizeof       go to state 55
     factor       go to state 56
     mutable      go to state 57
     immutable    go to state 58
@@ -2479,8 +2487,8 @@ State 172
     mulExp       go to state 51
     unaryExp     go to state 52
     unaryOp      go to state 53
-    CHSIGN       go to state 54
-    SIZEOF       go to state 55
+    chsign       go to state 54
+    sizeof       go to state 55
     factor       go to state 56
     mutable      go to state 57
     immutable    go to state 58
