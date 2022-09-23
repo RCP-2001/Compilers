@@ -224,7 +224,7 @@ void treeNode::printTree(int levels, int siblingNum)
         if (child[i] != NULL)
         {
             printf("\n");
-            for (int i = 0; i < levels; i++)
+            for (int j = 0; j < levels; j++)
             {
                 printf(".   ");
             }
