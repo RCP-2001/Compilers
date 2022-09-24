@@ -65,7 +65,7 @@ varDeclInit     : varDeclID                    {$$ = $1;}
                 ;
 
 varDeclID       : ID                            {$$ = newDeclNode(VarK, UndefinedType, $1); }                        
-                | ID LBRACK NUMCONST RBRACK     {treeNode* node = newDeclNode(VarK, UndefinedType, $1); node->isArray = true; $$ = node;}    
+                | ID LBRACK NUMCONST RBRACK     {treeNode* node = newDeclNode(VarK, UndefinedType, $1); node->setArray(true); $$ = node;}    
                 ;
 
 typeSpec        : INT   {$$ = Integer;}                            
@@ -94,7 +94,7 @@ paramIDList     : paramIDList COMMA paramID     {$1->addSibling($3); $$ = $1;  }
 
 
 paramID         : ID                           {$$ = newDeclNode(ParamK, UndefinedType, $1); }                          
-                | ID LBRACK RBRACK             {treeNode* node = newDeclNode(ParamK, UndefinedType, $1); node->isArray = true; $$ = node;} 
+                | ID LBRACK RBRACK             {treeNode* node = newDeclNode(ParamK, UndefinedType, $1); node->setArray(true); $$ = node;} 
                 ;
 
 stmt            : openStatement             {$$=$1;}
@@ -303,10 +303,18 @@ int main(int argc, char *argv[]){
         yyparse();
 
     if(Print == 1){
-       GLOBAL_HEAD->printTree(1,1);
-       printf("\n");
+       if(GLOBAL_HEAD != NULL){
+        GLOBAL_HEAD->printTree(1,1);
+        printf("\n");
+       }
     }
 
+        // Deleting Tree because we are done with it
+        //note: Make sure the complier is 100% done done before doing this
+        if(GLOBAL_HEAD != NULL){
+            delete GLOBAL_HEAD;
+            GLOBAL_HEAD = NULL;
+        }
         //printf("Number of errors: %d\n", numErrors);
     
 }

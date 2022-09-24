@@ -8,10 +8,11 @@ PRSR_SRS = $(PARSER).y $(PARSER).l
 HDRS = scanType.h
 OBJS = lex.yy.o $(PARSER).tab.o
 FUNCS = ScanFunc.cpp
+HEADERS = scanType.h
 
 YYFLAGS = -v -t -d 
 
-$(BIN) : $(OBJS) $(FUNCS)
+$(BIN) : $(OBJS) $(FUNCS) $(HEADERS)
 	$(CC) $(CCFLAGS) $(OBJS) $(FUNCS) -o $(BIN)
 
 lex.yy.c : $(PARSER).l $(PARSER).tab.h $(HDR)

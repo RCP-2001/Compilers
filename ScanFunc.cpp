@@ -5,17 +5,17 @@ treeNode *newDeclNode(DeclKind kind, ExpType type, TokenData *token, treeNode *c
 {
     // fprintf(stderr, "DECL NODE START\n");
     treeNode *node = new treeNode;
-    node->child[0] = c0;
-    node->child[1] = c1;
-    node->child[2] = c2;
+    node->addChildren(c0, 0);
+    node->addChildren(c1, 1);
+    node->addChildren(c2, 2);
 
-    node->sibling = NULL;
+    //node->sibling = NULL;
     // node.line_num = ???;
-    node->nodeKind = DeclK;
-    node->subkind.decl = kind;
-    node->attr = token;
+    node->SetNodeKind(DeclK);
+    node->SubKind(kind);
+    node->addAttr(token);
 
-    node->expType = type;
+    node->EType(type);
 
     // fprintf(stderr, "DEC NODE  Return\n");
     return node;
@@ -25,16 +25,16 @@ treeNode *newStmtNode(StmtKind kind, TokenData *token, treeNode *c0, treeNode *c
 {
     // fprintf(stderr, "STMT NODE START\n");
     treeNode *node = new treeNode;
-    node->child[0] = c0;
-    node->child[1] = c1;
-    node->child[2] = c2;
+    node->addChildren(c0, 0);
+    node->addChildren(c1, 1);
+    node->addChildren(c2, 2);
     printf("");
 
-    node->sibling = NULL;
+    //node->sibling = NULL;
     // node.line_num = ???;
-    node->nodeKind = StmtK;
-    node->subkind.stmt = kind;
-    node->attr = token;
+    node->SetNodeKind(StmtK);
+    node->SubKind(kind);
+    node->addAttr(token);
     // fprintf(stderr, "STMT NODE START\n");
     return node;
 }
@@ -42,15 +42,15 @@ treeNode *newStmtNode(StmtKind kind, TokenData *token, treeNode *c0, treeNode *c
 treeNode *newExpNode(ExpKind kind, TokenData *token, treeNode *c0, treeNode *c1, treeNode *c2)
 {
     treeNode *node = new treeNode;
-    node->child[0] = c0;
-    node->child[1] = c1;
-    node->child[2] = c2;
+    node->addChildren(c0, 0);
+    node->addChildren(c1, 1);
+    node->addChildren(c2, 2);
 
-    node->sibling = NULL;
+    //node->sibling = NULL;
     // node.line_num = ???;
-    node->nodeKind = ExpK;
-    node->subkind.exp = kind;
-    node->attr = token;
+    node->SetNodeKind(ExpK);
+    node->SubKind(kind);
+    node->addAttr(token);
 
     return node;
 }
@@ -92,7 +92,11 @@ void treeNode::addChildren(treeNode *aNode, int c)
         fprintf(stderr, "too many children LOL\n");
     }
     // should make sure child[c] does already have something LMAO
+    if(child[c] != NULL){
+        fprintf(stderr ,"Err- probably a mem leak\n");
+    }
     child[c] = aNode;
+
 }
 
 void treeNode::printTree(int levels, int siblingNum)
@@ -104,14 +108,15 @@ void treeNode::printTree(int levels, int siblingNum)
     {
     case DeclK:
         // printf("DeclNode, kind: %d , ETYPE= %d, [line: %d]", subkind.decl, expType, attr->linenum);
-        char* Stat;
-        if(isStatic == true){
+        char *Stat;
+        if (isStatic == true)
+        {
             Stat = strdup(" static");
         }
-        else{
+        else
+        {
             Stat = strdup("\0");
         }
-
 
         switch (subkind.decl)
         {
