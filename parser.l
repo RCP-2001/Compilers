@@ -12,11 +12,14 @@ int numErrors;
 static int setValue(int linenum, int tokenClass, char *svalue){
     // create the pass-bacc data space
     yylval.tokenData = new TokenData; 
-
+    
     //fill it up
     yylval.tokenData->tokenclass = tokenClass;
     yylval.tokenData->linenum = linenum;
     yylval.tokenData->tokenstr = strdup(svalue);
+    yylval.tokenData->cvalue = '\0';
+    yylval.tokenData->nvalue = 0;
+    yylval.tokenData->svalue = NULL;
 
     //refactor as switch????
     if(tokenClass == NUMCONST){
