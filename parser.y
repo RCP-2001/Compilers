@@ -2,17 +2,14 @@
 #include "scanType.h"
 #include <stdio.h>
 #include <cstring>
-#include <unistd.h>
-#include <getopt.h>
 
-double vars[26]; // this is just for caluclator lol
-
-treeNode* GLOBAL_HEAD;
+extern treeNode* GLOBAL_HEAD;
 
 extern int yylex();
 extern FILE *yyin;
 extern int line; //err line number from scanner
 extern int numErrors; //err count
+
 
 #define YYERROR_VERBOSE
 void yyerror(const char *msg){
@@ -262,59 +259,3 @@ constant        : NUMCONST       {treeNode* node = newExpNode(constantK, $1, NUL
 
 
 %%
-extern int yydebug;
-int main(int argc, char *argv[]){
-    int Debug = 0;
-    int Print = 0;
-    int opt;
-    while((opt = getopt(argc, argv, "dp")) != -1){
-        switch (opt){
-         case 'd':
-            Debug = 1;
-            break;
-         case 'p':
-            Print = 1;
-            break;
-         default:
-            break;
-        }
-    }
-    //printf("Debug: %d, Print: %d\n", Debug, Print);
-    
-    if(Debug == 1){
-        yydebug = 1;
-    }
-
-    GLOBAL_HEAD = NULL;
-    if(argc > 1){
-        if ((yyin = fopen(argv[optind], "r"))){
-            //file open successful
-        }
-        else{
-            printf("ERR: Failed to open %s \n", argv[optind]);
-            exit(1);
-        }
-
-    }
-    for(int i=0; i<26; i++){
-        vars[i] = 0.0;
-    }
-        numErrors = 0;
-        yyparse();
-
-    if(Print == 1){
-       if(GLOBAL_HEAD != NULL){
-        GLOBAL_HEAD->printTree(1,1);
-        printf("\n");
-       }
-    }
-
-        // Deleting Tree because we are done with it
-        //note: Make sure the complier is 100% done done before doing this
-        if(GLOBAL_HEAD != NULL){
-            delete GLOBAL_HEAD;
-            GLOBAL_HEAD = NULL;
-        }
-        //printf("Number of errors: %d\n", numErrors);
-    
-}
