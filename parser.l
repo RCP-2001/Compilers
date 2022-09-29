@@ -6,7 +6,7 @@
 
 int line = 1; 
 int numErrors;
-
+int NumWarnings;
 
 
 static int setValue(int linenum, int tokenClass, char *svalue){

@@ -6,9 +6,9 @@ CCFLAGS =
 
 PRSR_SRS = $(PARSER).y $(PARSER).l
 HDRS = scanType.h
-OBJS = lex.yy.o $(PARSER).tab.o ScanFunc.o SymTbl/symbolTable.o main.o
+OBJS = lex.yy.o $(PARSER).tab.o ScanFunc.o SymTbl/symbolTable.o Semantic.o main.o
 FUNCS = ScanFunc.cpp SymTbl/symbolTable.cpp
-HEADERS = scanType.h SymTbl/symbolTable.h 
+HEADERS = scanType.h SymTbl/symbolTable.h Semantic.h
 
 YACC = bison
 LEX = flex

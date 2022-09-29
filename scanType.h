@@ -192,6 +192,10 @@ class treeNode
     void addSibling(treeNode *);
     void addChildren(treeNode *, int child);
     void printTree(int levels, int);
+
+    //function for acessing private elements
+    //Ideally should be read only
+    TokenData* token(){ return attr; }
     
 };
 
