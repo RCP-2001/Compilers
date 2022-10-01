@@ -1,7 +1,6 @@
 
-//#include "scanType.h"
+#include "scanType.h"
 #include "Semantic.h"
-
 #include "parser.tab.h"
 #include "SymTbl/symbolTable.h"
 #include <stdio.h>
@@ -61,7 +60,9 @@ int main(int argc, char *argv[])
 
     yyparse();
     SymbolTable *symTbl = new SymbolTable;
+    //symTbl->debug(true);
     semanticAnalysis(symTbl, GLOBAL_HEAD);
+    symTbl->print( printTreeNode );
 
     if (Print == 1)
     {

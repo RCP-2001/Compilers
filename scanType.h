@@ -1,8 +1,14 @@
 #include <stdlib.h>
 #include <stdio.h>
-const int MAX_CHILDREN = 3;
-// porbably need to move more magic numbers here
 
+#ifndef MAX_CHILDREN
+#define MAX_CHILDREN 3
+//const int MAX_CHILDREN = 3;
+// porbably need to move more magic numbers here
+#endif
+
+#ifndef TYPES
+#define TYPES
 enum NodeKind
 {
     DeclK,
@@ -64,8 +70,10 @@ struct TokenData
     int nvalue;
     char *svalue;
 };
+#endif
 
-
+#ifndef AST
+#define AST
 class treeNode
 {
     private:
@@ -196,9 +204,16 @@ class treeNode
     //function for acessing private elements
     //Ideally should be read only
     TokenData* token(){ return attr; }
-    
+    treeNode* nextSibling(){return sibling;}
+    treeNode* GetChild(int c){ return child[c]; }
+    NodeKind Kind(){return nodeKind;}
+    DeclKind DKind(){return subkind.decl;}
+    ExpKind EKind(){return subkind.exp;}
+    StmtKind SKind(){return subkind.stmt;}
 };
 
 treeNode *newDeclNode(DeclKind kind, ExpType type, TokenData *token = NULL, treeNode *c0 = NULL, treeNode *c1 = NULL, treeNode *c2 = NULL);
 treeNode *newStmtNode(StmtKind kind, TokenData *token = NULL, treeNode *c0 = NULL, treeNode *c1 = NULL, treeNode *c2 = NULL);
 treeNode *newExpNode(ExpKind kind, TokenData *token = NULL, treeNode *c0 = NULL, treeNode *c1 = NULL, treeNode *c2 = NULL);
+
+#endif
