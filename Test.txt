@@ -6,8 +6,11 @@ int main(){
     bool z;
     bool k;
     int arr[5];
-    z = x;
-    x = (z + x);
-    k = 5 > x;
+    
+    k = (z>222);
+
+    if z = 222 then 4;
+
+
     //arr[3] = 2;
 }
