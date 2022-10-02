@@ -3,8 +3,8 @@
 
 #ifndef MAX_CHILDREN
 #define MAX_CHILDREN 3
-//const int MAX_CHILDREN = 3;
-// porbably need to move more magic numbers here
+// const int MAX_CHILDREN = 3;
+//  porbably need to move more magic numbers here
 #endif
 
 #ifndef TYPES
@@ -49,6 +49,7 @@ enum ExpType
     Char,
     CharInt,
     Equal,
+    Str,
     UndefinedType
 };
 enum VarKind
@@ -59,7 +60,6 @@ enum VarKind
     Parameter,
     LocalStatic
 };
-
 
 struct TokenData
 {
@@ -74,14 +74,17 @@ struct TokenData
 
 #ifndef AST
 #define AST
+
+const char *RETYPE(ExpType e);
+
 class treeNode
 {
-    private:
+private:
     struct treeNode *child[MAX_CHILDREN];
     struct treeNode *sibling;
 
     // node type
-    //int line_num;
+    // int line_num;
     NodeKind nodeKind; // type? Probably need to figure something out
     union
     {
@@ -99,64 +102,43 @@ class treeNode
     bool isArray;
     bool isStatic;
 
-    public:
-
-
+public:
     // inline functions
-    void SetNodeKind(NodeKind nkind){
-        nodeKind=nkind;
+    void SetNodeKind(NodeKind nkind)
+    {
+        nodeKind = nkind;
     }
-    void SubKind(ExpKind k){
+    void SubKind(ExpKind k)
+    {
         subkind.exp = k;
     }
-    void SubKind(StmtKind k){
+    void SubKind(StmtKind k)
+    {
         subkind.stmt = k;
     }
-    void SubKind(DeclKind k){
+    void SubKind(DeclKind k)
+    {
         subkind.decl = k;
     }
-    void addAttr(TokenData* n){
-        if(attr != NULL){
-            fprintf(stderr ,"Err- probably a mem leak\n");
+    void addAttr(TokenData *n)
+    {
+        if (attr != NULL)
+        {
+            fprintf(stderr, "Err- probably a mem leak\n");
         }
         attr = n;
     }
 
-    void setArray(bool val){
+    void setArray(bool val)
+    {
         isArray = val;
     }
 
     const char *RetETYPE()
     {
-        char *c;
-        switch (expType)
-        {
-        case Void:
-            return "void";
-            break;
-        case Integer:
-            return "int";
-            break;
-        case boolean:
-            return "bool";
-            break;
-        case Char:
-            return "char";
-            break;
-        case CharInt:
-            return "CharInt";
-            break;
-        case Equal:
-            return "Equal";
-            break;
-        case UndefinedType:
-            return "UndefinedType";
-            break;
-        default:
-            return "ERRR TYPE";
-            break;
-        }
+        return RETYPE(expType);
     }
+
     // Constructor
     treeNode()
     {
@@ -169,29 +151,33 @@ class treeNode
         isArray = false;
         isStatic = false;
     }
-    ~treeNode(){
-        for(int i =0; i < MAX_CHILDREN; i++){
-            if(child[i] != NULL){
+    ~treeNode()
+    {
+        for (int i = 0; i < MAX_CHILDREN; i++)
+        {
+            if (child[i] != NULL)
+            {
                 delete child[i];
                 child[i] = NULL;
             }
         }
-        if(sibling != NULL){
+        if (sibling != NULL)
+        {
             delete sibling;
             sibling = NULL;
         }
-        if(attr != NULL){
-            if(attr->tokenstr != NULL){
+        if (attr != NULL)
+        {
+            if (attr->tokenstr != NULL)
+            {
                 free(attr->tokenstr);
             }
-            if(attr->svalue != NULL){
+            if (attr->svalue != NULL)
+            {
                 free(attr->svalue);
             }
             delete attr;
         }
-
-
-
     }
 
     // other functions
@@ -201,15 +187,17 @@ class treeNode
     void addChildren(treeNode *, int child);
     void printTree(int levels, int);
 
-    //function for acessing private elements
-    //Ideally should be read only
-    TokenData* token(){ return attr; }
-    treeNode* nextSibling(){return sibling;}
-    treeNode* GetChild(int c){ return child[c]; }
-    NodeKind Kind(){return nodeKind;}
-    DeclKind DKind(){return subkind.decl;}
-    ExpKind EKind(){return subkind.exp;}
-    StmtKind SKind(){return subkind.stmt;}
+    // function for acessing private elements
+    // Ideally should be read only
+    TokenData *token() { return attr; }
+    treeNode *nextSibling() { return sibling; }
+    treeNode *GetChild(int c) { return child[c]; }
+    NodeKind Kind() { return nodeKind; }
+    DeclKind DKind() { return subkind.decl; }
+    ExpKind EKind() { return subkind.exp; }
+    StmtKind SKind() { return subkind.stmt; }
+    ExpType EType() { return expType; }
+    bool ArrayIs() {return isArray; }
 };
 
 treeNode *newDeclNode(DeclKind kind, ExpType type, TokenData *token = NULL, treeNode *c0 = NULL, treeNode *c1 = NULL, treeNode *c2 = NULL);

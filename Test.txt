@@ -1,0 +1,13 @@
+int main(){
+    int x;
+    int A;
+    int b;
+
+    bool z;
+    bool k;
+    int arr[5];
+    z = x;
+    x = (z + x);
+    k = 5 > x;
+    //arr[3] = 2;
+}

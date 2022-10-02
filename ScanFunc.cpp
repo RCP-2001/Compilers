@@ -251,3 +251,34 @@ void treeNode::printTree(int levels, int siblingNum)
     }
 }
 
+const char *RETYPE(ExpType e)
+{
+    char *c;
+    switch (e)
+    {
+    case Void:
+        return "void";
+        break;
+    case Integer:
+        return "int";
+        break;
+    case boolean:
+        return "bool";
+        break;
+    case Char:
+        return "char";
+        break;
+    case CharInt:
+        return "CharInt";
+        break;
+    case Equal:
+        return "Equal";
+        break;
+    case UndefinedType:
+        return "UndefinedType";
+        break;
+    default:
+        return "ERRR TYPE";
+        break;
+    }
+}

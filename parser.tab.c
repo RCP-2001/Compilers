@@ -1983,25 +1983,25 @@ yyreduce:
 
   case 111: /* constant: NUMCONST  */
 #line 255 "parser.y"
-                                 {treeNode* node = newExpNode(constantK, (yyvsp[0].tokenData), NULL, NULL, NULL); (yyval.tree)=node; }
+                                 {treeNode* node = newExpNode(constantK, (yyvsp[0].tokenData), NULL, NULL, NULL); node->EType(Integer), (yyval.tree)=node; }
 #line 1988 "parser.tab.c"
     break;
 
   case 112: /* constant: CHARCONST  */
 #line 256 "parser.y"
-                                 {treeNode* node = newExpNode(constantK, (yyvsp[0].tokenData), NULL, NULL, NULL); (yyval.tree)=node; }
+                                 {treeNode* node = newExpNode(constantK, (yyvsp[0].tokenData), NULL, NULL, NULL); node->EType(Char), (yyval.tree)=node; }
 #line 1994 "parser.tab.c"
     break;
 
   case 113: /* constant: STRINGCONST  */
 #line 257 "parser.y"
-                                 {treeNode* node = newExpNode(constantK, (yyvsp[0].tokenData), NULL, NULL, NULL); (yyval.tree)=node; }
+                                 {treeNode* node = newExpNode(constantK, (yyvsp[0].tokenData), NULL, NULL, NULL); node->EType(Char), node->setArray(true); (yyval.tree)=node; }
 #line 2000 "parser.tab.c"
     break;
 
   case 114: /* constant: BOOLCONST  */
 #line 258 "parser.y"
-                                 {treeNode* node = newExpNode(constantK, (yyvsp[0].tokenData), NULL, NULL, NULL); (yyval.tree)=node; }
+                                 {treeNode* node = newExpNode(constantK, (yyvsp[0].tokenData), NULL, NULL, NULL); node->EType(boolean), (yyval.tree)=node; }
 #line 2006 "parser.tab.c"
     break;
 

@@ -252,10 +252,10 @@ argList         : argList COMMA exp {$1->addSibling($3); $$=$1;}
                 | exp           {$$=$1;}
                 ;
 
-constant        : NUMCONST       {treeNode* node = newExpNode(constantK, $1, NULL, NULL, NULL); $$=node; }
-                | CHARCONST      {treeNode* node = newExpNode(constantK, $1, NULL, NULL, NULL); $$=node; }
-                | STRINGCONST    {treeNode* node = newExpNode(constantK, $1, NULL, NULL, NULL); $$=node; }
-                | BOOLCONST      {treeNode* node = newExpNode(constantK, $1, NULL, NULL, NULL); $$=node; }
+constant        : NUMCONST       {treeNode* node = newExpNode(constantK, $1, NULL, NULL, NULL); node->EType(Integer), $$=node; }
+                | CHARCONST      {treeNode* node = newExpNode(constantK, $1, NULL, NULL, NULL); node->EType(Char), $$=node; }
+                | STRINGCONST    {treeNode* node = newExpNode(constantK, $1, NULL, NULL, NULL); node->EType(Char), node->setArray(true); $$=node; }
+                | BOOLCONST      {treeNode* node = newExpNode(constantK, $1, NULL, NULL, NULL); node->EType(boolean), $$=node; }
 
 
 %%
