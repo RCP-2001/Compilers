@@ -199,6 +199,7 @@ public:
     StmtKind SKind() { return subkind.stmt; }
     ExpType EType() { return expType; }
     bool ArrayIs() {return isArray; }
+
 };
 
 treeNode *newDeclNode(DeclKind kind, ExpType type, TokenData *token = NULL, treeNode *c0 = NULL, treeNode *c1 = NULL, treeNode *c2 = NULL);
