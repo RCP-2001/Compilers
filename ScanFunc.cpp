@@ -1,5 +1,6 @@
 #include "scanType.h"
 #include <string.h>
+#include <string>
 
 treeNode *newDeclNode(DeclKind kind, ExpType type, TokenData *token, treeNode *c0, treeNode *c1, treeNode *c2)
 {
@@ -123,31 +124,31 @@ void treeNode::printTree(int levels, int siblingNum)
         case VarK:
             if (isArray == true)
             {
-                printf("Var: %s of array of%s type %s [line: %d]", attr->svalue, Stat, RetETYPE(), attr->linenum);
+                printf("Var: %s of array of%s type %s [line: %d]", attr->svalue, Stat, RetETYPE().c_str(), attr->linenum);
             }
             else
             {
-                printf("Var: %s of%s type %s [line: %d]", attr->svalue, Stat, RetETYPE(), attr->linenum);
+                printf("Var: %s of%s type %s [line: %d]", attr->svalue, Stat, RetETYPE().c_str(), attr->linenum);
             }
             break;
         case FuncK:
             if (isArray == true)
             {
-                printf("Func: %s returns array type %s [line: %d]", attr->svalue, RetETYPE(), attr->linenum); // dont know if nesscisary
+                printf("Func: %s returns array type %s [line: %d]", attr->svalue, RetETYPE().c_str(), attr->linenum); // dont know if nesscisary
             }
             else
             {
-                printf("Func: %s returns type %s [line: %d]", attr->svalue, RetETYPE(), attr->linenum);
+                printf("Func: %s returns type %s [line: %d]", attr->svalue, RetETYPE().c_str(), attr->linenum);
             }
             break;
         case ParamK:
             if (isArray == true)
             {
-                printf("Parm: %s of%s array of type %s [line: %d]", attr->svalue, Stat, RetETYPE(), attr->linenum);
+                printf("Parm: %s of%s array of type %s [line: %d]", attr->svalue, Stat, RetETYPE().c_str(), attr->linenum);
             }
             else
             {
-                printf("Parm: %s of%s type %s [line: %d]", attr->svalue, Stat, RetETYPE(), attr->linenum);
+                printf("Parm: %s of%s type %s [line: %d]", attr->svalue, Stat, RetETYPE().c_str(), attr->linenum);
             }
             break;
         default:
@@ -251,9 +252,8 @@ void treeNode::printTree(int levels, int siblingNum)
     }
 }
 
-const char *RETYPE(ExpType e)
+std::string RETYPE(ExpType e)
 {
-    char *c;
     switch (e)
     {
     case Void:

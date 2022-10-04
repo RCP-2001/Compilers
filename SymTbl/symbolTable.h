@@ -62,7 +62,7 @@ public:
     void *lookup(std::string sym);                   // returns ptr associated with sym anywhere in symbol table
                                                      // returns NULL if symbol not found
     void *lookupGlobal(std::string sym);             // returns ptr associated with sym in globals
-                                                     // returns NULL if symbol not found
+                                                     // returns NULL if symbol not founds
     bool insert(std::string sym, void *ptr);         // inserts new ptr associated with symbol sym in current scope
                                                      // returns false if already defined
     bool insertGlobal(std::string sym, void *ptr);   // inserts a new ptr associated with symbol sym 

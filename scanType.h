@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string>
 
 #ifndef MAX_CHILDREN
 #define MAX_CHILDREN 3
@@ -75,7 +76,7 @@ struct TokenData
 #ifndef AST
 #define AST
 
-const char *RETYPE(ExpType e);
+std::string RETYPE(ExpType e);
 
 class treeNode
 {
@@ -134,7 +135,7 @@ public:
         isArray = val;
     }
 
-    const char *RetETYPE()
+    std::string RetETYPE()
     {
         return RETYPE(expType);
     }

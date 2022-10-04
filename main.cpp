@@ -61,7 +61,6 @@ int main(int argc, char *argv[])
     yyparse();
     SymbolTable *symTbl = new SymbolTable;
     //symTbl->debug(true);
-    semanticAnalysis(symTbl, GLOBAL_HEAD);
     symTbl->print( printTreeNode );
 
     if (Print == 1)
@@ -72,6 +71,8 @@ int main(int argc, char *argv[])
             printf("\n");
         }
     }
+    semanticAnalysis(symTbl, GLOBAL_HEAD);
+
 
     // Deleting Tree because we are done with it
     // note: Make sure the complier is 100% done done before doing this
