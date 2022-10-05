@@ -102,6 +102,9 @@ private:
 
     bool isArray;
     bool isStatic;
+    // may be dumb haha
+    bool isUsed;
+    bool isInit;
 
 public:
     // inline functions
@@ -151,6 +154,8 @@ public:
         attr = NULL;
         isArray = false;
         isStatic = false;
+        isInit = false;
+        isUsed = false;
     }
     ~treeNode()
     {

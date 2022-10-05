@@ -523,8 +523,8 @@ char *yytext;
 
 
 int line = 1; 
-int numErrors;
-int NumWarnings;
+int numErrors = 0;
+int numWarnings = 0;
 
 
 static int setValue(int linenum, int tokenClass, char *svalue){

@@ -11,7 +11,7 @@
 treeNode *GLOBAL_HEAD;
 extern FILE *yyin;      // defined in parser.l
 extern int numErrors;   // defined in parser.l
-int numWarnings; // defined in parser.l
+extern int numWarnings; // defined in parser.l
 
 extern int yydebug;
 int main(int argc, char *argv[])
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
     yyparse();
     SymbolTable *symTbl = new SymbolTable;
     //symTbl->debug(true);
-    symTbl->print( printTreeNode );
+    //symTbl->print( printTreeNode );
 
     if (Print == 1)
     {
@@ -72,6 +72,12 @@ int main(int argc, char *argv[])
         }
     }
     semanticAnalysis(symTbl, GLOBAL_HEAD);
+    if(symTbl->lookup("main") == NULL){
+        printf("ERROR(LINKER): A function named 'main()' must be defined.\n");
+        numErrors++;
+    }
+    printf("Number of warnings: %d\n", numWarnings);
+    printf("Number of errors: %d\n", numErrors);
 
 
     // Deleting Tree because we are done with it
