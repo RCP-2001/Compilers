@@ -10,3 +10,5 @@ void semanticAnalysis(SymbolTable* symTbl, treeNode* tree);
 
 bool OpTokenIsBool(char *);
 std::string OpType(char *);
+
+void CheckForUse(std::string, void *);

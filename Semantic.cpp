@@ -28,6 +28,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
         semanticAnalysis(symTbl, tree->GetChild(0));
         semanticAnalysis(symTbl, tree->GetChild(1)->GetChild(0));
         semanticAnalysis(symTbl, tree->GetChild(1)->GetChild(1));
+        symTbl->applyToAll(CheckForUse);
         symTbl->leave();
         semanticAnalysis(symTbl, tree->nextSibling());
 
@@ -56,6 +57,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
         symTbl->enter("CompundStatement");
         semanticAnalysis(symTbl, tree->GetChild(0));
         semanticAnalysis(symTbl, tree->GetChild(1));
+        symTbl->applyToAll(CheckForUse);
         symTbl->leave();
         semanticAnalysis(symTbl, tree->nextSibling());
         return;
@@ -68,6 +70,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
         semanticAnalysis(symTbl, tree->GetChild(0));
         semanticAnalysis(symTbl, tree->GetChild(1));
         semanticAnalysis(symTbl, tree->GetChild(2));
+        symTbl->applyToAll(CheckForUse);
         symTbl->leave();
         semanticAnalysis(symTbl, tree->nextSibling());
         return;
@@ -114,19 +117,22 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
         // printTreeNode(tree);
         // printf("\n\n\n\n\n\n");
     }
-
     // Refrences to variables
     else if (tree->Kind() == ExpK && tree->EKind() == IdK)
     {
         treeNode *p = (treeNode *)symTbl->lookup(TData->tokenstr);
-        if (p == NULL)
+        if (p != NULL)
+        {
+            if (p->DKind() == FuncK)
+            {
+                printf("ERROR(%d): Cannot use function '%s' as a variable.\n", tree->token()->linenum, p->token()->tokenstr);
+                numErrors++;
+            }
+            p->UsedIs(true);
+        }
+        else
         {
             printf("ERROR(%d): Symbol '%s' is not declared.\n", TData->linenum, TData->tokenstr);
-            numErrors++;
-        }
-        else if (p->DKind() == FuncK)
-        {
-            printf("ERROR(%d): Cannot use function '%s' as a variable.\n", tree->token()->linenum, p->token()->tokenstr);
             numErrors++;
         }
     }
@@ -720,5 +726,15 @@ std::string OpType(char *Token)
     else
     {
         return "IDK";
+    }
+}
+
+void CheckForUse(std::string s, void *p)
+{
+    treeNode *n = (treeNode *)p;
+    if (n->UsedIs() == false)
+    {
+        printf("WARNING(%d): The variable '%s' seems not to be used.\n", n->token()->linenum, n->token()->tokenstr);
+        numWarnings++;
     }
 }

@@ -204,6 +204,10 @@ public:
     StmtKind SKind() { return subkind.stmt; }
     ExpType EType() { return expType; }
     bool ArrayIs() {return isArray; }
+    bool UsedIs() {return isUsed;}
+    void UsedIs(bool x){ isUsed = x; }
+    bool InitIs() {return isInit;}
+
 
 };
 

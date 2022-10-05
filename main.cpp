@@ -61,7 +61,6 @@ int main(int argc, char *argv[])
     yyparse();
     SymbolTable *symTbl = new SymbolTable;
     //symTbl->debug(true);
-    //symTbl->print( printTreeNode );
 
     if (Print == 1)
     {
@@ -78,6 +77,11 @@ int main(int argc, char *argv[])
     }
     printf("Number of warnings: %d\n", numWarnings);
     printf("Number of errors: %d\n", numErrors);
+
+    symTbl->enter("testScope");
+  //  symTbl->insert("test", newDeclNode(VarK, Integer));
+  //  symTbl->print( printTreeNode );
+    symTbl->leave();
 
 
     // Deleting Tree because we are done with it
