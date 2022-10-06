@@ -321,12 +321,12 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                 }
                 else if (op1A == true && op2A == false)
                 {
-                    printf("ERROR(%d): '%s' requires both operands be arrays or not but lhs is an array and rhs is not an array.\n", tree->token()->linenum);
+                    printf("ERROR(%d): '%s' requires both operands be arrays or not but lhs is an array and rhs is not an array.\n", tree->token()->linenum, tree->token()->tokenstr);
                     numErrors++;
                 }
                 else if (op1A == false && op2A == true)
                 {
-                    printf("ERROR(%d): '%s' requires both operands be arrays or not but lhs is not an array and rhs is an array.\n", tree->token()->linenum);
+                    printf("ERROR(%d): '%s' requires both operands be arrays or not but lhs is not an array and rhs is an array.\n", tree->token()->linenum, tree->token()->tokenstr);
                     numErrors++;
                 }
             }
