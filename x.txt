@@ -157,35 +157,22 @@ Sibling: 3  Func: main returns type void [line: 51]
 .   .   .   .   Child: 0  Id: zy [line: 66]
 .   .   .   .   Child: 1  Const 9 [line: 66]
 .   .   Sibling: 8  Call: outnl [line: 67]
-ERROR(12): '=' requires operands of the same type but lhs is type int and rhs is type int.
-ERROR(13): Symbol 'output' is not declared.
-ERROR(15): Symbol 'output' is not declared.
-ERROR(17): Symbol 'output' is not declared.
-ERROR(18): Symbol 'outnl' is not declared.
-ERROR(21): '=' requires operands of the same type but lhs is type int and rhs is type int.
-ERROR(22): Symbol 'output' is not declared.
-ERROR(24): Symbol 'output' is not declared.
-ERROR(25): '=' requires both operands be arrays or not but lhs is an array and rhs is not an array.
-ERROR(26): Symbol 'output' is not declared.
-ERROR(27): Symbol 'outnl' is not declared.
-ERROR(31): Symbol 'output' is not declared.
-ERROR(34): Symbol 'output' is not declared.
-ERROR(35): '=' requires operands of the same type but lhs is type int and rhs is type int.
-ERROR(36): '=' requires both operands be arrays or not but lhs is an array and rhs is not an array.
-ERROR(37): Symbol 'output' is not declared.
-ERROR(38): Symbol 'outnl' is not declared.
-ERROR(41): '=' requires operands of the same type but lhs is type int and rhs is type int.
-ERROR(42): Symbol 'output' is not declared.
-ERROR(44): Symbol 'output' is not declared.
-ERROR(45): '=' requires both operands be arrays or not but lhs is an array and rhs is not an array.
-ERROR(46): Symbol 'output' is not declared.
-ERROR(47): Symbol 'outnl' is not declared.
-ERROR(57): '=' requires operands of the same type but lhs is type int and rhs is type int.
-ERROR(58): Symbol 'output' is not declared.
-ERROR(59): Symbol 'output' is not declared.
-ERROR(60): Symbol 'outnl' is not declared.
-ERROR(65): Symbol 'output' is not declared.
-ERROR(66): Symbol 'output' is not declared.
-ERROR(67): Symbol 'outnl' is not declared.
-Number of warnings: 0
-Number of errors: 30
+DEBUG(symbolTable): insert in scope "Global" the symbol "gx"
+DEBUG(symbolTable): insert in scope "Global" the symbol "gy"
+DEBUG(symbolTable): insert in scope "Global" the symbol "esperanza"
+DEBUG(SymbolTable): enter scope "esperanza".
+DEBUG(symbolTable): insert in scope "esperanza" the symbol "px"
+DEBUG(symbolTable): insert in scope "esperanza" the symbol "py"
+DEBUG(symbolTable): insert in scope "esperanza" the symbol "x"
+DEBUG(symbolTable): insert in scope "esperanza" the symbol "y"
+DEBUG(symbolTable): insert in scope "esperanza" the symbol "sx"
+DEBUG(symbolTable): insert in scope "esperanza" the symbol "sy"
+DEBUG(SymbolTable): lookup the symbol "gx" and found it in the scope named "Global".
+DEBUG(SymbolTable): lookup the symbol "gx" and found it in the scope named "Global".
+DEBUG(SymbolTable): lookup the symbol "x" and found it in the scope named "esperanza".
+DEBUG(SymbolTable): lookup the symbol "x" and found it in the scope named "esperanza".
+DEBUG(SymbolTable): lookup the symbol "sx" and found it in the scope named "esperanza".
+DEBUG(SymbolTable): lookup the symbol "sx" and found it in the scope named "esperanza".
+DEBUG(SymbolTable): lookup the symbol "gy" and found it in the scope named "Global".
+DEBUG(SymbolTable): lookup the symbol "gy" and found it in the scope named "Global".
+DEBUG(SymbolTable): lookup the symbol "gy" and found it i
