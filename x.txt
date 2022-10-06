@@ -1,13 +1,13 @@
 Var: gx of type int [line: 2]
-Sibling: 1  Var: gy of array of type int [line: 2]
+Sibling: 1  Var: gy is array of type int [line: 2]
 Sibling: 2  Func: esperanza returns type void [line: 3]
 .   Child: 0  Parm: px of type int [line: 3]
-.   Sibling: 1  Parm: py of array of type int [line: 3]
+.   Sibling: 1  Parm: py is array of type int [line: 3]
 .   Child: 1  Compound [line: 4]
 .   .   Child: 0  Var: x of type int [line: 5]
-.   .   Sibling: 1  Var: y of array of type int [line: 5]
+.   .   Sibling: 1  Var: y is array of type int [line: 5]
 .   .   Sibling: 2  Var: sx of static type int [line: 6]
-.   .   Sibling: 3  Var: sy of array of type int [line: 6]
+.   .   Sibling: 3  Var: sy is array of type int [line: 6]
 .   .   Child: 1  Assign: = [line: 7]
 .   .   .   Child: 0  Id: gx [line: 7]
 .   .   .   Child: 1  Const 444 [line: 7]
@@ -131,7 +131,7 @@ Sibling: 2  Func: esperanza returns type void [line: 3]
 Sibling: 3  Func: main returns type void [line: 51]
 .   Child: 1  Compound [line: 52]
 .   .   Child: 0  Var: zx of type int [line: 53]
-.   .   Sibling: 1  Var: zy of array of type int [line: 53]
+.   .   Sibling: 1  Var: zy is array of type int [line: 53]
 .   .   Child: 1  Assign: = [line: 56]
 .   .   .   Child: 0  Id: zx [line: 56]
 .   .   .   Child: 1  Const 999 [line: 56]
@@ -163,17 +163,14 @@ ERROR(17): Symbol 'output' is not declared.
 ERROR(18): Symbol 'outnl' is not declared.
 ERROR(22): Symbol 'output' is not declared.
 ERROR(24): Symbol 'output' is not declared.
-ERROR(25): '=' requires both operands be arrays or not but lhs is an array and rhs is not an array.
 ERROR(26): Symbol 'output' is not declared.
 ERROR(27): Symbol 'outnl' is not declared.
 ERROR(31): Symbol 'output' is not declared.
 ERROR(34): Symbol 'output' is not declared.
-ERROR(36): '=' requires both operands be arrays or not but lhs is an array and rhs is not an array.
 ERROR(37): Symbol 'output' is not declared.
 ERROR(38): Symbol 'outnl' is not declared.
 ERROR(42): Symbol 'output' is not declared.
 ERROR(44): Symbol 'output' is not declared.
-ERROR(45): '=' requires both operands be arrays or not but lhs is an array and rhs is not an array.
 ERROR(46): Symbol 'output' is not declared.
 ERROR(47): Symbol 'outnl' is not declared.
 ERROR(58): Symbol 'output' is not declared.
@@ -183,4 +180,4 @@ ERROR(65): Symbol 'output' is not declared.
 ERROR(66): Symbol 'output' is not declared.
 ERROR(67): Symbol 'outnl' is not declared.
 Number of warnings: 0
-Number of errors: 25
+Number of errors: 22

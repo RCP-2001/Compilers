@@ -124,7 +124,7 @@ void treeNode::printTree(int levels, int siblingNum)
         case VarK:
             if (isArray == true)
             {
-                printf("Var: %s of array of%s type %s [line: %d]", attr->svalue, Stat, RetETYPE().c_str(), attr->linenum);
+                printf("Var: %s is array of%s type %s [line: %d]", attr->svalue, Stat, RetETYPE().c_str(), attr->linenum);
             }
             else
             {
@@ -144,7 +144,7 @@ void treeNode::printTree(int levels, int siblingNum)
         case ParamK:
             if (isArray == true)
             {
-                printf("Parm: %s of%s array of type %s [line: %d]", attr->svalue, Stat, RetETYPE().c_str(), attr->linenum);
+                printf("Parm: %s is%s array of type %s [line: %d]", attr->svalue, Stat, RetETYPE().c_str(), attr->linenum);
             }
             else
             {

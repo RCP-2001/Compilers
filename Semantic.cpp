@@ -269,7 +269,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                     if(n!=NULL)
                     {
                         op1 = n->EType();
-                        op1A = n->ArrayIs();
+                        //op1A = n->ArrayIs();
                     }
                 }
             }
@@ -293,7 +293,10 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                     if(n!=NULL)
                     {
                         op2 = n->EType();
-                        op2A = n->ArrayIs();
+                        // really need to make recusive
+                        // makes this acutally wrong haha
+                       // op2A = n->ArrayIs();
+                       
                     }
                 }
             }
@@ -307,7 +310,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
             if (tree->GetChild(1)->Kind() == ExpK && tree->GetChild(1)->EKind() == constantK)
             {
                 op2 = tree->GetChild(1)->EType();
-                op1A = tree->GetChild(1)->ArrayIs();
+                op2A = tree->GetChild(1)->ArrayIs();
             }
 
             // final print
