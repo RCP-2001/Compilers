@@ -97,7 +97,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
     //******************
     // Everything above returns early (because reasons)
 
-    //To Do: If Statemnets 
+    // To Do: If Statemnets
     //(Mostly just check the warnings tho)
 
     //********************
@@ -242,7 +242,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                 {
                     op2 = n->EType();
                     op2A = n->ArrayIs();
-                    if (n->InitIs() == false && tree->GetChild(1)->EKind() == IdK &&  n->DKind() != FuncK)
+                    if (n->InitIs() == false && tree->GetChild(1)->EKind() == IdK && n->DKind() != FuncK)
                     {
                         printf("WARNING(%d): Variable '%s' may be uninitialized when used here.\n", tree->token()->linenum, n->token()->tokenstr);
                         numWarnings++;
@@ -265,9 +265,12 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                 else if ((opType == "ArrayAcc") || (opType == "assign"))
                 {
                     // may need to make recusive????
+
                     treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(0)->GetChild(0)->token()->tokenstr);
-                    if(n!=NULL)
+                    if (n != NULL)
                     {
+                        // treeNode *x FindSymbol(n);
+
                         op1 = n->EType();
                         op1A = n->ArrayIs();
                     }
@@ -288,12 +291,22 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                 }
                 else if ((opType == "ArrayAcc") || (opType == "assign"))
                 {
+
                     // need to make recusive
                     treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(1)->GetChild(0)->token()->tokenstr);
-                    if(n!=NULL)
+                    if (tree->token()->linenum == 16)
+                    {
+                        fprintf(stderr, "n array Bool: %d\n", n->ArrayIs());
+                    }
+                    if (n != NULL)
                     {
                         op2 = n->EType();
                         op2A = n->ArrayIs();
+                    }
+                    if (tree->token()->linenum == 16)
+                    {
+                        fprintf(stderr, "n array Bool: %d\n", n->ArrayIs());
+                        fprintf(stderr, "op2A Bool: %d\n", op2A);
                     }
                 }
             }
@@ -307,26 +320,38 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
             if (tree->GetChild(1)->Kind() == ExpK && tree->GetChild(1)->EKind() == constantK)
             {
                 op2 = tree->GetChild(1)->EType();
-                op1A = tree->GetChild(1)->ArrayIs();
+                op2A = tree->GetChild(1)->ArrayIs();
             }
 
             // final print
-
-            if (op1 != op2)
+            if (tree->token()->linenum == 16)
             {
+                // fprintf(stderr, "n array Bool: %d\n", n->ArrayIs());
+                fprintf(stderr, "pre FP : op1A Bool: %d || op2A bool %d :: Token %s \n", op1A, op2A,  tree->token()->tokenstr);
+               
+            }
+
+            if ((op1 != op2) || (op1A != op2A))
+            {
+                if (tree->token()->linenum == 16)
+                {
+                    // fprintf(stderr, "n array Bool: %d\n", n->ArrayIs());
+                    fprintf(stderr, "pre FP : op1A Bool: %d || op2A bool %d\n", op1A, op2A);
+                }
                 if (op1 != UndefinedType && op2 != UndefinedType)
                 {
                     printf("ERROR(%d): '%s' requires operands of the same type but lhs is type %s and rhs is type %s.\n", tree->token()->linenum, tree->token()->tokenstr, RETYPE(op1).c_str(), RETYPE(op2).c_str());
                     numErrors++;
                 }
-                else if (op1A == true && op2A == false)
+                else if ((op1A == true) && (op2A == false))
                 {
-                    printf("ERROR(%d): '%s' requires both operands be arrays or not but lhs is an array and rhs is not an array.\n", tree->token()->linenum);
+                    printf("ERROR(%d): '%s' requires both operands be arrays or not but lhs is an array and rhs is not an array.\n", tree->token()->linenum, tree->token()->tokenstr);
+                    fprintf(stderr, "op1A: %d || op2A: %d ::: Token: %s\n", op1A, op2A, tree->token()->tokenstr);
                     numErrors++;
                 }
-                else if (op1A == false && op2A == true)
+                else if ((op1A == false) && (op2A == true))
                 {
-                    printf("ERROR(%d): '%s' requires both operands be arrays or not but lhs is not an array and rhs is an array.\n", tree->token()->linenum);
+                    printf("ERROR(%d): '%s' requires both operands be arrays or not but lhs is not an array and rhs is an array.\n", tree->token()->linenum, tree->token()->tokenstr);
                     numErrors++;
                 }
             }
@@ -769,4 +794,10 @@ void CheckForUse(std::string s, void *p)
         printf("WARNING(%d): The variable '%s' seems not to be used.\n", n->token()->linenum, n->token()->tokenstr);
         numWarnings++;
     }
+}
+
+treeNode *FindSymbol(treeNode *n)
+{
+    // testing
+    return n;
 }

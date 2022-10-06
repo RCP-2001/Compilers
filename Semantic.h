@@ -12,3 +12,6 @@ bool OpTokenIsBool(char *);
 std::string OpType(char *);
 
 void CheckForUse(std::string, void *);
+
+// Finds LHS of assign and array accessor
+treeNode* FindSymbol(treeNode*);

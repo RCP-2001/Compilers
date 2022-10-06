@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 
     yyparse();
     SymbolTable *symTbl = new SymbolTable;
-    symTbl->debug(true);
+    //symTbl->debug(true);
 
     if (Print == 1)
     {
