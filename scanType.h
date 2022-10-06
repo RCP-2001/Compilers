@@ -207,7 +207,7 @@ public:
     bool UsedIs() {return isUsed;}
     void UsedIs(bool x){ isUsed = x; }
     bool InitIs() {return isInit;}
-
+    void InitIs(bool x){ isInit = x; }
 
 };
 

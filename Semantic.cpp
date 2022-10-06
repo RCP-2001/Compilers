@@ -149,34 +149,46 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
         // Bool, Bool Operators
         if (strcmp(tree->token()->tokenstr, "and") == 0 || strcmp(tree->token()->tokenstr, "or") == 0)
         {
+            // Refactor and check
+            // might need right child be looked at first
             if (tree->GetChild(0)->Kind() == ExpK && (tree->GetChild(0)->EKind() == IdK || tree->GetChild(0)->EKind() == CallK))
             {
                 treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(0)->token()->tokenstr);
-                if (n == NULL)
+                if (n != NULL)
                 {
-                    // printf("??? X %s \n\n\n", tree->token()->tokenstr);
-                    // get handelded later
-                }
 
-                else if (n->EType() != boolean)
-                {
-                    printf("ERROR(%d): '%s' requires operands of type %s but lhs is of type %s.\n", tree->token()->linenum, tree->token()->tokenstr, "bool", n->RetETYPE().c_str());
-                    numErrors++;
+                    if (n->EType() != boolean)
+                    {
+                        printf("ERROR(%d): '%s' requires operands of type %s but lhs is of type %s.\n", tree->token()->linenum, tree->token()->tokenstr, "bool", n->RetETYPE().c_str());
+                        numErrors++;
+                    }
+                    if (n->ArrayIs() == true)
+                    {
+                        printf("ERROR(%d): The operation '%s' does not work with arrays.\n", tree->token()->linenum, tree->token()->tokenstr);
+                        numErrors++;
+                    }
+                    // Variable has been init (it it wasnt already)
+                    n->InitIs(true);
                 }
             }
             if (tree->GetChild(1)->Kind() == ExpK && (tree->GetChild(1)->EKind() == IdK || tree->GetChild(1)->EKind() == CallK))
             {
                 treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(1)->token()->tokenstr);
-                if (n == NULL)
+                if (n != NULL)
                 {
-                    // printf("???\n\n\n");
-                    // Get handedled later
-                }
 
-                else if (n->EType() != boolean)
-                {
-                    printf("ERROR(%d): '%s' requires operands of type %s but rhs is of type %s.\n", tree->token()->linenum, tree->token()->tokenstr, "bool", n->RetETYPE());
-                    numErrors++;
+                    if (n->InitIs() == false && tree->GetChild(1)->EKind() == IdK && n->DKind() != FuncK)
+                    {
+                        printf("WARNING(%d): Variable '%s' may be uninitialized when used here.\n", tree->token()->linenum, n->token()->tokenstr);
+                        numWarnings++;
+                    }
+                    if (n->EType() != boolean)
+                    {
+                        printf("ERROR(%d): '%s' requires operands of type %s but rhs is of type %s.\n", tree->token()->linenum, tree->token()->tokenstr, "bool", n->RetETYPE().c_str());
+                        numErrors++;
+                    }
+
+                    // check init
                 }
             }
             if (tree->GetChild(0)->Kind() == ExpK && tree->GetChild(0)->EKind() == OpK)
@@ -212,35 +224,26 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
             {
                 treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(0)->token()->tokenstr);
 
-                if (n == NULL)
-                {
-                    // printf("??? XX1X %s \n\n\n", tree->token()->tokenstr);
-                    // fprintf(stderr, "just checking things out\n");
-                    // fprintf(stderr, "line: %d token %s \n", tree->token()->linenum, tree->token()->tokenstr);
-                    /// if (tree->token()->linenum == 54)
-                    //{
-                    //     fprintf(stderr, "Line 54\n");
-                    //  }
-                }
-                else
+                if (n != NULL)
                 {
                     op1 = n->EType();
                     op1A = n->ArrayIs();
+                    n->InitIs(true);
                 }
             }
             // check if child 1 is ID
             if (tree->GetChild(1)->Kind() == ExpK && (tree->GetChild(1)->EKind() == IdK || tree->GetChild(1)->EKind() == CallK))
             {
                 treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(1)->token()->tokenstr);
-                if (n == NULL)
-                {
-                    // printf("??? %s \n\n\n", tree->token()->tokenstr);
-                    // fprintf(stderr, "just checking things out\n");
-                }
-                else
+                if (n != NULL)
                 {
                     op2 = n->EType();
                     op2A = n->ArrayIs();
+                    if (n->InitIs() == false && tree->GetChild(1)->EKind() == IdK &&  n->DKind() != FuncK)
+                    {
+                        printf("WARNING(%d): Variable '%s' may be uninitialized when used here.\n", tree->token()->linenum, n->token()->tokenstr);
+                        numWarnings++;
+                    }
                 }
             }
             // check if child 0 is Ops
@@ -351,28 +354,29 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
             }
             if (tree->GetChild(0)->Kind() == ExpK && (tree->GetChild(0)->EKind() == IdK) || (tree->GetChild(0)->EKind() == CallK))
             {
-                // possible segmentation fault KEKW
                 treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(0)->token()->tokenstr);
                 if (n != NULL)
                 {
-                    if (n->EType() != Integer)
-                    {
-                        printf("ERROR(%d): '%s' requires operands of type %s but lhs is of type %s.\n", tree->token()->linenum, tree->token()->tokenstr, RETYPE(Integer).c_str(), RETYPE(n->EType()).c_str());
-                        numErrors++;
-                    }
                     if (n->ArrayIs() == true)
                     {
                         printf("ERROR(%d): The operation '%s' does not work with arrays.\n", tree->token()->linenum, tree->token()->tokenstr);
                         sideIsArray = true;
                         numErrors++;
                     }
+                    if (n->EType() != Integer)
+                    {
+                        printf("ERROR(%d): '%s' requires operands of type %s but lhs is of type %s.\n", tree->token()->linenum, tree->token()->tokenstr, RETYPE(Integer).c_str(), RETYPE(n->EType()).c_str());
+                        numErrors++;
+                    }
+
+                    n->InitIs(true);
                 }
             }
             if (tree->GetChild(0)->Kind() == ExpK && (tree->GetChild(0)->EKind() == OpK) || (tree->GetChild(0)->EKind() == AssingK))
             {
 
                 std::string opType = OpType(tree->GetChild(0)->token()->tokenstr);
-                if (opType == "int")
+                if (opType != "int")
                 {
                     printf("ERROR(%d): '%s' requires operands of type %s but lhs is of type %s.\n", tree->token()->linenum, tree->token()->tokenstr, RETYPE(Integer).c_str(), RETYPE(tree->GetChild(0)->EType()).c_str());
                     numErrors++;
@@ -392,6 +396,11 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                 treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(1)->token()->tokenstr);
                 if (n != NULL)
                 {
+                    if (n->InitIs() == false && tree->GetChild(1)->EKind() == IdK && n->DKind() != FuncK)
+                    {
+                        printf("WARNING(%d): Variable '%s' may be uninitialized when used here.\n", tree->token()->linenum, n->token()->tokenstr);
+                        numWarnings++;
+                    }
                     if (n->EType() != Integer)
                     {
                         printf("ERROR(%d): '%s' requires operands of type %s but rhs is of type %s.\n", tree->token()->linenum, tree->token()->tokenstr, RETYPE(Integer).c_str(), RETYPE(n->EType()).c_str());
@@ -432,6 +441,11 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                 treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(0)->token()->tokenstr);
                 if (n != NULL)
                 {
+                    if (n->InitIs() == false && (tree->GetChild(0)->EKind() == IdK) && n->DKind() != FuncK)
+                    {
+                        printf("WARNING(%d): Variable '%s' may be uninitialized when used here.\n", tree->token()->linenum, n->token()->tokenstr);
+                        numWarnings++;
+                    }
                     if (n->EType() != Integer)
                     {
                         printf("ERROR(%d): Unary '%s' requires an operand of type %s but was given type %s.\n", tree->token()->linenum, tree->token()->tokenstr, RETYPE(Integer).c_str(), RETYPE(n->EType()).c_str());
@@ -444,7 +458,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                     }
                 }
             }
-            else if (tree->GetChild(0)->EKind() == OpK || tree->GetChild(0)->EKind() == OpK)
+            else if (tree->GetChild(0)->EKind() == OpK || tree->GetChild(0)->EKind() == AssingK)
             {
                 std::string opType = OpType(tree->GetChild(0)->token()->tokenstr);
                 if (opType != "int")
@@ -454,6 +468,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                 }
             }
         }
+        // Unary Not
         else if (strcmp(tree->token()->tokenstr, "not") == 0)
         {
             if (tree->GetChild(0)->Kind() == ExpK && tree->GetChild(0)->EKind() == constantK)
@@ -469,9 +484,20 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                 treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(0)->token()->tokenstr);
                 if (n != NULL)
                 {
+                    if (n->InitIs() == false && (tree->GetChild(0)->EKind() == IdK) && n->DKind() != FuncK)
+                    {
+                        printf("WARNING(%d): Variable '%s' may be uninitialized when used here.\n", tree->token()->linenum, n->token()->tokenstr);
+                        numWarnings++;
+                    }
                     if (n->EType() != boolean)
                     {
                         printf("ERROR(%d): Unary '%s' requires an operand of type %s but was given type %s.\n", tree->token()->linenum, tree->token()->tokenstr, RETYPE(boolean).c_str(), RETYPE(n->EType()).c_str());
+                        numErrors++;
+                    }
+
+                    if (n->ArrayIs() == true)
+                    {
+                        printf("ERROR(%d): The operation '%s' does not work with arrays.\n", tree->token()->linenum, tree->token()->tokenstr);
                         numErrors++;
                     }
                 }
@@ -510,6 +536,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                         printf("ERROR(%d): The operation '%s' only works with arrays.\n", tree->token()->linenum, tree->token()->tokenstr);
                         numErrors++;
                     }
+
                     // else should get handeled???
                 }
             }
@@ -535,11 +562,13 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                             printf("ERROR(%d): The operation '%s' only works with arrays.\n", tree->token()->linenum, tree->token()->tokenstr);
                             numErrors++;
                         }
+
                         // else should get handeled???
                     }
                 }
             }
             // check for exps that cant be an array at all
+            // I think this might be just be wrong
             else if ((tree->GetChild(0)->EKind() == OpK) || (tree->GetChild(0)->EKind() == AssingK) || (tree->GetChild(0)->EKind() == CallK))
             {
                 printf("ERROR(%d): The operation '%s' only works with arrays.\n", tree->token()->linenum, tree->token()->tokenstr);
@@ -552,12 +581,18 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
         {
             // Check left for array
             treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(0)->token()->tokenstr);
-            if (n == NULL)
+            if (n != NULL)
             {
-                // should get taken care of later
+                if (n->ArrayIs() != true || n->DKind() == FuncK)
+                {
+                    printf("ERROR(%d): Cannot index nonarray '%s'.\n", tree->token()->linenum, tree->GetChild(0)->token()->svalue);
+                    numErrors++;
+                }
             }
-            else if (n->ArrayIs() != true)
+            else
             {
+                // idk if this is really what i want
+                //  but i think i need it to match the output? (either that, or something else is wrong haha)
                 printf("ERROR(%d): Cannot index nonarray '%s'.\n", tree->token()->linenum, tree->GetChild(0)->token()->svalue);
                 numErrors++;
             }
@@ -572,7 +607,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
             }
 
             // if right child is Operation
-            if (((tree->GetChild(1)->EKind()) == OpK) || ((tree->GetChild(1)->EKind()) == AssingK))
+            else if (((tree->GetChild(1)->EKind()) == OpK) || ((tree->GetChild(1)->EKind()) == AssingK))
             {
                 // fprintf(stderr, "Tokenstr  %s \n", tree->token()->tokenstr);
                 // if(tree->token()->linenum == 44){
@@ -610,6 +645,11 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                 // printf("check pls\n");
 
                 // intf(stderr, "Out of2");
+            }
+            else if ((tree->GetChild(1)->EKind() == constantK && tree->GetChild(1)->EType() != Integer))
+            {
+                printf("ERROR(%d): Array '%s' should be indexed by type int but got type %s.\n", tree->token()->linenum, tree->GetChild(0)->token()->tokenstr, RETYPE(tree->GetChild(1)->EType()).c_str());
+                numErrors++;
             }
         }
         //**
