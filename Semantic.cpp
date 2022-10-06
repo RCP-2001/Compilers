@@ -97,6 +97,9 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
     //******************
     // Everything above returns early (because reasons)
 
+    //To Do: If Statemnets 
+    //(Mostly just check the warnings tho)
+
     //********************
     // calls
     if (tree->Kind() == ExpK && tree->EKind() == CallK)
@@ -263,12 +266,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                 {
                     // may need to make recusive????
                     treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(0)->GetChild(0)->token()->tokenstr);
-                    if (n == NULL)
-                    {
-                        // fprintf(stderr, "Token str %s\n", tree->token()->tokenstr);
-                        printf("???\n");
-                    }
-                    else
+                    if(n!=NULL)
                     {
                         op1 = n->EType();
                         op1A = n->ArrayIs();
@@ -292,13 +290,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                 {
                     // need to make recusive
                     treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(1)->GetChild(0)->token()->tokenstr);
-                    if (n == NULL)
-                    {
-                        fprintf(stderr, "Token str %s\n", tree->token()->tokenstr);
-
-                        printf("???\n");
-                    }
-                    else
+                    if(n!=NULL)
                     {
                         op2 = n->EType();
                         op2A = n->ArrayIs();
