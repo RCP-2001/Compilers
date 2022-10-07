@@ -12,3 +12,11 @@ bool OpTokenIsBool(char *);
 std::string OpType(char *);
 
 void CheckForUse(std::string, void *);
+
+
+treeNode* CheckType(treeNode*, SymbolTable*);
+
+void InitSiblings(treeNode* );
+
+bool  FindArrayAccessorOp(treeNode*);
+bool FindAssingOp(treeNode*);

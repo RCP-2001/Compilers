@@ -105,6 +105,7 @@ private:
     // may be dumb haha
     bool isUsed;
     bool isInit;
+    //bool InitMessagePlayed;
 
 public:
     // inline functions
@@ -156,6 +157,7 @@ public:
         isStatic = false;
         isInit = false;
         isUsed = false;
+        //InitMessagePlayed = false;
     }
     ~treeNode()
     {
@@ -208,6 +210,7 @@ public:
     void UsedIs(bool x){ isUsed = x; }
     bool InitIs() {return isInit;}
     void InitIs(bool x){ isInit = x; }
+    bool StaticIs(){ return isStatic;}
 
 };
 

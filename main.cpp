@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 
     yyparse();
     SymbolTable *symTbl = new SymbolTable;
-    //symTbl->debug(true);
+    // symTbl->debug(true);
 
     if (Print == 1)
     {
@@ -71,7 +71,14 @@ int main(int argc, char *argv[])
         }
     }
     semanticAnalysis(symTbl, GLOBAL_HEAD);
-    if(symTbl->lookup("main") == NULL){
+    treeNode *n = (treeNode *)symTbl->lookup("main");
+    if (n == NULL)
+    {
+        printf("ERROR(LINKER): A function named 'main()' must be defined.\n");
+        numErrors++;
+    }
+    else if (n->GetChild(0) != NULL)
+    {
         printf("ERROR(LINKER): A function named 'main()' must be defined.\n");
         numErrors++;
     }
@@ -79,10 +86,9 @@ int main(int argc, char *argv[])
     printf("Number of errors: %d\n", numErrors);
 
     symTbl->enter("testScope");
-  //  symTbl->insert("test", newDeclNode(VarK, Integer));
-  //  symTbl->print( printTreeNode );
+    //  symTbl->insert("test", newDeclNode(VarK, Integer));
+    //  symTbl->print( printTreeNode );
     symTbl->leave();
-
 
     // Deleting Tree because we are done with it
     // note: Make sure the complier is 100% done done before doing this

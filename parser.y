@@ -46,7 +46,7 @@ decl    : varDecl  {$$=$1;}
         | funDecl  {$$=$1;}
         ;
 
-varDecl : typeSpec varDeclList SEMI  {$2->EType($1); $$=$2;}
+varDecl : typeSpec varDeclList SEMI  {$2->EType($1); $2->BStatic(true); $$=$2;}
         ;
 
 scopedVarDecl   : STATIC typeSpec varDeclList SEMI  {$3->EType($2); $3->BStatic(true); $$=$3;}      

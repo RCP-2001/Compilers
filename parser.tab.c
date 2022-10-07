@@ -1351,7 +1351,7 @@ yyreduce:
 
   case 7: /* varDecl: typeSpec varDeclList SEMI  */
 #line 49 "parser.y"
-                                     {(yyvsp[-1].tree)->EType((yyvsp[-2].type)); (yyval.tree)=(yyvsp[-1].tree);}
+                                     {(yyvsp[-1].tree)->EType((yyvsp[-2].type)); (yyvsp[-1].tree)->BStatic(true); (yyval.tree)=(yyvsp[-1].tree);}
 #line 1356 "parser.tab.c"
     break;
 
