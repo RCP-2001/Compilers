@@ -316,6 +316,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                     // bool a = FindAssingOp
                     treeNode *n = (treeNode *)symTbl->lookup(p->token()->tokenstr); // loopup left most symbol
                     // fprintf(stderr, "n Token: %s, n Arra arra value %d\n", n->token()->tokenstr, n->ArrayIs());
+                    //
                     if (n != NULL)
                     {
                         op2 = n->EType();
