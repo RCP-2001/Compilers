@@ -71,6 +71,8 @@ int main(int argc, char *argv[])
         }
     }
     semanticAnalysis(symTbl, GLOBAL_HEAD);
+    //symTbl->print(printTreeNode);
+
     treeNode *n = (treeNode *)symTbl->lookup("main");
     if (n == NULL)
     {
@@ -78,6 +80,11 @@ int main(int argc, char *argv[])
         numErrors++;
     }
     else if (n->GetChild(0) != NULL)
+    {
+        printf("ERROR(LINKER): A function named 'main()' must be defined.\n");
+        numErrors++;
+    }
+    else if (n->DKind() != FuncK)
     {
         printf("ERROR(LINKER): A function named 'main()' must be defined.\n");
         numErrors++;

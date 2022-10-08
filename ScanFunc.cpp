@@ -84,6 +84,9 @@ void treeNode::EType(ExpType etype)
 void treeNode::BStatic(bool type)
 {
     isStatic = type;
+    if(sibling != NULL){
+        sibling->BStatic(type);
+    }
 }
 
 void treeNode::addChildren(treeNode *aNode, int c)

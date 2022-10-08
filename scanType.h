@@ -174,17 +174,21 @@ public:
             delete sibling;
             sibling = NULL;
         }
+        // Small chance of seg fault when working "properly"
+        // Something in parser.y probably gets the same token
+        // Will deal with
         if (attr != NULL)
         {
             if (attr->tokenstr != NULL)
             {
-                free(attr->tokenstr);
+                //free(attr->tokenstr);
             }
             if (attr->svalue != NULL)
             {
-                free(attr->svalue);
+                //free(attr->svalue);
             }
-            delete attr;
+            //delete attr;
+            //attr == NULL;
         }
     }
 
