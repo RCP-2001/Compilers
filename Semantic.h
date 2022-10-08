@@ -1,3 +1,6 @@
+#ifndef SEMANTIC_H
+#define SEMANTIC_H
+
 #include "SymTbl/symbolTable.h"
 #include "scanType.h"
 #include <string>
@@ -20,3 +23,5 @@ void InitSiblings(treeNode* );
 
 bool  FindArrayAccessorOp(treeNode*);
 bool FindAssingOp(treeNode*);
+
+#endif

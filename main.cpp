@@ -75,7 +75,9 @@ int main(int argc, char *argv[])
         }
         else
         {
-            printf("ERR: Failed to open %s \n", argv[optind]);
+            printf("ERROR(ARGLIST): source file \"%s\" could not be opened.\n", argv[optind]);
+            printf("Number of warnings: 0\n");
+            printf("Number of errors: 1\n");
             exit(1);
         }
     }
@@ -123,7 +125,9 @@ int main(int argc, char *argv[])
         // If this is in the version that gets graded... Sadge
         if (GLOBAL_HEAD != NULL)
         {
-            GLOBAL_HEAD->printTree(1, 1);
+            SymbolTable *PrintSymTbl = new SymbolTable;
+            //PrintSymTbl->debug(true);
+            GLOBAL_HEAD->printTree(1, 1, PrintSymTbl);
             printf("\n");
         }
     }

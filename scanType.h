@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string>
+#include "Semantic.h"
+//#include "SymTbl/symbolTable.cpp"
 
 #ifndef MAX_CHILDREN
 #define MAX_CHILDREN 3
@@ -198,6 +200,7 @@ public:
     void addSibling(treeNode *);
     void addChildren(treeNode *, int child);
     void printTree(int levels, int);
+    void printTree(int levels, int, SymbolTable* symTbl);
 
     // function for acessing private elements
     // Ideally should be read only
