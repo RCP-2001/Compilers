@@ -21,8 +21,12 @@ int main(int argc, char *argv[])
 
     int Debug = 0;
     int Print = 0;
+    int SymDebug = 0;
+    int TypePrint = 0;
+    int help = 0;
+
     int opt;
-    while ((opt = getopt(argc, argv, "dp")) != -1)
+    while ((opt = getopt(argc, argv, "dpDPh")) != -1)
     {
         switch (opt)
         {
@@ -31,6 +35,15 @@ int main(int argc, char *argv[])
             break;
         case 'p':
             Print = 1;
+            break;
+        case 'P':
+            TypePrint = 1;
+            break;
+        case 'D':
+            SymDebug = 1;
+            break;
+        case 'h':
+            help = 1;
             break;
         default:
             break;
@@ -41,6 +54,16 @@ int main(int argc, char *argv[])
     if (Debug == 1)
     {
         yydebug = 1;
+    }
+    if (help == 1)
+    {
+        printf("usage: -c [options] [sourcefile]\n");
+        printf("options:\n");
+        printf("-d - turn on parser debugging\n");
+        printf("-D - turn on symbol table debugging\n");
+        printf("-h - print this usage message\n");
+        printf("-p - print the abstract syntax tree");
+        printf("-P - print the abstract syntax tree plus type information");
     }
 
     GLOBAL_HEAD = NULL;
@@ -60,6 +83,10 @@ int main(int argc, char *argv[])
 
     yyparse();
     SymbolTable *symTbl = new SymbolTable;
+    if (SymDebug == 1)
+    {
+        symTbl->debug(true);
+    }
     // symTbl->debug(true);
 
     if (Print == 1)
@@ -71,7 +98,7 @@ int main(int argc, char *argv[])
         }
     }
     semanticAnalysis(symTbl, GLOBAL_HEAD);
-    //symTbl->print(printTreeNode);
+    // symTbl->print(printTreeNode);
 
     treeNode *n = (treeNode *)symTbl->lookup("main");
     if (n == NULL)
@@ -89,13 +116,19 @@ int main(int argc, char *argv[])
         printf("ERROR(LINKER): A function named 'main()' must be defined.\n");
         numErrors++;
     }
+
+    if (TypePrint == 1 && numErrors == 0)
+    {
+        // not going to worry about making a proper -P option just yet (will work on after turning in to test harnness)
+        // If this is in the version that gets graded... Sadge
+        if (GLOBAL_HEAD != NULL)
+        {
+            GLOBAL_HEAD->printTree(1, 1);
+            printf("\n");
+        }
+    }
     printf("Number of warnings: %d\n", numWarnings);
     printf("Number of errors: %d\n", numErrors);
-
-    symTbl->enter("testScope");
-    //  symTbl->insert("test", newDeclNode(VarK, Integer));
-    //  symTbl->print( printTreeNode );
-    symTbl->leave();
 
     // Deleting Tree because we are done with it
     // note: Make sure the complier is 100% done done before doing this
