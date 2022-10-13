@@ -546,7 +546,7 @@ static int setValue(int linenum, int tokenClass, char *svalue){
     }
     else if(tokenClass == ID){
         //printf("ID Set val\n");
- 
+        //fprintf(stderr, "ID Number %d\n", ID);
         yylval.tokenData->svalue = strdup(svalue); 
 
     }

@@ -7,9 +7,9 @@ CXXFLAGS =
 
 PRSR_SRS = $(PARSER).y $(PARSER).l
 HDRS = scanType.h
-OBJS = lex.yy.o $(PARSER).tab.o ScanFunc.o SymTbl/symbolTable.o Semantic.o main.o 
-SRC = ScanFunc.cpp SymTbl/symbolTable.cpp lex.yy.c Semantic.cpp main.cpp 
-HEADERS = scanType.h SymTbl/symbolTable.h Semantic.h
+OBJS = lex.yy.o $(PARSER).tab.o ScanFunc.o SymTbl/symbolTable.o Semantic.o main.o IO.o
+SRC = ScanFunc.cpp SymTbl/symbolTable.cpp lex.yy.c Semantic.cpp main.cpp IO.cpp
+HEADERS = scanType.h SymTbl/symbolTable.h Semantic.h IO.h
 
 YACC = bison
 LEX = flex

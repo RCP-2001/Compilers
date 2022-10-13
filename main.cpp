@@ -3,6 +3,7 @@
 #include "Semantic.h"
 #include "parser.tab.h"
 #include "SymTbl/symbolTable.h"
+#include "IO.h"
 #include <stdio.h>
 #include <cstring>
 #include <unistd.h>
@@ -66,6 +67,8 @@ int main(int argc, char *argv[])
         printf("-P - print the abstract syntax tree plus type information");
     }
 
+    treeNode *IOTree = MakeIOFuncs();
+
     GLOBAL_HEAD = NULL;
     if (argc > 1)
     {
@@ -99,7 +102,11 @@ int main(int argc, char *argv[])
             printf("\n");
         }
     }
-    semanticAnalysis(symTbl, GLOBAL_HEAD);
+    // add IO funcs to symTbl
+    semanticAnalysis(symTbl, IOTree);
+    //fprintf(stderr,"Token %s\n",  IOTree->token()->tokenstr);
+
+    //semanticAnalysis(symTbl, GLOBAL_HEAD);
     // symTbl->print(printTreeNode);
 
     treeNode *n = (treeNode *)symTbl->lookup("main");
