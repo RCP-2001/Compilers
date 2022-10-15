@@ -54,10 +54,36 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
         // set init
         else if (tree->GetChild(0) != NULL)
         {
-            // if (tree->GetChild(0)->Kind() == ExpK && tree->EKind() == InitK)
-            //{
+            if (tree->GetChild(0)->EKind() == constantK && tree->EType() != tree->GetChild(0)->EType())
+            {
+                printf("ERROR(%d): Initializer for variable '%s' of type %s is of type %s\n", tree->token()->linenum, tree->token()->tokenstr, tree->RetETYPE().c_str(), tree->GetChild(0)->RetETYPE().c_str());
+                numErrors++;
+            }
+            if (tree->ArrayIs() == true && tree->GetChild(0)->ArrayIs() != true)
+            {
+                printf("ERROR(%d): Initializer for variable '%s' requires both operands be arrays or not but variable is an array and rhs is not an array.\n", tree->token()->linenum, tree->token()->tokenstr);
+                numErrors++;
+            }
+            else if (tree->ArrayIs() != true && tree->GetChild(0)->ArrayIs() == true)
+            {
+                printf("ERROR(%d): Initializer for variable '%s' requires both operands be arrays or not but variable is not an array and rhs is an array.\n", tree->token()->linenum, tree->token()->tokenstr);
+                numErrors++;
+            }
+
+            if (tree->GetChild(0)->EKind() == CallK || tree->GetChild(0)->EKind() == IdK || strcmp(tree->GetChild(0)->token()->tokenstr, "?") == 0)
+            {
+                printf("ERROR(%d): Initializer for variable '%s' is not a constant expression.\n", tree->token()->linenum, tree->token()->tokenstr);
+                numErrors++;
+                // IDK how much this matters, but this is an error that comes up
+                treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(0)->token()->tokenstr);
+                if (n != NULL && n->EType() != tree->EType())
+                {
+                    printf("ERROR(%d): Initializer for variable '%s' of type %s is of type %s\n", tree->token()->linenum, tree->token()->tokenstr, tree->RetETYPE().c_str(), n->RetETYPE().c_str());
+                    numErrors++;
+                }
+            }
+
             tree->InitIs(true);
-            //}
         }
         else if (tree->StaticIs() == true)
         {
@@ -139,6 +165,11 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                 printf("ERROR(%d): Expecting type int in position %d in range of for statement but got type %s.\n", tree->token()->linenum, 1, n->RetETYPE().c_str());
                 numErrors++;
             }
+            if (n != NULL && n->ArrayIs() == true)
+            {
+                printf("ERROR(%d): Cannot use array in position %d in range of for statement.\n", tree->token()->linenum, 1);
+                numErrors++;
+            }
         }
 
         // check Child 1
@@ -162,6 +193,11 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
             if (n != NULL && n->EType() != Integer)
             {
                 printf("ERROR(%d): Expecting type int in position %d in range of for statement but got type %s.\n", tree->token()->linenum, 2, n->RetETYPE().c_str());
+                numErrors++;
+            }
+            if (n != NULL && n->ArrayIs() == true)
+            {
+                printf("ERROR(%d): Cannot use array in position %d in range of for statement.\n", tree->token()->linenum, 2);
                 numErrors++;
             }
         }
@@ -188,6 +224,11 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                 if (n != NULL && n->EType() != Integer)
                 {
                     printf("ERROR(%d): Expecting type int in position %d in range of for statement but got type %s.\n", tree->token()->linenum, 3, n->RetETYPE().c_str());
+                    numErrors++;
+                }
+                if (n != NULL && n->ArrayIs() == true)
+                {
+                    printf("ERROR(%d): Cannot use array in position %d in range of for statement.\n", tree->token()->linenum, 3);
                     numErrors++;
                 }
             }
@@ -425,7 +466,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                     numErrors++;
                 }
             }
-            if (tree->GetChild(1)->Kind() == ExpK && tree->GetChild(0)->EKind() == constantK)
+            if (tree->GetChild(1)->Kind() == ExpK && tree->GetChild(1)->EKind() == constantK)
             {
                 if (tree->GetChild(1)->EType() != boolean)
                 {

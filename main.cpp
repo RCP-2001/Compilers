@@ -109,6 +109,9 @@ int main(int argc, char *argv[])
     semanticAnalysis(symTbl, GLOBAL_HEAD);
     //symTbl->print(printTreeNode);
 
+    symTbl->applyToAllGlobal(CheckForUse);
+
+    
     treeNode *n = (treeNode *)symTbl->lookup("main");
     if (n == NULL)
     {
