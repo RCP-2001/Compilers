@@ -26,4 +26,8 @@ bool FindAssingOp(treeNode*);
 
 void ParamTypeCheck(treeNode* n, treeNode* t, SymbolTable* symTbl);
 
+bool FindReturn(treeNode* Func, treeNode* test, SymbolTable* symTbl);
+
+void FindBreaks(treeNode* test);
+
 #endif

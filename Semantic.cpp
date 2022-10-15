@@ -27,6 +27,14 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
         // params *Should be init*
         InitSiblings(tree->GetChild(0)); // dont know if i should do it like this, but here we are
 
+        // find return statements and give them a type
+        if (FindReturn(tree, tree->GetChild(1), symTbl) == false && tree->EType() != Void && (strcmp(tree->token()->tokenstr, "input") != 0 && strcmp(tree->token()->tokenstr, "inputb") != 0 && strcmp(tree->token()->tokenstr, "inputc") != 0))
+        {
+            printf("WARNING(%d): Expecting to return type %s but function '%s' has no return statement.\n", tree->token()->linenum, tree->RetETYPE().c_str(), tree->token()->tokenstr);
+            numWarnings++;
+        }
+
+        //******
         symTbl->enter(TData->tokenstr);
         semanticAnalysis(symTbl, tree->GetChild(0));
         // Avoid following Compund Statement
@@ -110,7 +118,9 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
     // for loops
     else if (tree->Kind() == StmtK && tree->SKind() == ForK)
     {
-        // idk this might be wrong KEKW
+        // Find Breaks and set their "is used" to true
+        FindBreaks(tree->GetChild(2));
+        //
         symTbl->enter("ForLoop");
 
         semanticAnalysis(symTbl, tree->GetChild(0));
@@ -138,6 +148,16 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
     //******************
     // Everything above returns early (because reasons)
 
+    // Break
+    else if (tree->Kind() == StmtK && tree->SKind() == BreaK)
+    {
+        if (tree->UsedIs() == false)
+        {
+            printf("ERROR(%d): Cannot have a break statement outside of loop.\n", tree->token()->linenum);
+            numErrors++;
+        }
+    }
+
     // Range Brothers out the roof we're not the same (He's Baby Keem)
     else if (tree->Kind() == StmtK && tree->SKind() == RangeK)
     {
@@ -153,8 +173,22 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
             std::string opType = OpType(tree->GetChild(0)->token()->tokenstr);
             if (opType != "int")
             {
-                printf("ERROR(%d): Expecting type int in position %d in range of for statement but got type %s.\n", tree->token()->linenum, 1, opType.c_str());
-                numErrors++;
+
+                if (opType == "ArrayAcc" || opType == "assign")
+                {
+                    treeNode *LeftSym = CheckType(tree->GetChild(0), symTbl); // find Left most Symbol
+                    treeNode *LeftDec = (treeNode *)symTbl->lookup(LeftSym->token()->tokenstr);
+                    if (LeftDec->EType() != Integer)
+                    {
+                        printf("ERROR(%d): Expecting type int in position %d in range of for statement but got type %s.\n", tree->token()->linenum, 1, LeftDec->RetETYPE().c_str());
+                        numErrors++;
+                    }
+                }
+                else
+                {
+                    printf("ERROR(%d): Expecting type int in position %d in range of for statement but got type %s.\n", tree->token()->linenum, 1, opType.c_str());
+                    numErrors++;
+                }
             }
         }
         else if (tree->GetChild(0)->EKind() == IdK || tree->GetChild(0)->EKind() == CallK)
@@ -183,8 +217,21 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
             std::string opType = OpType(tree->GetChild(1)->token()->tokenstr);
             if (opType != "int")
             {
-                printf("ERROR(%d): Expecting type int in position %d in range of for statement but got type %s.\n", tree->token()->linenum, 2, opType.c_str());
-                numErrors++;
+                if (opType == "ArrayAcc" || opType == "assign")
+                {
+                    treeNode *LeftSym = CheckType(tree->GetChild(1), symTbl); // find Left most Symbol
+                    treeNode *LeftDec = (treeNode *)symTbl->lookup(LeftSym->token()->tokenstr);
+                    if (LeftDec->EType() != Integer)
+                    {
+                        printf("ERROR(%d): Expecting type int in position %d in range of for statement but got type %s.\n", tree->token()->linenum, 2, LeftDec->RetETYPE().c_str());
+                        numErrors++;
+                    }
+                }
+                else
+                {
+                    printf("ERROR(%d): Expecting type int in position %d in range of for statement but got type %s.\n", tree->token()->linenum, 2, opType.c_str());
+                    numErrors++;
+                }
             }
         }
         else if (tree->GetChild(1)->EKind() == IdK || tree->GetChild(1)->EKind() == CallK)
@@ -214,8 +261,22 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                 std::string opType = OpType(tree->GetChild(2)->token()->tokenstr);
                 if (opType != "int")
                 {
-                    printf("ERROR(%d): Expecting type int in position %d in range of for statement but got type %s.\n", tree->token()->linenum, 3, opType.c_str());
-                    numErrors++;
+                    if (opType == "ArrayAcc" || opType == "assign")
+                    {
+                        treeNode *LeftSym = CheckType(tree->GetChild(2), symTbl); // find Left most Symbol
+                        treeNode *LeftDec = (treeNode *)symTbl->lookup(LeftSym->token()->tokenstr);
+                        if (LeftDec->EType() != Integer)
+                        {
+                            printf("ERROR(%d): Expecting type int in position %d in range of for statement but got type %s.\n", tree->token()->linenum, 3, LeftDec->RetETYPE().c_str());
+                            numErrors++;
+                        }
+                    }
+                    else
+                    {
+
+                        printf("ERROR(%d): Expecting type int in position %d in range of for statement but got type %s.\n", tree->token()->linenum, 3, opType.c_str());
+                        numErrors++;
+                    }
                 }
             }
             else if (tree->GetChild(2)->EKind() == IdK || tree->GetChild(2)->EKind() == CallK)
@@ -264,6 +325,9 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
 
     else if (tree->Kind() == StmtK && tree->SKind() == WhileK)
     {
+        // Finding Breaks
+        FindBreaks(tree->GetChild(1));
+
         if (tree->GetChild(0)->EKind() == constantK && tree->GetChild(0)->EType() != boolean)
         {
             printf("ERROR(%d): Expecting Boolean test condition in while statement but got type %s.\n", tree->token()->linenum, tree->GetChild(0)->RetETYPE().c_str());
@@ -1319,4 +1383,125 @@ void ParamTypeCheck(treeNode *n, treeNode *c, SymbolTable *symTbl)
         CallChild = CallChild->nextSibling();
         param++;
     }
+}
+
+bool FindReturn(treeNode *Func, treeNode *test, SymbolTable *symTbl)
+{
+    // has return been found?
+    bool retVal = false;
+    if (test == NULL)
+    {
+        // printf("returning\n");
+        return retVal;
+    }
+    // printf("Test Token %s \n", test->token()->tokenstr );
+    if (test->Kind() == StmtK && test->SKind() == ReturnK)
+    {
+        retVal = true;
+        // printf("Is Return Statment\n");
+        if (test->GetChild(0) == NULL && Func->EType() != Void)
+        {
+            printf("ERROR(%d): Function '%s' at line %d is expecting to return type %s but return has no value.\n", test->token()->linenum, Func->token()->tokenstr, Func->token()->linenum, Func->RetETYPE().c_str());
+            numErrors++;
+        }
+        if (test->GetChild(0) != NULL)
+        {
+            // Constantk
+            if (test->GetChild(0)->EKind() == constantK)
+            {
+                if (Func->EType() == Void)
+                {
+                    printf("ERROR(%d): Function '%s' at line %d is expecting no return value, but return has a value.\n", test->token()->linenum, Func->token()->tokenstr, Func->token()->linenum);
+                    numErrors++;
+                }
+                else if (test->GetChild(0)->EType() != Func->EType())
+                {
+                    printf("ERROR(%d): Function '%s' at line %d is expecting to return type %s but returns type %s.\n", test->token()->linenum, Func->token()->tokenstr, Func->token()->linenum, Func->RetETYPE().c_str(), test->GetChild(0)->RetETYPE().c_str());
+                    numErrors++;
+                }
+                if (test->GetChild(0)->ArrayIs() == true)
+                {
+                    printf("ERROR(%d): Cannot return an array.\n", test->token()->linenum);
+                    numErrors++;
+                }
+            }
+            // Calls and ID
+            if (test->GetChild(0)->EKind() == CallK || test->GetChild(0)->EKind() == IdK)
+            {
+                treeNode *n = (treeNode *)symTbl->lookup(test->GetChild(0)->token()->tokenstr);
+                if (Func->EType() == Void)
+                {
+                    printf("ERROR(%d): Function '%s' at line %d is expecting no return value, but return has a value.\n", test->token()->linenum, Func->token()->tokenstr, Func->token()->linenum);
+                    numErrors++;
+                }
+                else if (n->EType() != Func->EType())
+                {
+                    printf("ERROR(%d): Function '%s' at line %d is expecting to return type %s but returns type %s.\n", test->token()->linenum, Func->token()->tokenstr, Func->token()->linenum, Func->RetETYPE().c_str(), n->RetETYPE().c_str());
+                    numErrors++;
+                }
+                if (n->ArrayIs() == true)
+                {
+                    printf("ERROR(%d): Cannot return an array.\n", test->token()->linenum);
+                    numErrors++;
+                }
+            }
+            // Ops
+            if (test->GetChild(0)->EKind() == OpK || test->GetChild(0)->EKind() == AssingK)
+            {
+                std::string opType = OpType(test->GetChild(0)->token()->tokenstr);
+                if (Func->EType() == Void)
+                {
+                    printf("ERROR(%d): Function '%s' at line %d is expecting no return value, but return has a value.\n", test->token()->linenum, Func->token()->tokenstr, Func->token()->linenum);
+                    numErrors++;
+                }
+                else if (opType != Func->RetETYPE())
+                {
+                    if (opType == "ArrayAcc" || opType == "assign")
+                    {
+                        treeNode *LeftSym = CheckType(test->GetChild(0), symTbl); // find Left most Symbol
+                        treeNode *LeftDec = (treeNode *)symTbl->lookup(LeftSym->token()->tokenstr);
+                        if (LeftDec->EType() != Func->EType())
+                        {
+                            printf("ERROR(%d): Function '%s' at line %d is expecting to return type %s but returns type %s.\n", test->token()->linenum, Func->token()->tokenstr, Func->token()->linenum, Func->RetETYPE().c_str(), LeftDec->RetETYPE().c_str());
+                            numErrors++;
+                        }
+                        if (LeftDec->ArrayIs() == true)
+                        {
+                            printf("ERROR(%d): Cannot return an array.\n", test->token()->linenum);
+                            numErrors++;
+                        }
+                    }
+                    else
+                    {
+                        printf("ERROR(%d): Function '%s' at line %d is expecting to return type %s but returns type %s.\n", test->token()->linenum, Func->token()->tokenstr, Func->token()->linenum, Func->RetETYPE().c_str(), opType.c_str());
+                        numErrors++;
+                    }
+                }
+            }
+        }
+        // test->EType(Func->EType());
+    }
+
+    for (int i = 0; i < MAX_CHILDREN; i++)
+    {
+        retVal = (FindReturn(Func, test->GetChild(i), symTbl) || retVal);
+    }
+    retVal = (FindReturn(Func, test->nextSibling(), symTbl) || retVal);
+    return retVal;
+}
+
+void FindBreaks(treeNode *test)
+{
+    if (test == NULL)
+    {
+        return;
+    }
+    if (test->Kind() == StmtK && test->SKind() == BreaK)
+    {
+        test->UsedIs(true);
+    }
+    FindBreaks(test->GetChild(0));
+    FindBreaks(test->GetChild(1));
+    FindBreaks(test->GetChild(2));
+    FindBreaks(test->nextSibling());
 }
