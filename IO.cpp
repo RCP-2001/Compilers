@@ -90,10 +90,15 @@ treeNode *MakeIOFuncs()
     treeNode *OutputBParam = newDeclNode(ParamK, boolean, OutputBParamToken);
     treeNode *OutputCParam = newDeclNode(ParamK, Char, OutputCParamToken);
 
+    //Params are "Used" (probably will be able to get rid of)
+    OutputParam->UsedIs(true);
+    OutputBParam->UsedIs(true);
+    OutputCParam->UsedIs(true);
+
     // create tree nodes for funcs
     treeNode *Input = newDeclNode(FuncK, Integer, InputToken);
     treeNode *InputB = newDeclNode(FuncK, boolean, InputbToken);
-    treeNode *InputC = newDeclNode(FuncK, Char, InputbToken);
+    treeNode *InputC = newDeclNode(FuncK, Char, InputcToken);
     treeNode *Output = newDeclNode(FuncK, Void, OutputToken);
     treeNode *OutputB = newDeclNode(FuncK, Void, OutputbToken);
     treeNode *OutputC = newDeclNode(FuncK, Void, OutputcToken);

@@ -201,6 +201,7 @@ public:
     void addChildren(treeNode *, int child);
     void printTree(int levels, int);
     void printTree(int levels, int, SymbolTable* symTbl);
+    int GetChildren(int);
 
     // function for acessing private elements
     // Ideally should be read only

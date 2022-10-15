@@ -29,8 +29,12 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
 
         symTbl->enter(TData->tokenstr);
         semanticAnalysis(symTbl, tree->GetChild(0));
-        semanticAnalysis(symTbl, tree->GetChild(1)->GetChild(0));
-        semanticAnalysis(symTbl, tree->GetChild(1)->GetChild(1));
+        // Avoid following Compund Statement
+        if (tree->GetChild(1) != NULL)
+        {
+            semanticAnalysis(symTbl, tree->GetChild(1)->GetChild(0));
+            semanticAnalysis(symTbl, tree->GetChild(1)->GetChild(1));
+        }
         symTbl->applyToAll(CheckForUse);
         symTbl->leave();
         semanticAnalysis(symTbl, tree->nextSibling());
@@ -104,20 +108,147 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
         semanticAnalysis(symTbl, tree->nextSibling());
         return;
     }
-    else if (tree->Kind() == StmtK && tree->SKind() == RangeK)
-    {
-        // This almost certianly isnt right haha
-        return;
-    }
 
     //******************
     // Everything above returns early (because reasons)
 
-    // To Do: If Statemnets
-    //(Mostly just check the warnings tho)
+    // Range Brothers out the roof we're not the same (He's Baby Keem)
+    else if (tree->Kind() == StmtK && tree->SKind() == RangeK)
+    {
+        // Check Child 0
+        // Const
+        if (tree->GetChild(0)->EKind() == constantK && tree->GetChild(0)->EType() != Integer)
+        {
+            printf("ERROR(%d): Expecting type int in position %d in range of for statement but got type %s.\n", tree->token()->linenum, 1, tree->GetChild(0)->RetETYPE().c_str());
+            numErrors++;
+        }
+        else if (tree->GetChild(0)->EKind() == OpK || tree->GetChild(0)->EKind() == AssingK)
+        {
+            std::string opType = OpType(tree->GetChild(0)->token()->tokenstr);
+            if (opType != "int")
+            {
+                printf("ERROR(%d): Expecting type int in position %d in range of for statement but got type %s.\n", tree->token()->linenum, 1, opType.c_str());
+                numErrors++;
+            }
+        }
+        else if (tree->GetChild(0)->EKind() == IdK || tree->GetChild(0)->EKind() == CallK)
+        {
+            treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(0)->token()->tokenstr);
+            if (n != NULL && n->EType() != Integer)
+            {
+                printf("ERROR(%d): Expecting type int in position %d in range of for statement but got type %s.\n", tree->token()->linenum, 1, n->RetETYPE().c_str());
+                numErrors++;
+            }
+        }
+
+        // check Child 1
+        if (tree->GetChild(1)->EKind() == constantK && tree->GetChild(1)->EType() != Integer)
+        {
+            printf("ERROR(%d): Expecting type int in position %d in range of for statement but got type %s.\n", tree->token()->linenum, 2, tree->GetChild(1)->RetETYPE().c_str());
+            numErrors++;
+        }
+        else if (tree->GetChild(1)->EKind() == OpK || tree->GetChild(1)->EKind() == AssingK)
+        {
+            std::string opType = OpType(tree->GetChild(1)->token()->tokenstr);
+            if (opType != "int")
+            {
+                printf("ERROR(%d): Expecting type int in position %d in range of for statement but got type %s.\n", tree->token()->linenum, 2, opType.c_str());
+                numErrors++;
+            }
+        }
+        else if (tree->GetChild(1)->EKind() == IdK || tree->GetChild(1)->EKind() == CallK)
+        {
+            treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(1)->token()->tokenstr);
+            if (n != NULL && n->EType() != Integer)
+            {
+                printf("ERROR(%d): Expecting type int in position %d in range of for statement but got type %s.\n", tree->token()->linenum, 2, n->RetETYPE().c_str());
+                numErrors++;
+            }
+        }
+        // Check Child 2
+        if (tree->GetChild(2) != NULL)
+        {
+            if (tree->GetChild(2)->EKind() == constantK && tree->GetChild(2)->EType() != Integer)
+            {
+                printf("ERROR(%d): Expecting type int in position %d in range of for statement but got type %s.\n", tree->token()->linenum, 3, tree->GetChild(2)->RetETYPE().c_str());
+                numErrors++;
+            }
+            else if (tree->GetChild(2)->EKind() == OpK || tree->GetChild(2)->EKind() == AssingK)
+            {
+                std::string opType = OpType(tree->GetChild(2)->token()->tokenstr);
+                if (opType != "int")
+                {
+                    printf("ERROR(%d): Expecting type int in position %d in range of for statement but got type %s.\n", tree->token()->linenum, 3, opType.c_str());
+                    numErrors++;
+                }
+            }
+            else if (tree->GetChild(2)->EKind() == IdK || tree->GetChild(2)->EKind() == CallK)
+            {
+                treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(2)->token()->tokenstr);
+                if (n != NULL && n->EType() != Integer)
+                {
+                    printf("ERROR(%d): Expecting type int in position %d in range of for statement but got type %s.\n", tree->token()->linenum, 3, n->RetETYPE().c_str());
+                    numErrors++;
+                }
+            }
+        }
+    }
+
+    else if (tree->Kind() == StmtK && tree->SKind() == IfK)
+    {
+        if (tree->GetChild(0)->EKind() == constantK && tree->GetChild(0)->EType() != boolean)
+        {
+            printf("ERROR(%d): Expecting Boolean test condition in if statement but got type %s.\n", tree->token()->linenum, tree->GetChild(0)->RetETYPE().c_str());
+            numErrors++;
+        }
+        else if (tree->GetChild(0)->EKind() == OpK || tree->GetChild(0)->EKind() == AssingK)
+        {
+            std::string opType = OpType(tree->GetChild(0)->token()->tokenstr);
+            if (opType != "bool")
+            {
+                printf("ERROR(%d): Expecting Boolean test condition in if statement but got type %s.\n", tree->token()->linenum, opType.c_str());
+                numErrors++;
+            }
+        }
+        else if (tree->GetChild(0)->EKind() == IdK || tree->GetChild(0)->EKind() == CallK)
+        {
+            treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(0)->token()->tokenstr);
+            if (n != NULL && n->EType() != boolean)
+            {
+                printf("ERROR(%d): Expecting Boolean test condition in if statement but got type %s.\n", tree->token()->linenum, n->RetETYPE().c_str());
+                numErrors++;
+            }
+        }
+    }
+
+    else if (tree->Kind() == StmtK && tree->SKind() == WhileK)
+    {
+        if (tree->GetChild(0)->EKind() == constantK && tree->GetChild(0)->EType() != boolean)
+        {
+            printf("ERROR(%d): Expecting Boolean test condition in while statement but got type %s.\n", tree->token()->linenum, tree->GetChild(0)->RetETYPE().c_str());
+            numErrors++;
+        }
+        else if (tree->GetChild(0)->EKind() == OpK || tree->GetChild(0)->EKind() == AssingK)
+        {
+            std::string opType = OpType(tree->GetChild(0)->token()->tokenstr);
+            if (opType != "bool")
+            {
+                printf("ERROR(%d): Expecting Boolean test condition in while statement but got type %s.\n", tree->token()->linenum, opType.c_str());
+                numErrors++;
+            }
+        }
+        else if (tree->GetChild(0)->EKind() == IdK || tree->GetChild(0)->EKind() == CallK)
+        {
+            treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(0)->token()->tokenstr);
+            if (n != NULL && n->EType() != boolean)
+            {
+                printf("ERROR(%d): Expecting Boolean test condition in while statement but got type %s.\n", tree->token()->linenum, n->RetETYPE().c_str());
+                numErrors++;
+            }
+        }
+    }
 
     //********************
-    // calls
     // return cool
     else if (tree->Kind() == StmtK && tree->SKind() == ReturnK)
     {
@@ -137,6 +268,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
             }
         }
     }
+    // calls
     if (tree->Kind() == ExpK && tree->EKind() == CallK)
     {
         treeNode *n = (treeNode *)symTbl->lookup(tree->token()->tokenstr);
@@ -145,12 +277,28 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
             printf("ERROR(%d): Symbol '%s' is not declared.\n", tree->token()->linenum, tree->token()->tokenstr);
             numErrors++;
         }
-        else if (n->DKind() != FuncK)
+        else
         {
-            printf("ERROR(%d): '%s' is a simple variable and cannot be called.\n", tree->token()->linenum, tree->token()->tokenstr);
-            numErrors++;
-            n->UsedIs(true);
+            if (n->DKind() != FuncK)
+            {
+                printf("ERROR(%d): '%s' is a simple variable and cannot be called.\n", tree->token()->linenum, tree->token()->tokenstr);
+                numErrors++;
+                n->UsedIs(true);
+            }
+            if (n->GetChildren(0) > tree->GetChildren(0))
+            {
+                printf("ERROR(%d): Too few parameters passed for function '%s' declared on line %d.\n", tree->token()->linenum, tree->token()->tokenstr, n->token()->linenum);
+                numErrors++;
+            }
+            else if (n->GetChildren(0) < tree->GetChildren(0))
+            {
+                printf("ERROR(%d): Too many parameters passed for function '%s' declared on line %d.\n", tree->token()->linenum, tree->token()->tokenstr, n->token()->linenum);
+                numErrors++;
+            }
+
+            ParamTypeCheck(n, tree, symTbl);
         }
+        // fprintf(stderr, "n Child: %d, tree Child %d \n", n->GetChildren(0), tree->GetChildren(0));
 
         // printf("CallK \n");
         // printTreeNode(tree);
@@ -197,7 +345,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
             // Refactor and check
             // might need right child be looked at first
             bool sideIsArray = false; // To prevent duplicate  error messages
-
+            // IDK and CallK
             if (tree->GetChild(0)->Kind() == ExpK && (tree->GetChild(0)->EKind() == IdK || tree->GetChild(0)->EKind() == CallK))
             {
                 treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(0)->token()->tokenstr);
@@ -245,6 +393,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                     // check init
                 }
             }
+            // Ops
             if (tree->GetChild(0)->Kind() == ExpK && tree->GetChild(0)->EKind() == OpK)
             {
                 // treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(0)->token()->tokenstr);
@@ -267,7 +416,25 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                     numErrors++;
                 }
             }
+            // Const
+            if (tree->GetChild(0)->Kind() == ExpK && tree->GetChild(0)->EKind() == constantK)
+            {
+                if (tree->GetChild(0)->EType() != boolean)
+                {
+                    printf("ERROR(%d): '%s' requires operands of type %s but lhs is of type %s.\n", tree->token()->linenum, tree->token()->tokenstr, "bool", tree->GetChild(0)->RetETYPE().c_str());
+                    numErrors++;
+                }
+            }
+            if (tree->GetChild(1)->Kind() == ExpK && tree->GetChild(0)->EKind() == constantK)
+            {
+                if (tree->GetChild(1)->EType() != boolean)
+                {
+                    printf("ERROR(%d): '%s' requires operands of type %s but rhs is of type %s.\n", tree->token()->linenum, tree->token()->tokenstr, "bool", tree->GetChild(0)->RetETYPE().c_str());
+                    numErrors++;
+                }
+            }
         }
+
         //********************************
         // Equal Type (Including assingment)
         if (strcmp(tree->token()->tokenstr, "==") == 0 || strcmp(tree->token()->tokenstr, "!=") == 0 || strcmp(tree->token()->tokenstr, "<") == 0 || strcmp(tree->token()->tokenstr, "<=") == 0 || strcmp(tree->token()->tokenstr, ">") == 0 || strcmp(tree->token()->tokenstr, ">=") == 0 || strcmp(tree->token()->tokenstr, "=") == 0)
@@ -474,7 +641,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                         sideIsArray = true;
                         numErrors++;
                     }
-                    if (n->EType() != Integer )
+                    if (n->EType() != Integer)
                     {
                         printf("ERROR(%d): '%s' requires operands of type %s but lhs is of type %s.\n", tree->token()->linenum, tree->token()->tokenstr, RETYPE(Integer).c_str(), RETYPE(n->EType()).c_str());
                         numErrors++;
@@ -495,7 +662,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                 if (opType != "int")
                 {
 
-                    if (n != NULL && n->EType() != Integer )
+                    if (n != NULL && n->EType() != Integer)
                     {
                         printf("ERROR(%d): '%s' requires operands of type %s but lhs is of type %s.\n", tree->token()->linenum, tree->token()->tokenstr, RETYPE(Integer).c_str(), n->RetETYPE().c_str());
                         numErrors++;
@@ -954,8 +1121,16 @@ void CheckForUse(std::string s, void *p)
     treeNode *n = (treeNode *)p;
     if (n->UsedIs() == false)
     {
-        printf("WARNING(%d): The variable '%s' seems not to be used.\n", n->token()->linenum, n->token()->tokenstr);
-        numWarnings++;
+        if (n->DKind() == VarK)
+        {
+            printf("WARNING(%d): The variable '%s' seems not to be used.\n", n->token()->linenum, n->token()->tokenstr);
+            numWarnings++;
+        }
+        else if (n->DKind() == ParamK)
+        {
+            printf("WARNING(%d): The parameter '%s' seems not to be used.\n", n->token()->linenum, n->token()->tokenstr);
+            numWarnings++;
+        }
     }
 }
 
@@ -1030,5 +1205,77 @@ bool FindAssingOp(treeNode *n)
     else
     {
         return FindAssingOp(n->GetChild(1));
+    }
+}
+
+void ParamTypeCheck(treeNode *n, treeNode *c, SymbolTable *symTbl)
+{
+    int param = 1;
+    treeNode *FuncChild = n->GetChild(0);
+    treeNode *CallChild = c->GetChild(0);
+    while (FuncChild != NULL && CallChild != NULL)
+    {
+        treeNode *p = (treeNode *)symTbl->lookup(CallChild->token()->tokenstr);
+
+        if (FuncChild->EType() != CallChild->EType())
+        {
+            if (CallChild->Kind() == ExpK && (CallChild->EKind() == CallK || CallChild->EKind() == IdK))
+            {
+                if (p != NULL && (p->EType() != FuncChild->EType()))
+                {
+                    printf("ERROR(%d): Expecting type %s in parameter %i of call to '%s' declared on line %d but got type %s.\n", c->token()->linenum, FuncChild->RetETYPE().c_str(), param, n->token()->tokenstr, n->token()->linenum, p->RetETYPE().c_str());
+                    numErrors++;
+                }
+            }
+            else if (CallChild->Kind() == ExpK && (CallChild->EKind() == OpK || CallChild->EKind() == AssingK))
+            {
+                std::string opType = OpType(CallChild->token()->tokenstr);
+                if (opType != FuncChild->RetETYPE())
+                {
+                    if (opType == "ArrayAcc" || opType == "assign")
+                    {
+                        treeNode *LeftSym = CheckType(CallChild, symTbl); // find Left most Symbol
+                        treeNode *LeftDec = (treeNode *)symTbl->lookup(LeftSym->token()->tokenstr);
+                        if (LeftDec->EType() != FuncChild->EType())
+                        {
+                            printf("ERROR(%d): Expecting type %s in parameter %i of call to '%s' declared on line %d but got type %s.\n", c->token()->linenum, FuncChild->RetETYPE().c_str(), param, n->token()->tokenstr, n->token()->linenum, LeftSym->RetETYPE().c_str());
+                            numErrors++;
+                        }
+                    }
+                    else
+                    {
+                        printf("ERROR(%d): Expecting type %s in parameter %i of call to '%s' declared on line %d but got type %s.\n", c->token()->linenum, FuncChild->RetETYPE().c_str(), param, n->token()->tokenstr, n->token()->linenum, opType.c_str());
+                        numErrors++;
+                    }
+                }
+            }
+            else
+            {
+                printf("ERROR(%d): Expecting type %s in parameter %i of call to '%s' declared on line %d but got type %s.\n", c->token()->linenum, FuncChild->RetETYPE().c_str(), param, n->token()->tokenstr, n->token()->linenum, CallChild->RetETYPE().c_str());
+                numErrors++;
+            }
+        }
+
+        if (CallChild->Kind() == ExpK && (CallChild->EKind() == CallK || CallChild->EKind() == IdK) && p != NULL)
+        {
+            if (p->ArrayIs() != true && FuncChild->ArrayIs() == true)
+            {
+                printf("ERROR(%d): Expecting array in parameter %i of call to '%s' declared on line %d.\n", c->token()->linenum, param, n->token()->tokenstr, n->token()->linenum);
+                numErrors++;
+                // printf("p token:%s, n token %s \n", p->token()->tokenstr, n->token()->tokenstr);
+            }
+            else if (p->ArrayIs() == true && FuncChild->ArrayIs() != true)
+            {
+                printf("ERROR(%d): Not expecting array in parameter %i of call to '%s' declared on line %d.\n", c->token()->linenum, param, n->token()->tokenstr, n->token()->linenum);
+                numErrors++;
+                // printf("p token:%s, n token %s \n", p->token()->tokenstr, n->token()->tokenstr);
+            }
+        }
+
+        // printf("Func: %s, Call: %s \n", FuncChild->token()->tokenstr, CallChild->token()->tokenstr);
+
+        FuncChild = FuncChild->nextSibling();
+        CallChild = CallChild->nextSibling();
+        param++;
     }
 }

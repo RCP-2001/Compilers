@@ -485,3 +485,13 @@ void treeNode::printTree(int levels, int siblingNum, SymbolTable *symTbl)
         sibling->printTree(levels, siblingNum + 1, symTbl);
     }
 }
+
+int treeNode::GetChildren(int c){
+    int count = 0;
+    treeNode* CurrentChild = child[c];
+    while(CurrentChild != NULL){
+        count++;
+        CurrentChild = CurrentChild->nextSibling();
+    }
+    return count;
+}

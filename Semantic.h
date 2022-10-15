@@ -24,4 +24,6 @@ void InitSiblings(treeNode* );
 bool  FindArrayAccessorOp(treeNode*);
 bool FindAssingOp(treeNode*);
 
+void ParamTypeCheck(treeNode* n, treeNode* t, SymbolTable* symTbl);
+
 #endif

@@ -106,23 +106,23 @@ int main(int argc, char *argv[])
     semanticAnalysis(symTbl, IOTree);
     //fprintf(stderr,"Token %s\n",  IOTree->token()->tokenstr);
 
-    //semanticAnalysis(symTbl, GLOBAL_HEAD);
-    // symTbl->print(printTreeNode);
+    semanticAnalysis(symTbl, GLOBAL_HEAD);
+    //symTbl->print(printTreeNode);
 
     treeNode *n = (treeNode *)symTbl->lookup("main");
     if (n == NULL)
     {
-        printf("ERROR(LINKER): A function named 'main()' must be defined.\n");
+        printf("ERROR(LINKER): A function named 'main' with no parameters must be defined.\n");
         numErrors++;
     }
     else if (n->GetChild(0) != NULL)
     {
-        printf("ERROR(LINKER): A function named 'main()' must be defined.\n");
+        printf("ERROR(LINKER): A function named 'main' with no parameters must be defined.\n");
         numErrors++;
     }
     else if (n->DKind() != FuncK)
     {
-        printf("ERROR(LINKER): A function named 'main()' must be defined.\n");
+        printf("ERROR(LINKER): A function named 'main' with no parameters must be defined.\n");
         numErrors++;
     }
 
