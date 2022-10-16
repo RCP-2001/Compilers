@@ -1385,7 +1385,7 @@ void ParamTypeCheck(treeNode *n, treeNode *c, SymbolTable *symTbl)
                     {
                         treeNode *LeftSym = CheckType(CallChild, symTbl); // find Left most Symbol
                         treeNode *LeftDec = (treeNode *)symTbl->lookup(LeftSym->token()->tokenstr);
-                        if (LeftDec->EType() != FuncChild->EType())
+                        if (LeftDec != NULL && LeftDec->EType() != FuncChild->EType())
                         {
                             printf("ERROR(%d): Expecting type %s in parameter %i of call to '%s' declared on line %d but got type %s.\n", c->token()->linenum, FuncChild->RetETYPE().c_str(), param, n->token()->tokenstr, n->token()->linenum, LeftSym->RetETYPE().c_str());
                             numErrors++;
