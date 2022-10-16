@@ -134,6 +134,8 @@ int main(int argc, char *argv[])
         if (GLOBAL_HEAD != NULL)
         {
             SymbolTable *PrintSymTbl = new SymbolTable;
+            //Add IO to new SymTbl
+            semanticAnalysis(PrintSymTbl, IOTree);
             // PrintSymTbl->debug(true);
             GLOBAL_HEAD->printTree(1, 1, PrintSymTbl);
             printf("\n");
