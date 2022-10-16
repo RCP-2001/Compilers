@@ -90,7 +90,7 @@ treeNode *MakeIOFuncs()
     treeNode *OutputBParam = newDeclNode(ParamK, boolean, OutputBParamToken);
     treeNode *OutputCParam = newDeclNode(ParamK, Char, OutputCParamToken);
 
-    //Params are "Used" (probably will be able to get rid of)
+    // Params are "Used" (probably will be able to get rid of)
     OutputParam->UsedIs(true);
     OutputBParam->UsedIs(true);
     OutputCParam->UsedIs(true);
@@ -104,15 +104,23 @@ treeNode *MakeIOFuncs()
     treeNode *OutputC = newDeclNode(FuncK, Void, OutputcToken);
     treeNode *Outputnl = newDeclNode(FuncK, Void, OutputnlToken);
 
-    //Add params as Children
+    // TreeNodes "are used"
+    Input->UsedIs(true);
+    InputB->UsedIs(true);
+    InputC->UsedIs(true);
+    Output->UsedIs(true);
+    OutputB->UsedIs(true);
+    OutputC->UsedIs(true);
+    Outputnl->UsedIs(true);
+    // Add params as Children
     Output->addChildren(OutputParam, 0);
     OutputB->addChildren(OutputBParam, 0);
     OutputC->addChildren(OutputCParam, 0);
 
-    //Return Statements Output
-    //Still Dummy Stuff\
+    // Return Statements Output
+    // Still Dummy Stuff\
 
-    //all of these bad boys ass siblings to Input
+    // all of these bad boys ass siblings to Input
     Input->addSibling(InputB);
     Input->addSibling(InputC);
     Input->addSibling(Output);
@@ -121,5 +129,4 @@ treeNode *MakeIOFuncs()
     Input->addSibling(Outputnl);
 
     return Input;
-
 }

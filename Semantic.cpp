@@ -27,13 +27,6 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
         // params *Should be init*
         InitSiblings(tree->GetChild(0)); // dont know if i should do it like this, but here we are
 
-        // find return statements and give them a type
-        if (FindReturn(tree, tree->GetChild(1), symTbl) == false && tree->EType() != Void && (strcmp(tree->token()->tokenstr, "input") != 0 && strcmp(tree->token()->tokenstr, "inputb") != 0 && strcmp(tree->token()->tokenstr, "inputc") != 0))
-        {
-            printf("WARNING(%d): Expecting to return type %s but function '%s' has no return statement.\n", tree->token()->linenum, tree->RetETYPE().c_str(), tree->token()->tokenstr);
-            numWarnings++;
-        }
-
         //******
         symTbl->enter(TData->tokenstr);
         semanticAnalysis(symTbl, tree->GetChild(0));
@@ -43,6 +36,13 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
             semanticAnalysis(symTbl, tree->GetChild(1)->GetChild(0));
             semanticAnalysis(symTbl, tree->GetChild(1)->GetChild(1));
         }
+        // find return statements and give them a type
+        if (FindReturn(tree, tree->GetChild(1), symTbl) == false && tree->EType() != Void && (strcmp(tree->token()->tokenstr, "input") != 0 && strcmp(tree->token()->tokenstr, "inputb") != 0 && strcmp(tree->token()->tokenstr, "inputc") != 0))
+        {
+            printf("WARNING(%d): Expecting to return type %s but function '%s' has no return statement.\n", tree->token()->linenum, tree->RetETYPE().c_str(), tree->token()->tokenstr);
+            numWarnings++;
+        }
+
         symTbl->applyToAll(CheckForUse);
         symTbl->leave();
         semanticAnalysis(symTbl, tree->nextSibling());
@@ -60,7 +60,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
             numErrors++;
         }
         // set init
-        else if (tree->GetChild(0) != NULL)
+        if (tree->GetChild(0) != NULL)
         {
             if (tree->GetChild(0)->EKind() == constantK && tree->EType() != tree->GetChild(0)->EType())
             {
@@ -121,11 +121,14 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
         // Find Breaks and set their "is used" to true
         FindBreaks(tree->GetChild(2));
         //
+        tree->GetChild(0)->UsedIs(true);
         symTbl->enter("ForLoop");
 
         semanticAnalysis(symTbl, tree->GetChild(0));
         // set init to true for for loop vars
         tree->GetChild(0)->InitIs(true);
+        semanticAnalysis(symTbl, tree->GetChild(1));
+
         // check if next stmt is compund stmt
         if (tree->GetChild(2) != NULL && tree->GetChild(2)->SKind() == CompoundK)
         {
@@ -137,7 +140,6 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
         {
             semanticAnalysis(symTbl, tree->GetChild(2));
         }
-        semanticAnalysis(symTbl, tree->GetChild(1));
 
         symTbl->applyToAll(CheckForUse);
         symTbl->leave();
@@ -308,17 +310,38 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
             std::string opType = OpType(tree->GetChild(0)->token()->tokenstr);
             if (opType != "bool")
             {
-                printf("ERROR(%d): Expecting Boolean test condition in if statement but got type %s.\n", tree->token()->linenum, opType.c_str());
-                numErrors++;
+                if (opType == "ArrayAcc" || opType == "assign")
+                {
+                    treeNode *LeftSym = CheckType(tree->GetChild(0), symTbl); // find Left most Symbol
+                    treeNode *LeftDec = (treeNode *)symTbl->lookup(LeftSym->token()->tokenstr);
+                    if (LeftDec->EType() != boolean)
+                    {
+                        printf("ERROR(%d): Expecting Boolean test condition in if statement but got type %s.\n", tree->token()->linenum, LeftDec->RetETYPE().c_str());
+                        numErrors++;
+                    }
+                }
+                else
+                {
+                    printf("ERROR(%d): Expecting Boolean test condition in if statement but got type %s.\n", tree->token()->linenum, opType.c_str());
+                    numErrors++;
+                }
             }
         }
         else if (tree->GetChild(0)->EKind() == IdK || tree->GetChild(0)->EKind() == CallK)
         {
             treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(0)->token()->tokenstr);
-            if (n != NULL && n->EType() != boolean)
+            if (n != NULL)
             {
-                printf("ERROR(%d): Expecting Boolean test condition in if statement but got type %s.\n", tree->token()->linenum, n->RetETYPE().c_str());
-                numErrors++;
+                if (n->EType() != boolean)
+                {
+                    printf("ERROR(%d): Expecting Boolean test condition in if statement but got type %s.\n", tree->token()->linenum, n->RetETYPE().c_str());
+                    numErrors++;
+                }
+                if (n->ArrayIs() == true)
+                {
+                    printf("ERROR(%d): Cannot use array as test condition in if statement.\n", tree->token()->linenum);
+                    numErrors++;
+                }
             }
         }
     }
@@ -345,19 +368,30 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
         else if (tree->GetChild(0)->EKind() == IdK || tree->GetChild(0)->EKind() == CallK)
         {
             treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(0)->token()->tokenstr);
-            if (n != NULL && n->EType() != boolean)
+            if (n != NULL)
             {
-                printf("ERROR(%d): Expecting Boolean test condition in while statement but got type %s.\n", tree->token()->linenum, n->RetETYPE().c_str());
-                numErrors++;
+                if (n->EType() != boolean)
+                {
+                    printf("ERROR(%d): Expecting Boolean test condition in while statement but got type %s.\n", tree->token()->linenum, n->RetETYPE().c_str());
+                    numErrors++;
+                }
+                if (n->ArrayIs() == true)
+                {
+                    printf("ERROR(%d): Cannot use array as test condition in while statement.\n", tree->token()->linenum);
+                    numErrors++;
+                }
             }
         }
     }
 
     //********************
     // return cool
+    //
     else if (tree->Kind() == StmtK && tree->SKind() == ReturnK)
     {
-        if (tree->GetChild(0) != NULL)
+        // Was going to do it this way, but now do it during Func Decleration
+        // Well, techninclly after lol, Keeping for memes
+        /*if (tree->GetChild(0) != NULL)
         {
             if (tree->GetChild(0)->EKind() == IdK)
             {
@@ -371,7 +405,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                     }
                 }
             }
-        }
+        }*/
     }
     // calls
     if (tree->Kind() == ExpK && tree->EKind() == CallK)
@@ -384,23 +418,25 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
         }
         else
         {
+            n->UsedIs(true);
             if (n->DKind() != FuncK)
             {
                 printf("ERROR(%d): '%s' is a simple variable and cannot be called.\n", tree->token()->linenum, tree->token()->tokenstr);
                 numErrors++;
-                n->UsedIs(true);
             }
-            if (n->GetChildren(0) > tree->GetChildren(0))
+            else
             {
-                printf("ERROR(%d): Too few parameters passed for function '%s' declared on line %d.\n", tree->token()->linenum, tree->token()->tokenstr, n->token()->linenum);
-                numErrors++;
+                if (n->GetChildren(0) > tree->GetChildren(0))
+                {
+                    printf("ERROR(%d): Too few parameters passed for function '%s' declared on line %d.\n", tree->token()->linenum, tree->token()->tokenstr, n->token()->linenum);
+                    numErrors++;
+                }
+                else if (n->GetChildren(0) < tree->GetChildren(0))
+                {
+                    printf("ERROR(%d): Too many parameters passed for function '%s' declared on line %d.\n", tree->token()->linenum, tree->token()->tokenstr, n->token()->linenum);
+                    numErrors++;
+                }
             }
-            else if (n->GetChildren(0) < tree->GetChildren(0))
-            {
-                printf("ERROR(%d): Too many parameters passed for function '%s' declared on line %d.\n", tree->token()->linenum, tree->token()->tokenstr, n->token()->linenum);
-                numErrors++;
-            }
-
             ParamTypeCheck(n, tree, symTbl);
         }
         // fprintf(stderr, "n Child: %d, tree Child %d \n", n->GetChildren(0), tree->GetChildren(0));
@@ -506,6 +542,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                 if (opType != "bool" != 0)
                 {
                     // printf("??? %s \n\n\n", tree->token()->tokenstr);
+
                     printf("ERROR(%d): '%s' requires operands of type %s but lhs is of type %s.\n", tree->token()->linenum, tree->token()->tokenstr, "bool", opType.c_str());
                     numErrors++;
                 }
@@ -517,6 +554,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                 if (opType != "bool")
                 {
                     // printf("??? %s \n\n\n", tree->token()->tokenstr);
+
                     printf("ERROR(%d): '%s' requires operands of type %s but rhs is of type %s.\n", tree->token()->linenum, tree->token()->tokenstr, "bool", opType.c_str());
                     numErrors++;
                 }
@@ -534,7 +572,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
             {
                 if (tree->GetChild(1)->EType() != boolean)
                 {
-                    printf("ERROR(%d): '%s' requires operands of type %s but rhs is of type %s.\n", tree->token()->linenum, tree->token()->tokenstr, "bool", tree->GetChild(0)->RetETYPE().c_str());
+                    printf("ERROR(%d): '%s' requires operands of type %s but rhs is of type %s.\n", tree->token()->linenum, tree->token()->tokenstr, "bool", tree->GetChild(1)->RetETYPE().c_str());
                     numErrors++;
                 }
             }
@@ -816,9 +854,10 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                 std::string opType = OpType(tree->GetChild(1)->token()->tokenstr);
                 if (opType != "int")
                 {
+                    // printf("OpType: %s\n\n\n", opType.c_str());
                     if (n != NULL && n->EType() != Integer)
                     {
-                        printf("ERROR(%d): '%s' requires operands of type %s but lhs is of type %s.\n", tree->token()->linenum, tree->token()->tokenstr, RETYPE(Integer).c_str(), n->RetETYPE().c_str());
+                        printf("ERROR(%d): '%s' requires operands of type %s but rhs is of type %s.\n", tree->token()->linenum, tree->token()->tokenstr, RETYPE(Integer).c_str(), opType.c_str());
                         numErrors++;
                     }
                 }
@@ -915,7 +954,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                 std::string opType = OpType(tree->GetChild(0)->token()->tokenstr);
                 if (opType != "bool")
                 {
-                    printf("ERROR(%d): Unary '%s' requires an operand of %s but was given %s.\n", tree->token()->linenum, tree->token()->tokenstr, RETYPE(Integer).c_str(), opType.c_str());
+                    printf("ERROR(%d): Unary '%s' requires an operand of type %s but was given type %s.\n", tree->token()->linenum, tree->token()->tokenstr, RETYPE(Integer).c_str(), opType.c_str());
                     numErrors++;
                 }
             }
@@ -1054,7 +1093,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                 n = (treeNode *)symTbl->lookup(tree->GetChild(1)->token()->tokenstr);
                 if (n != NULL)
                 {
-                    if (n->EType() != Integer)
+                    if (n->EType() != Integer && (n->DKind() != FuncK && tree->GetChild(1)->EKind() == IdK))
                     {
                         // printf("test\n");
                         // printf("TEST TEST TEST %s \n", RETYPE(n->EType()).c_str());
@@ -1234,6 +1273,11 @@ void CheckForUse(std::string s, void *p)
         else if (n->DKind() == ParamK)
         {
             printf("WARNING(%d): The parameter '%s' seems not to be used.\n", n->token()->linenum, n->token()->tokenstr);
+            numWarnings++;
+        }
+        else if (n->DKind() == FuncK && strcmp(n->token()->tokenstr, "main") != 0)
+        {
+            printf("WARNING(%d): The function '%s' seems not to be used.\n", n->token()->linenum, n->token()->tokenstr);
             numWarnings++;
         }
     }
@@ -1463,15 +1507,18 @@ bool FindReturn(treeNode *Func, treeNode *test, SymbolTable *symTbl)
                     {
                         treeNode *LeftSym = CheckType(test->GetChild(0), symTbl); // find Left most Symbol
                         treeNode *LeftDec = (treeNode *)symTbl->lookup(LeftSym->token()->tokenstr);
-                        if (LeftDec->EType() != Func->EType())
+                        if (LeftDec != NULL)
                         {
-                            printf("ERROR(%d): Function '%s' at line %d is expecting to return type %s but returns type %s.\n", test->token()->linenum, Func->token()->tokenstr, Func->token()->linenum, Func->RetETYPE().c_str(), LeftDec->RetETYPE().c_str());
-                            numErrors++;
-                        }
-                        if (LeftDec->ArrayIs() == true)
-                        {
-                            printf("ERROR(%d): Cannot return an array.\n", test->token()->linenum);
-                            numErrors++;
+                            if (LeftDec->EType() != Func->EType())
+                            {
+                                printf("ERROR(%d): Function '%s' at line %d is expecting to return type %s but returns type %s.\n", test->token()->linenum, Func->token()->tokenstr, Func->token()->linenum, Func->RetETYPE().c_str(), LeftDec->RetETYPE().c_str());
+                                numErrors++;
+                            }
+                            if (LeftDec->ArrayIs() == true && opType != "ArrayAcc")
+                            {
+                                printf("ERROR(%d): Cannot return an array.\n", test->token()->linenum);
+                                numErrors++;
+                            }
                         }
                     }
                     else
