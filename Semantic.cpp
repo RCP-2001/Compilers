@@ -53,6 +53,8 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
     // params and variables
     else if (tree->Kind() == DeclK)
     {
+        semanticAnalysis(symTbl, tree->GetChild(0));
+
         if (symTbl->insert(TData->tokenstr, tree) == false)
         {
             treeNode *n = (treeNode *)symTbl->lookup(TData->tokenstr);
@@ -93,12 +95,11 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
 
             tree->InitIs(true);
         }
-        else if (tree->StaticIs() == true)
+        if (tree->StaticIs() == true)
         {
             tree->InitIs(true);
         }
 
-        semanticAnalysis(symTbl, tree->GetChild(0));
         semanticAnalysis(symTbl, tree->GetChild(1));
         semanticAnalysis(symTbl, tree->GetChild(2));
         semanticAnalysis(symTbl, tree->nextSibling());
