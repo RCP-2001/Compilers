@@ -75,6 +75,7 @@ int main(int argc, char *argv[])
         if ((yyin = fopen(argv[optind], "r")))
         {
             // file open successful
+            
         }
         else
         {
