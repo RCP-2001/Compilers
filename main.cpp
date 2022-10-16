@@ -70,21 +70,19 @@ int main(int argc, char *argv[])
     treeNode *IOTree = MakeIOFuncs();
 
     GLOBAL_HEAD = NULL;
-    if (argc > 1)
+
+    if ((yyin = fopen(argv[optind], "r")))
     {
-        if ((yyin = fopen(argv[optind], "r")))
-        {
-            // file open successful
-            
-        }
-        else
-        {
-            printf("ERROR(ARGLIST): source file \"%s\" could not be opened.\n", argv[optind]);
-            printf("Number of warnings: 0\n");
-            printf("Number of errors: 1\n");
-            exit(1);
-        }
+        // file open successful
     }
+    else
+    {
+        printf("ERROR(ARGLIST): source file \"%s\" could not be opened.\n", argv[optind]);
+        printf("Number of warnings: 0\n");
+        printf("Number of errors: 1\n");
+        exit(1);
+    }
+
     //***********************End of setup type beat**********************
 
     yyparse();
@@ -105,14 +103,13 @@ int main(int argc, char *argv[])
     }
     // add IO funcs to symTbl
     semanticAnalysis(symTbl, IOTree);
-    //fprintf(stderr,"Token %s\n",  IOTree->token()->tokenstr);
+    // fprintf(stderr,"Token %s\n",  IOTree->token()->tokenstr);
 
     semanticAnalysis(symTbl, GLOBAL_HEAD);
-    //symTbl->print(printTreeNode);
+    // symTbl->print(printTreeNode);
 
     symTbl->applyToAllGlobal(CheckForUse);
 
-    
     treeNode *n = (treeNode *)symTbl->lookup("main");
     if (n == NULL)
     {
@@ -137,7 +134,7 @@ int main(int argc, char *argv[])
         if (GLOBAL_HEAD != NULL)
         {
             SymbolTable *PrintSymTbl = new SymbolTable;
-            //PrintSymTbl->debug(true);
+            // PrintSymTbl->debug(true);
             GLOBAL_HEAD->printTree(1, 1, PrintSymTbl);
             printf("\n");
         }

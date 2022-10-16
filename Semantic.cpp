@@ -1429,20 +1429,23 @@ bool FindReturn(treeNode *Func, treeNode *test, SymbolTable *symTbl)
             if (test->GetChild(0)->EKind() == CallK || test->GetChild(0)->EKind() == IdK)
             {
                 treeNode *n = (treeNode *)symTbl->lookup(test->GetChild(0)->token()->tokenstr);
-                if (Func->EType() == Void)
+                if (n != NULL)
                 {
-                    printf("ERROR(%d): Function '%s' at line %d is expecting no return value, but return has a value.\n", test->token()->linenum, Func->token()->tokenstr, Func->token()->linenum);
-                    numErrors++;
-                }
-                else if (n->EType() != Func->EType())
-                {
-                    printf("ERROR(%d): Function '%s' at line %d is expecting to return type %s but returns type %s.\n", test->token()->linenum, Func->token()->tokenstr, Func->token()->linenum, Func->RetETYPE().c_str(), n->RetETYPE().c_str());
-                    numErrors++;
-                }
-                if (n->ArrayIs() == true)
-                {
-                    printf("ERROR(%d): Cannot return an array.\n", test->token()->linenum);
-                    numErrors++;
+                    if (Func->EType() == Void)
+                    {
+                        printf("ERROR(%d): Function '%s' at line %d is expecting no return value, but return has a value.\n", test->token()->linenum, Func->token()->tokenstr, Func->token()->linenum);
+                        numErrors++;
+                    }
+                    else if (n->EType() != Func->EType())
+                    {
+                        printf("ERROR(%d): Function '%s' at line %d is expecting to return type %s but returns type %s.\n", test->token()->linenum, Func->token()->tokenstr, Func->token()->linenum, Func->RetETYPE().c_str(), n->RetETYPE().c_str());
+                        numErrors++;
+                    }
+                    if (n->ArrayIs() == true)
+                    {
+                        printf("ERROR(%d): Cannot return an array.\n", test->token()->linenum);
+                        numErrors++;
+                    }
                 }
             }
             // Ops
