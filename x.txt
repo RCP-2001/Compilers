@@ -1,15 +1,63 @@
-ERROR(12): Symbol 'lyra' is already declared at line 11.
-ERROR(16): Symbol 'asha' is not declared.
-ERROR(16): Symbol 'bree' is not declared.
-ERROR(16): Symbol 'cloe' is not declared.
-ERROR(19): Symbol 'y' is not declared.
-ERROR(20): Symbol 'y' is not declared.
-WARNING(21): The variable 'y' seems not to be used.
-WARNING(21): The variable 'z' seems not to be used.
-WARNING(4): Expecting to return type int but function 'dog' has no return statement.
-WARNING(4): The parameter 'c' seems not to be used.
-WARNING(4): The parameter 'd' seems not to be used.
-WARNING(4): The function 'dog' seems not to be used.
-ERROR(LINKER): A function named 'main' with no parameters must be defined.
-Number of warnings: 6
-Number of errors: 7
+WARNING(6): Variable 'b' may be uninitialized when used here.
+WARNING(8): Variable 'aa' may be uninitialized when used here.
+WARNING(9): Variable 'bb' may be uninitialized when used here.
+WARNING(9): Variable 'cc' may be uninitialized when used here.
+WARNING(10): Variable 'c' may be uninitialized when used here.
+WARNING(11): Variable 'd' may be uninitialized when used here.
+WARNING(12): Variable 'dd' may be uninitialized when used here.
+WARNING(13): Variable 'ee' may be uninitialized when used here.
+Func: main returns type void [line: 1]
+.   Child: 1  Compound [line: 2]
+.   .   Child: 0  Var: a of type int [line: 3]
+.   .   Sibling: 1  Var: b of type int [line: 3]
+.   .   Sibling: 2  Var: c of type int [line: 3]
+.   .   Sibling: 3  Var: d of type int [line: 3]
+.   .   Sibling: 4  Var: aa is array of type int [line: 4]
+.   .   Sibling: 5  Var: bb is array of type int [line: 4]
+.   .   Sibling: 6  Var: cc is array of type int [line: 4]
+.   .   Sibling: 7  Var: dd is array of type int [line: 4]
+.   .   Sibling: 8  Var: ee is array of type int [line: 4]
+.   .   Child: 1  Assign: = of type int [line: 6]
+.   .   .   Child: 0  Id: a of type int [line: 6]
+.   .   .   Child: 1  Id: b of type int [line: 6]
+.   .   Sibling: 1  Assign: = of type int [line: 7]
+.   .   .   Child: 0  Id: a of type int [line: 7]
+.   .   .   Child: 1  Id: b of type int [line: 7]
+.   .   Sibling: 2  Assign: = of type int [line: 8]
+.   .   .   Child: 0  Id: a of type int [line: 8]
+.   .   .   Child: 1  Op: [ of type int [line: 8]
+.   .   .   .   Child: 0  Id: aa of type int [line: 8]
+.   .   .   .   Child: 1  Const 3 of type int [line: 8]
+.   .   Sibling: 3  Assign: = of type int [line: 9]
+.   .   .   Child: 0  Id: a of type int [line: 9]
+.   .   .   Child: 1  Op: [ of type int [line: 9]
+.   .   .   .   Child: 0  Id: bb of type int [line: 9]
+.   .   .   .   Child: 1  Op: [ of type int [line: 9]
+.   .   .   .   .   Child: 0  Id: cc of type int [line: 9]
+.   .   .   .   .   Child: 1  Const 3 of type int [line: 9]
+.   .   Sibling: 4  Assign: = of type int [line: 10]
+.   .   .   Child: 0  Op: [ of type int [line: 10]
+.   .   .   .   Child: 0  Id: cc of type int [line: 10]
+.   .   .   .   Child: 1  Id: c of type int [line: 10]
+.   .   .   Child: 1  Id: a of type int [line: 10]
+.   .   Sibling: 5  Assign: = of type int [line: 11]
+.   .   .   Child: 0  Op: [ of type int [line: 11]
+.   .   .   .   Child: 0  Id: cc of type int [line: 11]
+.   .   .   .   Child: 1  Op: + of type int [line: 11]
+.   .   .   .   .   Child: 0  Id: c of type int [line: 11]
+.   .   .   .   .   Child: 1  Id: d of type int [line: 11]
+.   .   .   Child: 1  Id: a of type int [line: 11]
+.   .   Sibling: 6  Op: [ of type int [line: 12]
+.   .   .   Child: 0  Id: cc of type int [line: 12]
+.   .   .   Child: 1  Op: [ of type int [line: 12]
+.   .   .   .   Child: 0  Id: dd of type int [line: 12]
+.   .   .   .   Child: 1  Const 3 of type int [line: 12]
+.   .   Sibling: 7  Assign: = of type int [line: 13]
+.   .   .   Child: 0  Op: [ of type int [line: 13]
+.   .   .   .   Child: 0  Id: cc of type int [line: 13]
+.   .   .   .   Child: 1  Op: [ of type int [line: 13]
+.   .   .   .   .   Child: 0  Id: ee of type int [line: 13]
+.   .   .   .   .   Child: 1  Const 3 of type int [line: 13]
+.   .   .   Child: 1  Const 284 of type int [line: 13]
+Number of warnings: 8
+Number of errors: 0
