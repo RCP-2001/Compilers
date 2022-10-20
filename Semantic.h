@@ -5,29 +5,30 @@
 #include "scanType.h"
 #include <string>
 
+void printTreeNode(void *node);
 
-void printTreeNode(void* node);
-
-
-void semanticAnalysis(SymbolTable* symTbl, treeNode* tree);
+void semanticAnalysis(SymbolTable *symTbl, treeNode *tree);
 
 bool OpTokenIsBool(char *);
 std::string OpType(char *);
 
 void CheckForUse(std::string, void *);
 
+treeNode *CheckType(treeNode *, SymbolTable *);
 
-treeNode* CheckType(treeNode*, SymbolTable*);
+void InitSiblings(treeNode *);
 
-void InitSiblings(treeNode* );
+bool FindArrayAccessorOp(treeNode *);
+bool FindAssingOp(treeNode *);
 
-bool  FindArrayAccessorOp(treeNode*);
-bool FindAssingOp(treeNode*);
+void ParamTypeCheck(treeNode *n, treeNode *t, SymbolTable *symTbl);
 
-void ParamTypeCheck(treeNode* n, treeNode* t, SymbolTable* symTbl);
+bool FindReturn(treeNode *Func, treeNode *test, SymbolTable *symTbl);
 
-bool FindReturn(treeNode* Func, treeNode* test, SymbolTable* symTbl);
+void FindBreaks(treeNode *test);
 
-void FindBreaks(treeNode* test);
+void FindUnintVariables(treeNode* Test, SymbolTable*);
+
+bool FindNonConstExp(treeNode *ID, treeNode * Testing);
 
 #endif

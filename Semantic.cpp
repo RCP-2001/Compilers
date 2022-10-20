@@ -64,6 +64,9 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
         // set init
         if (tree->GetChild(0) != NULL)
         {
+            FindNonConstExp(tree, tree->GetChild(0));
+            ///
+
             if (tree->GetChild(0)->EKind() == constantK && tree->EType() != tree->GetChild(0)->EType())
             {
                 printf("ERROR(%d): Initializer for variable '%s' of type %s is of type %s\n", tree->token()->linenum, tree->token()->tokenstr, tree->RetETYPE().c_str(), tree->GetChild(0)->RetETYPE().c_str());
@@ -106,8 +109,8 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
 
             if (tree->GetChild(0)->EKind() == CallK || tree->GetChild(0)->EKind() == IdK || strcmp(tree->GetChild(0)->token()->tokenstr, "?") == 0)
             {
-                printf("ERROR(%d): Initializer for variable '%s' is not a constant expression.\n", tree->token()->linenum, tree->token()->tokenstr);
-                numErrors++;
+                //   printf("ERROR(%d): Initializer for variable '%s' is not a constant expression.\n", tree->token()->linenum, tree->token()->tokenstr);
+                //  numErrors++;
                 // IDK how much this matters, but this is an error that comes up
                 treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(0)->token()->tokenstr);
                 if (n != NULL && n->EType() != tree->EType())
@@ -621,7 +624,10 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                 treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(1)->token()->tokenstr);
                 if (n != NULL /*&& n->EType() != Void*/)
                 {
-                    op2 = n->EType();
+                   if ((n->DKind() == FuncK && tree->GetChild(1)->EKind() == CallK) || (n->DKind() != FuncK && tree->GetChild(1)->EKind() == IdK))
+                    {
+                        op2 = n->EType();
+                    }
 
                     op2A = n->ArrayIs();
                     if (n->InitIs() == false && tree->GetChild(1)->EKind() == IdK && n->DKind() != FuncK)
@@ -641,10 +647,12 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                 if (opType == "bool")
                 {
                     op2 = boolean;
+                    FindUnintVariables(tree->GetChild(1), symTbl);
                 }
                 else if (opType == "int")
                 {
                     op2 = Integer;
+                    FindUnintVariables(tree->GetChild(1), symTbl);
                 }
                 else if ((opType == "ArrayAcc") || (opType == "assign"))
                 {
@@ -696,7 +704,10 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
 
                 if (n != NULL && n->EType() != Void)
                 {
-                    op1 = n->EType();
+                    if ((n->DKind() == FuncK && tree->GetChild(0)->EKind() == CallK) || (n->DKind() != FuncK && tree->GetChild(0)->EKind() == IdK))
+                    {
+                        op1 = n->EType();
+                    }
                     op1A = n->ArrayIs();
                     // set init if assign
                     if (strcmp(tree->token()->tokenstr, "=") == 0)
@@ -721,10 +732,12 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                 if (opType == "bool")
                 {
                     op1 = boolean;
+                    FindUnintVariables(tree->GetChild(0), symTbl);
                 }
                 else if (opType == "int")
                 {
                     op1 = Integer;
+                    FindUnintVariables(tree->GetChild(0), symTbl);
                 }
                 else if ((opType == "ArrayAcc") || (opType == "assign"))
                 {
@@ -831,6 +844,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
             // op
             if (tree->GetChild(0)->Kind() == ExpK && (tree->GetChild(0)->EKind() == OpK) || (tree->GetChild(0)->EKind() == AssingK))
             {
+                FindUnintVariables(tree->GetChild(0), symTbl);      // Need????
                 treeNode *p = CheckType(tree->GetChild(0), symTbl); // finds type of left most
                 treeNode *n = (treeNode *)symTbl->lookup(p->token()->tokenstr);
                 std::string opType = OpType(tree->GetChild(0)->token()->tokenstr);
@@ -880,16 +894,22 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
             // op
             if (tree->GetChild(1)->Kind() == ExpK && (tree->GetChild(1)->EKind() == OpK) || (tree->GetChild(1)->EKind() == AssingK))
             {
+                FindUnintVariables(tree->GetChild(1), symTbl); // need???
 
                 treeNode *p = CheckType(tree->GetChild(1), symTbl); // finds type of left most
                 treeNode *n = (treeNode *)symTbl->lookup(p->token()->tokenstr);
                 std::string opType = OpType(tree->GetChild(1)->token()->tokenstr);
                 if (opType != "int")
                 {
-                    // printf("OpType: %s\n\n\n", opType.c_str());
-                    if (n != NULL && n->EType() != Integer)
+                    if (opType == "ArrayAcc" && n != NULL && n->EType() != Integer)
                     {
                         printf("ERROR(%d): '%s' requires operands of type %s but rhs is of type %s.\n", tree->token()->linenum, tree->token()->tokenstr, RETYPE(Integer).c_str(), n->RetETYPE().c_str());
+                        numErrors++;
+                    }
+                    // printf("OpType: %s\n\n\n", opType.c_str());
+                    else if (n != NULL && n->EType() != Integer)
+                    {
+                        printf("ERROR(%d): '%s' requires operands of type %s but rhs is of type %s.\n", tree->token()->linenum, tree->token()->tokenstr, RETYPE(Integer).c_str(), opType.c_str());
                         numErrors++;
                     }
                 }
@@ -933,6 +953,8 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
             // ops
             else if (tree->GetChild(0)->EKind() == OpK || tree->GetChild(0)->EKind() == AssingK)
             {
+                FindUnintVariables(tree->GetChild(0), symTbl); // need??
+
                 treeNode *p = CheckType(tree->GetChild(0), symTbl); // finds type of left most
                 treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(0)->token()->tokenstr);
                 std::string opType = OpType(tree->GetChild(0)->token()->tokenstr);
@@ -983,10 +1005,12 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
             }
             else if (tree->GetChild(0)->EKind() == OpK || tree->GetChild(0)->EKind() == AssingK)
             {
+                FindUnintVariables(tree->GetChild(0), symTbl); // need???
+
                 std::string opType = OpType(tree->GetChild(0)->token()->tokenstr);
                 if (opType != "bool")
                 {
-                    printf("ERROR(%d): Unary '%s' requires an operand of type %s but was given type %s.\n", tree->token()->linenum, tree->token()->tokenstr, RETYPE(Integer).c_str(), opType.c_str());
+                    printf("ERROR(%d): Unary '%s' requires an operand of type %s but was given type %s.\n", tree->token()->linenum, tree->token()->tokenstr, RETYPE(boolean).c_str(), opType.c_str());
                     numErrors++;
                 }
             }
@@ -1035,7 +1059,9 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
             else if (tree->GetChild(0)->EKind() == OpK || tree->GetChild(0)->EKind() == AssingK)
             {
                 std::string opType = OpType(tree->GetChild(0)->token()->tokenstr);
-                if (opType == "ArrayAcc" || opType == "assign") // Array Acc might not be right here tbh
+                bool ArraAcc = FindArrayAccessorOp(tree->GetChild(0));
+
+                if (/*opType == "ArrayAcc" ||*/ opType == "assign") // Array Acc might not be right here tbh
                 {
                     treeNode *LeftSym = CheckType(tree->GetChild(0), symTbl); // find Left most Symbol
                     treeNode *LeftDec = (treeNode *)symTbl->lookup(LeftSym->token()->tokenstr);
@@ -1045,8 +1071,14 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                         numErrors++;
                     }
                 }
-                else
+                else if (tree->GetChild(0)->EKind() != AssingK)
                 {
+                    printf("ERROR(%d): The operation '%s' only works with arrays.\n", tree->token()->linenum, tree->token()->tokenstr);
+                    numErrors++;
+                }
+                else if (ArraAcc == true)
+                {
+                    // printf("EMEMEMMEMEM\n\n");
                     printf("ERROR(%d): The operation '%s' only works with arrays.\n", tree->token()->linenum, tree->token()->tokenstr);
                     numErrors++;
                 }
@@ -1387,6 +1419,7 @@ void ParamTypeCheck(treeNode *n, treeNode *c, SymbolTable *symTbl)
     int param = 1;
     treeNode *FuncChild = n->GetChild(0);
     treeNode *CallChild = c->GetChild(0);
+
     while (FuncChild != NULL && CallChild != NULL)
     {
         treeNode *p = (treeNode *)symTbl->lookup(CallChild->token()->tokenstr);
@@ -1417,6 +1450,7 @@ void ParamTypeCheck(treeNode *n, treeNode *c, SymbolTable *symTbl)
             else if (CallChild->Kind() == ExpK && (CallChild->EKind() == OpK || CallChild->EKind() == AssingK))
             {
                 std::string opType = OpType(CallChild->token()->tokenstr);
+                bool HasArrayAccOp = FindArrayAccessorOp(CallChild);
                 if (opType != FuncChild->RetETYPE())
                 {
                     if (opType == "ArrayAcc" || opType == "assign")
@@ -1426,7 +1460,7 @@ void ParamTypeCheck(treeNode *n, treeNode *c, SymbolTable *symTbl)
                         if (LeftDec != NULL && LeftDec->EType() != FuncChild->EType())
                         {
                             printf("ERROR(%d): Expecting type %s in parameter %i of call to '%s' declared on line %d but got type %s.\n", c->token()->linenum, FuncChild->RetETYPE().c_str(), param, n->token()->tokenstr, n->token()->linenum, LeftSym->RetETYPE().c_str());
-                            printf("MEMEMEMEMEM\n");
+                            // printf("MEMEMEMEMEM\n");
                             numErrors++;
                         }
                         if (LeftDec != NULL && LeftDec->ArrayIs() != true && FuncChild->ArrayIs() == true)
@@ -1435,7 +1469,7 @@ void ParamTypeCheck(treeNode *n, treeNode *c, SymbolTable *symTbl)
                             numErrors++;
                             // printf("p token:%s, n token %s \n", p->token()->tokenstr, n->token()->tokenstr);
                         }
-                        else if (LeftDec != NULL && LeftDec->ArrayIs() == true && FuncChild->ArrayIs() != true)
+                        else if (LeftDec != NULL && LeftDec->ArrayIs() == true && FuncChild->ArrayIs() != true && opType != "ArrayAcc" && HasArrayAccOp == false)
                         {
                             printf("ERROR(%d): Not expecting array in parameter %i of call to '%s' declared on line %d.\n", c->token()->linenum, param, n->token()->tokenstr, n->token()->linenum);
                             numErrors++;
@@ -1458,15 +1492,20 @@ void ParamTypeCheck(treeNode *n, treeNode *c, SymbolTable *symTbl)
                 {
                     treeNode *LeftSym = CheckType(CallChild, symTbl); // find Left most Symbol
                     treeNode *LeftDec = (treeNode *)symTbl->lookup(LeftSym->token()->tokenstr);
-                    if (LeftDec->ArrayIs() == true)
+                    if (LeftDec->ArrayIs() == true && HasArrayAccOp == false)
                     {
                         printf("ERROR(%d): Not expecting array in parameter %i of call to '%s' declared on line %d.\n", c->token()->linenum, param, n->token()->tokenstr, n->token()->linenum);
                         numErrors++;
                     }
                 }
             }
+            else if ((p == NULL) && (CallChild->EKind() == CallK || CallChild->EKind() == IdK))
+            {
+                // symbol not declared, will get handedled laterbasi
+            }
             else
             {
+                // printf("EMEMMEMEM\n\n\n");
                 printf("ERROR(%d): Expecting type %s in parameter %i of call to '%s' declared on line %d but got type %s.\n", c->token()->linenum, FuncChild->RetETYPE().c_str(), param, n->token()->tokenstr, n->token()->linenum, CallChild->RetETYPE().c_str());
                 numErrors++;
             }
@@ -1621,4 +1660,61 @@ void FindBreaks(treeNode *test)
     FindBreaks(test->GetChild(1));
     FindBreaks(test->GetChild(2));
     FindBreaks(test->nextSibling());
+}
+
+void FindUnintVariables(treeNode *Test, SymbolTable *symTbl)
+{
+    if (Test == NULL)
+    {
+        return;
+    }
+    if (Test->EKind() == IdK)
+    {
+        treeNode *n = (treeNode *)symTbl->lookup(Test->token()->tokenstr);
+        if (n != NULL && n->InitIs() != true)
+        {
+            printf("WARNING(%d): Variable '%s' may be uninitialized when used here.\n", Test->token()->linenum, n->token()->tokenstr);
+            numWarnings++;
+            n->InitIs(true);
+        }
+    }
+    FindUnintVariables(Test->GetChild(0), symTbl);
+    FindUnintVariables(Test->GetChild(1), symTbl);
+    FindUnintVariables(Test->GetChild(2), symTbl);
+}
+
+bool FindNonConstExp(treeNode *ID, treeNode *Test)
+{
+    if (Test == NULL)
+    {
+        return false;
+    }
+    if (Test->EKind() == IdK || Test->EKind() == CallK)
+    {
+        // printf("MEMEMEM\n");
+
+        printf("ERROR(%d): Initializer for variable '%s' is not a constant expression.\n", Test->token()->linenum, ID->token()->tokenstr);
+        numErrors++;
+        return true;
+    }
+    if (strcmp(Test->token()->tokenstr, "?") == 0)
+    {
+        // printf("MEMEMEM\n");
+        printf("ERROR(%d): Initializer for variable '%s' is not a constant expression.\n", Test->token()->linenum, ID->token()->tokenstr);
+        numErrors++;
+        return true;
+    }
+    if (FindNonConstExp(ID, Test->GetChild(0)) == true)
+    {
+        return true;
+    }
+    if (FindNonConstExp(ID, Test->GetChild(1)) == true)
+    {
+        return true;
+    }
+    if (FindNonConstExp(ID, Test->GetChild(2)) == true)
+    {
+        return true;
+    }
+    return false;
 }
