@@ -1,4 +1,4 @@
-%define parse.error detailed 
+%define parse.error verbose 
 
 %{
 #include "scanType.h"
