@@ -2,7 +2,7 @@ BIN = c-
 PARSER = parser
 
 CC = g++
-CFLAGS = 
+CFLAGS = -std=c++11
 CXXFLAGS = -std=c++11
 
 PRSR_SRS = $(PARSER).y $(PARSER).l
