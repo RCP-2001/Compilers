@@ -101,32 +101,35 @@ int main(int argc, char *argv[])
             printf("\n");
         }
     }
-    // add IO funcs to symTbl
-    semanticAnalysis(symTbl, IOTree);
-    // fprintf(stderr,"Token %s\n",  IOTree->token()->tokenstr);
-
-    semanticAnalysis(symTbl, GLOBAL_HEAD);
-    // symTbl->print(printTreeNode);
-
-    symTbl->applyToAllGlobal(CheckForUse);
-
-    treeNode *n = (treeNode *)symTbl->lookup("main");
-    if (n == NULL)
+    // Sematic analysus
+    if (numErrors == 0)
     {
-        printf("ERROR(LINKER): A function named 'main' with no parameters must be defined.\n");
-        numErrors++;
-    }
-    else if (n->GetChild(0) != NULL)
-    {
-        printf("ERROR(LINKER): A function named 'main' with no parameters must be defined.\n");
-        numErrors++;
-    }
-    else if (n->DKind() != FuncK)
-    {
-        printf("ERROR(LINKER): A function named 'main' with no parameters must be defined.\n");
-        numErrors++;
-    }
+        // add IO funcs to symTbl
+        semanticAnalysis(symTbl, IOTree);
+        // fprintf(stderr,"Token %s\n",  IOTree->token()->tokenstr);
 
+        semanticAnalysis(symTbl, GLOBAL_HEAD);
+        // symTbl->print(printTreeNode);
+
+        symTbl->applyToAllGlobal(CheckForUse);
+
+        treeNode *n = (treeNode *)symTbl->lookup("main");
+        if (n == NULL)
+        {
+            printf("ERROR(LINKER): A function named 'main' with no parameters must be defined.\n");
+            numErrors++;
+        }
+        else if (n->GetChild(0) != NULL)
+        {
+            printf("ERROR(LINKER): A function named 'main' with no parameters must be defined.\n");
+            numErrors++;
+        }
+        else if (n->DKind() != FuncK)
+        {
+            printf("ERROR(LINKER): A function named 'main' with no parameters must be defined.\n");
+            numErrors++;
+        }
+    }
     if (TypePrint == 1 && numErrors == 0)
     {
         // not going to worry about making a proper -P option just yet (will work on after turning in to test harnness)
@@ -134,7 +137,7 @@ int main(int argc, char *argv[])
         if (GLOBAL_HEAD != NULL)
         {
             SymbolTable *PrintSymTbl = new SymbolTable;
-            //Add IO to new SymTbl
+            // Add IO to new SymTbl
             semanticAnalysis(PrintSymTbl, IOTree);
             // PrintSymTbl->debug(true);
             GLOBAL_HEAD->printTree(1, 1, PrintSymTbl);

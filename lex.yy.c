@@ -525,7 +525,7 @@ char *yytext;
 int line = 1; 
 int numErrors = 0;
 int numWarnings = 0;
-char* lastToken;
+char* lastToken = NULL;
 
 static int setValue(int linenum, int tokenClass, char *svalue){
     // create the pass-bacc data space

@@ -170,6 +170,8 @@ void yyerror(const char *msg)
         strs[i] = niceTokenStr(strs[i]);
     }
 
+    printf("LastToken %s\n", lastToken);
+    exit(0);
     // print components
     printf("ERROR(%d): Syntax error, unexpected %s", line, strs[3]);
     if (elaborate(strs[3])) {
