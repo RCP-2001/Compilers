@@ -47,9 +47,12 @@ declist : declist decl  {$1-> addSibling($2); $$ = $1;}
 
 decl    : varDecl  {$$=$1;}
         | funDecl  {$$=$1;}
+        | error    {$$ = NULL;} // Do we need yyerrok?
         ;
 
 varDecl : typeSpec varDeclList SEMI  {$2->EType($1); $2->BStatic(true); $$=$2;}
+        | error varDeclList SEMI     {$$=NULL; yyerrok;}
+        | typeSpec error SEMI     {$$=NULL; yyerrok; }
         ;
 
 scopedVarDecl   : STATIC typeSpec varDeclList SEMI  {$3->EType($2); $3->BStatic(true); $$=$3;}      
