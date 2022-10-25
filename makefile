@@ -3,7 +3,7 @@ PARSER = parser
 
 CC = g++
 CFLAGS = 
-CXXFLAGS = 
+CXXFLAGS = -std=c++11
 
 PRSR_SRS = $(PARSER).y $(PARSER).l
 HDRS = scanType.h
