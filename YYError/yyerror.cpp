@@ -96,6 +96,7 @@ void initErrorProcessing()
     niceTokenNameMap["NOT"] = (char *)"\"not\"";
     niceTokenNameMap["NUMCONST"] = (char *)"numeric constant";
     niceTokenNameMap["OR"] = (char *)"\"or\"";
+    niceTokenNameMap["RCURL"] = (char *)"\"}\"";
     niceTokenNameMap["RETURN"] = (char *)"\"return\"";
     niceTokenNameMap["SIZEOF"] = (char *)"\"*\"";
     niceTokenNameMap["STATIC"] = (char *)"\"static\"";
@@ -104,6 +105,9 @@ void initErrorProcessing()
     niceTokenNameMap["THEN"] = (char *)"\"then\"";
     niceTokenNameMap["TO"] = (char *)"\"to\"";
     niceTokenNameMap["WHILE"] = (char *)"\"while\"";
+    // Other Tokens
+    // niceTokenNameMap["RCURL"] = (char *)"\"}\"";
+    // End
     niceTokenNameMap["$end"] = (char *)"end of input";
 }
 
@@ -167,8 +171,6 @@ void yyerror(const char *msg)
 
     // make a copy of msg string
     space = strdup(msg);
-    printf("MSG %s\n", msg);
-    exit(0);
 
     // split out components
     numstrs = split(space, strs, ' ');

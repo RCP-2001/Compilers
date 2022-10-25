@@ -4,6 +4,7 @@
 #include "parser.tab.h"
 #include "SymTbl/symbolTable.h"
 #include "IO.h"
+#include "YYError/yyerror.h"
 #include <stdio.h>
 #include <cstring>
 #include <unistd.h>
@@ -51,6 +52,8 @@ int main(int argc, char *argv[])
         }
     }
     // printf("Debug: %d, Print: %d\n", Debug, Print);
+    //Init map
+    initErrorProcessing();
 
     if (Debug == 1)
     {

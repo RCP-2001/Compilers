@@ -1,3 +1,5 @@
+%define parse.error detailed 
+
 %{
 #include "scanType.h"
 #include "YYError/yyerror.h"

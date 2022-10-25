@@ -67,7 +67,7 @@
 
 
 /* First part of user prologue.  */
-#line 1 "parser.y"
+#line 3 "parser.y"
 
 #include "scanType.h"
 #include "YYError/yyerror.h"
@@ -424,7 +424,7 @@ typedef int yy_state_fast_t;
 
 #define YY_ASSERT(E) ((void) (0 && (E)))
 
-#if !defined yyoverflow
+#if 1
 
 /* The parser invokes alloca or malloc; define the necessary symbols.  */
 
@@ -489,7 +489,7 @@ void free (void *); /* INFRINGES ON USER NAME SPACE */
 #   endif
 #  endif
 # endif
-#endif /* !defined yyoverflow */
+#endif /* 1 */
 
 #if (! defined yyoverflow \
      && (! defined __cplusplus \
@@ -617,35 +617,36 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    39,    39,    42,    43,    46,    47,    50,    53,    54,
-      57,    58,    61,    62,    65,    66,    69,    70,    71,    74,
-      75,    78,    79,    82,    83,    86,    89,    90,    94,    95,
-      98,    99,   102,   103,   106,   107,   108,   111,   112,   114,
-     117,   118,   119,   120,   123,   124,   127,   130,   131,   134,
-     135,   138,   139,   144,   145,   150,   151,   154,   155,   158,
-     161,   162,   163,   164,   166,   167,   168,   169,   170,   173,
-     174,   177,   178,   181,   182,   185,   186,   189,   190,   191,
-     192,   193,   194,   197,   198,   201,   202,   205,   206,   209,
-     210,   211,   214,   215,   218,   219,   220,   223,   226,   230,
-     231,   234,   235,   240,   241,   242,   245,   248,   249,   252,
-     253,   256,   257,   258,   259
+       0,    41,    41,    44,    45,    48,    49,    52,    55,    56,
+      59,    60,    63,    64,    67,    68,    71,    72,    73,    76,
+      77,    80,    81,    84,    85,    88,    91,    92,    96,    97,
+     100,   101,   104,   105,   108,   109,   110,   113,   114,   116,
+     119,   120,   121,   122,   125,   126,   129,   132,   133,   136,
+     137,   140,   141,   146,   147,   152,   153,   156,   157,   160,
+     163,   164,   165,   166,   168,   169,   170,   171,   172,   175,
+     176,   179,   180,   183,   184,   187,   188,   191,   192,   193,
+     194,   195,   196,   199,   200,   203,   204,   207,   208,   211,
+     212,   213,   216,   217,   220,   221,   222,   225,   228,   232,
+     233,   236,   237,   242,   243,   244,   247,   250,   251,   254,
+     255,   258,   259,   260,   261
 };
 #endif
 
 /** Accessing symbol of state STATE.  */
 #define YY_ACCESSING_SYMBOL(State) YY_CAST (yysymbol_kind_t, yystos[State])
 
-#if YYDEBUG || 0
+#if 1
 /* The user-facing name of the symbol whose (internal) number is
    YYSYMBOL.  No bounds checking.  */
 static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
 
-/* YYTNAME[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
-   First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
-static const char *const yytname[] =
+static const char *
+yysymbol_name (yysymbol_kind_t yysymbol)
 {
-  "\"end of file\"", "error", "\"invalid token\"", "SIZEOF", "CHSIGN",
-  "ID", "NUMCONST", "CHARCONST", "STRINGCONST", "BOOLCONST", "BOOL", "INT",
+  static const char *const yy_sname[] =
+  {
+  "end of file", "error", "invalid token", "SIZEOF", "CHSIGN", "ID",
+  "NUMCONST", "CHARCONST", "STRINGCONST", "BOOLCONST", "BOOL", "INT",
   "CHAR", "IF", "THEN", "ELSE", "WHILE", "FOR", "DO", "TO", "BY", "RETURN",
   "BREAK", "OR", "AND", "NOT", "STATIC", "SEMI", "COMMA", "COLON",
   "LBRACK", "RBRACK", "LCURL", "RCURL", "INC", "DEC", "ADDASS", "DECASS",
@@ -661,12 +662,8 @@ static const char *const yytname[] =
   "unaryRelExp", "relExp", "relop", "sumExp", "sumop", "mulExp", "mulop",
   "unaryExp", "unaryOp", "chsign", "sizeof", "factor", "mutable",
   "immutable", "call", "args", "argList", "constant", YY_NULLPTR
-};
-
-static const char *
-yysymbol_name (yysymbol_kind_t yysymbol)
-{
-  return yytname[yysymbol];
+  };
+  return yy_sname[yysymbol];
 }
 #endif
 
@@ -1040,8 +1037,226 @@ int yydebug;
 #endif
 
 
+/* Context of a parse error.  */
+typedef struct
+{
+  yy_state_t *yyssp;
+  yysymbol_kind_t yytoken;
+} yypcontext_t;
+
+/* Put in YYARG at most YYARGN of the expected tokens given the
+   current YYCTX, and return the number of tokens stored in YYARG.  If
+   YYARG is null, return the number of expected tokens (guaranteed to
+   be less than YYNTOKENS).  Return YYENOMEM on memory exhaustion.
+   Return 0 if there are more than YYARGN expected tokens, yet fill
+   YYARG up to YYARGN. */
+static int
+yypcontext_expected_tokens (const yypcontext_t *yyctx,
+                            yysymbol_kind_t yyarg[], int yyargn)
+{
+  /* Actual size of YYARG. */
+  int yycount = 0;
+  int yyn = yypact[+*yyctx->yyssp];
+  if (!yypact_value_is_default (yyn))
+    {
+      /* Start YYX at -YYN if negative to avoid negative indexes in
+         YYCHECK.  In other words, skip the first -YYN actions for
+         this state because they are default actions.  */
+      int yyxbegin = yyn < 0 ? -yyn : 0;
+      /* Stay within bounds of both yycheck and yytname.  */
+      int yychecklim = YYLAST - yyn + 1;
+      int yyxend = yychecklim < YYNTOKENS ? yychecklim : YYNTOKENS;
+      int yyx;
+      for (yyx = yyxbegin; yyx < yyxend; ++yyx)
+        if (yycheck[yyx + yyn] == yyx && yyx != YYSYMBOL_YYerror
+            && !yytable_value_is_error (yytable[yyx + yyn]))
+          {
+            if (!yyarg)
+              ++yycount;
+            else if (yycount == yyargn)
+              return 0;
+            else
+              yyarg[yycount++] = YY_CAST (yysymbol_kind_t, yyx);
+          }
+    }
+  if (yyarg && yycount == 0 && 0 < yyargn)
+    yyarg[0] = YYSYMBOL_YYEMPTY;
+  return yycount;
+}
 
 
+
+
+#ifndef yystrlen
+# if defined __GLIBC__ && defined _STRING_H
+#  define yystrlen(S) (YY_CAST (YYPTRDIFF_T, strlen (S)))
+# else
+/* Return the length of YYSTR.  */
+static YYPTRDIFF_T
+yystrlen (const char *yystr)
+{
+  YYPTRDIFF_T yylen;
+  for (yylen = 0; yystr[yylen]; yylen++)
+    continue;
+  return yylen;
+}
+# endif
+#endif
+
+#ifndef yystpcpy
+# if defined __GLIBC__ && defined _STRING_H && defined _GNU_SOURCE
+#  define yystpcpy stpcpy
+# else
+/* Copy YYSRC to YYDEST, returning the address of the terminating '\0' in
+   YYDEST.  */
+static char *
+yystpcpy (char *yydest, const char *yysrc)
+{
+  char *yyd = yydest;
+  const char *yys = yysrc;
+
+  while ((*yyd++ = *yys++) != '\0')
+    continue;
+
+  return yyd - 1;
+}
+# endif
+#endif
+
+
+
+static int
+yy_syntax_error_arguments (const yypcontext_t *yyctx,
+                           yysymbol_kind_t yyarg[], int yyargn)
+{
+  /* Actual size of YYARG. */
+  int yycount = 0;
+  /* There are many possibilities here to consider:
+     - If this state is a consistent state with a default action, then
+       the only way this function was invoked is if the default action
+       is an error action.  In that case, don't check for expected
+       tokens because there are none.
+     - The only way there can be no lookahead present (in yychar) is if
+       this state is a consistent state with a default action.  Thus,
+       detecting the absence of a lookahead is sufficient to determine
+       that there is no unexpected or expected token to report.  In that
+       case, just report a simple "syntax error".
+     - Don't assume there isn't a lookahead just because this state is a
+       consistent state with a default action.  There might have been a
+       previous inconsistent state, consistent state with a non-default
+       action, or user semantic action that manipulated yychar.
+     - Of course, the expected token list depends on states to have
+       correct lookahead information, and it depends on the parser not
+       to perform extra reductions after fetching a lookahead from the
+       scanner and before detecting a syntax error.  Thus, state merging
+       (from LALR or IELR) and default reductions corrupt the expected
+       token list.  However, the list is correct for canonical LR with
+       one exception: it will still contain any token that will not be
+       accepted due to an error action in a later state.
+  */
+  if (yyctx->yytoken != YYSYMBOL_YYEMPTY)
+    {
+      int yyn;
+      if (yyarg)
+        yyarg[yycount] = yyctx->yytoken;
+      ++yycount;
+      yyn = yypcontext_expected_tokens (yyctx,
+                                        yyarg ? yyarg + 1 : yyarg, yyargn - 1);
+      if (yyn == YYENOMEM)
+        return YYENOMEM;
+      else
+        yycount += yyn;
+    }
+  return yycount;
+}
+
+/* Copy into *YYMSG, which is of size *YYMSG_ALLOC, an error message
+   about the unexpected token YYTOKEN for the state stack whose top is
+   YYSSP.
+
+   Return 0 if *YYMSG was successfully written.  Return -1 if *YYMSG is
+   not large enough to hold the message.  In that case, also set
+   *YYMSG_ALLOC to the required number of bytes.  Return YYENOMEM if the
+   required number of bytes is too large to store.  */
+static int
+yysyntax_error (YYPTRDIFF_T *yymsg_alloc, char **yymsg,
+                const yypcontext_t *yyctx)
+{
+  enum { YYARGS_MAX = 5 };
+  /* Internationalized format string. */
+  const char *yyformat = YY_NULLPTR;
+  /* Arguments of yyformat: reported tokens (one for the "unexpected",
+     one per "expected"). */
+  yysymbol_kind_t yyarg[YYARGS_MAX];
+  /* Cumulated lengths of YYARG.  */
+  YYPTRDIFF_T yysize = 0;
+
+  /* Actual size of YYARG. */
+  int yycount = yy_syntax_error_arguments (yyctx, yyarg, YYARGS_MAX);
+  if (yycount == YYENOMEM)
+    return YYENOMEM;
+
+  switch (yycount)
+    {
+#define YYCASE_(N, S)                       \
+      case N:                               \
+        yyformat = S;                       \
+        break
+    default: /* Avoid compiler warnings. */
+      YYCASE_(0, YY_("syntax error"));
+      YYCASE_(1, YY_("syntax error, unexpected %s"));
+      YYCASE_(2, YY_("syntax error, unexpected %s, expecting %s"));
+      YYCASE_(3, YY_("syntax error, unexpected %s, expecting %s or %s"));
+      YYCASE_(4, YY_("syntax error, unexpected %s, expecting %s or %s or %s"));
+      YYCASE_(5, YY_("syntax error, unexpected %s, expecting %s or %s or %s or %s"));
+#undef YYCASE_
+    }
+
+  /* Compute error message size.  Don't count the "%s"s, but reserve
+     room for the terminator.  */
+  yysize = yystrlen (yyformat) - 2 * yycount + 1;
+  {
+    int yyi;
+    for (yyi = 0; yyi < yycount; ++yyi)
+      {
+        YYPTRDIFF_T yysize1
+          = yysize + yystrlen (yysymbol_name (yyarg[yyi]));
+        if (yysize <= yysize1 && yysize1 <= YYSTACK_ALLOC_MAXIMUM)
+          yysize = yysize1;
+        else
+          return YYENOMEM;
+      }
+  }
+
+  if (*yymsg_alloc < yysize)
+    {
+      *yymsg_alloc = 2 * yysize;
+      if (! (yysize <= *yymsg_alloc
+             && *yymsg_alloc <= YYSTACK_ALLOC_MAXIMUM))
+        *yymsg_alloc = YYSTACK_ALLOC_MAXIMUM;
+      return -1;
+    }
+
+  /* Avoid sprintf, as that infringes on the user's name space.
+     Don't have undefined behavior even if the translation
+     produced a string with the wrong number of "%s"s.  */
+  {
+    char *yyp = *yymsg;
+    int yyi = 0;
+    while ((*yyp = *yyformat) != '\0')
+      if (*yyp == '%' && yyformat[1] == 's' && yyi < yycount)
+        {
+          yyp = yystpcpy (yyp, yysymbol_name (yyarg[yyi++]));
+          yyformat += 2;
+        }
+      else
+        {
+          ++yyp;
+          ++yyformat;
+        }
+  }
+  return 0;
+}
 
 
 /*-----------------------------------------------.
@@ -1110,7 +1325,10 @@ yyparse (void)
      action routines.  */
   YYSTYPE yyval;
 
-
+  /* Buffer for error messages, and its allocated size.  */
+  char yymsgbuf[128];
+  char *yymsg = yymsgbuf;
+  YYPTRDIFF_T yymsg_alloc = sizeof yymsgbuf;
 
 #define YYPOPSTACK(N)   (yyvsp -= (N), yyssp -= (N))
 
@@ -1321,693 +1539,693 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* program: declist  */
-#line 39 "parser.y"
+#line 41 "parser.y"
                         {/*printf("accept Program\n");*/ GLOBAL_HEAD = (yyvsp[0].tree);}
-#line 1327 "parser.tab.c"
+#line 1545 "parser.tab.c"
     break;
 
   case 3: /* declist: declist decl  */
-#line 42 "parser.y"
+#line 44 "parser.y"
                         {(yyvsp[-1].tree)-> addSibling((yyvsp[0].tree)); (yyval.tree) = (yyvsp[-1].tree);}
-#line 1333 "parser.tab.c"
+#line 1551 "parser.tab.c"
     break;
 
   case 4: /* declist: decl  */
-#line 43 "parser.y"
+#line 45 "parser.y"
                         {(yyval.tree)=(yyvsp[0].tree);}
-#line 1339 "parser.tab.c"
+#line 1557 "parser.tab.c"
     break;
 
   case 5: /* decl: varDecl  */
-#line 46 "parser.y"
+#line 48 "parser.y"
                    {(yyval.tree)=(yyvsp[0].tree);}
-#line 1345 "parser.tab.c"
+#line 1563 "parser.tab.c"
     break;
 
   case 6: /* decl: funDecl  */
-#line 47 "parser.y"
+#line 49 "parser.y"
                    {(yyval.tree)=(yyvsp[0].tree);}
-#line 1351 "parser.tab.c"
+#line 1569 "parser.tab.c"
     break;
 
   case 7: /* varDecl: typeSpec varDeclList SEMI  */
-#line 50 "parser.y"
+#line 52 "parser.y"
                                      {(yyvsp[-1].tree)->EType((yyvsp[-2].type)); (yyvsp[-1].tree)->BStatic(true); (yyval.tree)=(yyvsp[-1].tree);}
-#line 1357 "parser.tab.c"
+#line 1575 "parser.tab.c"
     break;
 
   case 8: /* scopedVarDecl: STATIC typeSpec varDeclList SEMI  */
-#line 53 "parser.y"
+#line 55 "parser.y"
                                                     {(yyvsp[-1].tree)->EType((yyvsp[-2].type)); (yyvsp[-1].tree)->BStatic(true); (yyval.tree)=(yyvsp[-1].tree);}
-#line 1363 "parser.tab.c"
+#line 1581 "parser.tab.c"
     break;
 
   case 9: /* scopedVarDecl: typeSpec varDeclList SEMI  */
-#line 54 "parser.y"
+#line 56 "parser.y"
                                                     {(yyvsp[-1].tree)->EType((yyvsp[-2].type)); (yyval.tree)=(yyvsp[-1].tree); /*This might be wrong actually*/}
-#line 1369 "parser.tab.c"
+#line 1587 "parser.tab.c"
     break;
 
   case 10: /* varDeclList: varDeclList COMMA varDeclInit  */
-#line 57 "parser.y"
+#line 59 "parser.y"
                                                  {(yyvsp[-2].tree)->addSibling((yyvsp[0].tree)); (yyval.tree) = (yyvsp[-2].tree);  }
-#line 1375 "parser.tab.c"
+#line 1593 "parser.tab.c"
     break;
 
   case 11: /* varDeclList: varDeclInit  */
-#line 58 "parser.y"
+#line 60 "parser.y"
                                                  {(yyval.tree)=(yyvsp[0].tree);}
-#line 1381 "parser.tab.c"
+#line 1599 "parser.tab.c"
     break;
 
   case 12: /* varDeclInit: varDeclID  */
-#line 61 "parser.y"
+#line 63 "parser.y"
                                                {(yyval.tree) = (yyvsp[0].tree);}
-#line 1387 "parser.tab.c"
+#line 1605 "parser.tab.c"
     break;
 
   case 13: /* varDeclInit: varDeclID COLON simpleExp  */
-#line 62 "parser.y"
+#line 64 "parser.y"
                                                {(yyvsp[-2].tree)->addChildren((yyvsp[0].tree), 0); (yyval.tree) = (yyvsp[-2].tree);}
-#line 1393 "parser.tab.c"
+#line 1611 "parser.tab.c"
     break;
 
   case 14: /* varDeclID: ID  */
-#line 65 "parser.y"
+#line 67 "parser.y"
                                                 {(yyval.tree) = newDeclNode(VarK, UndefinedType, (yyvsp[0].tokenData)); }
-#line 1399 "parser.tab.c"
+#line 1617 "parser.tab.c"
     break;
 
   case 15: /* varDeclID: ID LBRACK NUMCONST RBRACK  */
-#line 66 "parser.y"
+#line 68 "parser.y"
                                                 {treeNode* node = newDeclNode(VarK, UndefinedType, (yyvsp[-3].tokenData)); node->setArray(true); (yyval.tree) = node;}
-#line 1405 "parser.tab.c"
+#line 1623 "parser.tab.c"
     break;
 
   case 16: /* typeSpec: INT  */
-#line 69 "parser.y"
-                        {(yyval.type) = Integer;}
-#line 1411 "parser.tab.c"
-    break;
-
-  case 17: /* typeSpec: BOOL  */
-#line 70 "parser.y"
-                        {(yyval.type) = boolean;}
-#line 1417 "parser.tab.c"
-    break;
-
-  case 18: /* typeSpec: CHAR  */
 #line 71 "parser.y"
-                        {(yyval.type) = Char;}
-#line 1423 "parser.tab.c"
-    break;
-
-  case 19: /* funDecl: typeSpec ID LPAREN params RPAREN compoundStmt  */
-#line 74 "parser.y"
-                                                                  {treeNode* node = newDeclNode(FuncK, (yyvsp[-5].type), (yyvsp[-4].tokenData)); node-> addChildren((yyvsp[-2].tree), 0); node-> addChildren((yyvsp[0].tree),1); (yyval.tree)= node;}
-#line 1429 "parser.tab.c"
-    break;
-
-  case 20: /* funDecl: ID LPAREN params RPAREN compoundStmt  */
-#line 75 "parser.y"
-                                                                  {treeNode* node = newDeclNode(FuncK, Void, (yyvsp[-4].tokenData)); node-> addChildren((yyvsp[-2].tree), 0); node-> addChildren((yyvsp[0].tree), 1); (yyval.tree)= node;}
-#line 1435 "parser.tab.c"
-    break;
-
-  case 21: /* params: paramList  */
-#line 78 "parser.y"
-                                {(yyval.tree) = (yyvsp[0].tree);}
-#line 1441 "parser.tab.c"
-    break;
-
-  case 22: /* params: %empty  */
-#line 79 "parser.y"
-                                {(yyval.tree)= NULL;}
-#line 1447 "parser.tab.c"
-    break;
-
-  case 23: /* paramList: paramList SEMI paramTypeList  */
-#line 82 "parser.y"
-                                                   {(yyvsp[-2].tree)->addSibling((yyvsp[0].tree)); (yyval.tree)=(yyvsp[-2].tree);}
-#line 1453 "parser.tab.c"
-    break;
-
-  case 24: /* paramList: paramTypeList  */
-#line 83 "parser.y"
-                                                   {(yyval.tree)=(yyvsp[0].tree);}
-#line 1459 "parser.tab.c"
-    break;
-
-  case 25: /* paramTypeList: typeSpec paramIDList  */
-#line 86 "parser.y"
-                                                {(yyvsp[0].tree)->EType((yyvsp[-1].type)); (yyval.tree)=(yyvsp[0].tree); /*This might be wrong actually*/}
-#line 1465 "parser.tab.c"
-    break;
-
-  case 26: /* paramIDList: paramIDList COMMA paramID  */
-#line 89 "parser.y"
-                                                {(yyvsp[-2].tree)->addSibling((yyvsp[0].tree)); (yyval.tree) = (yyvsp[-2].tree);  }
-#line 1471 "parser.tab.c"
-    break;
-
-  case 27: /* paramIDList: paramID  */
-#line 90 "parser.y"
-                                                {(yyval.tree)=(yyvsp[0].tree);}
-#line 1477 "parser.tab.c"
-    break;
-
-  case 28: /* paramID: ID  */
-#line 94 "parser.y"
-                                               {(yyval.tree) = newDeclNode(ParamK, UndefinedType, (yyvsp[0].tokenData)); }
-#line 1483 "parser.tab.c"
-    break;
-
-  case 29: /* paramID: ID LBRACK RBRACK  */
-#line 95 "parser.y"
-                                               {treeNode* node = newDeclNode(ParamK, UndefinedType, (yyvsp[-2].tokenData)); node->setArray(true); (yyval.tree) = node;}
-#line 1489 "parser.tab.c"
-    break;
-
-  case 30: /* stmt: openStatement  */
-#line 98 "parser.y"
-                                            {(yyval.tree)=(yyvsp[0].tree);}
-#line 1495 "parser.tab.c"
-    break;
-
-  case 31: /* stmt: closedStatement  */
-#line 99 "parser.y"
-                                            {(yyval.tree)=(yyvsp[0].tree);}
-#line 1501 "parser.tab.c"
-    break;
-
-  case 32: /* openStatement: openItrStmt  */
-#line 102 "parser.y"
-                                         {(yyval.tree)=(yyvsp[0].tree);}
-#line 1507 "parser.tab.c"
-    break;
-
-  case 33: /* openStatement: openSelectStatement  */
-#line 103 "parser.y"
-                                         {(yyval.tree)=(yyvsp[0].tree);}
-#line 1513 "parser.tab.c"
-    break;
-
-  case 34: /* closedStatement: closedSelectStatement  */
-#line 106 "parser.y"
-                                         {(yyval.tree)=(yyvsp[0].tree);}
-#line 1519 "parser.tab.c"
-    break;
-
-  case 35: /* closedStatement: closedItrStmt  */
-#line 107 "parser.y"
-                                         {(yyval.tree)=(yyvsp[0].tree);}
-#line 1525 "parser.tab.c"
-    break;
-
-  case 36: /* closedStatement: simpleStatement  */
-#line 108 "parser.y"
-                                         {(yyval.tree)=(yyvsp[0].tree);}
-#line 1531 "parser.tab.c"
-    break;
-
-  case 37: /* openSelectStatement: IF exp THEN stmt  */
-#line 111 "parser.y"
-                                                                                {treeNode *node = newStmtNode(IfK, (yyvsp[-3].tokenData), (yyvsp[-2].tree), (yyvsp[0].tree), NULL); (yyval.tree)=node;}
-#line 1537 "parser.tab.c"
-    break;
-
-  case 38: /* openSelectStatement: IF exp THEN closedStatement ELSE openStatement  */
-#line 112 "parser.y"
-                                                                                {treeNode *node = newStmtNode(IfK, (yyvsp[-5].tokenData), (yyvsp[-4].tree), (yyvsp[-2].tree), (yyvsp[0].tree)); (yyval.tree)=node;}
-#line 1543 "parser.tab.c"
-    break;
-
-  case 39: /* closedSelectStatement: IF exp THEN closedStatement ELSE closedStatement  */
-#line 114 "parser.y"
-                                                                                {treeNode *node = newStmtNode(IfK, (yyvsp[-5].tokenData), (yyvsp[-4].tree), (yyvsp[-2].tree), (yyvsp[0].tree)); (yyval.tree)=node;}
-#line 1549 "parser.tab.c"
-    break;
-
-  case 40: /* simpleStatement: expStmt  */
-#line 117 "parser.y"
-                                     {(yyval.tree)= (yyvsp[0].tree);}
-#line 1555 "parser.tab.c"
-    break;
-
-  case 41: /* simpleStatement: compoundStmt  */
-#line 118 "parser.y"
-                                     {(yyval.tree)= (yyvsp[0].tree);}
-#line 1561 "parser.tab.c"
-    break;
-
-  case 42: /* simpleStatement: breakStmt  */
-#line 119 "parser.y"
-                                     {(yyval.tree)= (yyvsp[0].tree);}
-#line 1567 "parser.tab.c"
-    break;
-
-  case 43: /* simpleStatement: returnStmt  */
-#line 120 "parser.y"
-                                     {(yyval.tree)= (yyvsp[0].tree);}
-#line 1573 "parser.tab.c"
-    break;
-
-  case 44: /* expStmt: exp SEMI  */
-#line 123 "parser.y"
-                                    {(yyval.tree)=(yyvsp[-1].tree);}
-#line 1579 "parser.tab.c"
-    break;
-
-  case 45: /* expStmt: SEMI  */
-#line 124 "parser.y"
-                                    {(yyval.tree)=NULL; /*WTF this porbably will break something i am sad wtf*/}
-#line 1585 "parser.tab.c"
-    break;
-
-  case 46: /* compoundStmt: LCURL LocalDecls stmtList RCURL  */
-#line 127 "parser.y"
-                                                    {treeNode *node = newStmtNode(CompoundK, (yyvsp[-3].tokenData), (yyvsp[-2].tree), (yyvsp[-1].tree), NULL ); (yyval.tree)= node;}
-#line 1591 "parser.tab.c"
-    break;
-
-  case 47: /* LocalDecls: LocalDecls scopedVarDecl  */
-#line 130 "parser.y"
-                                                    {if((yyvsp[-1].tree) == NULL){(yyval.tree)=(yyvsp[0].tree);} else{(yyvsp[-1].tree)->addSibling((yyvsp[0].tree)); (yyval.tree) = (yyvsp[-1].tree);}}
-#line 1597 "parser.tab.c"
-    break;
-
-  case 48: /* LocalDecls: %empty  */
-#line 131 "parser.y"
-                                                     {(yyval.tree)= NULL;}
-#line 1603 "parser.tab.c"
-    break;
-
-  case 49: /* stmtList: stmtList stmt  */
-#line 134 "parser.y"
-                                   {if((yyvsp[-1].tree) == NULL){(yyval.tree)=(yyvsp[0].tree);} else{(yyvsp[-1].tree)->addSibling((yyvsp[0].tree)); (yyval.tree) = (yyvsp[-1].tree);}}
-#line 1609 "parser.tab.c"
-    break;
-
-  case 50: /* stmtList: %empty  */
-#line 135 "parser.y"
-                                   {(yyval.tree)= NULL;}
-#line 1615 "parser.tab.c"
-    break;
-
-  case 51: /* openItrStmt: WHILE simpleExp DO openStatement  */
-#line 138 "parser.y"
-                                                        {treeNode* node = newStmtNode(WhileK, (yyvsp[-3].tokenData), (yyvsp[-2].tree), (yyvsp[0].tree), NULL ); (yyval.tree)=node;}
-#line 1621 "parser.tab.c"
-    break;
-
-  case 52: /* openItrStmt: FOR ID ASSIGN itrRange DO openStatement  */
-#line 139 "parser.y"
-                                                            {
-                                                            treeNode* IDNode = newDeclNode(VarK, Integer, (yyvsp[-4].tokenData), NULL, NULL, NULL);
-                                                            treeNode* node = newStmtNode(ForK, (yyvsp[-4].tokenData), IDNode, (yyvsp[-2].tree), (yyvsp[0].tree)); (yyval.tree) = node;  /*Totally wrong lmafo*/}
+                        {(yyval.type) = Integer;}
 #line 1629 "parser.tab.c"
     break;
 
-  case 53: /* closedItrStmt: WHILE simpleExp DO closedStatement  */
-#line 144 "parser.y"
-                                                         {treeNode* node = newStmtNode(WhileK, (yyvsp[-3].tokenData), (yyvsp[-2].tree), (yyvsp[0].tree), NULL ); (yyval.tree)=node;}
+  case 17: /* typeSpec: BOOL  */
+#line 72 "parser.y"
+                        {(yyval.type) = boolean;}
 #line 1635 "parser.tab.c"
     break;
 
-  case 54: /* closedItrStmt: FOR ID ASSIGN itrRange DO closedStatement  */
-#line 145 "parser.y"
+  case 18: /* typeSpec: CHAR  */
+#line 73 "parser.y"
+                        {(yyval.type) = Char;}
+#line 1641 "parser.tab.c"
+    break;
+
+  case 19: /* funDecl: typeSpec ID LPAREN params RPAREN compoundStmt  */
+#line 76 "parser.y"
+                                                                  {treeNode* node = newDeclNode(FuncK, (yyvsp[-5].type), (yyvsp[-4].tokenData)); node-> addChildren((yyvsp[-2].tree), 0); node-> addChildren((yyvsp[0].tree),1); (yyval.tree)= node;}
+#line 1647 "parser.tab.c"
+    break;
+
+  case 20: /* funDecl: ID LPAREN params RPAREN compoundStmt  */
+#line 77 "parser.y"
+                                                                  {treeNode* node = newDeclNode(FuncK, Void, (yyvsp[-4].tokenData)); node-> addChildren((yyvsp[-2].tree), 0); node-> addChildren((yyvsp[0].tree), 1); (yyval.tree)= node;}
+#line 1653 "parser.tab.c"
+    break;
+
+  case 21: /* params: paramList  */
+#line 80 "parser.y"
+                                {(yyval.tree) = (yyvsp[0].tree);}
+#line 1659 "parser.tab.c"
+    break;
+
+  case 22: /* params: %empty  */
+#line 81 "parser.y"
+                                {(yyval.tree)= NULL;}
+#line 1665 "parser.tab.c"
+    break;
+
+  case 23: /* paramList: paramList SEMI paramTypeList  */
+#line 84 "parser.y"
+                                                   {(yyvsp[-2].tree)->addSibling((yyvsp[0].tree)); (yyval.tree)=(yyvsp[-2].tree);}
+#line 1671 "parser.tab.c"
+    break;
+
+  case 24: /* paramList: paramTypeList  */
+#line 85 "parser.y"
+                                                   {(yyval.tree)=(yyvsp[0].tree);}
+#line 1677 "parser.tab.c"
+    break;
+
+  case 25: /* paramTypeList: typeSpec paramIDList  */
+#line 88 "parser.y"
+                                                {(yyvsp[0].tree)->EType((yyvsp[-1].type)); (yyval.tree)=(yyvsp[0].tree); /*This might be wrong actually*/}
+#line 1683 "parser.tab.c"
+    break;
+
+  case 26: /* paramIDList: paramIDList COMMA paramID  */
+#line 91 "parser.y"
+                                                {(yyvsp[-2].tree)->addSibling((yyvsp[0].tree)); (yyval.tree) = (yyvsp[-2].tree);  }
+#line 1689 "parser.tab.c"
+    break;
+
+  case 27: /* paramIDList: paramID  */
+#line 92 "parser.y"
+                                                {(yyval.tree)=(yyvsp[0].tree);}
+#line 1695 "parser.tab.c"
+    break;
+
+  case 28: /* paramID: ID  */
+#line 96 "parser.y"
+                                               {(yyval.tree) = newDeclNode(ParamK, UndefinedType, (yyvsp[0].tokenData)); }
+#line 1701 "parser.tab.c"
+    break;
+
+  case 29: /* paramID: ID LBRACK RBRACK  */
+#line 97 "parser.y"
+                                               {treeNode* node = newDeclNode(ParamK, UndefinedType, (yyvsp[-2].tokenData)); node->setArray(true); (yyval.tree) = node;}
+#line 1707 "parser.tab.c"
+    break;
+
+  case 30: /* stmt: openStatement  */
+#line 100 "parser.y"
+                                            {(yyval.tree)=(yyvsp[0].tree);}
+#line 1713 "parser.tab.c"
+    break;
+
+  case 31: /* stmt: closedStatement  */
+#line 101 "parser.y"
+                                            {(yyval.tree)=(yyvsp[0].tree);}
+#line 1719 "parser.tab.c"
+    break;
+
+  case 32: /* openStatement: openItrStmt  */
+#line 104 "parser.y"
+                                         {(yyval.tree)=(yyvsp[0].tree);}
+#line 1725 "parser.tab.c"
+    break;
+
+  case 33: /* openStatement: openSelectStatement  */
+#line 105 "parser.y"
+                                         {(yyval.tree)=(yyvsp[0].tree);}
+#line 1731 "parser.tab.c"
+    break;
+
+  case 34: /* closedStatement: closedSelectStatement  */
+#line 108 "parser.y"
+                                         {(yyval.tree)=(yyvsp[0].tree);}
+#line 1737 "parser.tab.c"
+    break;
+
+  case 35: /* closedStatement: closedItrStmt  */
+#line 109 "parser.y"
+                                         {(yyval.tree)=(yyvsp[0].tree);}
+#line 1743 "parser.tab.c"
+    break;
+
+  case 36: /* closedStatement: simpleStatement  */
+#line 110 "parser.y"
+                                         {(yyval.tree)=(yyvsp[0].tree);}
+#line 1749 "parser.tab.c"
+    break;
+
+  case 37: /* openSelectStatement: IF exp THEN stmt  */
+#line 113 "parser.y"
+                                                                                {treeNode *node = newStmtNode(IfK, (yyvsp[-3].tokenData), (yyvsp[-2].tree), (yyvsp[0].tree), NULL); (yyval.tree)=node;}
+#line 1755 "parser.tab.c"
+    break;
+
+  case 38: /* openSelectStatement: IF exp THEN closedStatement ELSE openStatement  */
+#line 114 "parser.y"
+                                                                                {treeNode *node = newStmtNode(IfK, (yyvsp[-5].tokenData), (yyvsp[-4].tree), (yyvsp[-2].tree), (yyvsp[0].tree)); (yyval.tree)=node;}
+#line 1761 "parser.tab.c"
+    break;
+
+  case 39: /* closedSelectStatement: IF exp THEN closedStatement ELSE closedStatement  */
+#line 116 "parser.y"
+                                                                                {treeNode *node = newStmtNode(IfK, (yyvsp[-5].tokenData), (yyvsp[-4].tree), (yyvsp[-2].tree), (yyvsp[0].tree)); (yyval.tree)=node;}
+#line 1767 "parser.tab.c"
+    break;
+
+  case 40: /* simpleStatement: expStmt  */
+#line 119 "parser.y"
+                                     {(yyval.tree)= (yyvsp[0].tree);}
+#line 1773 "parser.tab.c"
+    break;
+
+  case 41: /* simpleStatement: compoundStmt  */
+#line 120 "parser.y"
+                                     {(yyval.tree)= (yyvsp[0].tree);}
+#line 1779 "parser.tab.c"
+    break;
+
+  case 42: /* simpleStatement: breakStmt  */
+#line 121 "parser.y"
+                                     {(yyval.tree)= (yyvsp[0].tree);}
+#line 1785 "parser.tab.c"
+    break;
+
+  case 43: /* simpleStatement: returnStmt  */
+#line 122 "parser.y"
+                                     {(yyval.tree)= (yyvsp[0].tree);}
+#line 1791 "parser.tab.c"
+    break;
+
+  case 44: /* expStmt: exp SEMI  */
+#line 125 "parser.y"
+                                    {(yyval.tree)=(yyvsp[-1].tree);}
+#line 1797 "parser.tab.c"
+    break;
+
+  case 45: /* expStmt: SEMI  */
+#line 126 "parser.y"
+                                    {(yyval.tree)=NULL; /*WTF this porbably will break something i am sad wtf*/}
+#line 1803 "parser.tab.c"
+    break;
+
+  case 46: /* compoundStmt: LCURL LocalDecls stmtList RCURL  */
+#line 129 "parser.y"
+                                                    {treeNode *node = newStmtNode(CompoundK, (yyvsp[-3].tokenData), (yyvsp[-2].tree), (yyvsp[-1].tree), NULL ); (yyval.tree)= node;}
+#line 1809 "parser.tab.c"
+    break;
+
+  case 47: /* LocalDecls: LocalDecls scopedVarDecl  */
+#line 132 "parser.y"
+                                                    {if((yyvsp[-1].tree) == NULL){(yyval.tree)=(yyvsp[0].tree);} else{(yyvsp[-1].tree)->addSibling((yyvsp[0].tree)); (yyval.tree) = (yyvsp[-1].tree);}}
+#line 1815 "parser.tab.c"
+    break;
+
+  case 48: /* LocalDecls: %empty  */
+#line 133 "parser.y"
+                                                     {(yyval.tree)= NULL;}
+#line 1821 "parser.tab.c"
+    break;
+
+  case 49: /* stmtList: stmtList stmt  */
+#line 136 "parser.y"
+                                   {if((yyvsp[-1].tree) == NULL){(yyval.tree)=(yyvsp[0].tree);} else{(yyvsp[-1].tree)->addSibling((yyvsp[0].tree)); (yyval.tree) = (yyvsp[-1].tree);}}
+#line 1827 "parser.tab.c"
+    break;
+
+  case 50: /* stmtList: %empty  */
+#line 137 "parser.y"
+                                   {(yyval.tree)= NULL;}
+#line 1833 "parser.tab.c"
+    break;
+
+  case 51: /* openItrStmt: WHILE simpleExp DO openStatement  */
+#line 140 "parser.y"
+                                                        {treeNode* node = newStmtNode(WhileK, (yyvsp[-3].tokenData), (yyvsp[-2].tree), (yyvsp[0].tree), NULL ); (yyval.tree)=node;}
+#line 1839 "parser.tab.c"
+    break;
+
+  case 52: /* openItrStmt: FOR ID ASSIGN itrRange DO openStatement  */
+#line 141 "parser.y"
                                                             {
                                                             treeNode* IDNode = newDeclNode(VarK, Integer, (yyvsp[-4].tokenData), NULL, NULL, NULL);
                                                             treeNode* node = newStmtNode(ForK, (yyvsp[-4].tokenData), IDNode, (yyvsp[-2].tree), (yyvsp[0].tree)); (yyval.tree) = node;  /*Totally wrong lmafo*/}
-#line 1643 "parser.tab.c"
-    break;
-
-  case 55: /* itrRange: simpleExp TO simpleExp  */
-#line 150 "parser.y"
-                                                        {treeNode* node = newStmtNode(RangeK, (yyvsp[-1].tokenData), (yyvsp[-2].tree), (yyvsp[0].tree), NULL); (yyval.tree)=node;}
-#line 1649 "parser.tab.c"
-    break;
-
-  case 56: /* itrRange: simpleExp TO simpleExp BY simpleExp  */
-#line 151 "parser.y"
-                                                        {treeNode* node = newStmtNode(RangeK, (yyvsp[-3].tokenData), (yyvsp[-4].tree), (yyvsp[-2].tree), (yyvsp[0].tree)); (yyval.tree)=node;}
-#line 1655 "parser.tab.c"
-    break;
-
-  case 57: /* returnStmt: RETURN SEMI  */
-#line 154 "parser.y"
-                                        {treeNode* node = newStmtNode(ReturnK, (yyvsp[-1].tokenData), NULL, NULL, NULL); (yyval.tree)=node;}
-#line 1661 "parser.tab.c"
-    break;
-
-  case 58: /* returnStmt: RETURN exp SEMI  */
-#line 155 "parser.y"
-                                        {treeNode* node = newStmtNode(ReturnK, (yyvsp[-2].tokenData), (yyvsp[-1].tree), NULL, NULL); (yyval.tree)=node;}
-#line 1667 "parser.tab.c"
-    break;
-
-  case 59: /* breakStmt: BREAK SEMI  */
-#line 158 "parser.y"
-                                       {treeNode* node = newStmtNode(BreaK, (yyvsp[-1].tokenData), NULL, NULL, NULL); (yyval.tree)=node;}
-#line 1673 "parser.tab.c"
-    break;
-
-  case 60: /* exp: mutable assignop exp  */
-#line 161 "parser.y"
-                                          {(yyvsp[-1].tree)->addChildren((yyvsp[-2].tree),0); (yyvsp[-1].tree)->addChildren((yyvsp[0].tree),1); (yyval.tree)=(yyvsp[-1].tree);}
-#line 1679 "parser.tab.c"
-    break;
-
-  case 61: /* exp: mutable INC  */
-#line 162 "parser.y"
-                                          {treeNode* node = newExpNode(AssingK, (yyvsp[0].tokenData), (yyvsp[-1].tree), NULL, NULL); (yyval.tree)=node; }
-#line 1685 "parser.tab.c"
-    break;
-
-  case 62: /* exp: mutable DEC  */
-#line 163 "parser.y"
-                                          {treeNode* node = newExpNode(AssingK, (yyvsp[0].tokenData), (yyvsp[-1].tree), NULL, NULL); (yyval.tree)=node; }
-#line 1691 "parser.tab.c"
-    break;
-
-  case 63: /* exp: simpleExp  */
-#line 164 "parser.y"
-                                          {(yyval.tree)=(yyvsp[0].tree); /*not sure this is right either tbh*/}
-#line 1697 "parser.tab.c"
-    break;
-
-  case 64: /* assignop: ASSIGN  */
-#line 166 "parser.y"
-                                 {treeNode* node = newExpNode(AssingK, (yyvsp[0].tokenData)); (yyval.tree)=node; /*Check yourself before you wreck yourself*/}
-#line 1703 "parser.tab.c"
-    break;
-
-  case 65: /* assignop: ADDASS  */
-#line 167 "parser.y"
-                                 {treeNode* node = newExpNode(AssingK, (yyvsp[0].tokenData)); (yyval.tree)=node; /**/}
-#line 1709 "parser.tab.c"
-    break;
-
-  case 66: /* assignop: DECASS  */
-#line 168 "parser.y"
-                                 {treeNode* node = newExpNode(AssingK, (yyvsp[0].tokenData)); (yyval.tree)=node; /*Fairly certien this will give wrong tree structure*/}
-#line 1715 "parser.tab.c"
-    break;
-
-  case 67: /* assignop: MULASS  */
-#line 169 "parser.y"
-                                 {treeNode* node = newExpNode(AssingK, (yyvsp[0].tokenData)); (yyval.tree)=node; /*Fairly certien this will give wrong tree structure*/}
-#line 1721 "parser.tab.c"
-    break;
-
-  case 68: /* assignop: DIVASS  */
-#line 170 "parser.y"
-                                 {treeNode* node = newExpNode(AssingK, (yyvsp[0].tokenData)); (yyval.tree)=node; /*Fairly certien this will give wrong tree structure*/}
-#line 1727 "parser.tab.c"
-    break;
-
-  case 69: /* simpleExp: simpleExp OR andExp  */
-#line 173 "parser.y"
-                                        {treeNode* node = newExpNode(OpK, (yyvsp[-1].tokenData), (yyvsp[-2].tree), (yyvsp[0].tree), NULL); (yyval.tree)=node; }
-#line 1733 "parser.tab.c"
-    break;
-
-  case 70: /* simpleExp: andExp  */
-#line 174 "parser.y"
-                                        {(yyval.tree)=(yyvsp[0].tree);}
-#line 1739 "parser.tab.c"
-    break;
-
-  case 71: /* andExp: andExp AND unaryRelExp  */
-#line 177 "parser.y"
-                                            {treeNode* node = newExpNode(OpK, (yyvsp[-1].tokenData), (yyvsp[-2].tree), (yyvsp[0].tree), NULL); (yyval.tree)=node; }
-#line 1745 "parser.tab.c"
-    break;
-
-  case 72: /* andExp: unaryRelExp  */
-#line 178 "parser.y"
-                                           {(yyval.tree)=(yyvsp[0].tree);}
-#line 1751 "parser.tab.c"
-    break;
-
-  case 73: /* unaryRelExp: NOT unaryRelExp  */
-#line 181 "parser.y"
-                                        {treeNode* node = newExpNode(OpK, (yyvsp[-1].tokenData), (yyvsp[0].tree), NULL, NULL); (yyval.tree)=node; }
-#line 1757 "parser.tab.c"
-    break;
-
-  case 74: /* unaryRelExp: relExp  */
-#line 182 "parser.y"
-                                        {(yyval.tree)=(yyvsp[0].tree);}
-#line 1763 "parser.tab.c"
-    break;
-
-  case 75: /* relExp: sumExp relop sumExp  */
-#line 185 "parser.y"
-                                       {(yyvsp[-1].tree)->addChildren((yyvsp[-2].tree),0); (yyvsp[-1].tree)->addChildren((yyvsp[0].tree),1); (yyval.tree)=(yyvsp[-1].tree);}
-#line 1769 "parser.tab.c"
-    break;
-
-  case 76: /* relExp: sumExp  */
-#line 186 "parser.y"
-                                      {(yyval.tree)=(yyvsp[0].tree);}
-#line 1775 "parser.tab.c"
-    break;
-
-  case 77: /* relop: LESS  */
-#line 189 "parser.y"
-                            {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData)); (yyval.tree)=node;}
-#line 1781 "parser.tab.c"
-    break;
-
-  case 78: /* relop: LEQ  */
-#line 190 "parser.y"
-                            {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData)); (yyval.tree)=node;}
-#line 1787 "parser.tab.c"
-    break;
-
-  case 79: /* relop: GREATER  */
-#line 191 "parser.y"
-                            {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData)); (yyval.tree)=node;}
-#line 1793 "parser.tab.c"
-    break;
-
-  case 80: /* relop: GEQ  */
-#line 192 "parser.y"
-                            {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData)); (yyval.tree)=node;}
-#line 1799 "parser.tab.c"
-    break;
-
-  case 81: /* relop: EQ  */
-#line 193 "parser.y"
-                            {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData)); (yyval.tree)=node;}
-#line 1805 "parser.tab.c"
-    break;
-
-  case 82: /* relop: NEQ  */
-#line 194 "parser.y"
-                            {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData)); (yyval.tree)=node;}
-#line 1811 "parser.tab.c"
-    break;
-
-  case 83: /* sumExp: sumExp sumop mulExp  */
-#line 197 "parser.y"
-                                      {(yyvsp[-1].tree)->addChildren((yyvsp[-2].tree),0); (yyvsp[-1].tree)->addChildren((yyvsp[0].tree),1); (yyval.tree)=(yyvsp[-1].tree);}
-#line 1817 "parser.tab.c"
-    break;
-
-  case 84: /* sumExp: mulExp  */
-#line 198 "parser.y"
-                                      {(yyval.tree)=(yyvsp[0].tree);}
-#line 1823 "parser.tab.c"
-    break;
-
-  case 85: /* sumop: ADD  */
-#line 201 "parser.y"
-                      {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData), NULL, NULL, NULL); (yyval.tree)=node; }
-#line 1829 "parser.tab.c"
-    break;
-
-  case 86: /* sumop: SUB  */
-#line 202 "parser.y"
-                      {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData), NULL, NULL, NULL); (yyval.tree)=node; }
-#line 1835 "parser.tab.c"
-    break;
-
-  case 87: /* mulExp: mulExp mulop unaryExp  */
-#line 205 "parser.y"
-                                        {(yyvsp[-1].tree)->addChildren((yyvsp[-2].tree),0); (yyvsp[-1].tree)->addChildren((yyvsp[0].tree),1); (yyval.tree)=(yyvsp[-1].tree);}
-#line 1841 "parser.tab.c"
-    break;
-
-  case 88: /* mulExp: unaryExp  */
-#line 206 "parser.y"
-                               {(yyval.tree)=(yyvsp[0].tree);}
 #line 1847 "parser.tab.c"
     break;
 
-  case 89: /* mulop: MUL  */
-#line 209 "parser.y"
-                      {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData), NULL, NULL, NULL); (yyval.tree)=node; }
+  case 53: /* closedItrStmt: WHILE simpleExp DO closedStatement  */
+#line 146 "parser.y"
+                                                         {treeNode* node = newStmtNode(WhileK, (yyvsp[-3].tokenData), (yyvsp[-2].tree), (yyvsp[0].tree), NULL ); (yyval.tree)=node;}
 #line 1853 "parser.tab.c"
     break;
 
-  case 90: /* mulop: DIV  */
-#line 210 "parser.y"
-                      {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData), NULL, NULL, NULL); (yyval.tree)=node; }
-#line 1859 "parser.tab.c"
+  case 54: /* closedItrStmt: FOR ID ASSIGN itrRange DO closedStatement  */
+#line 147 "parser.y"
+                                                            {
+                                                            treeNode* IDNode = newDeclNode(VarK, Integer, (yyvsp[-4].tokenData), NULL, NULL, NULL);
+                                                            treeNode* node = newStmtNode(ForK, (yyvsp[-4].tokenData), IDNode, (yyvsp[-2].tree), (yyvsp[0].tree)); (yyval.tree) = node;  /*Totally wrong lmafo*/}
+#line 1861 "parser.tab.c"
     break;
 
-  case 91: /* mulop: MOD  */
-#line 211 "parser.y"
-                      {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData), NULL, NULL, NULL); (yyval.tree)=node; }
-#line 1865 "parser.tab.c"
+  case 55: /* itrRange: simpleExp TO simpleExp  */
+#line 152 "parser.y"
+                                                        {treeNode* node = newStmtNode(RangeK, (yyvsp[-1].tokenData), (yyvsp[-2].tree), (yyvsp[0].tree), NULL); (yyval.tree)=node;}
+#line 1867 "parser.tab.c"
     break;
 
-  case 92: /* unaryExp: unaryOp unaryExp  */
-#line 214 "parser.y"
-                                   {(yyvsp[-1].tree)->addChildren((yyvsp[0].tree),0); (yyval.tree)=(yyvsp[-1].tree);}
-#line 1871 "parser.tab.c"
+  case 56: /* itrRange: simpleExp TO simpleExp BY simpleExp  */
+#line 153 "parser.y"
+                                                        {treeNode* node = newStmtNode(RangeK, (yyvsp[-3].tokenData), (yyvsp[-4].tree), (yyvsp[-2].tree), (yyvsp[0].tree)); (yyval.tree)=node;}
+#line 1873 "parser.tab.c"
     break;
 
-  case 93: /* unaryExp: factor  */
-#line 215 "parser.y"
-                                    {(yyval.tree)=(yyvsp[0].tree);}
-#line 1877 "parser.tab.c"
+  case 57: /* returnStmt: RETURN SEMI  */
+#line 156 "parser.y"
+                                        {treeNode* node = newStmtNode(ReturnK, (yyvsp[-1].tokenData), NULL, NULL, NULL); (yyval.tree)=node;}
+#line 1879 "parser.tab.c"
     break;
 
-  case 94: /* unaryOp: chsign  */
-#line 218 "parser.y"
-                                {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData), NULL, NULL, NULL); (yyval.tree)=node; }
-#line 1883 "parser.tab.c"
+  case 58: /* returnStmt: RETURN exp SEMI  */
+#line 157 "parser.y"
+                                        {treeNode* node = newStmtNode(ReturnK, (yyvsp[-2].tokenData), (yyvsp[-1].tree), NULL, NULL); (yyval.tree)=node;}
+#line 1885 "parser.tab.c"
     break;
 
-  case 95: /* unaryOp: sizeof  */
-#line 219 "parser.y"
-                                {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData), NULL, NULL, NULL); (yyval.tree)=node; }
-#line 1889 "parser.tab.c"
+  case 59: /* breakStmt: BREAK SEMI  */
+#line 160 "parser.y"
+                                       {treeNode* node = newStmtNode(BreaK, (yyvsp[-1].tokenData), NULL, NULL, NULL); (yyval.tree)=node;}
+#line 1891 "parser.tab.c"
     break;
 
-  case 96: /* unaryOp: QMARK  */
-#line 220 "parser.y"
-                                {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData), NULL, NULL, NULL); (yyval.tree)=node; }
-#line 1895 "parser.tab.c"
+  case 60: /* exp: mutable assignop exp  */
+#line 163 "parser.y"
+                                          {(yyvsp[-1].tree)->addChildren((yyvsp[-2].tree),0); (yyvsp[-1].tree)->addChildren((yyvsp[0].tree),1); (yyval.tree)=(yyvsp[-1].tree);}
+#line 1897 "parser.tab.c"
     break;
 
-  case 97: /* chsign: SUB  */
-#line 223 "parser.y"
-                        {   free ((yyvsp[0].tokenData)->tokenstr);
-                            (yyvsp[0].tokenData)->tokenstr=strdup("chsign"); (yyval.tokenData)=(yyvsp[0].tokenData);  /*This might be really really wrong lol*/}
-#line 1902 "parser.tab.c"
+  case 61: /* exp: mutable INC  */
+#line 164 "parser.y"
+                                          {treeNode* node = newExpNode(AssingK, (yyvsp[0].tokenData), (yyvsp[-1].tree), NULL, NULL); (yyval.tree)=node; }
+#line 1903 "parser.tab.c"
     break;
 
-  case 98: /* sizeof: MUL  */
-#line 226 "parser.y"
-                        {   free ((yyvsp[0].tokenData)->tokenstr);
-                            (yyvsp[0].tokenData)->tokenstr=strdup("sizeof"); (yyval.tokenData)=(yyvsp[0].tokenData);  /*This might be really really wrong lol*/}
+  case 62: /* exp: mutable DEC  */
+#line 165 "parser.y"
+                                          {treeNode* node = newExpNode(AssingK, (yyvsp[0].tokenData), (yyvsp[-1].tree), NULL, NULL); (yyval.tree)=node; }
 #line 1909 "parser.tab.c"
     break;
 
-  case 99: /* factor: mutable  */
-#line 230 "parser.y"
-                                    {(yyval.tree)=(yyvsp[0].tree);}
+  case 63: /* exp: simpleExp  */
+#line 166 "parser.y"
+                                          {(yyval.tree)=(yyvsp[0].tree); /*not sure this is right either tbh*/}
 #line 1915 "parser.tab.c"
     break;
 
-  case 100: /* factor: immutable  */
-#line 231 "parser.y"
-                                    {(yyval.tree)=(yyvsp[0].tree);}
+  case 64: /* assignop: ASSIGN  */
+#line 168 "parser.y"
+                                 {treeNode* node = newExpNode(AssingK, (yyvsp[0].tokenData)); (yyval.tree)=node; /*Check yourself before you wreck yourself*/}
 #line 1921 "parser.tab.c"
     break;
 
-  case 101: /* mutable: ID  */
-#line 234 "parser.y"
-                                             {treeNode* node = newExpNode(IdK, (yyvsp[0].tokenData), NULL, NULL, NULL); (yyval.tree)=node; }
+  case 65: /* assignop: ADDASS  */
+#line 169 "parser.y"
+                                 {treeNode* node = newExpNode(AssingK, (yyvsp[0].tokenData)); (yyval.tree)=node; /**/}
 #line 1927 "parser.tab.c"
     break;
 
+  case 66: /* assignop: DECASS  */
+#line 170 "parser.y"
+                                 {treeNode* node = newExpNode(AssingK, (yyvsp[0].tokenData)); (yyval.tree)=node; /*Fairly certien this will give wrong tree structure*/}
+#line 1933 "parser.tab.c"
+    break;
+
+  case 67: /* assignop: MULASS  */
+#line 171 "parser.y"
+                                 {treeNode* node = newExpNode(AssingK, (yyvsp[0].tokenData)); (yyval.tree)=node; /*Fairly certien this will give wrong tree structure*/}
+#line 1939 "parser.tab.c"
+    break;
+
+  case 68: /* assignop: DIVASS  */
+#line 172 "parser.y"
+                                 {treeNode* node = newExpNode(AssingK, (yyvsp[0].tokenData)); (yyval.tree)=node; /*Fairly certien this will give wrong tree structure*/}
+#line 1945 "parser.tab.c"
+    break;
+
+  case 69: /* simpleExp: simpleExp OR andExp  */
+#line 175 "parser.y"
+                                        {treeNode* node = newExpNode(OpK, (yyvsp[-1].tokenData), (yyvsp[-2].tree), (yyvsp[0].tree), NULL); (yyval.tree)=node; }
+#line 1951 "parser.tab.c"
+    break;
+
+  case 70: /* simpleExp: andExp  */
+#line 176 "parser.y"
+                                        {(yyval.tree)=(yyvsp[0].tree);}
+#line 1957 "parser.tab.c"
+    break;
+
+  case 71: /* andExp: andExp AND unaryRelExp  */
+#line 179 "parser.y"
+                                            {treeNode* node = newExpNode(OpK, (yyvsp[-1].tokenData), (yyvsp[-2].tree), (yyvsp[0].tree), NULL); (yyval.tree)=node; }
+#line 1963 "parser.tab.c"
+    break;
+
+  case 72: /* andExp: unaryRelExp  */
+#line 180 "parser.y"
+                                           {(yyval.tree)=(yyvsp[0].tree);}
+#line 1969 "parser.tab.c"
+    break;
+
+  case 73: /* unaryRelExp: NOT unaryRelExp  */
+#line 183 "parser.y"
+                                        {treeNode* node = newExpNode(OpK, (yyvsp[-1].tokenData), (yyvsp[0].tree), NULL, NULL); (yyval.tree)=node; }
+#line 1975 "parser.tab.c"
+    break;
+
+  case 74: /* unaryRelExp: relExp  */
+#line 184 "parser.y"
+                                        {(yyval.tree)=(yyvsp[0].tree);}
+#line 1981 "parser.tab.c"
+    break;
+
+  case 75: /* relExp: sumExp relop sumExp  */
+#line 187 "parser.y"
+                                       {(yyvsp[-1].tree)->addChildren((yyvsp[-2].tree),0); (yyvsp[-1].tree)->addChildren((yyvsp[0].tree),1); (yyval.tree)=(yyvsp[-1].tree);}
+#line 1987 "parser.tab.c"
+    break;
+
+  case 76: /* relExp: sumExp  */
+#line 188 "parser.y"
+                                      {(yyval.tree)=(yyvsp[0].tree);}
+#line 1993 "parser.tab.c"
+    break;
+
+  case 77: /* relop: LESS  */
+#line 191 "parser.y"
+                            {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData)); (yyval.tree)=node;}
+#line 1999 "parser.tab.c"
+    break;
+
+  case 78: /* relop: LEQ  */
+#line 192 "parser.y"
+                            {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData)); (yyval.tree)=node;}
+#line 2005 "parser.tab.c"
+    break;
+
+  case 79: /* relop: GREATER  */
+#line 193 "parser.y"
+                            {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData)); (yyval.tree)=node;}
+#line 2011 "parser.tab.c"
+    break;
+
+  case 80: /* relop: GEQ  */
+#line 194 "parser.y"
+                            {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData)); (yyval.tree)=node;}
+#line 2017 "parser.tab.c"
+    break;
+
+  case 81: /* relop: EQ  */
+#line 195 "parser.y"
+                            {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData)); (yyval.tree)=node;}
+#line 2023 "parser.tab.c"
+    break;
+
+  case 82: /* relop: NEQ  */
+#line 196 "parser.y"
+                            {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData)); (yyval.tree)=node;}
+#line 2029 "parser.tab.c"
+    break;
+
+  case 83: /* sumExp: sumExp sumop mulExp  */
+#line 199 "parser.y"
+                                      {(yyvsp[-1].tree)->addChildren((yyvsp[-2].tree),0); (yyvsp[-1].tree)->addChildren((yyvsp[0].tree),1); (yyval.tree)=(yyvsp[-1].tree);}
+#line 2035 "parser.tab.c"
+    break;
+
+  case 84: /* sumExp: mulExp  */
+#line 200 "parser.y"
+                                      {(yyval.tree)=(yyvsp[0].tree);}
+#line 2041 "parser.tab.c"
+    break;
+
+  case 85: /* sumop: ADD  */
+#line 203 "parser.y"
+                      {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData), NULL, NULL, NULL); (yyval.tree)=node; }
+#line 2047 "parser.tab.c"
+    break;
+
+  case 86: /* sumop: SUB  */
+#line 204 "parser.y"
+                      {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData), NULL, NULL, NULL); (yyval.tree)=node; }
+#line 2053 "parser.tab.c"
+    break;
+
+  case 87: /* mulExp: mulExp mulop unaryExp  */
+#line 207 "parser.y"
+                                        {(yyvsp[-1].tree)->addChildren((yyvsp[-2].tree),0); (yyvsp[-1].tree)->addChildren((yyvsp[0].tree),1); (yyval.tree)=(yyvsp[-1].tree);}
+#line 2059 "parser.tab.c"
+    break;
+
+  case 88: /* mulExp: unaryExp  */
+#line 208 "parser.y"
+                               {(yyval.tree)=(yyvsp[0].tree);}
+#line 2065 "parser.tab.c"
+    break;
+
+  case 89: /* mulop: MUL  */
+#line 211 "parser.y"
+                      {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData), NULL, NULL, NULL); (yyval.tree)=node; }
+#line 2071 "parser.tab.c"
+    break;
+
+  case 90: /* mulop: DIV  */
+#line 212 "parser.y"
+                      {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData), NULL, NULL, NULL); (yyval.tree)=node; }
+#line 2077 "parser.tab.c"
+    break;
+
+  case 91: /* mulop: MOD  */
+#line 213 "parser.y"
+                      {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData), NULL, NULL, NULL); (yyval.tree)=node; }
+#line 2083 "parser.tab.c"
+    break;
+
+  case 92: /* unaryExp: unaryOp unaryExp  */
+#line 216 "parser.y"
+                                   {(yyvsp[-1].tree)->addChildren((yyvsp[0].tree),0); (yyval.tree)=(yyvsp[-1].tree);}
+#line 2089 "parser.tab.c"
+    break;
+
+  case 93: /* unaryExp: factor  */
+#line 217 "parser.y"
+                                    {(yyval.tree)=(yyvsp[0].tree);}
+#line 2095 "parser.tab.c"
+    break;
+
+  case 94: /* unaryOp: chsign  */
+#line 220 "parser.y"
+                                {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData), NULL, NULL, NULL); (yyval.tree)=node; }
+#line 2101 "parser.tab.c"
+    break;
+
+  case 95: /* unaryOp: sizeof  */
+#line 221 "parser.y"
+                                {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData), NULL, NULL, NULL); (yyval.tree)=node; }
+#line 2107 "parser.tab.c"
+    break;
+
+  case 96: /* unaryOp: QMARK  */
+#line 222 "parser.y"
+                                {treeNode* node = newExpNode(OpK, (yyvsp[0].tokenData), NULL, NULL, NULL); (yyval.tree)=node; }
+#line 2113 "parser.tab.c"
+    break;
+
+  case 97: /* chsign: SUB  */
+#line 225 "parser.y"
+                        {   free ((yyvsp[0].tokenData)->tokenstr);
+                            (yyvsp[0].tokenData)->tokenstr=strdup("chsign"); (yyval.tokenData)=(yyvsp[0].tokenData);  /*This might be really really wrong lol*/}
+#line 2120 "parser.tab.c"
+    break;
+
+  case 98: /* sizeof: MUL  */
+#line 228 "parser.y"
+                        {   free ((yyvsp[0].tokenData)->tokenstr);
+                            (yyvsp[0].tokenData)->tokenstr=strdup("sizeof"); (yyval.tokenData)=(yyvsp[0].tokenData);  /*This might be really really wrong lol*/}
+#line 2127 "parser.tab.c"
+    break;
+
+  case 99: /* factor: mutable  */
+#line 232 "parser.y"
+                                    {(yyval.tree)=(yyvsp[0].tree);}
+#line 2133 "parser.tab.c"
+    break;
+
+  case 100: /* factor: immutable  */
+#line 233 "parser.y"
+                                    {(yyval.tree)=(yyvsp[0].tree);}
+#line 2139 "parser.tab.c"
+    break;
+
+  case 101: /* mutable: ID  */
+#line 236 "parser.y"
+                                             {treeNode* node = newExpNode(IdK, (yyvsp[0].tokenData), NULL, NULL, NULL); (yyval.tree)=node; }
+#line 2145 "parser.tab.c"
+    break;
+
   case 102: /* mutable: ID LBRACK exp RBRACK  */
-#line 235 "parser.y"
+#line 237 "parser.y"
                                             {
                                                 treeNode* IDNode = newExpNode(IdK, (yyvsp[-3].tokenData), NULL, NULL, NULL);
                                                 treeNode* node = newExpNode(OpK, (yyvsp[-2].tokenData), IDNode, (yyvsp[-1].tree), NULL); (yyval.tree)=node; /*Something is up with this one LOL*/ }
-#line 1935 "parser.tab.c"
+#line 2153 "parser.tab.c"
     break;
 
   case 103: /* immutable: LPAREN exp RPAREN  */
-#line 240 "parser.y"
+#line 242 "parser.y"
                                         {(yyval.tree)=(yyvsp[-1].tree);}
-#line 1941 "parser.tab.c"
+#line 2159 "parser.tab.c"
     break;
 
   case 104: /* immutable: call  */
-#line 241 "parser.y"
+#line 243 "parser.y"
                                         {(yyval.tree)=(yyvsp[0].tree);}
-#line 1947 "parser.tab.c"
+#line 2165 "parser.tab.c"
     break;
 
   case 105: /* immutable: constant  */
-#line 242 "parser.y"
+#line 244 "parser.y"
                                         {(yyval.tree)=(yyvsp[0].tree);}
-#line 1953 "parser.tab.c"
+#line 2171 "parser.tab.c"
     break;
 
   case 106: /* call: ID LPAREN args RPAREN  */
-#line 245 "parser.y"
+#line 247 "parser.y"
                                          {treeNode* node = newExpNode(CallK, (yyvsp[-3].tokenData), (yyvsp[-1].tree), NULL, NULL); (yyval.tree)=node;}
-#line 1959 "parser.tab.c"
+#line 2177 "parser.tab.c"
     break;
 
   case 107: /* args: argList  */
-#line 248 "parser.y"
+#line 250 "parser.y"
                             {(yyval.tree)=(yyvsp[0].tree);}
-#line 1965 "parser.tab.c"
+#line 2183 "parser.tab.c"
     break;
 
   case 108: /* args: %empty  */
-#line 249 "parser.y"
+#line 251 "parser.y"
                            {(yyval.tree)=NULL;}
-#line 1971 "parser.tab.c"
+#line 2189 "parser.tab.c"
     break;
 
   case 109: /* argList: argList COMMA exp  */
-#line 252 "parser.y"
+#line 254 "parser.y"
                                     {(yyvsp[-2].tree)->addSibling((yyvsp[0].tree)); (yyval.tree)=(yyvsp[-2].tree);}
-#line 1977 "parser.tab.c"
+#line 2195 "parser.tab.c"
     break;
 
   case 110: /* argList: exp  */
-#line 253 "parser.y"
+#line 255 "parser.y"
                                 {(yyval.tree)=(yyvsp[0].tree);}
-#line 1983 "parser.tab.c"
+#line 2201 "parser.tab.c"
     break;
 
   case 111: /* constant: NUMCONST  */
-#line 256 "parser.y"
+#line 258 "parser.y"
                                  {treeNode* node = newExpNode(constantK, (yyvsp[0].tokenData), NULL, NULL, NULL); node->EType(Integer), (yyval.tree)=node; }
-#line 1989 "parser.tab.c"
+#line 2207 "parser.tab.c"
     break;
 
   case 112: /* constant: CHARCONST  */
-#line 257 "parser.y"
+#line 259 "parser.y"
                                  {treeNode* node = newExpNode(constantK, (yyvsp[0].tokenData), NULL, NULL, NULL); node->EType(Char), (yyval.tree)=node; }
-#line 1995 "parser.tab.c"
+#line 2213 "parser.tab.c"
     break;
 
   case 113: /* constant: STRINGCONST  */
-#line 258 "parser.y"
+#line 260 "parser.y"
                                  {treeNode* node = newExpNode(constantK, (yyvsp[0].tokenData), NULL, NULL, NULL); node->EType(Char), node->setArray(true); (yyval.tree)=node; }
-#line 2001 "parser.tab.c"
+#line 2219 "parser.tab.c"
     break;
 
   case 114: /* constant: BOOLCONST  */
-#line 259 "parser.y"
+#line 261 "parser.y"
                                  {treeNode* node = newExpNode(constantK, (yyvsp[0].tokenData), NULL, NULL, NULL); node->EType(boolean), (yyval.tree)=node; }
-#line 2007 "parser.tab.c"
+#line 2225 "parser.tab.c"
     break;
 
 
-#line 2011 "parser.tab.c"
+#line 2229 "parser.tab.c"
 
       default: break;
     }
@@ -2054,7 +2272,37 @@ yyerrlab:
   if (!yyerrstatus)
     {
       ++yynerrs;
-      yyerror (YY_("syntax error"));
+      {
+        yypcontext_t yyctx
+          = {yyssp, yytoken};
+        char const *yymsgp = YY_("syntax error");
+        int yysyntax_error_status;
+        yysyntax_error_status = yysyntax_error (&yymsg_alloc, &yymsg, &yyctx);
+        if (yysyntax_error_status == 0)
+          yymsgp = yymsg;
+        else if (yysyntax_error_status == -1)
+          {
+            if (yymsg != yymsgbuf)
+              YYSTACK_FREE (yymsg);
+            yymsg = YY_CAST (char *,
+                             YYSTACK_ALLOC (YY_CAST (YYSIZE_T, yymsg_alloc)));
+            if (yymsg)
+              {
+                yysyntax_error_status
+                  = yysyntax_error (&yymsg_alloc, &yymsg, &yyctx);
+                yymsgp = yymsg;
+              }
+            else
+              {
+                yymsg = yymsgbuf;
+                yymsg_alloc = sizeof yymsgbuf;
+                yysyntax_error_status = YYENOMEM;
+              }
+          }
+        yyerror (yymsgp);
+        if (yysyntax_error_status == YYENOMEM)
+          YYNOMEM;
+      }
     }
 
   if (yyerrstatus == 3)
@@ -2196,9 +2444,10 @@ yyreturnlab:
   if (yyss != yyssa)
     YYSTACK_FREE (yyss);
 #endif
-
+  if (yymsg != yymsgbuf)
+    YYSTACK_FREE (yymsg);
   return yyresult;
 }
 
-#line 262 "parser.y"
+#line 264 "parser.y"
 
