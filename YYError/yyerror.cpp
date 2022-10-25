@@ -167,7 +167,7 @@ void yyerror(const char *msg)
 
     // make a copy of msg string
     space = strdup(msg);
-    printf("LastToken %s\n", lastToken);
+    printf("MSG %s\n", msg);
     exit(0);
 
     // split out components
