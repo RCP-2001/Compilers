@@ -7,7 +7,7 @@
 int line = 1; 
 int numErrors = 0;
 int numWarnings = 0;
-
+char* lastToken;
 
 static int setValue(int linenum, int tokenClass, char *svalue){
     // create the pass-bacc data space
@@ -134,64 +134,64 @@ static int setValue(int linenum, int tokenClass, char *svalue){
 %option noyywrap
 
 %%
-"if"                        {return setValue(line, IF, yytext);}
-"then"                      {return setValue(line, THEN, yytext);}
-"else"                      {return setValue(line, ELSE, yytext);}
+"if"                        {lastToken = yytext; return setValue(line, IF, yytext);}
+"then"                      {lastToken = yytext; return setValue(line, THEN, yytext);}
+"else"                      {lastToken = yytext; return setValue(line, ELSE, yytext);}
 
-"while"                     {return setValue(line, WHILE, yytext);}
-"for"                       {return setValue(line, FOR, yytext);}
-"do"                        {return setValue(line, DO, yytext);}
-"to"                        {return setValue(line, TO, yytext);}
-"by"                        {return setValue(line, BY, yytext);}
+"while"                     {lastToken = yytext; return setValue(line, WHILE, yytext);}
+"for"                       {lastToken = yytext; return setValue(line, FOR, yytext);}
+"do"                        {lastToken = yytext; return setValue(line, DO, yytext);}
+"to"                        {lastToken = yytext; return setValue(line, TO, yytext);}
+"by"                        {lastToken = yytext; return setValue(line, BY, yytext);}
 
-"return"                    {return setValue(line, RETURN, yytext);}
-"break"                     {return setValue(line, BREAK, yytext);}
+"return"                    {lastToken = yytext; return setValue(line, RETURN, yytext);}
+"break"                     {lastToken = yytext; return setValue(line, BREAK, yytext);}
 
-"or"                        {return setValue(line, OR, yytext);}
-"and"                       {return setValue(line, AND, yytext );}
-"not"                       {return setValue(line, NOT, yytext );}
+"or"                        {lastToken = yytext; return setValue(line, OR, yytext);}
+"and"                       {lastToken = yytext; return setValue(line, AND, yytext );}
+"not"                       {lastToken = yytext; return setValue(line, NOT, yytext );}
 
-"static"                    {return setValue(line, STATIC, yytext);}
-"int"                       {return setValue(line, INT, yytext);}
-"bool"                      {return setValue(line, BOOL, yytext);}
-"char"                      {return setValue(line, CHAR, yytext);}
-"true"|"false"              {return setValue(line, BOOLCONST, yytext); }
+"static"                    {lastToken = yytext; return setValue(line, STATIC, yytext);}
+"int"                       {lastToken = yytext; return setValue(line, INT, yytext);}
+"bool"                      {lastToken = yytext; return setValue(line, BOOL, yytext);}
+"char"                      {lastToken = yytext; return setValue(line, CHAR, yytext);}
+"true"|"false"              {lastToken = yytext; return setValue(line, BOOLCONST, yytext); }
 
-[a-zA-Z][a-zA-Z0-9]*        {return setValue(line, ID, yytext); }
-[0-9]+                      {return setValue(line, NUMCONST, yytext); }
-L?'(\\.|[^\\'\n])+'	        {return setValue(line, CHARCONST, yytext);}
-L?\"(\\.|[^\\"\n])*\"       {return setValue(line, STRINGCONST, yytext);}
+[a-zA-Z][a-zA-Z0-9]*        {lastToken = yytext; return setValue(line, ID, yytext); }
+[0-9]+                      {lastToken = yytext; return setValue(line, NUMCONST, yytext); }
+L?'(\\.|[^\\'\n])+'	        {lastToken = yytext; return setValue(line, CHARCONST, yytext);}
+L?\"(\\.|[^\\"\n])*\"       {lastToken = yytext; return setValue(line, STRINGCONST, yytext);}
 
-;                           {return setValue(line, SEMI, yytext);}
-,                           {return setValue(line, COMMA, yytext);}
-:                           {return setValue(line, COLON, yytext);}
-\[                          {return setValue(line, LBRACK, yytext);}  
-]                           {return setValue(line, RBRACK, yytext);} 
-\{                          {return setValue(line, LCURL, yytext);}
-\}                          {return setValue(line, RCURL, yytext);}
-\(                          {return setValue(line, LPAREN, yytext);}
-\)                           {return setValue(line, RPAREN, yytext);}
+;                           {lastToken = yytext; return setValue(line, SEMI, yytext);}
+,                           {lastToken = yytext; return setValue(line, COMMA, yytext);}
+:                           {lastToken = yytext; return setValue(line, COLON, yytext);}
+\[                          {lastToken = yytext; return setValue(line, LBRACK, yytext);}  
+]                           {lastToken = yytext; return setValue(line, RBRACK, yytext);} 
+\{                          {lastToken = yytext; return setValue(line, LCURL, yytext);}
+\}                          {lastToken = yytext; return setValue(line, RCURL, yytext);}
+\(                          {lastToken = yytext; return setValue(line, LPAREN, yytext);}
+\)                          {lastToken = yytext; return setValue(line, RPAREN, yytext);}
 
-"++"                        {return setValue(line, INC, yytext);}
-"--"                        {return setValue(line, DEC, yytext);}
-"+="                        {return setValue(line, ADDASS, yytext);}
-"-="                        {return setValue(line, DECASS, yytext);}
-"*="                        {return setValue(line, MULASS, yytext);}
-"/="                        {return setValue(line, DIVASS, yytext);}
+"++"                        {lastToken = yytext; return setValue(line, INC, yytext);}
+"--"                        {lastToken = yytext; return setValue(line, DEC, yytext);}
+"+="                        {lastToken = yytext; return setValue(line, ADDASS, yytext);}
+"-="                        {lastToken = yytext; return setValue(line, DECASS, yytext);}
+"*="                        {lastToken = yytext; return setValue(line, MULASS, yytext);}
+"/="                        {lastToken = yytext; return setValue(line, DIVASS, yytext);}
 
-"<="                        {return setValue(line, LEQ, yytext);}
-">="                        {return setValue(line, GEQ, yytext);}
-\<                           {return setValue(line, LESS, yytext);}
->                           {return setValue(line, GREATER, yytext);}
-"=="                        {return setValue(line, EQ, yytext);}
-"!="                        {return setValue(line, NEQ, yytext);}
-\+                          {return setValue(line, ADD, yytext);}
--                           {return setValue(line, SUB, yytext);}
-\*                          {return setValue(line, MUL, yytext);}   
-\/                          {return setValue(line, DIV, yytext);}
-%                           {return setValue(line, MOD, yytext);}
-\?                          {return setValue(line, QMARK, yytext);}
-=                           {return setValue(line, ASSIGN, yytext);}
+"<="                        {lastToken = yytext; return setValue(line, LEQ, yytext);}
+">="                        {lastToken = yytext; return setValue(line, GEQ, yytext);}
+\<                          {lastToken = yytext; return setValue(line, LESS, yytext);}
+>                           {lastToken = yytext; return setValue(line, GREATER, yytext);}
+"=="                        {lastToken = yytext; return setValue(line, EQ, yytext);}
+"!="                        {lastToken = yytext; return setValue(line, NEQ, yytext);}
+\+                          {lastToken = yytext; return setValue(line, ADD, yytext);}
+-                           {lastToken = yytext; return setValue(line, SUB, yytext);}
+\*                          {lastToken = yytext; return setValue(line, MUL, yytext);}   
+\/                          {lastToken = yytext; return setValue(line, DIV, yytext);}
+%                           {lastToken = yytext; return setValue(line, MOD, yytext);}
+\?                          {lastToken = yytext; return setValue(line, QMARK, yytext);}
+=                           {lastToken = yytext; return setValue(line, ASSIGN, yytext);}
 
 
 

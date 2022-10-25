@@ -305,7 +305,7 @@ void treeNode::printTree(int levels, int siblingNum, SymbolTable *symTbl)
         char *Stat;
         if (isStatic == true)
         {
-            Stat = strdup(" static");
+            Stat = strdup(""); // sample output doesnt specify static this time i guess lol
         }
         else
         {
@@ -406,11 +406,11 @@ void treeNode::printTree(int levels, int siblingNum, SymbolTable *symTbl)
         case constantK:
             if (isArray == true)
             {
-                printf("Const is array %s of type %s [line: %d]", attr->tokenstr, RetETYPE().c_str(), attr->linenum);
+                printf("Const is array %s of type %s [line: %d]", StringVal().c_str(), RetETYPE().c_str(), attr->linenum);
             }
             else
             {
-                printf("Const %s of type %s [line: %d]", attr->tokenstr, RetETYPE().c_str(), attr->linenum);
+                printf("Const %s of type %s [line: %d]", StringVal().c_str(), RetETYPE().c_str(), attr->linenum);
             }
             break;
         case IdK:
@@ -476,6 +476,15 @@ void treeNode::printTree(int levels, int siblingNum, SymbolTable *symTbl)
 
     if (sibling != NULL)
     {
+        if (sibling->Kind() == StmtK && sibling->SKind() == CompoundK)
+        {
+            symTbl->enter("Compound Statement");
+        }
+        if (nodeKind == StmtK && subkind.stmt == CompoundK)
+        {
+            symTbl->leave();
+        }
+
         printf("\n");
         for (int i = 1; i < levels; i++)
         {
@@ -486,12 +495,46 @@ void treeNode::printTree(int levels, int siblingNum, SymbolTable *symTbl)
     }
 }
 
-int treeNode::GetChildren(int c){
+int treeNode::GetChildren(int c)
+{
     int count = 0;
-    treeNode* CurrentChild = child[c];
-    while(CurrentChild != NULL){
+    treeNode *CurrentChild = child[c];
+    while (CurrentChild != NULL)
+    {
         count++;
         CurrentChild = CurrentChild->nextSibling();
     }
     return count;
+}
+
+std::string treeNode::StringVal()
+{
+    if (expType == Integer)
+    {
+        return std::to_string(attr->nvalue);
+    }
+    else if (expType == Char && isArray == true)
+    {
+        std::string Ret = (attr->svalue);
+        Ret = "\"" + Ret + "\"";
+        return Ret;
+    }
+    else if (expType == Char && isArray == false)
+    {
+        std::string Ret = &(attr->cvalue);
+        Ret = "\'" + Ret + "\'";
+        return Ret;
+    }
+    else if (expType == boolean && attr->nvalue == 0)
+    {
+        return "false";
+    }
+    else if (expType == boolean && attr->nvalue == 1)
+    {
+        return "true";
+    }
+    else
+    {
+        return "Something went wrong";
+    }
 }

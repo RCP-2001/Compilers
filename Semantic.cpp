@@ -487,6 +487,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
             }
             else if (p->InitIs() == false)
             {
+
                 printf("WARNING(%d): Variable '%s' may be uninitialized when used here.\n", tree->token()->linenum, p->token()->tokenstr);
                 p->InitIs(true); // dont need to be annoying about uninit vars
                 numWarnings++;
@@ -624,7 +625,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                 treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(1)->token()->tokenstr);
                 if (n != NULL /*&& n->EType() != Void*/)
                 {
-                   if ((n->DKind() == FuncK && tree->GetChild(1)->EKind() == CallK) || (n->DKind() != FuncK && tree->GetChild(1)->EKind() == IdK))
+                    if ((n->DKind() == FuncK && tree->GetChild(1)->EKind() == CallK) || (n->DKind() != FuncK && tree->GetChild(1)->EKind() == IdK))
                     {
                         op2 = n->EType();
                     }
@@ -632,6 +633,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                     op2A = n->ArrayIs();
                     if (n->InitIs() == false && tree->GetChild(1)->EKind() == IdK && n->DKind() != FuncK)
                     {
+
                         printf("WARNING(%d): Variable '%s' may be uninitialized when used here.\n", tree->token()->linenum, n->token()->tokenstr);
                         n->InitIs(true); // dont need to be annoying about uninit vars
                         numWarnings++;
@@ -654,7 +656,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                     op2 = Integer;
                     FindUnintVariables(tree->GetChild(1), symTbl);
                 }
-                else if ((opType == "ArrayAcc") || (opType == "assign"))
+                else if ((opType == "ArrayAcc") || (opType == "assign") || tree->GetChild(1)->EKind() == AssingK)
                 {
                     // need to make recusive
                     // treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(1)->GetChild(0)->token()->tokenstr);
@@ -668,6 +670,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                     //
                     if (n != NULL)
                     {
+
                         op2 = n->EType();
                         // really need to make recusive
                         // makes this acutally wrong
@@ -676,6 +679,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                             op2A = false;
                             if (n->InitIs() == false && n->DKind() != FuncK && a == false)
                             {
+
                                 printf("WARNING(%d): Variable '%s' may be uninitialized when used here.\n", tree->token()->linenum, n->token()->tokenstr);
                                 n->InitIs(true); // dont need to be annoying about uninit vars
                                 numWarnings++;
@@ -684,6 +688,10 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                         else
                         {
                             op2A = n->ArrayIs();
+                        }
+                        if (a == true)
+                        {
+                            n->InitIs(true);
                         }
                     }
                 }
@@ -715,8 +723,9 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                         n->InitIs(true);
                     }
                     // otherwise, yell
-                    else if (n->InitIs() == false && tree->GetChild(1)->EKind() == IdK && n->DKind() != FuncK)
+                    else if (n->InitIs() == false && tree->GetChild(0)->EKind() == IdK && n->DKind() != FuncK)
                     {
+
                         printf("WARNING(%d): Variable '%s' may be uninitialized when used here.\n", tree->token()->linenum, n->token()->tokenstr);
                         n->InitIs(true); // dont need to be annoying about uninit vars
                         numWarnings++;
@@ -739,7 +748,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                     op1 = Integer;
                     FindUnintVariables(tree->GetChild(0), symTbl);
                 }
-                else if ((opType == "ArrayAcc") || (opType == "assign"))
+                if ((opType == "ArrayAcc") || (opType == "assign") || tree->GetChild(0)->EKind() == AssingK)
                 {
                     // may need to make recusive????
                     // treeNode *n = (treeNode *)symTbl->lookup(tree->GetChild(0)->GetChild(0)->token()->tokenstr);
@@ -754,7 +763,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                         if (b == true)
                         {
                             op1A = false;
-                            if (strcmp(tree->token()->tokenstr, "=") == 0)
+                            if (strcmp(tree->token()->tokenstr, "=") == 0 || tree->GetChild(0)->EKind() == AssingK)
                             {
                                 n->InitIs(true);
                             }
@@ -874,6 +883,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                 {
                     if (n->InitIs() == false && tree->GetChild(1)->EKind() == IdK && n->DKind() != FuncK)
                     {
+
                         printf("WARNING(%d): Variable '%s' may be uninitialized when used here.\n", tree->token()->linenum, n->token()->tokenstr);
                         n->InitIs(true); // dont need to be annoying about uninit vars
 
@@ -986,6 +996,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                 {
                     if (n->InitIs() == false && (tree->GetChild(0)->EKind() == IdK) && n->DKind() != FuncK)
                     {
+
                         printf("WARNING(%d): Variable '%s' may be uninitialized when used here.\n", tree->token()->linenum, n->token()->tokenstr);
                         n->InitIs(true); // dont need to be annoying about uninit vars
                         numWarnings++;
@@ -1041,6 +1052,7 @@ void semanticAnalysis(SymbolTable *symTbl, treeNode *tree)
                     }
                     if (n->InitIs() == false && n->StaticIs() == false)
                     {
+
                         printf("WARNING(%d): Variable '%s' may be uninitialized when used here.\n", tree->token()->linenum, n->token()->tokenstr);
                         n->InitIs(true); // dont need to be annoying about uninit vars
                         numWarnings++;
@@ -1404,7 +1416,7 @@ bool FindAssingOp(treeNode *n)
     {
         return false;
     }
-    if (strcmp(n->token()->tokenstr, "=") == 0)
+    if (strcmp(n->token()->tokenstr, "=") == 0 || n->EKind() == AssingK)
     {
         return true;
     }
@@ -1666,6 +1678,13 @@ void FindUnintVariables(treeNode *Test, SymbolTable *symTbl)
 {
     if (Test == NULL)
     {
+        return;
+    }
+    if (Test->EKind() == AssingK)
+    {
+        // Do look down 1, cuz its being assinged
+        FindUnintVariables(Test->GetChild(1), symTbl);
+        FindUnintVariables(Test->GetChild(2), symTbl);
         return;
     }
     if (Test->EKind() == IdK)

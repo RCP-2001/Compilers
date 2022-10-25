@@ -1,5 +1,6 @@
 %{
 #include "scanType.h"
+#include "YYError/yyerror.h"
 #include <stdio.h>
 #include <cstring>
 
@@ -10,14 +11,14 @@ extern FILE *yyin;
 extern int line; //err line number from scanner
 extern int numErrors; //err count
 
-
+/* Old yyerror
 #define YYERROR_VERBOSE
 void yyerror(const char *msg){
     printf("ERROR(%d): %s\n", line, msg);
     //printf("CurrentToken: %s \n", yytext);
     //printToken(yychar, tokenString);
     numErrors++;
-}
+}*/
 
 %}
 
@@ -163,7 +164,7 @@ exp             : mutable assignop exp    {$2->addChildren($1,0); $2->addChildre
                 | simpleExp               {$$=$1; /*not sure this is right either tbh*/}
 
 assignop        : ASSIGN         {treeNode* node = newExpNode(AssingK, $1); $$=node; /*Check yourself before you wreck yourself*/}
-                | ADDASS         {treeNode* node = newExpNode(AssingK, $1); $$=node; /*Cuz bitches like you iz bad 4 my healt*/}
+                | ADDASS         {treeNode* node = newExpNode(AssingK, $1); $$=node; /**/}
                 | DECASS         {treeNode* node = newExpNode(AssingK, $1); $$=node; /*Fairly certien this will give wrong tree structure*/}
                 | MULASS         {treeNode* node = newExpNode(AssingK, $1); $$=node; /*Fairly certien this will give wrong tree structure*/}
                 | DIVASS         {treeNode* node = newExpNode(AssingK, $1); $$=node; /*Fairly certien this will give wrong tree structure*/}

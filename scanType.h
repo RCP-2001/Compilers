@@ -202,6 +202,7 @@ public:
     void printTree(int levels, int);
     void printTree(int levels, int, SymbolTable* symTbl);
     int GetChildren(int);
+    std::string StringVal();
 
     // function for acessing private elements
     // Ideally should be read only

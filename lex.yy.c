@@ -525,7 +525,7 @@ char *yytext;
 int line = 1; 
 int numErrors = 0;
 int numWarnings = 0;
-
+char* lastToken;
 
 static int setValue(int linenum, int tokenClass, char *svalue){
     // create the pass-bacc data space
@@ -927,252 +927,252 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 137 "parser.l"
-{return setValue(line, IF, yytext);}
+{lastToken = yytext; return setValue(line, IF, yytext);}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
 #line 138 "parser.l"
-{return setValue(line, THEN, yytext);}
+{lastToken = yytext; return setValue(line, THEN, yytext);}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 139 "parser.l"
-{return setValue(line, ELSE, yytext);}
+{lastToken = yytext; return setValue(line, ELSE, yytext);}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 141 "parser.l"
-{return setValue(line, WHILE, yytext);}
+{lastToken = yytext; return setValue(line, WHILE, yytext);}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 142 "parser.l"
-{return setValue(line, FOR, yytext);}
+{lastToken = yytext; return setValue(line, FOR, yytext);}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 143 "parser.l"
-{return setValue(line, DO, yytext);}
+{lastToken = yytext; return setValue(line, DO, yytext);}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 144 "parser.l"
-{return setValue(line, TO, yytext);}
+{lastToken = yytext; return setValue(line, TO, yytext);}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 145 "parser.l"
-{return setValue(line, BY, yytext);}
+{lastToken = yytext; return setValue(line, BY, yytext);}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 147 "parser.l"
-{return setValue(line, RETURN, yytext);}
+{lastToken = yytext; return setValue(line, RETURN, yytext);}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 148 "parser.l"
-{return setValue(line, BREAK, yytext);}
+{lastToken = yytext; return setValue(line, BREAK, yytext);}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 150 "parser.l"
-{return setValue(line, OR, yytext);}
+{lastToken = yytext; return setValue(line, OR, yytext);}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 151 "parser.l"
-{return setValue(line, AND, yytext );}
+{lastToken = yytext; return setValue(line, AND, yytext );}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 152 "parser.l"
-{return setValue(line, NOT, yytext );}
+{lastToken = yytext; return setValue(line, NOT, yytext );}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 154 "parser.l"
-{return setValue(line, STATIC, yytext);}
+{lastToken = yytext; return setValue(line, STATIC, yytext);}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 155 "parser.l"
-{return setValue(line, INT, yytext);}
+{lastToken = yytext; return setValue(line, INT, yytext);}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 156 "parser.l"
-{return setValue(line, BOOL, yytext);}
+{lastToken = yytext; return setValue(line, BOOL, yytext);}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 157 "parser.l"
-{return setValue(line, CHAR, yytext);}
+{lastToken = yytext; return setValue(line, CHAR, yytext);}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 158 "parser.l"
-{return setValue(line, BOOLCONST, yytext); }
+{lastToken = yytext; return setValue(line, BOOLCONST, yytext); }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 160 "parser.l"
-{return setValue(line, ID, yytext); }
+{lastToken = yytext; return setValue(line, ID, yytext); }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
 #line 161 "parser.l"
-{return setValue(line, NUMCONST, yytext); }
+{lastToken = yytext; return setValue(line, NUMCONST, yytext); }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 162 "parser.l"
-{return setValue(line, CHARCONST, yytext);}
+{lastToken = yytext; return setValue(line, CHARCONST, yytext);}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 163 "parser.l"
-{return setValue(line, STRINGCONST, yytext);}
+{lastToken = yytext; return setValue(line, STRINGCONST, yytext);}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
 #line 165 "parser.l"
-{return setValue(line, SEMI, yytext);}
+{lastToken = yytext; return setValue(line, SEMI, yytext);}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 166 "parser.l"
-{return setValue(line, COMMA, yytext);}
+{lastToken = yytext; return setValue(line, COMMA, yytext);}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
 #line 167 "parser.l"
-{return setValue(line, COLON, yytext);}
+{lastToken = yytext; return setValue(line, COLON, yytext);}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
 #line 168 "parser.l"
-{return setValue(line, LBRACK, yytext);}  
+{lastToken = yytext; return setValue(line, LBRACK, yytext);}  
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 169 "parser.l"
-{return setValue(line, RBRACK, yytext);} 
+{lastToken = yytext; return setValue(line, RBRACK, yytext);} 
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
 #line 170 "parser.l"
-{return setValue(line, LCURL, yytext);}
+{lastToken = yytext; return setValue(line, LCURL, yytext);}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
 #line 171 "parser.l"
-{return setValue(line, RCURL, yytext);}
+{lastToken = yytext; return setValue(line, RCURL, yytext);}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 172 "parser.l"
-{return setValue(line, LPAREN, yytext);}
+{lastToken = yytext; return setValue(line, LPAREN, yytext);}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
 #line 173 "parser.l"
-{return setValue(line, RPAREN, yytext);}
+{lastToken = yytext; return setValue(line, RPAREN, yytext);}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
 #line 175 "parser.l"
-{return setValue(line, INC, yytext);}
+{lastToken = yytext; return setValue(line, INC, yytext);}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
 #line 176 "parser.l"
-{return setValue(line, DEC, yytext);}
+{lastToken = yytext; return setValue(line, DEC, yytext);}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
 #line 177 "parser.l"
-{return setValue(line, ADDASS, yytext);}
+{lastToken = yytext; return setValue(line, ADDASS, yytext);}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
 #line 178 "parser.l"
-{return setValue(line, DECASS, yytext);}
+{lastToken = yytext; return setValue(line, DECASS, yytext);}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
 #line 179 "parser.l"
-{return setValue(line, MULASS, yytext);}
+{lastToken = yytext; return setValue(line, MULASS, yytext);}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
 #line 180 "parser.l"
-{return setValue(line, DIVASS, yytext);}
+{lastToken = yytext; return setValue(line, DIVASS, yytext);}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
 #line 182 "parser.l"
-{return setValue(line, LEQ, yytext);}
+{lastToken = yytext; return setValue(line, LEQ, yytext);}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
 #line 183 "parser.l"
-{return setValue(line, GEQ, yytext);}
+{lastToken = yytext; return setValue(line, GEQ, yytext);}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
 #line 184 "parser.l"
-{return setValue(line, LESS, yytext);}
+{lastToken = yytext; return setValue(line, LESS, yytext);}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
 #line 185 "parser.l"
-{return setValue(line, GREATER, yytext);}
+{lastToken = yytext; return setValue(line, GREATER, yytext);}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
 #line 186 "parser.l"
-{return setValue(line, EQ, yytext);}
+{lastToken = yytext; return setValue(line, EQ, yytext);}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
 #line 187 "parser.l"
-{return setValue(line, NEQ, yytext);}
+{lastToken = yytext; return setValue(line, NEQ, yytext);}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
 #line 188 "parser.l"
-{return setValue(line, ADD, yytext);}
+{lastToken = yytext; return setValue(line, ADD, yytext);}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
 #line 189 "parser.l"
-{return setValue(line, SUB, yytext);}
+{lastToken = yytext; return setValue(line, SUB, yytext);}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
 #line 190 "parser.l"
-{return setValue(line, MUL, yytext);}   
+{lastToken = yytext; return setValue(line, MUL, yytext);}   
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
 #line 191 "parser.l"
-{return setValue(line, DIV, yytext);}
+{lastToken = yytext; return setValue(line, DIV, yytext);}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
 #line 192 "parser.l"
-{return setValue(line, MOD, yytext);}
+{lastToken = yytext; return setValue(line, MOD, yytext);}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
 #line 193 "parser.l"
-{return setValue(line, QMARK, yytext);}
+{lastToken = yytext; return setValue(line, QMARK, yytext);}
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
 #line 194 "parser.l"
-{return setValue(line, ASSIGN, yytext);}
+{lastToken = yytext; return setValue(line, ASSIGN, yytext);}
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
