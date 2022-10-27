@@ -50,18 +50,18 @@ decl    : varDecl  {$$=$1;}
         | error    {$$ = NULL;} // Do we need yxyerrok?
         ;
 
-varDecl : typeSpec varDeclList SEMI  {$2->EType($1); $2->BStatic(true); $$=$2;}
+varDecl : typeSpec varDeclList SEMI  {if($2 != NULL){$2->EType($1); $2->BStatic(true);} $$=$2;}
         | error varDeclList SEMI     {$$=NULL; yyerrok;}
         | typeSpec error SEMI     {$$=NULL; yyerrok; }
         ;
 
-scopedVarDecl   : STATIC typeSpec varDeclList SEMI  {$3->EType($2); $3->BStatic(true); $$=$3;}      
-                | typeSpec varDeclList SEMI         {$2->EType($1); $$=$2; /*This might be wrong actually*/}
-                | error varDeclList SEMI            {$$=NULL; yyerrok;} //??
-                | typeSpec error SEMI               {$$=NULL; yyerrok;} //??
+scopedVarDecl   : STATIC typeSpec varDeclList SEMI  {$3->EType($2); $3->BStatic(true); $$=$3; yyerrok;}      
+                | typeSpec varDeclList SEMI         {$2->EType($1); $$=$2; yyerrok; /*This might be wrong actually*/}
+                //| erxror varDeclList SEMI            {$$=NULL; yyerrok;} //??
+                //| typeSpec exrror SEMI               {$$=NULL; yyerrok;} //??
                 ;
 
-varDeclList     : varDeclList COMMA varDeclInit  {$1->addSibling($3); $$ = $1; yyerrok;}   //Need yxyerrok?
+varDeclList     : varDeclList COMMA varDeclInit  {if($1!=NULL) $1->addSibling($3); $$ = $1; yyerrok;}   //Need yxyerrok?
                 | varDeclInit                    {$$=$1;}
                 | varDeclList COMMA error        {$$=NULL;} //No yxyerrok?
                 | error                          {$$=NULL;} //No yxyerrok?
@@ -87,7 +87,7 @@ funDecl         : typeSpec ID LPAREN params RPAREN compoundStmt   {treeNode* nod
                 | ID LPAREN params RPAREN compoundStmt            {treeNode* node = newDeclNode(FuncK, Void, $1); node-> addChildren($3, 0); node-> addChildren($5, 1); $$= node;}
                 | typeSpec error                                  {$$=NULL;}
                 | typeSpec ID LPAREN error                       {$$=NULL;}
-                | ID error                                       {$$=NULL;} 
+                | ID LPAREN error                                       {$$=NULL;} 
                 | ID LPAREN params RPAREN error                 {$$=NULL;}
                 ;
 
@@ -95,17 +95,17 @@ params          : paramList     {$$ = $1;}
                 | %empty        {$$= NULL;}
                 ;
 
-paramList       : paramList SEMI paramTypeList     {$1->addSibling($3); $$=$1;}
+paramList       : paramList SEMI paramTypeList     {if($1!=NULL) $1->addSibling($3); $$=$1;}
                 | paramTypeList                    {$$=$1;}
                 | paramList SEMI error             {$$= NULL;}
                 | error                            {$$= NULL;}
                 ;
 
-paramTypeList   : typeSpec paramIDList          {$2->EType($1); $$=$2; /*This might be wrong actually*/}  
+paramTypeList   : typeSpec paramIDList          {if($2 != NULL) $2->EType($1); $$=$2; /*This might be wrong actually*/}  
                 | typeSpec error                {$$= NULL;}
                 ;
 
-paramIDList     : paramIDList COMMA paramID     {$1->addSibling($3); $$ = $1;  yyerrok;}    
+paramIDList     : paramIDList COMMA paramID     {if($1!=NULL) $1->addSibling($3); $$ = $1;  yyerrok;}    
                 | paramID                       {$$=$1;}   
                 | paramIDList COMMA error       {$$= NULL;}
                 | error                         {$$= NULL;}
