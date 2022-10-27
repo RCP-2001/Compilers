@@ -71,7 +71,9 @@ void initErrorProcessing()
 {
 
     niceTokenNameMap["ADDASS"] = (char *)"\"+=\"";
+    niceTokenNameMap["ADD"] = (char *)"\'+\'";
     niceTokenNameMap["AND"] = (char *)"\"and\"";
+    niceTokenNameMap["ASSIGN"] = (char *)"\'=\'";
     niceTokenNameMap["BOOL"] = (char *)"\"bool\"";
     niceTokenNameMap["BOOLCONST"] = (char *)"Boolean constant";
     niceTokenNameMap["BREAK"] = (char *)"\"break\"";
@@ -79,6 +81,9 @@ void initErrorProcessing()
     niceTokenNameMap["CHAR"] = (char *)"\"char\"";
     niceTokenNameMap["CHARCONST"] = (char *)"character constant";
     niceTokenNameMap["CHSIGN"] = (char *)"-";
+    niceTokenNameMap["COLON"] = (char *)"\':\'";
+    niceTokenNameMap["COMMA"] = (char *)"\',\'";
+    niceTokenNameMap["DECASS"] = (char *)"\"-=\"";
     niceTokenNameMap["DEC"] = (char *)"\"--\"";
     niceTokenNameMap["DIVASS"] = (char *)"\"/=\"";
     niceTokenNameMap["DO"] = (char *)"\"do\"";
@@ -90,14 +95,20 @@ void initErrorProcessing()
     niceTokenNameMap["IF"] = (char *)"\"if\"";
     niceTokenNameMap["INC"] = (char *)"\"++\"";
     niceTokenNameMap["INT"] = (char *)"\"int\"";
+    niceTokenNameMap["LCURL"] = (char *)"\'{\'";
     niceTokenNameMap["LEQ"] = (char *)"\"<=\"";
+    niceTokenNameMap["LPAREN"] = (char *)"\'(\'";
+    niceTokenNameMap["MOD"] = (char *)"\'%\'";
     niceTokenNameMap["MULASS"] = (char *)"\"*=\"";
     niceTokenNameMap["NEQ"] = (char *)"\"!=\"";
     niceTokenNameMap["NOT"] = (char *)"\"not\"";
     niceTokenNameMap["NUMCONST"] = (char *)"numeric constant";
     niceTokenNameMap["OR"] = (char *)"\"or\"";
+    niceTokenNameMap["RBRACK"] = (char *)"\']\'";
     niceTokenNameMap["RCURL"] = (char *)"\"}\"";
     niceTokenNameMap["RETURN"] = (char *)"\"return\"";
+    niceTokenNameMap["RPAREN"] = (char *)"\')\'";
+    niceTokenNameMap["SEMI"] = (char *)"\';\'";
     niceTokenNameMap["SIZEOF"] = (char *)"\"*\"";
     niceTokenNameMap["STATIC"] = (char *)"\"static\"";
     niceTokenNameMap["STRINGCONST"] = (char *)"string constant";
@@ -171,8 +182,8 @@ void yyerror(const char *msg)
 
     // make a copy of msg string
     space = strdup(msg);
-    //printf("MSG: %s\n", msg);
-    //exit(0);
+    // printf("MSG: %s\n", msg);
+    // exit(0);
 
     // split out components
     numstrs = split(space, strs, ' ');

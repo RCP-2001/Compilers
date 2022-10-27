@@ -67,7 +67,9 @@ void treeNode::addSibling(treeNode *aNode)
     }
     else
     {
-        //   fprintf(stderr, "SIBLING NODE ELSE\n");
+        //fprintf(stderr, "SIBLING NODE ELSE\n");
+        //fprintf(stderr, "Test: %s", aNode->token()->tokenstr);
+        //exit(0);
         sibling->addSibling(aNode);
     }
 }
