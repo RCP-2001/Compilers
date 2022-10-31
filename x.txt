@@ -1,3 +1,5084 @@
-ERROR(2): Syntax error, unexpected ';', expecting '{'.
-ERROR(3): Syntax error, unexpected '(', expecting ')'.
-ERROR(3): Syntax error, unexpected ')', expecting ',' or ';'.
+Starting parse
+Entering state 0
+Stack now 0
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 2
+Stack now 0 2
+Reading a token
+Next token is token ID ()
+ERROR(2): Syntax error, unexpected identifier "be", expecting '('.
+Error: popping token ID ()
+Stack now 0
+Shifting token error ()
+Entering state 1
+Stack now 0 1
+Next token is token ID ()
+Shifting token ID ()
+Entering state 13
+Stack now 0 1 13
+Reading a token
+Next token is token COMMA ()
+Reducing stack by rule 21 (line 74):
+   $1 = token ID ()
+-> $$ = nterm varDeclID ()
+Entering state 16
+Stack now 0 1 16
+Next token is token COMMA ()
+Reducing stack by rule 18 (line 69):
+   $1 = nterm varDeclID ()
+-> $$ = nterm varDeclInit ()
+Entering state 15
+Stack now 0 1 15
+Reducing stack by rule 15 (line 64):
+   $1 = nterm varDeclInit ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token COMMA ()
+Shifting token COMMA ()
+Entering state 27
+Stack now 0 1 14 27
+Reading a token
+Next token is token OR ()
+Shifting token error ()
+Entering state 64
+Stack now 0 1 14 27 64
+Next token is token OR ()
+Reducing stack by rule 16 (line 65):
+   $1 = nterm varDeclList ()
+   $2 = token COMMA ()
+   $3 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token OR ()
+Error: discarding token OR ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token NOT ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token NOT ()
+Error: discarding token NOT ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token TO ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token TO ()
+Error: discarding token TO ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token COLON ()
+Shifting token COLON ()
+Entering state 23
+Stack now 0 1 12 23
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 37
+Stack now 0 1 12 23 37
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 148 (line 289):
+   $1 = token ID ()
+-> $$ = nterm mutable ()
+Entering state 58
+Stack now 0 1 12 23 58
+Reducing stack by rule 146 (line 285):
+   $1 = nterm mutable ()
+-> $$ = nterm factor ()
+Entering state 57
+Stack now 0 1 12 23 57
+Reducing stack by rule 139 (line 269):
+   $1 = nterm factor ()
+-> $$ = nterm unaryExp ()
+Entering state 53
+Stack now 0 1 12 23 53
+Reducing stack by rule 133 (line 259):
+   $1 = nterm unaryExp ()
+-> $$ = nterm mulExp ()
+Entering state 52
+Stack now 0 1 12 23 52
+Next token is token ID ()
+Reducing stack by rule 128 (line 250):
+   $1 = nterm mulExp ()
+-> $$ = nterm sumExp ()
+Entering state 51
+Stack now 0 1 12 23 51
+Next token is token ID ()
+Reducing stack by rule 119 (line 237):
+   $1 = nterm sumExp ()
+-> $$ = nterm relExp ()
+Entering state 50
+Stack now 0 1 12 23 50
+Reducing stack by rule 116 (line 232):
+   $1 = nterm relExp ()
+-> $$ = nterm unaryRelExp ()
+Entering state 49
+Stack now 0 1 12 23 49
+Reducing stack by rule 113 (line 227):
+   $1 = nterm unaryRelExp ()
+-> $$ = nterm andExp ()
+Entering state 48
+Stack now 0 1 12 23 48
+Next token is token ID ()
+Reducing stack by rule 110 (line 222):
+   $1 = nterm andExp ()
+-> $$ = nterm simpleExp ()
+Entering state 47
+Stack now 0 1 12 23 47
+Next token is token ID ()
+Reducing stack by rule 20 (line 71):
+   $1 = token error ()
+   $2 = token COLON ()
+   $3 = nterm simpleExp ()
+-> $$ = nterm varDeclInit ()
+Entering state 15
+Stack now 0 1 15
+Reducing stack by rule 15 (line 64):
+   $1 = nterm varDeclInit ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token COLON ()
+Shifting token COLON ()
+Entering state 23
+Stack now 0 1 12 23
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 37
+Stack now 0 1 12 23 37
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 148 (line 289):
+   $1 = token ID ()
+-> $$ = nterm mutable ()
+Entering state 58
+Stack now 0 1 12 23 58
+Reducing stack by rule 146 (line 285):
+   $1 = nterm mutable ()
+-> $$ = nterm factor ()
+Entering state 57
+Stack now 0 1 12 23 57
+Reducing stack by rule 139 (line 269):
+   $1 = nterm factor ()
+-> $$ = nterm unaryExp ()
+Entering state 53
+Stack now 0 1 12 23 53
+Reducing stack by rule 133 (line 259):
+   $1 = nterm unaryExp ()
+-> $$ = nterm mulExp ()
+Entering state 52
+Stack now 0 1 12 23 52
+Next token is token ID ()
+Reducing stack by rule 128 (line 250):
+   $1 = nterm mulExp ()
+-> $$ = nterm sumExp ()
+Entering state 51
+Stack now 0 1 12 23 51
+Next token is token ID ()
+Reducing stack by rule 119 (line 237):
+   $1 = nterm sumExp ()
+-> $$ = nterm relExp ()
+Entering state 50
+Stack now 0 1 12 23 50
+Reducing stack by rule 116 (line 232):
+   $1 = nterm relExp ()
+-> $$ = nterm unaryRelExp ()
+Entering state 49
+Stack now 0 1 12 23 49
+Reducing stack by rule 113 (line 227):
+   $1 = nterm unaryRelExp ()
+-> $$ = nterm andExp ()
+Entering state 48
+Stack now 0 1 12 23 48
+Next token is token ID ()
+Reducing stack by rule 110 (line 222):
+   $1 = nterm andExp ()
+-> $$ = nterm simpleExp ()
+Entering state 47
+Stack now 0 1 12 23 47
+Next token is token ID ()
+Reducing stack by rule 20 (line 71):
+   $1 = token error ()
+   $2 = token COLON ()
+   $3 = nterm simpleExp ()
+-> $$ = nterm varDeclInit ()
+Entering state 15
+Stack now 0 1 15
+Reducing stack by rule 15 (line 64):
+   $1 = nterm varDeclInit ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token TO ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token TO ()
+Error: discarding token TO ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token AND ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token AND ()
+Error: discarding token AND ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token COMMA ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token COMMA ()
+Shifting token COMMA ()
+Entering state 27
+Stack now 0 1 14 27
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 13
+Stack now 0 1 14 27 13
+Reading a token
+Next token is token TO ()
+Reducing stack by rule 21 (line 74):
+   $1 = token ID ()
+-> $$ = nterm varDeclID ()
+Entering state 16
+Stack now 0 1 14 27 16
+Next token is token TO ()
+Reducing stack by rule 18 (line 69):
+   $1 = nterm varDeclID ()
+-> $$ = nterm varDeclInit ()
+Entering state 65
+Stack now 0 1 14 27 65
+Reducing stack by rule 14 (line 63):
+   $1 = nterm varDeclList ()
+   $2 = token COMMA ()
+   $3 = nterm varDeclInit ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token TO ()
+ERROR(3): Invalid or misplaced input character: '''. Character Ignored.
+ERROR(5): Syntax error, unexpected "to", expecting ',' or ';'.
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Next token is token TO ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token TO ()
+Error: discarding token TO ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token COMMA ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token COMMA ()
+Shifting token COMMA ()
+Entering state 27
+Stack now 0 1 14 27
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 13
+Stack now 0 1 14 27 13
+Reading a token
+Next token is token BY ()
+Reducing stack by rule 21 (line 74):
+   $1 = token ID ()
+-> $$ = nterm varDeclID ()
+Entering state 16
+Stack now 0 1 14 27 16
+Next token is token BY ()
+Reducing stack by rule 18 (line 69):
+   $1 = nterm varDeclID ()
+-> $$ = nterm varDeclInit ()
+Entering state 65
+Stack now 0 1 14 27 65
+Reducing stack by rule 14 (line 63):
+   $1 = nterm varDeclList ()
+   $2 = token COMMA ()
+   $3 = nterm varDeclInit ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token BY ()
+ERROR(6): Syntax error, unexpected "by", expecting ',' or ';'.
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Next token is token BY ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token BY ()
+Error: discarding token BY ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token QMARK ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token QMARK ()
+Error: discarding token QMARK ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token COLON ()
+Shifting token COLON ()
+Entering state 23
+Stack now 0 1 12 23
+Reading a token
+Next token is token TO ()
+Error: popping token COLON ()
+Stack now 0 1 12
+Error: popping token error ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Next token is token TO ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token TO ()
+Error: discarding token TO ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 1
+Shifting token error ()
+Entering state 12
+Stack now 0 1 12
+Reading a token
+Next token is token SEMI ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 1 14
+Next token is token SEMI ()
+Shifting token SEMI ()
+Entering state 26
+Stack now 0 1 14 26
+Reducing stack by rule 8 (line 53):
+   $1 = token error ()
+   $2 = nterm varDeclList ()
+   $3 = token SEMI ()
+-> $$ = nterm varDecl ()
+Entering state 9
+Stack now 0 9
+Reducing stack by rule 4 (line 47):
+   $1 = nterm varDecl ()
+-> $$ = nterm decl ()
+Entering state 8
+Stack now 0 8
+Reducing stack by rule 3 (line 44):
+   $1 = nterm decl ()
+-> $$ = nterm declist ()
+Entering state 7
+Stack now 0 7
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 2
+Stack now 0 7 2
+Reading a token
+Next token is token ID ()
+ERROR(7): Syntax error, unexpected identifier "more", expecting '('.
+Error: popping token ID ()
+Stack now 0 7
+Shifting token error ()
+Entering state 1
+Stack now 0 7 1
+Next token is token ID ()
+Shifting token ID ()
+Entering state 13
+Stack now 0 7 1 13
+Reading a token
+Next token is token SEMI ()
+Reducing stack by rule 21 (line 74):
+   $1 = token ID ()
+-> $$ = nterm varDeclID ()
+Entering state 16
+Stack now 0 7 1 16
+Next token is token SEMI ()
+Reducing stack by rule 18 (line 69):
+   $1 = nterm varDeclID ()
+-> $$ = nterm varDeclInit ()
+Entering state 15
+Stack now 0 7 1 15
+Reducing stack by rule 15 (line 64):
+   $1 = nterm varDeclInit ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token SEMI ()
+Shifting token SEMI ()
+Entering state 26
+Stack now 0 7 1 14 26
+Reducing stack by rule 8 (line 53):
+   $1 = token error ()
+   $2 = nterm varDeclList ()
+   $3 = token SEMI ()
+-> $$ = nterm varDecl ()
+Entering state 9
+Stack now 0 7 9
+Reducing stack by rule 4 (line 47):
+   $1 = nterm varDecl ()
+-> $$ = nterm decl ()
+Entering state 19
+Stack now 0 7 19
+Reducing stack by rule 2 (line 43):
+   $1 = nterm declist ()
+   $2 = nterm decl ()
+-> $$ = nterm declist ()
+Entering state 7
+Stack now 0 7
+Reading a token
+Next token is token AND ()
+ERROR(7): Syntax error, unexpected "and".
+Shifting token error ()
+Entering state 1
+Stack now 0 7 1
+Next token is token AND ()
+Error: discarding token AND ()
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token BY ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token BY ()
+Error: discarding token BY ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token TO ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token TO ()
+Error: discarding token TO ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token SUB ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token SUB ()
+Error: discarding token SUB ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token AND ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token AND ()
+Error: discarding token AND ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token TO ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token TO ()
+Error: discarding token TO ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token COMMA ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token COMMA ()
+Shifting token COMMA ()
+Entering state 27
+Stack now 0 7 1 14 27
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 13
+Stack now 0 7 1 14 27 13
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 21 (line 74):
+   $1 = token ID ()
+-> $$ = nterm varDeclID ()
+Entering state 16
+Stack now 0 7 1 14 27 16
+Next token is token ID ()
+Reducing stack by rule 18 (line 69):
+   $1 = nterm varDeclID ()
+-> $$ = nterm varDeclInit ()
+Entering state 65
+Stack now 0 7 1 14 27 65
+Reducing stack by rule 14 (line 63):
+   $1 = nterm varDeclList ()
+   $2 = token COMMA ()
+   $3 = nterm varDeclInit ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+ERROR(9): Invalid or misplaced input character: '''. Character Ignored.
+ERROR(9): Syntax error, unexpected identifier "a", expecting ',' or ';'.
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token TO ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token TO ()
+Error: discarding token TO ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token COMMA ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token COMMA ()
+Shifting token COMMA ()
+Entering state 27
+Stack now 0 7 1 14 27
+Reading a token
+Next token is token TO ()
+Shifting token error ()
+Entering state 64
+Stack now 0 7 1 14 27 64
+Next token is token TO ()
+Reducing stack by rule 16 (line 65):
+   $1 = nterm varDeclList ()
+   $2 = token COMMA ()
+   $3 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token TO ()
+Error: discarding token TO ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token SEMI ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token SEMI ()
+Shifting token SEMI ()
+Entering state 26
+Stack now 0 7 1 14 26
+Reducing stack by rule 8 (line 53):
+   $1 = token error ()
+   $2 = nterm varDeclList ()
+   $3 = token SEMI ()
+-> $$ = nterm varDecl ()
+Entering state 9
+Stack now 0 7 9
+Reducing stack by rule 4 (line 47):
+   $1 = nterm varDecl ()
+-> $$ = nterm decl ()
+Entering state 19
+Stack now 0 7 19
+Reducing stack by rule 2 (line 43):
+   $1 = nterm declist ()
+   $2 = nterm decl ()
+-> $$ = nterm declist ()
+Entering state 7
+Stack now 0 7
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 2
+Stack now 0 7 2
+Reading a token
+Next token is token ID ()
+ERROR(10): Invalid or misplaced input character: '''. Character Ignored.
+ERROR(10): Invalid or misplaced input character: '.'. Character Ignored.
+ERROR(11): Syntax error, unexpected identifier "sleep", expecting '('.
+Error: popping token ID ()
+Stack now 0 7
+Shifting token error ()
+Entering state 1
+Stack now 0 7 1
+Next token is token ID ()
+Shifting token ID ()
+Entering state 13
+Stack now 0 7 1 13
+Reading a token
+Next token is token COLON ()
+Reducing stack by rule 21 (line 74):
+   $1 = token ID ()
+-> $$ = nterm varDeclID ()
+Entering state 16
+Stack now 0 7 1 16
+Next token is token COLON ()
+Shifting token COLON ()
+Entering state 28
+Stack now 0 7 1 16 28
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 37
+Stack now 0 7 1 16 28 37
+Reading a token
+Next token is token TO ()
+Reducing stack by rule 148 (line 289):
+   $1 = token ID ()
+-> $$ = nterm mutable ()
+Entering state 58
+Stack now 0 7 1 16 28 58
+Reducing stack by rule 146 (line 285):
+   $1 = nterm mutable ()
+-> $$ = nterm factor ()
+Entering state 57
+Stack now 0 7 1 16 28 57
+Reducing stack by rule 139 (line 269):
+   $1 = nterm factor ()
+-> $$ = nterm unaryExp ()
+Entering state 53
+Stack now 0 7 1 16 28 53
+Reducing stack by rule 133 (line 259):
+   $1 = nterm unaryExp ()
+-> $$ = nterm mulExp ()
+Entering state 52
+Stack now 0 7 1 16 28 52
+Next token is token TO ()
+Reducing stack by rule 128 (line 250):
+   $1 = nterm mulExp ()
+-> $$ = nterm sumExp ()
+Entering state 51
+Stack now 0 7 1 16 28 51
+Next token is token TO ()
+Reducing stack by rule 119 (line 237):
+   $1 = nterm sumExp ()
+-> $$ = nterm relExp ()
+Entering state 50
+Stack now 0 7 1 16 28 50
+Reducing stack by rule 116 (line 232):
+   $1 = nterm relExp ()
+-> $$ = nterm unaryRelExp ()
+Entering state 49
+Stack now 0 7 1 16 28 49
+Reducing stack by rule 113 (line 227):
+   $1 = nterm unaryRelExp ()
+-> $$ = nterm andExp ()
+Entering state 48
+Stack now 0 7 1 16 28 48
+Next token is token TO ()
+Reducing stack by rule 110 (line 222):
+   $1 = nterm andExp ()
+-> $$ = nterm simpleExp ()
+Entering state 66
+Stack now 0 7 1 16 28 66
+Next token is token TO ()
+Reducing stack by rule 19 (line 70):
+   $1 = nterm varDeclID ()
+   $2 = token COLON ()
+   $3 = nterm simpleExp ()
+-> $$ = nterm varDeclInit ()
+Entering state 15
+Stack now 0 7 1 15
+Reducing stack by rule 15 (line 64):
+   $1 = nterm varDeclInit ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token TO ()
+ERROR(11): Syntax error, unexpected "to", expecting ',' or ';'.
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Next token is token TO ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token TO ()
+Error: discarding token TO ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token COLON ()
+Shifting token COLON ()
+Entering state 23
+Stack now 0 7 1 12 23
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 37
+Stack now 0 7 1 12 23 37
+Reading a token
+Next token is token COMMA ()
+Reducing stack by rule 148 (line 289):
+   $1 = token ID ()
+-> $$ = nterm mutable ()
+Entering state 58
+Stack now 0 7 1 12 23 58
+Reducing stack by rule 146 (line 285):
+   $1 = nterm mutable ()
+-> $$ = nterm factor ()
+Entering state 57
+Stack now 0 7 1 12 23 57
+Reducing stack by rule 139 (line 269):
+   $1 = nterm factor ()
+-> $$ = nterm unaryExp ()
+Entering state 53
+Stack now 0 7 1 12 23 53
+Reducing stack by rule 133 (line 259):
+   $1 = nterm unaryExp ()
+-> $$ = nterm mulExp ()
+Entering state 52
+Stack now 0 7 1 12 23 52
+Next token is token COMMA ()
+Reducing stack by rule 128 (line 250):
+   $1 = nterm mulExp ()
+-> $$ = nterm sumExp ()
+Entering state 51
+Stack now 0 7 1 12 23 51
+Next token is token COMMA ()
+Reducing stack by rule 119 (line 237):
+   $1 = nterm sumExp ()
+-> $$ = nterm relExp ()
+Entering state 50
+Stack now 0 7 1 12 23 50
+Reducing stack by rule 116 (line 232):
+   $1 = nterm relExp ()
+-> $$ = nterm unaryRelExp ()
+Entering state 49
+Stack now 0 7 1 12 23 49
+Reducing stack by rule 113 (line 227):
+   $1 = nterm unaryRelExp ()
+-> $$ = nterm andExp ()
+Entering state 48
+Stack now 0 7 1 12 23 48
+Next token is token COMMA ()
+Reducing stack by rule 110 (line 222):
+   $1 = nterm andExp ()
+-> $$ = nterm simpleExp ()
+Entering state 47
+Stack now 0 7 1 12 23 47
+Next token is token COMMA ()
+Reducing stack by rule 20 (line 71):
+   $1 = token error ()
+   $2 = token COLON ()
+   $3 = nterm simpleExp ()
+-> $$ = nterm varDeclInit ()
+Entering state 15
+Stack now 0 7 1 15
+Reducing stack by rule 15 (line 64):
+   $1 = nterm varDeclInit ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token COMMA ()
+Shifting token COMMA ()
+Entering state 27
+Stack now 0 7 1 14 27
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 13
+Stack now 0 7 1 14 27 13
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 21 (line 74):
+   $1 = token ID ()
+-> $$ = nterm varDeclID ()
+Entering state 16
+Stack now 0 7 1 14 27 16
+Next token is token ID ()
+Reducing stack by rule 18 (line 69):
+   $1 = nterm varDeclID ()
+-> $$ = nterm varDeclInit ()
+Entering state 65
+Stack now 0 7 1 14 27 65
+Reducing stack by rule 14 (line 63):
+   $1 = nterm varDeclList ()
+   $2 = token COMMA ()
+   $3 = nterm varDeclInit ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+ERROR(11): Invalid or misplaced input character: '''. Character Ignored.
+ERROR(11): Syntax error, unexpected identifier "s", expecting ',' or ';'.
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token SEMI ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token SEMI ()
+Shifting token SEMI ()
+Entering state 26
+Stack now 0 7 1 14 26
+Reducing stack by rule 8 (line 53):
+   $1 = token error ()
+   $2 = nterm varDeclList ()
+   $3 = token SEMI ()
+-> $$ = nterm varDecl ()
+Entering state 9
+Stack now 0 7 9
+Reducing stack by rule 4 (line 47):
+   $1 = nterm varDecl ()
+-> $$ = nterm decl ()
+Entering state 19
+Stack now 0 7 19
+Reducing stack by rule 2 (line 43):
+   $1 = nterm declist ()
+   $2 = nterm decl ()
+-> $$ = nterm declist ()
+Entering state 7
+Stack now 0 7
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 2
+Stack now 0 7 2
+Reading a token
+Next token is token ID ()
+ERROR(12): Syntax error, unexpected identifier "in", expecting '('.
+Error: popping token ID ()
+Stack now 0 7
+Shifting token error ()
+Entering state 1
+Stack now 0 7 1
+Next token is token ID ()
+Shifting token ID ()
+Entering state 13
+Stack now 0 7 1 13
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 21 (line 74):
+   $1 = token ID ()
+-> $$ = nterm varDeclID ()
+Entering state 16
+Stack now 0 7 1 16
+Next token is token ID ()
+Reducing stack by rule 18 (line 69):
+   $1 = nterm varDeclID ()
+-> $$ = nterm varDeclInit ()
+Entering state 15
+Stack now 0 7 1 15
+Reducing stack by rule 15 (line 64):
+   $1 = nterm varDeclInit ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token COMMA ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token COMMA ()
+Shifting token COMMA ()
+Entering state 27
+Stack now 0 7 1 14 27
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 13
+Stack now 0 7 1 14 27 13
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 21 (line 74):
+   $1 = token ID ()
+-> $$ = nterm varDeclID ()
+Entering state 16
+Stack now 0 7 1 14 27 16
+Next token is token ID ()
+Reducing stack by rule 18 (line 69):
+   $1 = nterm varDeclID ()
+-> $$ = nterm varDeclInit ()
+Entering state 65
+Stack now 0 7 1 14 27 65
+Reducing stack by rule 14 (line 63):
+   $1 = nterm varDeclList ()
+   $2 = token COMMA ()
+   $3 = nterm varDeclInit ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+ERROR(14): Syntax error, unexpected identifier "give", expecting ',' or ';'.
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token COLON ()
+Shifting token COLON ()
+Entering state 23
+Stack now 0 7 1 12 23
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 37
+Stack now 0 7 1 12 23 37
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 148 (line 289):
+   $1 = token ID ()
+-> $$ = nterm mutable ()
+Entering state 58
+Stack now 0 7 1 12 23 58
+Reducing stack by rule 146 (line 285):
+   $1 = nterm mutable ()
+-> $$ = nterm factor ()
+Entering state 57
+Stack now 0 7 1 12 23 57
+Reducing stack by rule 139 (line 269):
+   $1 = nterm factor ()
+-> $$ = nterm unaryExp ()
+Entering state 53
+Stack now 0 7 1 12 23 53
+Reducing stack by rule 133 (line 259):
+   $1 = nterm unaryExp ()
+-> $$ = nterm mulExp ()
+Entering state 52
+Stack now 0 7 1 12 23 52
+Next token is token ID ()
+Reducing stack by rule 128 (line 250):
+   $1 = nterm mulExp ()
+-> $$ = nterm sumExp ()
+Entering state 51
+Stack now 0 7 1 12 23 51
+Next token is token ID ()
+Reducing stack by rule 119 (line 237):
+   $1 = nterm sumExp ()
+-> $$ = nterm relExp ()
+Entering state 50
+Stack now 0 7 1 12 23 50
+Reducing stack by rule 116 (line 232):
+   $1 = nterm relExp ()
+-> $$ = nterm unaryRelExp ()
+Entering state 49
+Stack now 0 7 1 12 23 49
+Reducing stack by rule 113 (line 227):
+   $1 = nterm unaryRelExp ()
+-> $$ = nterm andExp ()
+Entering state 48
+Stack now 0 7 1 12 23 48
+Next token is token ID ()
+Reducing stack by rule 110 (line 222):
+   $1 = nterm andExp ()
+-> $$ = nterm simpleExp ()
+Entering state 47
+Stack now 0 7 1 12 23 47
+Next token is token ID ()
+Reducing stack by rule 20 (line 71):
+   $1 = token error ()
+   $2 = token COLON ()
+   $3 = nterm simpleExp ()
+-> $$ = nterm varDeclInit ()
+Entering state 15
+Stack now 0 7 1 15
+Reducing stack by rule 15 (line 64):
+   $1 = nterm varDeclInit ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token SEMI ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token SEMI ()
+Shifting token SEMI ()
+Entering state 26
+Stack now 0 7 1 14 26
+Reducing stack by rule 8 (line 53):
+   $1 = token error ()
+   $2 = nterm varDeclList ()
+   $3 = token SEMI ()
+-> $$ = nterm varDecl ()
+Entering state 9
+Stack now 0 7 9
+Reducing stack by rule 4 (line 47):
+   $1 = nterm varDecl ()
+-> $$ = nterm decl ()
+Entering state 19
+Stack now 0 7 19
+Reducing stack by rule 2 (line 43):
+   $1 = nterm declist ()
+   $2 = nterm decl ()
+-> $$ = nterm declist ()
+Entering state 7
+Stack now 0 7
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 2
+Stack now 0 7 2
+Reading a token
+Next token is token ID ()
+ERROR(14): Invalid or misplaced input character: '''. Character Ignored.
+ERROR(16): Syntax error, unexpected identifier "who", expecting '('.
+Error: popping token ID ()
+Stack now 0 7
+Shifting token error ()
+Entering state 1
+Stack now 0 7 1
+Next token is token ID ()
+Shifting token ID ()
+Entering state 13
+Stack now 0 7 1 13
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 21 (line 74):
+   $1 = token ID ()
+-> $$ = nterm varDeclID ()
+Entering state 16
+Stack now 0 7 1 16
+Next token is token ID ()
+Reducing stack by rule 18 (line 69):
+   $1 = nterm varDeclID ()
+-> $$ = nterm varDeclInit ()
+Entering state 15
+Stack now 0 7 1 15
+Reducing stack by rule 15 (line 64):
+   $1 = nterm varDeclInit ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token AND ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token AND ()
+Error: discarding token AND ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token COMMA ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token COMMA ()
+Shifting token COMMA ()
+Entering state 27
+Stack now 0 7 1 14 27
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 13
+Stack now 0 7 1 14 27 13
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 21 (line 74):
+   $1 = token ID ()
+-> $$ = nterm varDeclID ()
+Entering state 16
+Stack now 0 7 1 14 27 16
+Next token is token ID ()
+Reducing stack by rule 18 (line 69):
+   $1 = nterm varDeclID ()
+-> $$ = nterm varDeclInit ()
+Entering state 65
+Stack now 0 7 1 14 27 65
+Reducing stack by rule 14 (line 63):
+   $1 = nterm varDeclList ()
+   $2 = token COMMA ()
+   $3 = nterm varDeclInit ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+ERROR(17): Syntax error, unexpected identifier "oppressor", expecting ',' or ';'.
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token CHARCONST ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token CHARCONST ()
+Error: discarding token CHARCONST ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token COMMA ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token COMMA ()
+Shifting token COMMA ()
+Entering state 27
+Stack now 0 7 1 14 27
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 13
+Stack now 0 7 1 14 27 13
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 21 (line 74):
+   $1 = token ID ()
+-> $$ = nterm varDeclID ()
+Entering state 16
+Stack now 0 7 1 14 27 16
+Next token is token ID ()
+Reducing stack by rule 18 (line 69):
+   $1 = nterm varDeclID ()
+-> $$ = nterm varDeclInit ()
+Entering state 65
+Stack now 0 7 1 14 27 65
+Reducing stack by rule 14 (line 63):
+   $1 = nterm varDeclList ()
+   $2 = token COMMA ()
+   $3 = nterm varDeclInit ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+WARNING(17): character is 22 characters long and not a single character: ''s wrong, the proud man''.  The first char will be used.
+ERROR(18): Syntax error, unexpected identifier "pangs", expecting ',' or ';'.
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token COMMA ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token COMMA ()
+Shifting token COMMA ()
+Entering state 27
+Stack now 0 7 1 14 27
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 13
+Stack now 0 7 1 14 27 13
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 21 (line 74):
+   $1 = token ID ()
+-> $$ = nterm varDeclID ()
+Entering state 16
+Stack now 0 7 1 14 27 16
+Next token is token ID ()
+Reducing stack by rule 18 (line 69):
+   $1 = nterm varDeclID ()
+-> $$ = nterm varDeclInit ()
+Entering state 65
+Stack now 0 7 1 14 27 65
+Reducing stack by rule 14 (line 63):
+   $1 = nterm varDeclList ()
+   $2 = token COMMA ()
+   $3 = nterm varDeclInit ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+ERROR(18): Syntax error, unexpected identifier "law", expecting ',' or ';'.
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token COMMA ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token COMMA ()
+Shifting token COMMA ()
+Entering state 27
+Stack now 0 7 1 14 27
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 13
+Stack now 0 7 1 14 27 13
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 21 (line 74):
+   $1 = token ID ()
+-> $$ = nterm varDeclID ()
+Entering state 16
+Stack now 0 7 1 14 27 16
+Next token is token ID ()
+Reducing stack by rule 18 (line 69):
+   $1 = nterm varDeclID ()
+-> $$ = nterm varDeclInit ()
+Entering state 65
+Stack now 0 7 1 14 27 65
+Reducing stack by rule 14 (line 63):
+   $1 = nterm varDeclList ()
+   $2 = token COMMA ()
+   $3 = nterm varDeclInit ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+ERROR(18): Invalid or misplaced input character: '''. Character Ignored.
+ERROR(19): Syntax error, unexpected identifier "insolence", expecting ',' or ';'.
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token AND ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token AND ()
+Error: discarding token AND ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token COMMA ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token COMMA ()
+Shifting token COMMA ()
+Entering state 27
+Stack now 0 7 1 14 27
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 13
+Stack now 0 7 1 14 27 13
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 21 (line 74):
+   $1 = token ID ()
+-> $$ = nterm varDeclID ()
+Entering state 16
+Stack now 0 7 1 14 27 16
+Next token is token ID ()
+Reducing stack by rule 18 (line 69):
+   $1 = nterm varDeclID ()
+-> $$ = nterm varDeclInit ()
+Entering state 65
+Stack now 0 7 1 14 27 65
+Reducing stack by rule 14 (line 63):
+   $1 = nterm varDeclList ()
+   $2 = token COMMA ()
+   $3 = nterm varDeclInit ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+ERROR(21): Syntax error, unexpected identifier "he", expecting ',' or ';'.
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token QMARK ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token QMARK ()
+Error: discarding token QMARK ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token COMMA ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token COMMA ()
+Shifting token COMMA ()
+Entering state 27
+Stack now 0 7 1 14 27
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 13
+Stack now 0 7 1 14 27 13
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 21 (line 74):
+   $1 = token ID ()
+-> $$ = nterm varDeclID ()
+Entering state 16
+Stack now 0 7 1 14 27 16
+Next token is token ID ()
+Reducing stack by rule 18 (line 69):
+   $1 = nterm varDeclID ()
+-> $$ = nterm varDeclInit ()
+Entering state 65
+Stack now 0 7 1 14 27 65
+Reducing stack by rule 14 (line 63):
+   $1 = nterm varDeclList ()
+   $2 = token COMMA ()
+   $3 = nterm varDeclInit ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+ERROR(23): Syntax error, unexpected identifier "grunt", expecting ',' or ';'.
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token AND ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token AND ()
+Error: discarding token AND ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token COMMA ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token COMMA ()
+Shifting token COMMA ()
+Entering state 27
+Stack now 0 7 1 14 27
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 13
+Stack now 0 7 1 14 27 13
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 21 (line 74):
+   $1 = token ID ()
+-> $$ = nterm varDeclID ()
+Entering state 16
+Stack now 0 7 1 14 27 16
+Next token is token ID ()
+Reducing stack by rule 18 (line 69):
+   $1 = nterm varDeclID ()
+-> $$ = nterm varDeclInit ()
+Entering state 65
+Stack now 0 7 1 14 27 65
+Reducing stack by rule 14 (line 63):
+   $1 = nterm varDeclList ()
+   $2 = token COMMA ()
+   $3 = nterm varDeclInit ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+ERROR(24): Syntax error, unexpected identifier "that", expecting ',' or ';'.
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token COMMA ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token COMMA ()
+Shifting token COMMA ()
+Entering state 27
+Stack now 0 7 1 14 27
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 13
+Stack now 0 7 1 14 27 13
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 21 (line 74):
+   $1 = token ID ()
+-> $$ = nterm varDeclID ()
+Entering state 16
+Stack now 0 7 1 14 27 16
+Next token is token ID ()
+Reducing stack by rule 18 (line 69):
+   $1 = nterm varDeclID ()
+-> $$ = nterm varDeclInit ()
+Entering state 65
+Stack now 0 7 1 14 27 65
+Reducing stack by rule 14 (line 63):
+   $1 = nterm varDeclList ()
+   $2 = token COMMA ()
+   $3 = nterm varDeclInit ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+ERROR(25): Syntax error, unexpected identifier "undiscover", expecting ',' or ';'.
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token COMMA ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token COMMA ()
+Shifting token COMMA ()
+Entering state 27
+Stack now 0 7 1 14 27
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 13
+Stack now 0 7 1 14 27 13
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 21 (line 74):
+   $1 = token ID ()
+-> $$ = nterm varDeclID ()
+Entering state 16
+Stack now 0 7 1 14 27 16
+Next token is token ID ()
+Reducing stack by rule 18 (line 69):
+   $1 = nterm varDeclID ()
+-> $$ = nterm varDeclInit ()
+Entering state 65
+Stack now 0 7 1 14 27 65
+Reducing stack by rule 14 (line 63):
+   $1 = nterm varDeclList ()
+   $2 = token COMMA ()
+   $3 = nterm varDeclInit ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+ERROR(25): Invalid or misplaced input character: '''. Character Ignored.
+ERROR(26): Syntax error, unexpected identifier "the", expecting ',' or ';'.
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token TO ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token TO ()
+Error: discarding token TO ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token NOT ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token NOT ()
+Error: discarding token NOT ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token QMARK ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token QMARK ()
+Error: discarding token QMARK ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token SEMI ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token SEMI ()
+Shifting token SEMI ()
+Entering state 26
+Stack now 0 7 1 14 26
+Reducing stack by rule 8 (line 53):
+   $1 = token error ()
+   $2 = nterm varDeclList ()
+   $3 = token SEMI ()
+-> $$ = nterm varDecl ()
+Entering state 9
+Stack now 0 7 9
+Reducing stack by rule 4 (line 47):
+   $1 = nterm varDecl ()
+-> $$ = nterm decl ()
+Entering state 19
+Stack now 0 7 19
+Reducing stack by rule 2 (line 43):
+   $1 = nterm declist ()
+   $2 = nterm decl ()
+-> $$ = nterm declist ()
+Entering state 7
+Stack now 0 7
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 2
+Stack now 0 7 2
+Reading a token
+Next token is token ID ()
+ERROR(30): Syntax error, unexpected identifier "thus", expecting '('.
+Error: popping token ID ()
+Stack now 0 7
+Shifting token error ()
+Entering state 1
+Stack now 0 7 1
+Next token is token ID ()
+Shifting token ID ()
+Entering state 13
+Stack now 0 7 1 13
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 21 (line 74):
+   $1 = token ID ()
+-> $$ = nterm varDeclID ()
+Entering state 16
+Stack now 0 7 1 16
+Next token is token ID ()
+Reducing stack by rule 18 (line 69):
+   $1 = nterm varDeclID ()
+-> $$ = nterm varDeclInit ()
+Entering state 15
+Stack now 0 7 1 15
+Reducing stack by rule 15 (line 64):
+   $1 = nterm varDeclInit ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token COMMA ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token COMMA ()
+Shifting token COMMA ()
+Entering state 27
+Stack now 0 7 1 14 27
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 13
+Stack now 0 7 1 14 27 13
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 21 (line 74):
+   $1 = token ID ()
+-> $$ = nterm varDeclID ()
+Entering state 16
+Stack now 0 7 1 14 27 16
+Next token is token ID ()
+Reducing stack by rule 18 (line 69):
+   $1 = nterm varDeclID ()
+-> $$ = nterm varDeclInit ()
+Entering state 65
+Stack now 0 7 1 14 27 65
+Reducing stack by rule 14 (line 63):
+   $1 = nterm varDeclList ()
+   $2 = token COMMA ()
+   $3 = nterm varDeclInit ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+ERROR(31): Invalid or misplaced input character: '''. Character Ignored.
+ERROR(32): Syntax error, unexpected identifier "enterprises", expecting ',' or ';'.
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token AND ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token AND ()
+Error: discarding token AND ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token COMMA ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token COMMA ()
+Shifting token COMMA ()
+Entering state 27
+Stack now 0 7 1 14 27
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 13
+Stack now 0 7 1 14 27 13
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 21 (line 74):
+   $1 = token ID ()
+-> $$ = nterm varDeclID ()
+Entering state 16
+Stack now 0 7 1 14 27 16
+Next token is token ID ()
+Reducing stack by rule 18 (line 69):
+   $1 = nterm varDeclID ()
+-> $$ = nterm varDeclInit ()
+Entering state 65
+Stack now 0 7 1 14 27 65
+Reducing stack by rule 14 (line 63):
+   $1 = nterm varDeclList ()
+   $2 = token COMMA ()
+   $3 = nterm varDeclInit ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+ERROR(34): Syntax error, unexpected identifier "lose", expecting ',' or ';'.
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token DEC ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token DEC ()
+Error: discarding token DEC ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token COMMA ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token COMMA ()
+Shifting token COMMA ()
+Entering state 27
+Stack now 0 7 1 14 27
+Reading a token
+Next token is token ID ()
+Shifting token ID ()
+Entering state 13
+Stack now 0 7 1 14 27 13
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 21 (line 74):
+   $1 = token ID ()
+-> $$ = nterm varDeclID ()
+Entering state 16
+Stack now 0 7 1 14 27 16
+Next token is token ID ()
+Reducing stack by rule 18 (line 69):
+   $1 = nterm varDeclID ()
+-> $$ = nterm varDeclInit ()
+Entering state 65
+Stack now 0 7 1 14 27 65
+Reducing stack by rule 14 (line 63):
+   $1 = nterm varDeclList ()
+   $2 = token COMMA ()
+   $3 = nterm varDeclInit ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+ERROR(34): Invalid or misplaced input character: '.'. Character Ignored.
+ERROR(34): Invalid or misplaced input character: '!'. Character Ignored.
+ERROR(35): Invalid or misplaced input character: '!'. Character Ignored.
+ERROR(35): Syntax error, unexpected identifier "thy", expecting ',' or ';'.
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Next token is token ID ()
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Next token is token ID ()
+Error: discarding token ID ()
+Error: popping nterm varDeclList ()
+Stack now 0 7 1
+Shifting token error ()
+Entering state 12
+Stack now 0 7 1 12
+Reading a token
+Now at end of input.
+Reducing stack by rule 17 (line 66):
+   $1 = token error ()
+-> $$ = nterm varDeclList ()
+Entering state 14
+Stack now 0 7 1 14
+Now at end of input.
+Cleanup: discarding lookahead token "end of file" ()
+Stack now 0 7 1 14
+Cleanup: popping nterm varDeclList ()
+Cleanup: popping token error ()
+Cleanup: popping nterm declist ()
+ERROR(36): Invalid or misplaced input character: '''. Character Ignored.
+ERROR(36): Invalid or misplaced input character: '.'. Character Ignored.
+Number of warnings: 1
+Number of errors: 39

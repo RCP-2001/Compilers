@@ -1,5 +1,4 @@
 %define parse.error verbose 
-
 %{
 #include "scanType.h"
 #include "YYError/yyerror.h"
@@ -55,10 +54,10 @@ varDecl : typeSpec varDeclList SEMI  {if($2 != NULL){$2->EType($1); $2->BStatic(
         | typeSpec error SEMI     {$$=NULL; yyerrok; }
         ;
 
-scopedVarDecl   : STATIC typeSpec varDeclList SEMI  {$3->EType($2); $3->BStatic(true); $$=$3; yyerrok;}      
-                | typeSpec varDeclList SEMI         {$2->EType($1); $$=$2; yyerrok; /*This might be wrong actually*/}
-                //| erxror varDeclList SEMI            {$$=NULL; yyerrok;} //??
-                //| typeSpec exrror SEMI               {$$=NULL; yyerrok;} //??
+scopedVarDecl   : STATIC typeSpec varDeclList SEMI  {if($3!=NULL){$3->EType($2); $3->BStatic(true);} $$=$3; yyerrok;}      
+                | typeSpec varDeclList SEMI         {if($2!=NULL) $2->EType($1); $$=$2; yyerrok; /*This might be wrong actually*/}
+                | error varDeclList SEMI            {$$=NULL; yyerrok;} //??
+                | typeSpec error SEMI               {$$=NULL; yyerrok;} //??
                 ;
 
 varDeclList     : varDeclList COMMA varDeclInit  {if($1!=NULL) $1->addSibling($3); $$ = $1; yyerrok;}   //Need yxyerrok?
@@ -68,7 +67,7 @@ varDeclList     : varDeclList COMMA varDeclInit  {if($1!=NULL) $1->addSibling($3
                 ;
 
 varDeclInit     : varDeclID                    {$$ = $1;}                 
-                | varDeclID COLON simpleExp    {$1->addChildren($3, 0); $$ = $1;}
+                | varDeclID COLON simpleExp    {if($1!=NULL)$1->addChildren($3, 0); $$ = $1;}
                 | error COLON simpleExp             {$$ = NULL; yyerrok; }     
                 ;
 
@@ -131,12 +130,17 @@ closedStatement: closedSelectStatement   {$$=$1;}
 
 openSelectStatement     : IF exp THEN stmt                                      {treeNode *node = newStmtNode(IfK, $1, $2, $4, NULL); $$=node;}
                         | IF exp THEN closedStatement ELSE openStatement        {treeNode *node = newStmtNode(IfK, $1, $2, $4, $6); $$=node;}
-                        | IF error                                              {$$=NULL;}
-                        | IF error ELSE openStatement                           {$$ =NULL; yyerrok;}
-                        | IF error THEN closedItrStmt ELSE openStatement        {$$=NULL; yyerrok;}
+                        | IF error THEN stmt    {$$=NULL; yyerrok;}
+                        
+                        | IF error THEN closedStatement ELSE openStatement {$$=NULL; yyerrok;}
 
 closedSelectStatement : IF exp THEN closedStatement ELSE closedStatement        {treeNode *node = newStmtNode(IfK, $1, $2, $4, $6); $$=node;}
-                      | IF error THEN closedStatement ELSE closedStatement      {$$=NULL; yyerrok;}
+                        | IF error                                              {$$=NULL; }
+
+                        | IF error ELSE closedStatement                         {$$=NULL; yyerrok;}
+
+                        | IF error THEN closedStatement ELSE closedStatement      {$$=NULL; yyerrok;}
+
                       ;
 
 simpleStatement : expStmt            {$$= $1;}
@@ -145,7 +149,7 @@ simpleStatement : expStmt            {$$= $1;}
                 | returnStmt         {$$= $1;}
                 ;
 
-expStmt         : exp SEMI          {$$=$1;}
+expStmt         : exp SEMI          {$$=$1; yyerrok; }
                 | error SEMI        {$$=NULL; yyerrok;}
                 | SEMI              {$$=NULL; /*WTF this porbably will break something i am sad wtf*/}
                 ;
@@ -157,7 +161,7 @@ LocalDecls      : LocalDecls scopedVarDecl          {if($1 == NULL){$$=$2;} else
                 | %empty                             {$$= NULL;}  
                 ;
 
-stmtList        : stmtList stmt    {if($1 == NULL){$$=$2;} else{$1->addSibling($2); $$ = $1;} }
+stmtList        : stmtList stmt    {if($1 == NULL){$$=$2;} else{$1->addSibling($2); $$ = $1;}  }
                 | %empty           {$$= NULL;}  
                 ;
 
@@ -197,7 +201,7 @@ returnStmt      : RETURN SEMI           {treeNode* node = newStmtNode(ReturnK, $
 breakStmt       : BREAK SEMI           {treeNode* node = newStmtNode(BreaK, $1, NULL, NULL, NULL); $$=node;}
                 ;
 
-exp             : mutable assignop exp    {$2->addChildren($1,0); $2->addChildren($3,1); $$=$2;}
+exp             : mutable assignop exp    {if($2!=NULL){$2->addChildren($1,0); $2->addChildren($3,1);} $$=$2;}
                 | mutable INC             {treeNode* node = newExpNode(AssingK, $2, $1, NULL, NULL); $$=node; }
                 | mutable DEC             {treeNode* node = newExpNode(AssingK, $2, $1, NULL, NULL); $$=node; }
                 | simpleExp               {$$=$1; /*not sure this is right either tbh*/}
@@ -229,7 +233,7 @@ unaryRelExp     : NOT unaryRelExp       {treeNode* node = newExpNode(OpK, $1, $2
                 | NOT error             {$$=NULL;}
                 ;
 
-relExp          : sumExp relop sumExp  {$2->addChildren($1,0); $2->addChildren($3,1); $$=$2;}
+relExp          : sumExp relop sumExp  {if($2!=NULL){$2->addChildren($1,0); $2->addChildren($3,1);} $$=$2;}
                 | sumExp               {$$=$1;}
                 | sumExp relop error   {$$=NULL;}   
                 ;
@@ -242,7 +246,7 @@ relop           : LESS      {treeNode* node = newExpNode(OpK, $1); $$=node;}
                 | NEQ       {treeNode* node = newExpNode(OpK, $1); $$=node;}    
                 ;
 
-sumExp          : sumExp sumop mulExp {$2->addChildren($1,0); $2->addChildren($3,1); $$=$2;}
+sumExp          : sumExp sumop mulExp {if($2!=NULL){$2->addChildren($1,0); $2->addChildren($3,1);} $$=$2;}
                 | mulExp              {$$=$1; }
                 | sumExp sumop error  {$$=NULL; }
                 ;
@@ -251,7 +255,7 @@ sumop           : ADD {treeNode* node = newExpNode(OpK, $1, NULL, NULL, NULL); $
                 | SUB {treeNode* node = newExpNode(OpK, $1, NULL, NULL, NULL); $$=node; }
                 ;
 
-mulExp          : mulExp mulop unaryExp {$2->addChildren($1,0); $2->addChildren($3,1); $$=$2;}
+mulExp          : mulExp mulop unaryExp {if($2!=NULL){$2->addChildren($1,0); $2->addChildren($3,1);} $$=$2;}
                 | unaryExp     {$$=$1;}
                 | mulExp mulop error {$$=NULL; }
                 ;
@@ -261,7 +265,7 @@ mulop           : MUL {treeNode* node = newExpNode(OpK, $1, NULL, NULL, NULL); $
                 | MOD {treeNode* node = newExpNode(OpK, $1, NULL, NULL, NULL); $$=node; }
                 ;
 
-unaryExp        : unaryOp unaryExp {$1->addChildren($2,0); $$=$1;}
+unaryExp        : unaryOp unaryExp {if($1!=NULL)$1->addChildren($2,0); $$=$1;}
                 | factor            {$$=$1;}
                 | unaryOp error    {$$=NULL; }
                 ;
@@ -295,14 +299,14 @@ immutable       : LPAREN exp RPAREN     {$$=$2; yyerrok;}
                 ;
 
 call            : ID LPAREN args RPAREN  {treeNode* node = newExpNode(CallK, $1, $3, NULL, NULL); $$=node;}
-                | error RPAREN      {$$=NULL; yyerrok; }
+                /*| error RPAREN      {$$=NULL;  yyerrok; } /* in gramar on website, but seems to give close results without?*/
                 ;
 
 args            : argList   {$$=$1;}        
                 | %empty   {$$=NULL;}       
                 ;
 
-argList         : argList COMMA exp {$1->addSibling($3); $$=$1; yyerrok;}
+argList         : argList COMMA exp {if($1!=NULL) $1->addSibling($3); $$=$1; yyerrok;}
                 | exp           {$$=$1;}
                 | argList COMMA error {$$=NULL;}
                 ;

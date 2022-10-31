@@ -34,7 +34,12 @@ static int setValue(int linenum, int tokenClass, char *svalue){
     }
     else if(tokenClass == CHARCONST){
         //printf("Charconst Set val\n");
-        if(svalue[1] == '\\'){
+        if(strlen(svalue) == 2){
+            printf("ERROR(3): Empty character ''. Characters ignored.\n");
+            numErrors++;
+        }
+
+        else if(svalue[1] == '\\'){
             if(strlen(svalue) > 4){
                 printf("WARNING(%d): character is %d characters long and not a single character: '%s'.  The first char will be used.\n", linenum, strlen(svalue)-2, svalue);
                 numWarnings++;
@@ -161,7 +166,7 @@ static int setValue(int linenum, int tokenClass, char *svalue){
 
 [a-zA-Z][a-zA-Z0-9]*        {lastToken = yytext; return setValue(line, ID, yytext); }
 [0-9]+                      {lastToken = yytext; return setValue(line, NUMCONST, yytext); }
-L?'(\\.|[^\\'\n])+'	        {lastToken = yytext; return setValue(line, CHARCONST, yytext);}
+L?'(\\.|[^\\'\n])*'	        {lastToken = yytext; return setValue(line, CHARCONST, yytext);}
 L?\"(\\.|[^\\"\n])*\"       {lastToken = yytext; return setValue(line, STRINGCONST, yytext);}
 
 ;                           {lastToken = yytext; return setValue(line, SEMI, yytext);}
