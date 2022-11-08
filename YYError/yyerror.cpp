@@ -86,7 +86,7 @@ void initErrorProcessing()
     niceTokenNameMap["DECASS"] = (char *)"\"-=\"";
     niceTokenNameMap["DEC"] = (char *)"\"--\"";
     niceTokenNameMap["DIVASS"] = (char *)"\"/=\"";
-    niceTokenNameMap["DIV"] = (char *)"\"/\"";
+    niceTokenNameMap["DIV"] = (char *)"\'/\'";
     niceTokenNameMap["DO"] = (char *)"\"do\"";
     niceTokenNameMap["ELSE"] = (char *)"\"else\"";
     niceTokenNameMap["EQ"] = (char *)"\"==\"";

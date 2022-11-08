@@ -299,7 +299,7 @@ immutable       : LPAREN exp RPAREN     {$$=$2; yyerrok;}
                 ;
 
 call            : ID LPAREN args RPAREN  {treeNode* node = newExpNode(CallK, $1, $3, NULL, NULL); $$=node;}
-                /*| error RPAREN      {$$=NULL;  yyerrok; } /* in gramar on website, but seems to give close results without?*/
+                | error LPAREN      {$$=NULL;  yyerrok; } /* in gramar on website, but seems to give close results without?*/
                 ;
 
 args            : argList   {$$=$1;}        
