@@ -92,6 +92,15 @@ void treeNode::BStatic(bool type)
     }
 }
 
+void treeNode::BGlobal(bool type)
+{
+    isGlobal = type;
+    if (sibling != NULL)
+    {
+        sibling->BGlobal(type);
+    }
+}
+
 void treeNode::addChildren(treeNode *aNode, int c)
 {
     if (c >= MAX_CHILDREN)

@@ -104,9 +104,12 @@ private:
 
     bool isArray;
     bool isStatic;
+    bool isGlobal;
     // may be dumb haha
     bool isUsed;
     bool isInit;
+    int Size;
+    int Loc;
     //bool InitMessagePlayed;
 
 public:
@@ -157,6 +160,7 @@ public:
         attr = NULL;
         isArray = false;
         isStatic = false;
+        isGlobal = false;
         isInit = false;
         isUsed = false;
         //InitMessagePlayed = false;
@@ -196,6 +200,7 @@ public:
 
     // other functions
     void BStatic(bool);
+    void BGlobal(bool);
     void EType(ExpType);
     void addSibling(treeNode *);
     void addChildren(treeNode *, int child);
@@ -220,6 +225,12 @@ public:
     bool InitIs() {return isInit;}
     void InitIs(bool x){ isInit = x; }
     bool StaticIs(){ return isStatic;}
+    bool GlobablIs() {return isGlobal;}
+
+    void SetSize(int x){ Size = x;}
+    void SetLoc(int x){ Loc = x;}
+    int GetLoc(){return Loc;}
+    int GetSize() {return Size;} 
 
 };
 

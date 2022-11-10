@@ -71,8 +71,8 @@ varDeclInit     : varDeclID                    {$$ = $1;}
                 | error COLON simpleExp             {$$ = NULL; yyerrok; }     
                 ;
 
-varDeclID       : ID                            {$$ = newDeclNode(VarK, UndefinedType, $1); }                        
-                | ID LBRACK NUMCONST RBRACK     {treeNode* node = newDeclNode(VarK, UndefinedType, $1); node->setArray(true); $$ = node;}    
+varDeclID       : ID                            {$$ = newDeclNode(VarK, UndefinedType, $1); $$->SetSize(1); }                        
+                | ID LBRACK NUMCONST RBRACK     {treeNode* node = newDeclNode(VarK, UndefinedType, $1); node->setArray(true); node->SetSize($3->nvalue + 1); $$ = node;}    
                 | ID LBRACK error               {$$=NULL;} //Hmm
                 | error RBRACK                  {$$=NULL; yyerrok;} //Hmm
                 ;

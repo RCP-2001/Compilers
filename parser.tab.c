@@ -1858,13 +1858,13 @@ yyreduce:
 
   case 22: /* varDeclID: ID  */
 #line 74 "parser.y"
-                                                {(yyval.tree) = newDeclNode(VarK, UndefinedType, (yyvsp[0].tokenData)); }
+                                                {(yyval.tree) = newDeclNode(VarK, UndefinedType, (yyvsp[0].tokenData)); (yyval.tree)->SetSize(1); }
 #line 1863 "parser.tab.c"
     break;
 
   case 23: /* varDeclID: ID LBRACK NUMCONST RBRACK  */
 #line 75 "parser.y"
-                                                {treeNode* node = newDeclNode(VarK, UndefinedType, (yyvsp[-3].tokenData)); node->setArray(true); (yyval.tree) = node;}
+                                                {treeNode* node = newDeclNode(VarK, UndefinedType, (yyvsp[-3].tokenData)); node->setArray(true); node->SetSize((yyvsp[-1].tokenData)->nvalue + 1); (yyval.tree) = node;}
 #line 1869 "parser.tab.c"
     break;
 
