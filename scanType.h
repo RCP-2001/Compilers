@@ -206,6 +206,7 @@ public:
     void addChildren(treeNode *, int child);
     void printTree(int levels, int);
     void printTree(int levels, int, SymbolTable* symTbl);
+    void printMemTree(int levels, int, SymbolTable* symTbl);
     int GetChildren(int);
     std::string StringVal();
 
@@ -230,12 +231,17 @@ public:
     void SetSize(int x){ Size = x;}
     void SetLoc(int x){ Loc = x;}
     int GetLoc(){return Loc;}
-    int GetSize() {return Size;} 
+    int GetSize() {return Size;}
+
+    int SiblingSize();
+
 
 };
 
 treeNode *newDeclNode(DeclKind kind, ExpType type, TokenData *token = NULL, treeNode *c0 = NULL, treeNode *c1 = NULL, treeNode *c2 = NULL);
 treeNode *newStmtNode(StmtKind kind, TokenData *token = NULL, treeNode *c0 = NULL, treeNode *c1 = NULL, treeNode *c2 = NULL);
 treeNode *newExpNode(ExpKind kind, TokenData *token = NULL, treeNode *c0 = NULL, treeNode *c1 = NULL, treeNode *c2 = NULL);
+
+char* getMemType(treeNode*, SymbolTable*);
 
 #endif

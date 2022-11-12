@@ -5,6 +5,7 @@
 #include "SymTbl/symbolTable.h"
 #include "IO.h"
 #include "YYError/yyerror.h"
+#include "MemLocFinder/MemLoc.h"
 #include <stdio.h>
 #include <cstring>
 #include <unistd.h>
@@ -14,6 +15,7 @@ treeNode *GLOBAL_HEAD;
 extern FILE *yyin;      // defined in parser.l
 extern int numErrors;   // defined in parser.l
 extern int numWarnings; // defined in parser.l
+extern int goffset;     // defined in MemLoc
 
 extern int yydebug;
 int main(int argc, char *argv[])
@@ -26,9 +28,10 @@ int main(int argc, char *argv[])
     int SymDebug = 0;
     int TypePrint = 0;
     int help = 0;
+    int MemPrint = 0;
 
     int opt;
-    while ((opt = getopt(argc, argv, "dpDPh")) != -1)
+    while ((opt = getopt(argc, argv, "dpDPhM")) != -1)
     {
         switch (opt)
         {
@@ -47,12 +50,15 @@ int main(int argc, char *argv[])
         case 'h':
             help = 1;
             break;
+        case 'M':
+            MemPrint = 1;
+            break;
         default:
             break;
         }
     }
     // printf("Debug: %d, Print: %d\n", Debug, Print);
-    //Init map
+    // Init map
     initErrorProcessing();
 
     if (Debug == 1)
@@ -68,6 +74,7 @@ int main(int argc, char *argv[])
         printf("-h - print this usage message\n");
         printf("-p - print the abstract syntax tree");
         printf("-P - print the abstract syntax tree plus type information");
+        printf("-M - print the abstract syntax tree plus memmory location information");
     }
 
     treeNode *IOTree = MakeIOFuncs();
@@ -135,8 +142,6 @@ int main(int argc, char *argv[])
     }
     if (TypePrint == 1 && numErrors == 0)
     {
-        // not going to worry about making a proper -P option just yet (will work on after turning in to test harnness)
-        // If this is in the version that gets graded... Sadge
         if (GLOBAL_HEAD != NULL)
         {
             SymbolTable *PrintSymTbl = new SymbolTable;
@@ -147,6 +152,23 @@ int main(int argc, char *argv[])
             printf("\n");
         }
     }
+
+    if (MemPrint == 1 && numErrors == 0)
+    {
+        if (GLOBAL_HEAD != NULL)
+        {
+            SymbolTable *Mem = new SymbolTable;
+            MemLocSet(GLOBAL_HEAD, Mem);
+            SymbolTable *PrintSymTbl = new SymbolTable;
+            // Add IO to new SymTbl
+            semanticAnalysis(PrintSymTbl, IOTree);
+            // PrintSymTbl->debug(true);
+            GLOBAL_HEAD->printMemTree(1, 1, PrintSymTbl);
+            printf("\n");
+        }
+        printf("Offset for end of global space: %d\n", goffset);
+    }
+    
     printf("Number of warnings: %d\n", numWarnings);
     printf("Number of errors: %d\n", numErrors);
 

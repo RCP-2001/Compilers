@@ -40,7 +40,7 @@ void yyerror(const char *msg){
 program : declist       {/*printf("accept Program\n");*/ GLOBAL_HEAD = $1;}
         ;
 
-declist : declist decl  {if($1!=NULL) $1-> addSibling($2); $$ = $1;}
+declist : declist decl  {if($1!=NULL) $1-> addSibling($2); $1->BGlobal(true); $$ = $1;}
         | decl          {$$=$1;}    
         ;
 
@@ -49,7 +49,7 @@ decl    : varDecl  {$$=$1;}
         | error    {$$ = NULL;} // Do we need yxyerrok?
         ;
 
-varDecl : typeSpec varDeclList SEMI  {if($2 != NULL){$2->EType($1); $2->BStatic(true);} $$=$2;}
+varDecl : typeSpec varDeclList SEMI  {if($2 != NULL){$2->EType($1);  $2->BGlobal(true);} $$=$2;}
         | error varDeclList SEMI     {$$=NULL; yyerrok;}
         | typeSpec error SEMI     {$$=NULL; yyerrok; }
         ;
@@ -111,8 +111,8 @@ paramIDList     : paramIDList COMMA paramID     {if($1!=NULL) $1->addSibling($3)
                 ;
 
 
-paramID         : ID                           {$$ = newDeclNode(ParamK, UndefinedType, $1); }                          
-                | ID LBRACK RBRACK             {treeNode* node = newDeclNode(ParamK, UndefinedType, $1); node->setArray(true); $$ = node;} 
+paramID         : ID                           {$$ = newDeclNode(ParamK, UndefinedType, $1); $$->SetSize(1); }                          
+                | ID LBRACK RBRACK             {treeNode* node = newDeclNode(ParamK, UndefinedType, $1); node->setArray(true); node->SetSize(1); $$ = node;} 
                 ;
 
 stmt            : openStatement             {$$=$1;}
@@ -168,6 +168,7 @@ stmtList        : stmtList stmt    {if($1 == NULL){$$=$2;} else{$1->addSibling($
 openItrStmt     : WHILE simpleExp DO openStatement      {treeNode* node = newStmtNode(WhileK, $1, $2, $4, NULL ); $$=node;}  
                 | FOR ID ASSIGN itrRange DO openStatement   {
                                                             treeNode* IDNode = newDeclNode(VarK, Integer, $2, NULL, NULL, NULL);
+                                                            IDNode->SetSize(1);
                                                             treeNode* node = newStmtNode(ForK, $2, IDNode, $4, $6); $$ = node;  /*Totally wrong lmafo*/}
                 | FOR error     {$$=NULL;}
                 | FOR ID ASSIGN error DO openStatement  {$$=NULL; yyerrok;}
@@ -179,6 +180,7 @@ openItrStmt     : WHILE simpleExp DO openStatement      {treeNode* node = newStm
 closedItrStmt   : WHILE simpleExp DO closedStatement     {treeNode* node = newStmtNode(WhileK, $1, $2, $4, NULL ); $$=node;}  
                 | FOR ID ASSIGN itrRange DO closedStatement {
                                                             treeNode* IDNode = newDeclNode(VarK, Integer, $2, NULL, NULL, NULL);
+                                                            IDNode->SetSize(1);
                                                             treeNode* node = newStmtNode(ForK, $2, IDNode, $4, $6); $$ = node;  /*Totally wrong lmafo*/}
                 | FOR error     {$$=NULL;}
                 | FOR ID ASSIGN error DO closedStatement  {$$=NULL; yyerrok;}
@@ -311,10 +313,10 @@ argList         : argList COMMA exp {if($1!=NULL) $1->addSibling($3); $$=$1; yye
                 | argList COMMA error {$$=NULL;}
                 ;
 
-constant        : NUMCONST       {treeNode* node = newExpNode(constantK, $1, NULL, NULL, NULL); node->EType(Integer), $$=node; }
-                | CHARCONST      {treeNode* node = newExpNode(constantK, $1, NULL, NULL, NULL); node->EType(Char), $$=node; }
-                | STRINGCONST    {treeNode* node = newExpNode(constantK, $1, NULL, NULL, NULL); node->EType(Char), node->setArray(true); $$=node; }
-                | BOOLCONST      {treeNode* node = newExpNode(constantK, $1, NULL, NULL, NULL); node->EType(boolean), $$=node; }
+constant        : NUMCONST       {treeNode* node = newExpNode(constantK, $1, NULL, NULL, NULL); node->EType(Integer); node->SetSize(1); $$=node; }
+                | CHARCONST      {treeNode* node = newExpNode(constantK, $1, NULL, NULL, NULL); node->EType(Char); node->SetSize(1); $$=node; }
+                | STRINGCONST    {treeNode* node = newExpNode(constantK, $1, NULL, NULL, NULL); node->EType(Char); node->setArray(true); node->SetSize(strlen($1->svalue)+1); $$=node; }
+                | BOOLCONST      {treeNode* node = newExpNode(constantK, $1, NULL, NULL, NULL); node->EType(boolean); node->SetSize(1); $$=node; }
 
 
 %%

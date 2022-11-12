@@ -1,7 +1,7 @@
 #include "../scanType.h"
 
-int foffset = 0;
-int goffset = 0;
+extern int foffset;
+extern int goffset;
 
-void MemLocSet(treeNode* node);
+void MemLocSet(treeNode* node, SymbolTable* SymbolTable);
 
