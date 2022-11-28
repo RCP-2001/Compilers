@@ -1,0 +1,12 @@
+#!/bin/bash
+ 
+#
+# Copy all xxx.mem files to xxx.mem.f21
+#
+
+for file in *.mem
+do
+    echo '=' $file ' >> ' $file.f21 '='
+    cp $file $file.f21
+done
+

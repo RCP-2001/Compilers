@@ -1,0 +1,6 @@
+3,4c3,4
+<      for i := 0 to 3 do {
+<           for j := 0 to 3 do {
+---
+>      for i = 0 to 3 do {
+>           for j = 0 to 3 do {

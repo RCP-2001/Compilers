@@ -1,0 +1,792 @@
+16c16
+< .   .   Child: 1  Assign: = of type int [line: 33]
+---
+> .   .   Child: 1  Assign: := of type int [line: 33]
+25c25
+< .   .   .   .   .   Child: 0  Op: == of type bool [line: 36]
+---
+> .   .   .   .   .   Child: 0  Op: = of type bool [line: 36]
+40c40
+< .   .   .   .   Child: 1  Assign: = of type int [line: 43]
+---
+> .   .   .   .   Child: 1  Assign: := of type int [line: 43]
+45c45
+< .   .   .   .   Sibling: 1  Assign: = of type bool [line: 44]
+---
+> .   .   .   .   Sibling: 1  Assign: := of type bool [line: 44]
+49c49
+< .   .   .   .   Child: 1  Assign: = of type bool [line: 47]
+---
+> .   .   .   .   Child: 1  Assign: := of type bool [line: 47]
+59c59
+< .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 54]
+---
+> .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 54]
+64c64
+< .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 54]
+---
+> .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 54]
+70c70
+< .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 55]
+---
+> .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 55]
+75c75
+< .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 55]
+---
+> .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 55]
+81c81
+< .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 56]
+---
+> .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 56]
+86c86
+< .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 56]
+---
+> .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 56]
+91c91
+< .   .   .   .   Child: 1  Op: == of type bool [line: 58]
+---
+> .   .   .   .   Child: 1  Op: = of type bool [line: 58]
+98c98
+< .   .   .   .   Child: 1  Assign: = of type int [line: 59]
+---
+> .   .   .   .   Child: 1  Assign: := of type int [line: 59]
+103c103
+< .   .   .   .   Sibling: 1  Assign: = of type bool [line: 60]
+---
+> .   .   .   .   Sibling: 1  Assign: := of type bool [line: 60]
+111c111
+< .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 63]
+---
+> .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 63]
+116c116
+< .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 63]
+---
+> .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 63]
+122c122
+< .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 64]
+---
+> .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 64]
+127c127
+< .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 64]
+---
+> .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 64]
+132c132
+< .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 65]
+---
+> .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 65]
+139c139
+< .   .   .   .   .   .   Child: 1  Assign: = of type int [line: 66]
+---
+> .   .   .   .   .   .   Child: 1  Assign: := of type int [line: 66]
+144c144
+< .   .   .   .   .   .   Sibling: 1  Assign: = of type bool [line: 67]
+---
+> .   .   .   .   .   .   Sibling: 1  Assign: := of type bool [line: 67]
+153c153
+< .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 70]
+---
+> .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 70]
+158c158
+< .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 70]
+---
+> .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 70]
+164c164
+< .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 71]
+---
+> .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 71]
+169c169
+< .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 71]
+---
+> .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 71]
+175c175
+< .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 72]
+---
+> .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 72]
+180c180
+< .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 72]
+---
+> .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 72]
+185c185
+< .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 73]
+---
+> .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 73]
+192c192
+< .   .   .   .   .   .   .   .   Child: 1  Assign: = of type int [line: 74]
+---
+> .   .   .   .   .   .   .   .   Child: 1  Assign: := of type int [line: 74]
+197c197
+< .   .   .   .   .   .   .   .   Sibling: 1  Assign: = of type bool [line: 75]
+---
+> .   .   .   .   .   .   .   .   Sibling: 1  Assign: := of type bool [line: 75]
+205c205
+< .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 78]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 78]
+210c210
+< .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 78]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 78]
+216c216
+< .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 79]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 79]
+221c221
+< .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 79]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 79]
+226c226
+< .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 80]
+---
+> .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 80]
+233c233
+< .   .   .   .   .   .   .   .   .   .   Child: 1  Assign: = of type int [line: 81]
+---
+> .   .   .   .   .   .   .   .   .   .   Child: 1  Assign: := of type int [line: 81]
+238c238
+< .   .   .   .   .   .   .   .   .   .   Sibling: 1  Assign: = of type bool [line: 82]
+---
+> .   .   .   .   .   .   .   .   .   .   Sibling: 1  Assign: := of type bool [line: 82]
+248c248
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 85]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 85]
+253c253
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 85]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 85]
+259c259
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 86]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 86]
+264c264
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 86]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 86]
+270c270
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 87]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 87]
+275c275
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 87]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 87]
+281c281
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 88]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 88]
+286c286
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 88]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 88]
+291c291
+< .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 89]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 89]
+298c298
+< .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Assign: = of type int [line: 90]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Assign: := of type int [line: 90]
+303c303
+< .   .   .   .   .   .   .   .   .   .   .   .   Sibling: 1  Assign: = of type bool [line: 91]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   Sibling: 1  Assign: := of type bool [line: 91]
+311c311
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 94]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 94]
+316c316
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 94]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 94]
+322c322
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 95]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 95]
+327c327
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 95]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 95]
+332c332
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 96]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 96]
+339c339
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Assign: = of type int [line: 97]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Assign: := of type int [line: 97]
+344c344
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   Sibling: 1  Assign: = of type bool [line: 98]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   Sibling: 1  Assign: := of type bool [line: 98]
+353c353
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 101]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 101]
+358c358
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 101]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 101]
+364c364
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 102]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 102]
+369c369
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 102]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 102]
+375c375
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 103]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 103]
+380c380
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 103]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 103]
+385c385
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 104]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 104]
+392c392
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Assign: = of type int [line: 105]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Assign: := of type int [line: 105]
+397c397
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Sibling: 1  Assign: = of type bool [line: 106]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Sibling: 1  Assign: := of type bool [line: 106]
+405c405
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 109]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 109]
+410c410
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 109]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 109]
+416c416
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 110]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 110]
+421c421
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 110]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 110]
+426c426
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 111]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 111]
+433c433
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Assign: = of type int [line: 112]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Assign: := of type int [line: 112]
+438c438
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Sibling: 1  Assign: = of type bool [line: 113]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Sibling: 1  Assign: := of type bool [line: 113]
+447c447
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 116]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 116]
+452c452
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 116]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 116]
+458c458
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 117]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 117]
+463c463
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 118]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 118]
+469c469
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 119]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 119]
+474c474
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 120]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 120]
+479c479
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 121]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 121]
+486c486
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Assign: = of type int [line: 122]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Assign: := of type int [line: 122]
+491c491
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Sibling: 1  Assign: = of type bool [line: 123]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Sibling: 1  Assign: := of type bool [line: 123]
+495c495
+< .   .   .   Child: 0  Op: != of type bool [line: 134]
+---
+> .   .   .   Child: 0  Op: >< of type bool [line: 134]
+506c506
+< .   .   Child: 1  Assign: = of type bool [line: 144]
+---
+> .   .   Child: 1  Assign: := of type bool [line: 144]
+514c514
+< .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 146]
+---
+> .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 146]
+519c519
+< .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 146]
+---
+> .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 146]
+525c525
+< .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 147]
+---
+> .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 147]
+530c530
+< .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 147]
+---
+> .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 147]
+536c536
+< .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 148]
+---
+> .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 148]
+541c541
+< .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 148]
+---
+> .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 148]
+546c546
+< .   .   .   .   Child: 1  Op: == of type bool [line: 149]
+---
+> .   .   .   .   Child: 1  Op: = of type bool [line: 149]
+553c553
+< .   .   .   .   Child: 1  Assign: = of type int [line: 150]
+---
+> .   .   .   .   Child: 1  Assign: := of type int [line: 150]
+558c558
+< .   .   .   .   Sibling: 1  Assign: = of type bool [line: 151]
+---
+> .   .   .   .   Sibling: 1  Assign: := of type bool [line: 151]
+566c566
+< .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 154]
+---
+> .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 154]
+571c571
+< .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 154]
+---
+> .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 154]
+577c577
+< .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 155]
+---
+> .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 155]
+582c582
+< .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 155]
+---
+> .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 155]
+587c587
+< .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 156]
+---
+> .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 156]
+594c594
+< .   .   .   .   .   .   Child: 1  Assign: = of type int [line: 157]
+---
+> .   .   .   .   .   .   Child: 1  Assign: := of type int [line: 157]
+599c599
+< .   .   .   .   .   .   Sibling: 1  Assign: = of type bool [line: 158]
+---
+> .   .   .   .   .   .   Sibling: 1  Assign: := of type bool [line: 158]
+608c608
+< .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 161]
+---
+> .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 161]
+613c613
+< .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 161]
+---
+> .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 161]
+619c619
+< .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 162]
+---
+> .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 162]
+624c624
+< .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 162]
+---
+> .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 162]
+630c630
+< .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 163]
+---
+> .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 163]
+635c635
+< .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 163]
+---
+> .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 163]
+640c640
+< .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 164]
+---
+> .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 164]
+647c647
+< .   .   .   .   .   .   .   .   Child: 1  Assign: = of type int [line: 165]
+---
+> .   .   .   .   .   .   .   .   Child: 1  Assign: := of type int [line: 165]
+652c652
+< .   .   .   .   .   .   .   .   Sibling: 1  Assign: = of type bool [line: 166]
+---
+> .   .   .   .   .   .   .   .   Sibling: 1  Assign: := of type bool [line: 166]
+660c660
+< .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 169]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 169]
+665c665
+< .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 169]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 169]
+671c671
+< .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 170]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 170]
+676c676
+< .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 170]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 170]
+681c681
+< .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 171]
+---
+> .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 171]
+688c688
+< .   .   .   .   .   .   .   .   .   .   Child: 1  Assign: = of type int [line: 172]
+---
+> .   .   .   .   .   .   .   .   .   .   Child: 1  Assign: := of type int [line: 172]
+693c693
+< .   .   .   .   .   .   .   .   .   .   Sibling: 1  Assign: = of type bool [line: 173]
+---
+> .   .   .   .   .   .   .   .   .   .   Sibling: 1  Assign: := of type bool [line: 173]
+703c703
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 176]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 176]
+708c708
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 176]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 176]
+714c714
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 177]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 177]
+719c719
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 177]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 177]
+725c725
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 178]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 178]
+730c730
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 178]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 178]
+736c736
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 179]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 179]
+741c741
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 179]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 179]
+746c746
+< .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 180]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 180]
+753c753
+< .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Assign: = of type int [line: 181]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Assign: := of type int [line: 181]
+758c758
+< .   .   .   .   .   .   .   .   .   .   .   .   Sibling: 1  Assign: = of type bool [line: 182]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   Sibling: 1  Assign: := of type bool [line: 182]
+766c766
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 185]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 185]
+771c771
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 185]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 185]
+777c777
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 186]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 186]
+782c782
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 186]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 186]
+787c787
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 187]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 187]
+794c794
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Assign: = of type int [line: 188]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Assign: := of type int [line: 188]
+799c799
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   Sibling: 1  Assign: = of type bool [line: 189]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   Sibling: 1  Assign: := of type bool [line: 189]
+808c808
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 192]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 192]
+813c813
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 192]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 192]
+819c819
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 193]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 193]
+824c824
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 193]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 193]
+830c830
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 194]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 194]
+835c835
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 194]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 194]
+840c840
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 195]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 195]
+847c847
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Assign: = of type int [line: 196]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Assign: := of type int [line: 196]
+852c852
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Sibling: 1  Assign: = of type bool [line: 197]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Sibling: 1  Assign: := of type bool [line: 197]
+860c860
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 200]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 200]
+865c865
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 200]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 200]
+871c871
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 201]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 201]
+876c876
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 201]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 201]
+881c881
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 202]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 202]
+888c888
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Assign: = of type int [line: 203]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Assign: := of type int [line: 203]
+893c893
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Sibling: 1  Assign: = of type bool [line: 204]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Sibling: 1  Assign: := of type bool [line: 204]
+902c902
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 207]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 207]
+907c907
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 207]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 207]
+913c913
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 208]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 208]
+918c918
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 209]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 209]
+924c924
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 210]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 210]
+929c929
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 211]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 211]
+934c934
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 212]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 212]
+941c941
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Assign: = of type int [line: 213]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Child: 1  Assign: := of type int [line: 213]
+946c946
+< .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Sibling: 1  Assign: = of type bool [line: 214]
+---
+> .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Sibling: 1  Assign: := of type bool [line: 214]
+966c966
+< .   .   Child: 1  Assign: = of type bool [line: 242]
+---
+> .   .   Child: 1  Assign: := of type bool [line: 242]
+980c980
+< .   .   .   .   .   .   Child: 0  Op: != of type bool [line: 245]
+---
+> .   .   .   .   .   .   Child: 0  Op: >< of type bool [line: 245]
+985c985
+< .   .   .   .   .   .   Child: 1  Op: != of type bool [line: 245]
+---
+> .   .   .   .   .   .   Child: 1  Op: >< of type bool [line: 245]
+991c991
+< .   .   .   .   .   .   Child: 1  Assign: = of type int [line: 246]
+---
+> .   .   .   .   .   .   Child: 1  Assign: := of type int [line: 246]
+996c996
+< .   .   .   .   .   .   Sibling: 1  Assign: = of type bool [line: 247]
+---
+> .   .   .   .   .   .   Sibling: 1  Assign: := of type bool [line: 247]
+1004c1004
+< .   .   Child: 1  Assign: = of type int [line: 257]
+---
+> .   .   Child: 1  Assign: := of type int [line: 257]
+1013c1013
+< .   .   .   .   .   Child: 0  Op: == of type bool [line: 260]
+---
+> .   .   .   .   .   Child: 0  Op: = of type bool [line: 260]
+1022c1022
+< .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 263]
+---
+> .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 263]
+1036c1036
+< .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 269]
+---
+> .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 269]
+1039c1039
+< .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 269]
+---
+> .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 269]
+1042c1042
+< .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 269]
+---
+> .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 269]
+1052c1052
+< .   .   Child: 1  Assign: = of type int [line: 281]
+---
+> .   .   Child: 1  Assign: := of type int [line: 281]
+1057c1057
+< .   .   .   .   Child: 0  Op: != of type bool [line: 283]
+---
+> .   .   .   .   Child: 0  Op: >< of type bool [line: 283]
+1066c1066
+< .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 283]
+---
+> .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 283]
+1073c1073
+< .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 284]
+---
+> .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 284]
+1081c1081
+< .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 285]
+---
+> .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 285]
+1088c1088
+< .   .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 286]
+---
+> .   .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 286]
+1096c1096
+< .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 287]
+---
+> .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 287]
+1103c1103
+< .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 288]
+---
+> .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 288]
+1115c1115
+< .   .   .   .   Child: 0  Op: != of type bool [line: 292]
+---
+> .   .   .   .   Child: 0  Op: >< of type bool [line: 292]
+1122c1122
+< .   .   .   .   .   Child: 0  Op: == of type bool [line: 293]
+---
+> .   .   .   .   .   Child: 0  Op: = of type bool [line: 293]
+1129c1129
+< .   .   .   .   .   Child: 1  Op: == of type bool [line: 293]
+---
+> .   .   .   .   .   Child: 1  Op: = of type bool [line: 293]
+1141c1141
+< .   .   .   .   Child: 0  Op: != of type bool [line: 297]
+---
+> .   .   .   .   Child: 0  Op: >< of type bool [line: 297]
+1149c1149
+< .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 297]
+---
+> .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 297]
+1156c1156
+< .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 298]
+---
+> .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 298]
+1164c1164
+< .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 299]
+---
+> .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 299]
+1171c1171
+< .   .   .   .   .   .   Child: 1  Op: == of type bool [line: 300]
+---
+> .   .   .   .   .   .   Child: 1  Op: = of type bool [line: 300]
+1183c1183
+< .   .   .   .   Child: 0  Op: != of type bool [line: 304]
+---
+> .   .   .   .   Child: 0  Op: >< of type bool [line: 304]
+1190c1190
+< .   .   .   .   .   Child: 0  Op: == of type bool [line: 305]
+---
+> .   .   .   .   .   Child: 0  Op: = of type bool [line: 305]
+1197c1197
+< .   .   .   .   .   Child: 1  Op: == of type bool [line: 305]
+---
+> .   .   .   .   .   Child: 1  Op: = of type bool [line: 305]
+1209c1209
+< .   .   .   .   Child: 0  Op: != of type bool [line: 309]
+---
+> .   .   .   .   Child: 0  Op: >< of type bool [line: 309]
+1216c1216
+< .   .   .   .   .   Child: 0  Op: == of type bool [line: 310]
+---
+> .   .   .   .   .   Child: 0  Op: = of type bool [line: 310]
+1223c1223
+< .   .   .   .   .   Child: 1  Op: == of type bool [line: 310]
+---
+> .   .   .   .   .   Child: 1  Op: = of type bool [line: 310]
+1235c1235
+< .   .   .   .   Child: 0  Op: != of type bool [line: 314]
+---
+> .   .   .   .   Child: 0  Op: >< of type bool [line: 314]
+1248c1248
+< .   .   .   Child: 0  Op: == of type bool [line: 318]
+---
+> .   .   .   Child: 0  Op: = of type bool [line: 318]
+1260c1260
+< .   .   Child: 1  Assign: = of type int [line: 329]
+---
+> .   .   Child: 1  Assign: := of type int [line: 329]
+1269c1269
+< .   .   .   .   Child: 1  Op: == of type bool [line: 334]
+---
+> .   .   .   .   Child: 1  Op: = of type bool [line: 334]
+1273c1273
+< .   .   .   .   Child: 1  Assign: = of type int [line: 335]
+---
+> .   .   .   .   Child: 1  Assign: := of type int [line: 335]
+1290c1290
+< .   .   Child: 1  Assign: = of type int [line: 349]
+---
+> .   .   Child: 1  Assign: := of type int [line: 349]
+1298c1298
+< .   .   .   .   Child: 1  Assign: = of type int [line: 352]
+---
+> .   .   .   .   Child: 1  Assign: := of type int [line: 352]
+1306c1306
+< .   .   Sibling: 2  Assign: = of type bool [line: 356]
+---
+> .   .   Sibling: 2  Assign: := of type bool [line: 356]

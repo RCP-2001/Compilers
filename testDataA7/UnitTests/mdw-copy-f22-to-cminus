@@ -1,0 +1,13 @@
+#!/bin/bash
+ 
+#
+# Copy all xxx.c-.f22 files to xxx.c-
+#
+
+for file in *.c-.f22
+do
+    stem=`echo $file | sed 's/.f22*$//'`
+    echo '=' $file ' >> ' $stem '='
+    cp $file $stem
+done
+

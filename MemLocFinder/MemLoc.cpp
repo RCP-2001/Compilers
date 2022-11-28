@@ -160,6 +160,7 @@ void MemLocSet(treeNode *node, SymbolTable *symTbl)
             DecNode = (treeNode *)symTbl->lookup(node->token()->tokenstr);
             node->SetLoc(DecNode->GetLoc());
             node->SetSize(DecNode->GetSize());
+            node->SetIDKind(DecNode->DKind());
             break;
         case OpK:
             MemLocSet(node->GetChild(0), symTbl);

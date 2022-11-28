@@ -1,0 +1,12 @@
+#!/bin/bash
+ 
+#
+# xmog all xxx.c- files to xxx.c-.f22
+#
+
+for file in *.c-
+do
+    echo '=' $file ' >> ' $file.f22 '='
+    ../../../../../../xmog/000/xmog $file > $file.f22
+done
+

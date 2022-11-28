@@ -1,0 +1,24 @@
+15c15
+< .   .   Child: 1  Assign: = of type int [line: 7]
+---
+> .   .   Child: 1  Assign: := of type int [line: 7]
+23c23
+< .   .   .   .   Child: 1  Assign: = of type int [line: 9]
+---
+> .   .   .   .   Child: 1  Assign: := of type int [line: 9]
+34c34
+< .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 12]
+---
+> .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 12]
+38c38
+< .   .   .   .   .   .   Sibling: 2  Assign: = of type int [line: 13]
+---
+> .   .   .   .   .   .   Sibling: 2  Assign: := of type int [line: 13]
+46c46
+< .   .   .   .   .   Child: 0  Op: == of type bool [line: 16]
+---
+> .   .   .   .   .   Child: 0  Op: = of type bool [line: 16]
+50c50
+< .   .   .   .   Sibling: 4  Assign: = of type int [line: 17]
+---
+> .   .   .   .   Sibling: 4  Assign: := of type int [line: 17]

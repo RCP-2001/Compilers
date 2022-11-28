@@ -1,0 +1,20 @@
+1c1
+< // C-F21
+---
+> // C-F22
+7,8c7,8
+<     if d=0 then  output(s);
+<     else s := d;
+---
+>     if d==0 then  output(s);
+>     else s = d;
+14,15c14,15
+<     if c=0 then  output(s);
+<     else s := c;
+---
+>     if c==0 then  output(s);
+>     else s = c;
+20c20
+<     s:=333;
+---
+>     s=333;

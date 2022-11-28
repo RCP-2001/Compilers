@@ -1,0 +1,12 @@
+14c14
+< .   .   Child: 1  Assign: = of type int [line: 6]
+---
+> .   .   Child: 1  Assign: := of type int [line: 6]
+25c25
+< .   .   .   .   .   Child: 0  Op: == of type bool [line: 9]
+---
+> .   .   .   .   .   Child: 0  Op: = of type bool [line: 9]
+29c29
+< .   .   .   .   .   Child: 2  Assign: = of type int [line: 10]
+---
+> .   .   .   .   .   Child: 2  Assign: := of type int [line: 10]

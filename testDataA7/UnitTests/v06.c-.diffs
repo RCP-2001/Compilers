@@ -1,0 +1,4 @@
+3c3
+<     for i := 0 to *s do outputc(s[i]);
+---
+>     for i = 0 to *s do outputc(s[i]);

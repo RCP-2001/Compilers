@@ -111,6 +111,7 @@ private:
     int Size;
     int Loc;
     //bool InitMessagePlayed;
+    DeclKind IDKind;
 
 public:
     // inline functions
@@ -232,6 +233,9 @@ public:
     void SetLoc(int x){ Loc = x;}
     int GetLoc(){return Loc;}
     int GetSize() {return Size;}
+
+    void SetIDKind(DeclKind type){IDKind = type;}
+    DeclKind GetIDK(){return IDKind;}
 
     int SiblingSize();
 

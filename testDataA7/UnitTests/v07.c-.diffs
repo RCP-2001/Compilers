@@ -1,0 +1,38 @@
+5c5
+<     i := 0;
+---
+>     i = 0;
+21,24c21,24
+<    for i:=0 to 9 do a[i]:=i+10;
+<    for i:=0 to 4 do b[i]:=i+200;
+<    for i:=0 to 6 do h[i]:=i+3000;
+<    big[9] := 2048;
+---
+>    for i=0 to 9 do a[i]=i+10;
+>    for i=0 to 4 do b[i]=i+200;
+>    for i=0 to 6 do h[i]=i+3000;
+>    big[9] = 2048;
+26c26
+<    small := a;
+---
+>    small = a;
+28c28
+<    big := a;
+---
+>    big = a;
+32c32
+<    small := b;
+---
+>    small = b;
+34c34
+<    big := b;
+---
+>    big = b;
+38c38
+<    small := h;
+---
+>    small = h;
+40c40
+<    big := h;
+---
+>    big = h;

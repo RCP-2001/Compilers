@@ -1,0 +1,12 @@
+6,7c6,7
+<    outputb(a=b);
+<    outputb(b=a);
+---
+>    outputb(a==b);
+>    outputb(b==a);
+9,10c9,10
+<    outputb(a><b);
+<    outputb(b><a);
+---
+>    outputb(a!=b);
+>    outputb(b!=a);

@@ -1,0 +1,40 @@
+22c22
+< .   .   .   Child: 0  Op: == of type bool [line: 6]
+---
+> .   .   .   Child: 0  Op: = of type bool [line: 6]
+26c26
+< .   .   .   Child: 0  Op: != of type bool [line: 7]
+---
+> .   .   .   Child: 0  Op: >< of type bool [line: 7]
+38c38
+< .   .   .   Child: 0  Op: == of type bool [line: 10]
+---
+> .   .   .   Child: 0  Op: = of type bool [line: 10]
+42c42
+< .   .   .   Child: 0  Op: != of type bool [line: 11]
+---
+> .   .   .   Child: 0  Op: >< of type bool [line: 11]
+54c54
+< .   .   .   Child: 0  Op: == of type bool [line: 15]
+---
+> .   .   .   Child: 0  Op: = of type bool [line: 15]
+58c58
+< .   .   .   Child: 0  Op: != of type bool [line: 16]
+---
+> .   .   .   Child: 0  Op: >< of type bool [line: 16]
+62c62
+< .   .   .   Child: 0  Op: == of type bool [line: 17]
+---
+> .   .   .   Child: 0  Op: = of type bool [line: 17]
+66c66
+< .   .   .   Child: 0  Op: != of type bool [line: 18]
+---
+> .   .   .   Child: 0  Op: >< of type bool [line: 18]
+70c70
+< .   .   .   Child: 0  Op: == of type bool [line: 19]
+---
+> .   .   .   Child: 0  Op: = of type bool [line: 19]
+74c74
+< .   .   .   Child: 0  Op: != of type bool [line: 20]
+---
+> .   .   .   Child: 0  Op: >< of type bool [line: 20]

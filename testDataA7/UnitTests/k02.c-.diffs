@@ -1,0 +1,4 @@
+3c3
+<      for i := 100 to 90 by -2 do {
+---
+>      for i = 100 to 90 by -2 do {

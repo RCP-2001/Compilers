@@ -1,0 +1,4 @@
+14c14
+< .   .   .   Child: 0  Op: == of type bool [line: 4]
+---
+> .   .   .   Child: 0  Op: = of type bool [line: 4]

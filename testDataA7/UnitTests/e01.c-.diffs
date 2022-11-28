@@ -1,0 +1,12 @@
+1c1
+< // C-F21
+---
+> // C-F22
+10c10
+<     x := false;
+---
+>     x = false;
+23c23
+<     x := false;
+---
+>     x = false;

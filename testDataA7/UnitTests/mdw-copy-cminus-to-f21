@@ -1,0 +1,12 @@
+#!/bin/bash
+ 
+#
+# Copy all xxx.c- files to xxx.c-.f21
+#
+
+for file in *.c-
+do
+    echo '=' $file ' >> ' $file.f21 '='
+    cp $file $file.f21
+done
+

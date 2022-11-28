@@ -145,6 +145,10 @@ int main(int argc, char *argv[])
         if (GLOBAL_HEAD != NULL)
         {
             SymbolTable *PrintSymTbl = new SymbolTable;
+            if (SymDebug == 1)
+            {
+                PrintSymTbl->debug(true);
+            }
             // Add IO to new SymTbl
             semanticAnalysis(PrintSymTbl, IOTree);
             // PrintSymTbl->debug(true);
@@ -160,6 +164,14 @@ int main(int argc, char *argv[])
             SymbolTable *Mem = new SymbolTable;
             MemLocSet(GLOBAL_HEAD, Mem);
             SymbolTable *PrintSymTbl = new SymbolTable;
+            if (SymDebug == 1)
+            {
+                PrintSymTbl->debug(true);
+            }
+            if (SymDebug == 1)
+            {
+            //    Mem->debug(true);
+            }
             // Add IO to new SymTbl
             semanticAnalysis(PrintSymTbl, IOTree);
             // PrintSymTbl->debug(true);
@@ -168,7 +180,7 @@ int main(int argc, char *argv[])
         }
         printf("Offset for end of global space: %d\n", goffset);
     }
-    
+
     printf("Number of warnings: %d\n", numWarnings);
     printf("Number of errors: %d\n", numErrors);
 

@@ -1,0 +1,32 @@
+5c5
+<     i := 0;
+---
+>     i = 0;
+7c7
+<           if s[i]='\0' then break;
+---
+>           if s[i]=='\0' then break;
+21c21
+<    small := a;
+---
+>    small = a;
+24c24
+<    big := a;
+---
+>    big = a;
+29c29
+<    small := b;
+---
+>    small = b;
+32c32
+<    big := b;
+---
+>    big = b;
+37c37
+<    small := h;
+---
+>    small = h;
+40c40
+<    big := h;
+---
+>    big = h;

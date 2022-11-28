@@ -1,0 +1,64 @@
+16c16
+< .   .   Child: 1  Assign: = of type int [line: 9]
+---
+> .   .   Child: 1  Assign: := of type int [line: 9]
+24c24
+< .   .   .   .   Child: 1  Assign: = of type char [line: 13]
+---
+> .   .   .   .   Child: 1  Assign: := of type char [line: 13]
+35c35
+< .   .   .   .   .   .   Sibling: 1  Assign: = of type char [line: 16]
+---
+> .   .   .   .   .   .   Sibling: 1  Assign: := of type char [line: 16]
+41c41
+< .   .   .   .   .   Child: 0  Op: == of type bool [line: 18]
+---
+> .   .   .   .   .   Child: 0  Op: = of type bool [line: 18]
+53c53
+< .   .   Child: 1  Assign: = of type int [line: 28]
+---
+> .   .   Child: 1  Assign: := of type int [line: 28]
+71c71
+< .   .   .   Child: 0  Op: == of type bool [line: 37]
+---
+> .   .   .   Child: 0  Op: = of type bool [line: 37]
+77c77
+< .   .   .   .   Child: 0  Op: == of type bool [line: 38]
+---
+> .   .   .   .   Child: 0  Op: = of type bool [line: 38]
+83c83
+< .   .   .   .   .   Child: 0  Op: == of type bool [line: 39]
+---
+> .   .   .   .   .   Child: 0  Op: = of type bool [line: 39]
+89c89
+< .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 40]
+---
+> .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 40]
+95c95
+< .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 41]
+---
+> .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 41]
+101c101
+< .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 42]
+---
+> .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 42]
+107c107
+< .   .   .   .   .   .   .   .   .   Child: 0  Op: == of type bool [line: 43]
+---
+> .   .   .   .   .   .   .   .   .   Child: 0  Op: = of type bool [line: 43]
+120c120
+< .   .   Child: 1  Assign: = of type int [line: 51]
+---
+> .   .   Child: 1  Assign: := of type int [line: 51]
+123c123
+< .   .   Sibling: 1  Assign: = of type int [line: 52]
+---
+> .   .   Sibling: 1  Assign: := of type int [line: 52]
+176c176
+< .   .   .   .   Child: 1  Assign: = of type int [line: 70]
+---
+> .   .   .   .   Child: 1  Assign: := of type int [line: 70]
+181c181
+< .   .   .   .   .   Child: 0  Op: == of type bool [line: 71]
+---
+> .   .   .   .   .   Child: 0  Op: = of type bool [line: 71]

@@ -1,0 +1,14 @@
+#!/bin/bash
+ 
+#
+# do a diff of all *.tm with *.tm.f22-pre-codegen-change to see if codegen is correct.
+#
+
+for file in *.tm
+do
+    # stem=`echo $file | sed 's/..*$//'`
+
+    echo '=' $file ' <<=>> ' $file.f22-pre-codgen-change  to $file.codegen-diffs '='
+    diff $file $file.f22-pre-codgen-change > $file.codegen-diffs
+done
+

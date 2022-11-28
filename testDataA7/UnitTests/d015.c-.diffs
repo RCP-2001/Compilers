@@ -1,0 +1,16 @@
+1c1
+< // C-F21
+---
+> // C-F22
+6,7c6,7
+<     outputb('X'='Y');
+<     outputb('X'><'Y');
+---
+>     outputb('X'=='Y');
+>     outputb('X'!='Y');
+10,11c10,11
+<     outputb('Y'='Y');
+<     outputb('Y'><'Y');
+---
+>     outputb('Y'=='Y');
+>     outputb('Y'!='Y');

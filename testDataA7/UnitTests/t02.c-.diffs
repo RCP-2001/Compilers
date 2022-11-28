@@ -1,0 +1,18 @@
+1c1
+< // C-F21
+---
+> // C-F22
+8c8
+<              k[n] := 1;
+---
+>              k[n] = 1;
+11c11
+<              k[n] := n * factorial(n-1);
+---
+>              k[n] = n * factorial(n-1);
+21,22c21,22
+<         n := 10;
+<         n := factorial(n);
+---
+>         n = 10;
+>         n = factorial(n);

@@ -1,0 +1,14 @@
+1c1,3
+< * C- compiler version F22
+---
+> * C- compiler version C-S21
+> * Built: Apr 18, 2021 (toffset telemetry)
+> * Author: Robert B. Heckendorn
+312c314
+< 204:    TNE  3,4,3	Op != 
+---
+> 204:    TNE  3,4,3	Op >< 
+455c457
+< 281:    TEQ  3,4,3	Op == 
+---
+> 281:    TEQ  3,4,3	Op = 

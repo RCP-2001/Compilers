@@ -739,6 +739,7 @@ void treeNode::printMemTree(int levels, int siblingNum, SymbolTable *symTbl)
             {
                 if (child[i]->nodeKind == StmtK && child[i]->subkind.stmt == CompoundK)
                 {
+                   // printf("Enter1");
                     symTbl->enter("CompundStmt");
                 }
             }
@@ -751,22 +752,37 @@ void treeNode::printMemTree(int levels, int siblingNum, SymbolTable *symTbl)
 
             printf("Child: %d  ", i);
             child[i]->printMemTree(levels + 1, 1, symTbl);
+
+            if ((nodeKind == DeclK && subkind.decl != FuncK) || (nodeKind != DeclK))
+            {
+                if (child[i]->nodeKind == StmtK && child[i]->subkind.stmt == CompoundK)
+
+                {
+                    //   printf("LeaveTest");
+                    // symTbl->leave();
+                }
+            }
         }
     }
     if ((nodeKind == DeclK && subkind.decl == FuncK))
     {
+        // printf("Leav3");
+        // symTbl->leave();
+    }
+
+    if (nodeKind == StmtK && (subkind.stmt == CompoundK))
+    {
+       // printf("LEAxVE");
         symTbl->leave();
     }
 
     if (sibling != NULL)
     {
-        if (sibling->Kind() == StmtK && sibling->SKind() == CompoundK)
+        if (sibling->Kind() == StmtK && (sibling->SKind() == CompoundK))
         {
-            symTbl->enter("Compound Statement");
-        }
-        if (nodeKind == StmtK && subkind.stmt == CompoundK)
-        {
-            symTbl->leave();
+           // printf("Enter2");
+
+            symTbl->enter("Compound Statement Or For Statement");
         }
 
         printf("\n");

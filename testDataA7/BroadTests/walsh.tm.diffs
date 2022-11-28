@@ -1,0 +1,22 @@
+1c1,3
+< * C- compiler version F22
+---
+> * C- compiler version C-S21
+> * Built: Apr 18, 2021 (toffset telemetry)
+> * Author: Robert B. Heckendorn
+103c105
+<  55:    TEQ  3,4,3	Op == 
+---
+>  55:    TEQ  3,4,3	Op = 
+132c134
+<  73:    TEQ  3,4,3	Op == 
+---
+>  73:    TEQ  3,4,3	Op = 
+190c192
+< 101:    TEQ  3,4,3	Op == 
+---
+> 101:    TEQ  3,4,3	Op = 
+681c683
+< 362:    TEQ  3,4,3	Op == 
+---
+> 362:    TEQ  3,4,3	Op = 

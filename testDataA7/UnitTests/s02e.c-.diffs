@@ -1,0 +1,8 @@
+1c1
+< // C-F21
+---
+> // C-F22
+9c9
+<     if init then  runningSum := 0;
+---
+>     if init then  runningSum = 0;

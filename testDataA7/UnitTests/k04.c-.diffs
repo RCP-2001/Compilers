@@ -1,0 +1,8 @@
+4c4
+<      for i := 300 to 313 by 2 do {
+---
+>      for i = 300 to 313 by 2 do {
+6c6
+<          x := i;
+---
+>          x = i;

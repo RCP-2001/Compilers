@@ -40,16 +40,16 @@ void yyerror(const char *msg){
 program : declist       {/*printf("accept Program\n");*/ GLOBAL_HEAD = $1;}
         ;
 
-declist : declist decl  {if($1!=NULL) $1-> addSibling($2); $1->BGlobal(true); $$ = $1;}
+declist : declist decl  {if($1!=NULL) $1-> addSibling($2); /*$1->BGlobal(true);*/ $$ = $1;}
         | decl          {$$=$1;}    
         ;
 
-decl    : varDecl  {$$=$1;}
-        | funDecl  {$$=$1;}
+decl    : varDecl  {$$=$1; $1->BGlobal(true);}
+        | funDecl  {$$=$1; $1->BGlobal(true);}
         | error    {$$ = NULL;} // Do we need yxyerrok?
         ;
 
-varDecl : typeSpec varDeclList SEMI  {if($2 != NULL){$2->EType($1);  $2->BGlobal(true);} $$=$2;}
+varDecl : typeSpec varDeclList SEMI  {if($2 != NULL){$2->EType($1);  /*$2->BGlobal(true)*/;} $$=$2;}
         | error varDeclList SEMI     {$$=NULL; yyerrok;}
         | typeSpec error SEMI     {$$=NULL; yyerrok; }
         ;

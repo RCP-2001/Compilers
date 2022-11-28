@@ -1,0 +1,14 @@
+#!/bin/bash
+ 
+#
+# do a diff of all *.tm with *.tm.f21 to see if codegen is correct.
+#
+
+for file in *.tm
+do
+    # stem=`echo $file | sed 's/..*$//'`
+
+    echo '=' $file ' <<=>> ' $file.f21  to $file.diffs '='
+    diff $file $file.f21 > $file.diffs
+done
+

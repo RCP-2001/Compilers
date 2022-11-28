@@ -1,0 +1,10 @@
+1c1
+< // C-F21
+---
+> // C-F22
+7,8c7,8
+<     x := true;
+<     y := false;
+---
+>     x = true;
+>     y = false;

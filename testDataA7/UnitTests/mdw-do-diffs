@@ -1,0 +1,13 @@
+#!/bin/bash
+ 
+#
+# do a diff of all *.c-.f21 with *.c-.f22 to see if xmog is correct.
+#
+
+for file in *.c-.f21
+do
+    stem=`echo $file | sed 's/.f21*$//'`
+    echo '=' $file ' >> ' $stem.f22 '='
+    diff $file $stem.f22 > $stem.diffs
+done
+

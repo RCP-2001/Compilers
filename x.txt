@@ -102,7 +102,7 @@ Sibling: 2  Func: wallace returns type void [mem: Global loc: 0 size: -4] [line:
 .   .   .   .   .   Child: 1  Id: trousers of type int [mem: Parameter loc: -3 size: 1] [line: 24]
 .   .   .   .   Child: 1  Op: >= of type bool [line: 24]
 .   .   .   .   .   Child: 0  Id: trousers of type int [mem: Parameter loc: -3 size: 1] [line: 24]
-.   .   .   .   .   Child: 1  Id: gromit of type int [mem: Global loc: 0 size: 1] [line: 24]
+.   .   .   .   .   Child: 1  Id: gromit of type int [mem: Global loc: 0 size: 1] [line: 24]Enter2
 .   .   Sibling: 11  Compound [mem: None loc: 0 size: -11] [line: 25]
 .   .   .   Child: 0  Var: a of type int [mem: Local loc: -7 size: 1] [line: 26]
 .   .   .   Sibling: 1  Var: grand of type int [mem: Local loc: -8 size: 1] [line: 26]
@@ -196,7 +196,7 @@ Sibling: 2  Func: wallace returns type void [mem: Global loc: 0 size: -4] [line:
 .   .   .   .   .   .   Child: 0  Assign: -- of type int [line: 34]
 .   .   .   .   .   .   .   Child: 0  Id: cheese of type int [mem: Local loc: -6 size: 1] [line: 34]
 .   .   Sibling: 17  While [line: 36]
-.   .   .   Child: 0  Id: shave of type bool [mem: Local loc: -5 size: 1] [line: 36]
+.   .   .   Child: 0  Id: shave of type bool [mem: Local loc: -5 size: 1] [line: 36]Enter1
 .   .   .   Child: 1  Compound [mem: None loc: 0 size: -7] [line: 36]
 .   .   .   .   Child: 0  Var: were of static type int [mem: LocalStatic loc: -2 size: 1] [line: 37]
 .   .   .   .   Sibling: 1  Var: rabbit of static type int [mem: LocalStatic loc: -3 size: 1] [line: 37]
@@ -218,7 +218,7 @@ Sibling: 2  Func: wallace returns type void [mem: Global loc: 0 size: -4] [line:
 .   .   .   .   .   .   Child: 0  Id: gromit of type int [mem: Global loc: 0 size: 1] [line: 42]
 .   .   .   .   .   Sibling: 1  Op: - of type int [line: 42]
 .   .   .   .   .   .   Child: 0  Id: were of static type int [mem: LocalStatic loc: -2 size: 1] [line: 42]
-.   .   .   .   .   .   Child: 1  Id: rabbit of static type int [mem: LocalStatic loc: -3 size: 1] [line: 42]
+.   .   .   .   .   .   Child: 1  Id: rabbit of static type int [mem: LocalStatic loc: -3 size: 1] [line: 42]Enter2
 .   .   .   .   Sibling: 3  Compound [mem: None loc: 0 size: -10] [line: 43]
 .   .   .   .   .   Child: 0  Var: the of type int [mem: Local loc: -7 size: 1] [line: 44]
 .   .   .   .   .   Sibling: 1  Var: wrong of type int [mem: Local loc: -8 size: 1] [line: 44]

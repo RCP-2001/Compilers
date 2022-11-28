@@ -1,0 +1,12 @@
+#!/bin/bash
+ 
+#
+# Copy all xxx.tm files to xxx.tm.f22-pre-codegen-change
+#
+
+for file in *.tm
+do
+    echo '=' $file ' >> ' $file.f22-pre-codegen-change '='
+    cp $file $file.f22-pre-codgen-change
+done
+

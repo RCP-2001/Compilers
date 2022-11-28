@@ -1,0 +1,16 @@
+1c1
+< // C-F21
+---
+> // C-F22
+11c11
+<     x := cat()  and  false;
+---
+>     x = cat()  and  false;
+13c13
+<     x := cat()  or  false;
+---
+>     x = cat()  or  false;
+15c15
+<     x := not  cat();
+---
+>     x = not  cat();

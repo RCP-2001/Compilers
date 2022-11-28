@@ -1,0 +1,12 @@
+#!/bin/bash
+ 
+#
+# Copy all xxx.tm files to xxx.tm.f21
+#
+
+for file in *.tm
+do
+    echo '=' $file ' >> ' $file.f21 '='
+    cp $file $file.f21
+done
+

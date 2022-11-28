@@ -1,0 +1,30 @@
+1c1
+< // C-F21
+---
+> // C-F22
+6,7c6,7
+<     outputb(1=2);
+<     outputb(1><2);
+---
+>     outputb(1==2);
+>     outputb(1!=2);
+10,11c10,11
+<     outputb(2=2);
+<     outputb(2><2);
+---
+>     outputb(2==2);
+>     outputb(2!=2);
+15,20c15,20
+<     outputb(true=true);
+<     outputb(true><true);
+<     outputb(false=true);
+<     outputb(false><true);
+<     outputb(false=false);
+<     outputb(false><false);
+---
+>     outputb(true==true);
+>     outputb(true!=true);
+>     outputb(false==true);
+>     outputb(false!=true);
+>     outputb(false==false);
+>     outputb(false!=false);
