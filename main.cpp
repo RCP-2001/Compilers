@@ -6,6 +6,7 @@
 #include "IO.h"
 #include "YYError/yyerror.h"
 #include "MemLocFinder/MemLoc.h"
+#include "CodeGen/CodeGen.h"
 #include <stdio.h>
 #include <cstring>
 #include <unistd.h>
@@ -170,7 +171,7 @@ int main(int argc, char *argv[])
             }
             if (SymDebug == 1)
             {
-            //    Mem->debug(true);
+                //    Mem->debug(true);
             }
             // Add IO to new SymTbl
             semanticAnalysis(PrintSymTbl, IOTree);
@@ -188,7 +189,19 @@ int main(int argc, char *argv[])
     // note: Make sure the complier is 100% done done before doing this
     if (GLOBAL_HEAD != NULL)
     {
-        delete GLOBAL_HEAD;
+        std::string OutfileName = basename(argv[optind]);
+
+        // OutfileName = basename(argv[o]);
+        OutfileName = OutfileName.substr(0, OutfileName.find_first_of("."));
+        std::cout << OutfileName << std::endl;
+        // return 0;
+        std::ofstream Outfile(OutfileName + ".tm");
+
+        // CodeGen Before deletion
+        ListNode *H = Linearize(GLOBAL_HEAD);
+        H->GenerateCode(Outfile);
+        Outfile.close();
+        delete GLOBAL_HEAD; //
         GLOBAL_HEAD = NULL;
     }
     // printf("Number of errors: %d\n", numErrors);
