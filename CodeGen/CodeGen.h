@@ -11,14 +11,21 @@ private:
 
     // Pretty sure I dont need these
     // just here for testing
-    std:
+    std::string address;
+    std::string instruction;
+    std::string comment;
 
     std::string Type;
     std::string TokenStr;
 
+    treeNode *AssociatedNode;
+    void GenCodeFromTree();
+    std::string Code;
+
     ListNode *next;
 
 public:
+
     ListNode()
     {
         next = NULL;
@@ -30,3 +37,5 @@ public:
 };
 
 ListNode *Linearize(treeNode *TreeNode);
+
+void GenerateIOLib(std::ofstream &Fileout);

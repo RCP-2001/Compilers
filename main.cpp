@@ -199,6 +199,7 @@ int main(int argc, char *argv[])
 
         // CodeGen Before deletion
         ListNode *H = Linearize(GLOBAL_HEAD);
+        GenerateIOLib(Outfile);
         H->GenerateCode(Outfile);
         Outfile.close();
         delete GLOBAL_HEAD; //
