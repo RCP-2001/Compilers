@@ -38,4 +38,8 @@ public:
 
 ListNode *Linearize(treeNode *TreeNode);
 
+void Init(std::ofstream &Fileout);
+
 void GenerateIOLib(std::ofstream &Fileout);
+
+void LoadConstants(treeNode*,  std::string &);

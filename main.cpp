@@ -201,6 +201,7 @@ int main(int argc, char *argv[])
         ListNode *H = Linearize(GLOBAL_HEAD);
         GenerateIOLib(Outfile);
         H->GenerateCode(Outfile);
+        Init(Outfile);
         Outfile.close();
         delete GLOBAL_HEAD; //
         GLOBAL_HEAD = NULL;

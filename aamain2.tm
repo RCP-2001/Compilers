@@ -69,13 +69,37 @@
 39 : ST  3,-1(1)     Store Return addr
 * TOFF = -2
 40 : ST 1,-2(1)   Store fp in ghost Frame output? (IDK what that means tbh)
+*LOADING CALL PARAMS
 * CONST
 41 : LDC 3,666(0)   Load Integer Constant 
 42 : ST 3,-2(1)   
-43 : ST 1,-2(1)   Store fp in ghost Frame output? (IDK what that means tbh)
-* CONST
-44 : LDC 3,1(0)   Load Integer Constant 
-45 : ST 3,-2(1)   
-46 : ST 1,-2(1)   Store fp in ghost Frame output? (IDK what that means tbh)
+43 : LDA 1,-2(1)     Ghost frame becomes new active frame
+44 : LDA 3,1(7)     return addr in ac
+45 : JMP 7,-40(7)     Call func (IDK how to do this properly tbh
+46 : LDA 3,0(2)    Save Result in AC 
+* CONST NODE
 47 : ST 1,-2(1)   Store fp in ghost Frame output? (IDK what that means tbh)
-48 : ST 1,-2(1)   Store fp in ghost Frame output? (IDK what that means tbh)
+*LOADING CALL PARAMS
+* CONST
+48 : LDC 3,1(0)   Load Integer Constant 
+49 : ST 3,-2(1)   
+50 : LDA 1,-2(1)     Ghost frame becomes new active frame
+51 : LDA 3,1(7)     return addr in ac
+52 : JMP 7,-40(7)     Call func (IDK how to do this properly tbh
+53 : LDA 3,0(2)    Save Result in AC 
+* CONST NODE
+54 : ST 1,-2(1)   Store fp in ghost Frame output? (IDK what that means tbh)
+55 : LDA 1,-2(1)     Ghost frame becomes new active frame
+56 : LDA 3,1(7)     return addr in ac
+57 : JMP 7,-40(7)     Call func (IDK how to do this properly tbh
+58 : LDA 3,0(2)    Save Result in AC 
+59 : ST 1,-2(1)   Store fp in ghost Frame output? (IDK what that means tbh)
+60 : LDA 1,-2(1)     Ghost frame becomes new active frame
+61 : LDA 3,1(7)     return addr in ac
+62 : JMP 7,-40(7)     Call func (IDK how to do this properly tbh
+63 : LDA 3,0(2)    Save Result in AC 
+64 : ST 1,-2(1)   Store fp in ghost Frame output? (IDK what that means tbh)
+65 : LDA 1,-2(1)     Ghost frame becomes new active frame
+66 : LDA 3,1(7)     return addr in ac
+67 : JMP 7,-40(7)     Call func (IDK how to do this properly tbh
+68 : LDA 3,0(2)    Save Result in AC 

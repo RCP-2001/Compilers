@@ -51,41 +51,18 @@ void ListNode::GenCodeFromTree()
         case CallK:
             Code = Code + std::to_string(currentAddr) + " : ST 1,-2(1)   Store fp in ghost Frame output? (IDK what that means tbh)\n";
             currentAddr++;
+
+            // Pass by Ref!!!
+            LoadConstants(AssociatedNode->GetChild(0), Code);
+            Code = Code + std::to_string(currentAddr++) + " : LDA 1,-2(1)     Ghost frame becomes new active frame\n";
+            Code = Code + std::to_string(currentAddr++) + " : LDA 3,1(7)     return addr in ac\n";
+            Code = Code + std::to_string(currentAddr++) + " : JMP 7,-40(7)     Call func (IDK how to do this properly tbh\n";
+            Code = Code + std::to_string(currentAddr++) + " : LDA 3,0(2)    Save Result in AC \n";
+
             break;
         case constantK:
-            Code = Code + "* CONST\n";
-            switch (AssociatedNode->EType())
-            {
-            case Integer:
-                Code = Code + std::to_string(currentAddr) + " : LDC " + "3," + std::to_string(AssociatedNode->token()->nvalue) + "(0)   Load Integer Constant \n";
-                currentAddr++;
-                Code = Code + std::to_string(currentAddr) + " : ST " + "3," + std::to_string(TOFF) + "(1)   \n";
-                currentAddr++;
-
-                break;
-            case Char:
-                if (AssociatedNode->ArrayIs() == false)
-                {
-                    Code = Code + std::to_string(currentAddr) + " : LDC " + "3," + std::to_string(AssociatedNode->token()->cvalue) + "(0)   Load Char Constant \n";
-                    currentAddr++;
-                    Code = Code + std::to_string(currentAddr) + " : ST " + "3," + std::to_string(TOFF) + "(1)   \n";
-                    currentAddr++;
-                }
-                else
-                {
-                    Code = Code + "Im Sad \n";
-                }
-                break;
-            case boolean:
-                Code = Code + std::to_string(currentAddr) + " : LDC " + "3," + std::to_string(AssociatedNode->token()->nvalue) + "(0)   Load Integer Constant \n";
-                currentAddr++;
-                Code = Code + std::to_string(currentAddr) + " : ST " + "3," + std::to_string(TOFF) + "(1)   \n";
-                currentAddr++;
-                break;
-
-            default:
-                break;
-            }
+            Code = Code + "* CONST NODE\n";
+            break;
         default:
             break;
         }
@@ -210,4 +187,67 @@ void GenerateIOLib(std::ofstream &Fileout)
     Fileout << "* " << std::endl;
     Fileout << "*************************" << std::endl;
     currentAddr = 39;
+}
+
+void LoadConstants(treeNode *CurrentNode, std::string &Code)
+{
+    if (CurrentNode == NULL)
+    {
+        return;
+    }
+
+    Code = Code + "*LOADING CALL PARAMS\n";
+    if (CurrentNode->Kind() != ExpK)
+    {
+        // Should never get here
+        Code = Code + "*ERRR: Not Exp??? \n";
+        return;
+    }
+    switch (CurrentNode->EKind())
+    {
+    case constantK:
+        Code = Code + "* CONST\n";
+        switch (CurrentNode->EType())
+        {
+        case Integer:
+            Code = Code + std::to_string(currentAddr) + " : LDC " + "3," + std::to_string(CurrentNode->token()->nvalue) + "(0)   Load Integer Constant \n";
+            currentAddr++;
+            Code = Code + std::to_string(currentAddr) + " : ST " + "3," + std::to_string(TOFF) + "(1)   \n";
+            currentAddr++;
+
+            break;
+        case Char:
+            if (CurrentNode->ArrayIs() == false)
+            {
+                Code = Code + std::to_string(currentAddr) + " : LDC " + "3," + std::to_string(CurrentNode->token()->cvalue) + "(0)   Load Char Constant \n";
+                currentAddr++;
+                Code = Code + std::to_string(currentAddr) + " : ST " + "3," + std::to_string(TOFF) + "(1)   \n";
+                currentAddr++;
+            }
+            else
+            {
+                Code = Code + "Im Sad \n";
+            }
+            break;
+        case boolean:
+            Code = Code + std::to_string(currentAddr) + " : LDC " + "3," + std::to_string(CurrentNode->token()->nvalue) + "(0)   Load Integer Constant \n";
+            currentAddr++;
+            Code = Code + std::to_string(currentAddr) + " : ST " + "3," + std::to_string(TOFF) + "(1)   \n";
+            currentAddr++;
+            break;
+
+        default:
+            break;
+        }
+        break;
+    default:
+        break;
+    }
+    LoadConstants(CurrentNode->nextSibling(), Code);
+}
+
+void Init(std::ofstream Fileout){
+    Fileout << "*INIT \n";
+    Fileout << "0 : JMP 7,75(7)     Jmp to init \n";
+    Fileout << currentAddr++ << " : LDA 1,0(0)  set frist frame\n";
 }
