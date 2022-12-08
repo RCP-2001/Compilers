@@ -4,7 +4,22 @@
 #include <string.h>
 #include "../scanType.h"
 
-class ListNode
+#ifndef REG
+#define REG
+
+#define GLOBAL 0 
+#define FRAMEPOINTER 1
+#define RETURN 2
+#define AC1 3
+#define AC2 4
+#define AC3 5
+#define AC4 6
+#define PC 7
+
+#endif
+
+
+    class ListNode
 {
 private:
     // Codegen goes here?
@@ -25,7 +40,6 @@ private:
     ListNode *next;
 
 public:
-
     ListNode()
     {
         next = NULL;
@@ -42,4 +56,6 @@ void Init(std::ofstream &Fileout);
 
 void GenerateIOLib(std::ofstream &Fileout);
 
-void LoadConstants(treeNode*,  std::string &);
+void LoadConstants(treeNode *, std::string &);
+
+void GenerateCodeTree(treeNode *Node, std::ofstream &Fileout, bool PushParam = false);

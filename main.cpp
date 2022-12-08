@@ -198,9 +198,11 @@ int main(int argc, char *argv[])
         std::ofstream Outfile(OutfileName + ".tm");
 
         // CodeGen Before deletion
-        ListNode *H = Linearize(GLOBAL_HEAD);
+        //  ListNode *H = Linearize(GLOBAL_HEAD);
         GenerateIOLib(Outfile);
-        H->GenerateCode(Outfile);
+        // H->GenerateCode(Outfile);
+        GenerateCodeTree(GLOBAL_HEAD, Outfile);
+
         Init(Outfile);
         Outfile.close();
         delete GLOBAL_HEAD; //

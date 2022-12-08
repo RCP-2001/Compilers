@@ -103,3 +103,11 @@
 66 : LDA 3,1(7)     return addr in ac
 67 : JMP 7,-40(7)     Call func (IDK how to do this properly tbh
 68 : LDA 3,0(2)    Save Result in AC 
+*INIT 
+0 : JMP 7,75(7)     Jmp to init 
+39 : LDA 1,0(0)  set frist frame
+40 : ST 1,0(1)   Store old fp (point to self?)
+* GLOBLS + STATICS (idk how to do this KEKW)
+41 : LDA 3,1(7)  return addr in ac? 
+42 : JMP 7,-41(7)   Jump to main
+43 : HALT 0,0,0 DONE

@@ -2,6 +2,7 @@
 
 static int currentAddr = 39;
 static int TOFF = 0;
+static int MainAddr = 0;
 
 ListNode::~ListNode()
 {
@@ -20,6 +21,7 @@ ListNode::ListNode(treeNode *node)
 
 void ListNode::GenCodeFromTree()
 {
+    printf("NODE\n");
     switch (AssociatedNode->Kind())
     {
     case DeclK:
@@ -42,22 +44,35 @@ void ListNode::GenCodeFromTree()
             break;
         }
         break;
+
+    case StmtK:
+        switch (AssociatedNode->SKind())
+        {
+        case CompoundK:
+            Code = "* COMPOUND STATEMENT \n";
+            printf("Adding Code form Compound Statement\n");
+            TOFF = AssociatedNode->GetSize();
+            Code = Code + "*TOFF = " + std::to_string(TOFF) + "\n";
+            break;
+
+        default:
+            break;
+        }
+        break;
     case ExpK:
         switch (AssociatedNode->EKind())
         {
-        case CompoundK:
-            Code = Code + "* COMPOUND STATEMENT \n";
-            break;
+
         case CallK:
-            Code = Code + std::to_string(currentAddr) + " : ST 1,-2(1)   Store fp in ghost Frame output? (IDK what that means tbh)\n";
+            Code = Code + std::to_string(currentAddr) + " : ST " + std::to_string(FRAMEPOINTER) + ",-2(1)   Store fp in ghost Frame output? (IDK what that means tbh)\n";
             currentAddr++;
 
             // Pass by Ref!!!
             LoadConstants(AssociatedNode->GetChild(0), Code);
-            Code = Code + std::to_string(currentAddr++) + " : LDA 1,-2(1)     Ghost frame becomes new active frame\n";
-            Code = Code + std::to_string(currentAddr++) + " : LDA 3,1(7)     return addr in ac\n";
-            Code = Code + std::to_string(currentAddr++) + " : JMP 7,-40(7)     Call func (IDK how to do this properly tbh\n";
-            Code = Code + std::to_string(currentAddr++) + " : LDA 3,0(2)    Save Result in AC \n";
+            Code = Code + std::to_string(currentAddr++) + " : LDA " + std::to_string(FRAMEPOINTER) + ",-2(1)     Ghost frame becomes new active frame\n";
+            Code = Code + std::to_string(currentAddr++) + " : LDA " + std::to_string(AC1) + ",1(7)     return addr in ac\n";
+            Code = Code + std::to_string(currentAddr++) + " : JMP " + std::to_string(PC) + ",-40(7)     Call func (IDK how to do this properly tbh\n";
+            Code = Code + std::to_string(currentAddr++) + " : LDA " + std::to_string(AC1) + ",0(2)    Save Result in AC \n";
 
             break;
         case constantK:
@@ -110,11 +125,13 @@ ListNode *Linearize(treeNode *TreeNode)
 
 void ListNode::GenerateCode(std::ofstream &Fileout)
 {
+    printf("Adding to page???\n");
     Fileout << Code;
     if (next != NULL)
     {
         next->GenerateCode(Fileout);
     }
+    // if(AssociatedNode->Kind() == DeclK && AssociatedNode()->
 }
 
 void GenerateIOLib(std::ofstream &Fileout)
@@ -210,18 +227,18 @@ void LoadConstants(treeNode *CurrentNode, std::string &Code)
         switch (CurrentNode->EType())
         {
         case Integer:
-            Code = Code + std::to_string(currentAddr) + " : LDC " + "3," + std::to_string(CurrentNode->token()->nvalue) + "(0)   Load Integer Constant \n";
+            Code = Code + std::to_string(currentAddr) + " : LDC " + std::to_string(AC1) + "," + std::to_string(CurrentNode->token()->nvalue) + "(0)   Load Integer Constant \n";
             currentAddr++;
-            Code = Code + std::to_string(currentAddr) + " : ST " + "3," + std::to_string(TOFF) + "(1)   \n";
+            Code = Code + std::to_string(currentAddr) + " : ST " + std::to_string(AC1) + "," + std::to_string(TOFF) + "(1)   \n";
             currentAddr++;
 
             break;
         case Char:
             if (CurrentNode->ArrayIs() == false)
             {
-                Code = Code + std::to_string(currentAddr) + " : LDC " + "3," + std::to_string(CurrentNode->token()->cvalue) + "(0)   Load Char Constant \n";
+                Code = Code + std::to_string(currentAddr) + " : LDC " + std::to_string(AC1) + "," + std::to_string(CurrentNode->token()->cvalue) + "(0)   Load Char Constant \n";
                 currentAddr++;
-                Code = Code + std::to_string(currentAddr) + " : ST " + "3," + std::to_string(TOFF) + "(1)   \n";
+                Code = Code + std::to_string(currentAddr) + " : ST " + std::to_string(AC1) + "," + std::to_string(TOFF) + "(1)   \n";
                 currentAddr++;
             }
             else
@@ -230,9 +247,9 @@ void LoadConstants(treeNode *CurrentNode, std::string &Code)
             }
             break;
         case boolean:
-            Code = Code + std::to_string(currentAddr) + " : LDC " + "3," + std::to_string(CurrentNode->token()->nvalue) + "(0)   Load Integer Constant \n";
+            Code = Code + std::to_string(currentAddr) + " : LDC " + std::to_string(AC1) + "," + std::to_string(CurrentNode->token()->nvalue) + "(0)   Load Integer Constant \n";
             currentAddr++;
-            Code = Code + std::to_string(currentAddr) + " : ST " + "3," + std::to_string(TOFF) + "(1)   \n";
+            Code = Code + std::to_string(currentAddr) + " : ST " + std::to_string(AC1) + "," + std::to_string(TOFF) + "(1)   \n";
             currentAddr++;
             break;
 
@@ -246,8 +263,130 @@ void LoadConstants(treeNode *CurrentNode, std::string &Code)
     LoadConstants(CurrentNode->nextSibling(), Code);
 }
 
-void Init(std::ofstream Fileout){
+void Init(std::ofstream &Fileout)
+{
     Fileout << "*INIT \n";
-    Fileout << "0 : JMP 7,75(7)     Jmp to init \n";
+    Fileout << "0 : JMP 7," << currentAddr - 1 << "(7)     Jmp to init \n";
     Fileout << currentAddr++ << " : LDA 1,0(0)  set frist frame\n";
+    Fileout << currentAddr++ << " : ST 1,0(1)   Store old fp (point to self?)\n";
+    Fileout << "* GLOBLS + STATICS (idk how to do this KEKW)\n";
+    Fileout << currentAddr++ << " : LDA 3,1(7)  return addr in ac? \n";
+    Fileout << currentAddr++ << " : JMP 7,-10(7)   Jump to main\n";
+    Fileout << currentAddr++ << " : HALT 0,0,0 DONE\n";
+}
+
+void GenerateCodeTree(treeNode *Node, std::ofstream &Fileout, bool PushParam)
+{
+    if (Node == NULL)
+    {
+        return;
+    }
+
+    switch (Node->Kind())
+    {
+    case DeclK:
+        switch (Node->DKind())
+        {
+        case FuncK:
+            Fileout << "* ** ** ** ** ** ** ** ** ** ** ** ** \n";
+            Fileout << "* FUNC " << Node->token()->tokenstr << std::endl;
+            TOFF = Node->GetSize();
+            Fileout << "* TOFF = " << TOFF << std::endl;
+
+            Fileout << currentAddr++ << " : ST  " << AC1 << ",-1"
+                    << "(" << FRAMEPOINTER << ")"
+                    << " Store Ret Addr" << std::endl;
+
+            // Generate Code in Children
+            GenerateCodeTree(Node->GetChild(0), Fileout);
+            GenerateCodeTree(Node->GetChild(1), Fileout);
+
+            // Standard End
+            Fileout << "* add Standard end in case of no return \n";
+            Fileout << currentAddr++ << " : LDC " << RETURN << ",0"
+                    << "(0)"
+                    << "   Set Ret val to 0" << std::endl;
+            Fileout << currentAddr++ << " : LD " << AC1 << ",-1"
+                    << "(" << FRAMEPOINTER << ")"
+                    << " Load Return addr" << std::endl;
+            Fileout << currentAddr++ << " : LD " << FRAMEPOINTER << ",0"
+                    << "(" << FRAMEPOINTER << ")"
+                    << "   Adjust Frame Pointer " << std::endl;
+            Fileout << currentAddr++ << " : JMP " << PC << ",0 "
+                    << "(" << AC1 << ")"
+                    << "  Ret" << std::endl;
+
+            Fileout << "* END OF FUNC " << Node->token()->tokenstr << std::endl;
+
+            break;
+
+        default:
+            break;
+        }
+        break;
+    case StmtK:
+        switch (Node->SKind())
+        {
+        case CompoundK:
+            Fileout << "* COMPOUND" << std::endl;
+            TOFF = Node->GetSize();
+            Fileout << "* TOFF = " << TOFF << std::endl;
+
+            GenerateCodeTree(Node->GetChild(0), Fileout);
+            GenerateCodeTree(Node->GetChild(1), Fileout);
+
+            Fileout << "* End of Compound " << std::endl;
+
+            break;
+
+        default:
+            break;
+        }
+
+        break;
+    case ExpK:
+        switch (Node->EKind())
+        {
+        case constantK:
+            Fileout << "* CONST" << std::endl;
+            // Load into AC1 (Might need to make a few diffrent ones?)
+            switch (Node->EType())
+            {
+            case Integer:
+                Fileout << currentAddr++ << " : "
+                        << "LDC " << AC1 << "," << Node->token()->nvalue << "(0)"
+                        << "Load Integer Const" << std::endl;
+                if (PushParam == true)
+                {
+                    Fileout << currentAddr++ << " : "
+                            << "ST " << AC1 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                            << "Push Param" << std::endl;
+                }
+                break;
+            case Char:
+                break;
+            case boolean:
+                break;
+
+            default:
+                break;
+            }
+            break;
+        case CallK:
+            Fileout << "* CALL output" << std::endl;
+            Fileout << currentAddr++ << " : "
+                    << "ST " << FRAMEPOINTER << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                    << " FP in ghost frame for output" << std::endl;
+            TOFF--;
+            Fileout << "* TOFF =" << TOFF << std::endl;
+            GenerateCodeTree(Node->GetChild(0), Fileout, true);
+            break;
+        default:
+            break;
+        }
+        break;
+    default:
+        break;
+    }
+    GenerateCodeTree(Node->nextSibling(), Fileout, PushParam);
 }
