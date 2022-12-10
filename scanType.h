@@ -114,6 +114,9 @@ private:
     DeclKind IDKind;
 
 public:
+    //address Func (and maybe vars?) are located
+    int address = 0;
+
     // inline functions
     void SetNodeKind(NodeKind nkind)
     {
@@ -233,6 +236,8 @@ public:
     void SetLoc(int x){ Loc = x;}
     int GetLoc(){return Loc;}
     int GetSize() {return Size;}
+
+    std::string MEMTYPE;
 
     void SetIDKind(DeclKind type){IDKind = type;}
     DeclKind GetIDK(){return IDKind;}

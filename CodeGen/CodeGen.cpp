@@ -1,137 +1,64 @@
 #include "CodeGen.h"
 
+extern treeNode *GLOBAL_HEAD;
+extern int goffset;
+
 static int currentAddr = 39;
 static int TOFF = 0;
 static int MainAddr = 0;
+static int InputAddr = 1;
+static int InputbAddr = 12;
+static int InputcAddr = 23;
+static int OutputAddr = 6;
+static int OutputbAddr = 17;
+static int OutputcAddr = 28;
+static int OutnlAddr = 34;
 
-ListNode::~ListNode()
+static int GetAddr(std::string FuncName)
 {
-    if (next != NULL)
+    if (FuncName == "input")
     {
-        delete next;
+        return InputAddr;
     }
-}
-
-ListNode::ListNode(treeNode *node)
-{
-    TokenStr = node->token()->tokenstr;
-    AssociatedNode = node;
-    GenCodeFromTree();
-}
-
-void ListNode::GenCodeFromTree()
-{
-    printf("NODE\n");
-    switch (AssociatedNode->Kind())
+    else if (FuncName == "inputb")
     {
-    case DeclK:
-        switch (AssociatedNode->DKind())
+        return InputbAddr;
+    }
+    else if (FuncName == "inputc")
+    {
+        return InputcAddr;
+    }
+    else if (FuncName == "output")
+    {
+        return OutputAddr;
+    }
+    else if (FuncName == "outputb")
+    {
+        return OutputbAddr;
+    }
+    else if (FuncName == "outputc")
+    {
+        return OutputcAddr;
+    }
+    else if (FuncName == "outnl")
+    {
+        return OutnlAddr;
+    }
+    // If its not main or a built in func, look for actual func
+    treeNode *CurrentNode = GLOBAL_HEAD;
+    while (CurrentNode != NULL)
+    {
+        if (CurrentNode->Kind() == DeclK && CurrentNode->DKind() == FuncK)
         {
-        case FuncK:
-            Code = "* ** ** ** ** ** ** ** ** ** ** ** ** \n";
-            Code = Code + "* FUNCTION " + AssociatedNode->token()->tokenstr + "\n";
-            // TOFFSET???
-            Code = Code + std::to_string(currentAddr) + " : ST  3,-1(1)     Store Return addr\n";
-            currentAddr++;
-            TOFF = TOFF + AssociatedNode->GetSize();
-            Code = Code + "* TOFF = " + std::to_string(TOFF) + "\n";
-            break;
-        case ParamK:
-
-            break;
-
-        default:
-            break;
+            if (FuncName == CurrentNode->token()->tokenstr)
+            {
+                return CurrentNode->address;
+            }
         }
-        break;
-
-    case StmtK:
-        switch (AssociatedNode->SKind())
-        {
-        case CompoundK:
-            Code = "* COMPOUND STATEMENT \n";
-            printf("Adding Code form Compound Statement\n");
-            TOFF = AssociatedNode->GetSize();
-            Code = Code + "*TOFF = " + std::to_string(TOFF) + "\n";
-            break;
-
-        default:
-            break;
-        }
-        break;
-    case ExpK:
-        switch (AssociatedNode->EKind())
-        {
-
-        case CallK:
-            Code = Code + std::to_string(currentAddr) + " : ST " + std::to_string(FRAMEPOINTER) + ",-2(1)   Store fp in ghost Frame output? (IDK what that means tbh)\n";
-            currentAddr++;
-
-            // Pass by Ref!!!
-            LoadConstants(AssociatedNode->GetChild(0), Code);
-            Code = Code + std::to_string(currentAddr++) + " : LDA " + std::to_string(FRAMEPOINTER) + ",-2(1)     Ghost frame becomes new active frame\n";
-            Code = Code + std::to_string(currentAddr++) + " : LDA " + std::to_string(AC1) + ",1(7)     return addr in ac\n";
-            Code = Code + std::to_string(currentAddr++) + " : JMP " + std::to_string(PC) + ",-40(7)     Call func (IDK how to do this properly tbh\n";
-            Code = Code + std::to_string(currentAddr++) + " : LDA " + std::to_string(AC1) + ",0(2)    Save Result in AC \n";
-
-            break;
-        case constantK:
-            Code = Code + "* CONST NODE\n";
-            break;
-        default:
-            break;
-        }
-        break;
-
-    default:
-        break;
+        CurrentNode = CurrentNode->nextSibling();
     }
-}
-
-void ListNode::AddNode(ListNode *newNode)
-{
-    if (newNode == NULL)
-    {
-        return;
-    }
-    if (next == NULL)
-    {
-        next = newNode;
-        return;
-    }
-    next->AddNode(newNode);
-}
-
-ListNode *Linearize(treeNode *TreeNode)
-{
-    if (TreeNode == NULL)
-    {
-        return NULL;
-    }
-    ListNode *Current = new ListNode(TreeNode);
-    ListNode *Child0 = Linearize(TreeNode->GetChild(0));
-    ListNode *Child1 = Linearize(TreeNode->GetChild(1));
-    ListNode *Child2 = Linearize(TreeNode->GetChild(2));
-    Current->AddNode(Child0);
-    Current->AddNode(Child1);
-    Current->AddNode(Child2);
-
-    // Current-> Code = (std::string) TreeNode->token()->tokenstr + "\n";
-
-    ListNode *Sibling = Linearize(TreeNode->nextSibling());
-    Current->AddNode(Sibling);
-    return Current;
-}
-
-void ListNode::GenerateCode(std::ofstream &Fileout)
-{
-    printf("Adding to page???\n");
-    Fileout << Code;
-    if (next != NULL)
-    {
-        next->GenerateCode(Fileout);
-    }
-    // if(AssociatedNode->Kind() == DeclK && AssociatedNode()->
+    // Return 0 if cant be found
+    return 0;
 }
 
 void GenerateIOLib(std::ofstream &Fileout)
@@ -206,81 +133,28 @@ void GenerateIOLib(std::ofstream &Fileout)
     currentAddr = 39;
 }
 
-void LoadConstants(treeNode *CurrentNode, std::string &Code)
-{
-    if (CurrentNode == NULL)
-    {
-        return;
-    }
-
-    Code = Code + "*LOADING CALL PARAMS\n";
-    if (CurrentNode->Kind() != ExpK)
-    {
-        // Should never get here
-        Code = Code + "*ERRR: Not Exp??? \n";
-        return;
-    }
-    switch (CurrentNode->EKind())
-    {
-    case constantK:
-        Code = Code + "* CONST\n";
-        switch (CurrentNode->EType())
-        {
-        case Integer:
-            Code = Code + std::to_string(currentAddr) + " : LDC " + std::to_string(AC1) + "," + std::to_string(CurrentNode->token()->nvalue) + "(0)   Load Integer Constant \n";
-            currentAddr++;
-            Code = Code + std::to_string(currentAddr) + " : ST " + std::to_string(AC1) + "," + std::to_string(TOFF) + "(1)   \n";
-            currentAddr++;
-
-            break;
-        case Char:
-            if (CurrentNode->ArrayIs() == false)
-            {
-                Code = Code + std::to_string(currentAddr) + " : LDC " + std::to_string(AC1) + "," + std::to_string(CurrentNode->token()->cvalue) + "(0)   Load Char Constant \n";
-                currentAddr++;
-                Code = Code + std::to_string(currentAddr) + " : ST " + std::to_string(AC1) + "," + std::to_string(TOFF) + "(1)   \n";
-                currentAddr++;
-            }
-            else
-            {
-                Code = Code + "Im Sad \n";
-            }
-            break;
-        case boolean:
-            Code = Code + std::to_string(currentAddr) + " : LDC " + std::to_string(AC1) + "," + std::to_string(CurrentNode->token()->nvalue) + "(0)   Load Integer Constant \n";
-            currentAddr++;
-            Code = Code + std::to_string(currentAddr) + " : ST " + std::to_string(AC1) + "," + std::to_string(TOFF) + "(1)   \n";
-            currentAddr++;
-            break;
-
-        default:
-            break;
-        }
-        break;
-    default:
-        break;
-    }
-    LoadConstants(CurrentNode->nextSibling(), Code);
-}
-
+// Load INIT section of exe
 void Init(std::ofstream &Fileout)
 {
     Fileout << "*INIT \n";
     Fileout << "0 : JMP 7," << currentAddr - 1 << "(7)     Jmp to init \n";
-    Fileout << currentAddr++ << " : LDA 1,0(0)  set frist frame\n";
-    Fileout << currentAddr++ << " : ST 1,0(1)   Store old fp (point to self?)\n";
+    Fileout << currentAddr++ << " : LDA 1," << goffset << "(0)  set frist frame (end of globals) \n";
+    Fileout << currentAddr++ << " : ST 1,0(1)   Store old fp ()\n";
     Fileout << "* GLOBLS + STATICS (idk how to do this KEKW)\n";
     Fileout << currentAddr++ << " : LDA 3,1(7)  return addr in ac? \n";
-    Fileout << currentAddr++ << " : JMP 7,-10(7)   Jump to main\n";
+    Fileout << "* Main ADDR " << GetAddr("main") << std::endl;
+    Fileout << currentAddr++ << " : JMP 7," << -1 * (currentAddr - GetAddr("main")) << "(7)   Jump to main\n";
     Fileout << currentAddr++ << " : HALT 0,0,0 DONE\n";
 }
 
+// Generate Code using tree
 void GenerateCodeTree(treeNode *Node, std::ofstream &Fileout, bool PushParam)
 {
     if (Node == NULL)
     {
         return;
     }
+    int OldToff = TOFF;
 
     switch (Node->Kind())
     {
@@ -292,6 +166,8 @@ void GenerateCodeTree(treeNode *Node, std::ofstream &Fileout, bool PushParam)
             Fileout << "* FUNC " << Node->token()->tokenstr << std::endl;
             TOFF = Node->GetSize();
             Fileout << "* TOFF = " << TOFF << std::endl;
+
+            Node->address = currentAddr;
 
             Fileout << currentAddr++ << " : ST  " << AC1 << ",-1"
                     << "(" << FRAMEPOINTER << ")"
@@ -329,6 +205,7 @@ void GenerateCodeTree(treeNode *Node, std::ofstream &Fileout, bool PushParam)
         {
         case CompoundK:
             Fileout << "* COMPOUND" << std::endl;
+            OldToff = TOFF;
             TOFF = Node->GetSize();
             Fileout << "* TOFF = " << TOFF << std::endl;
 
@@ -336,7 +213,25 @@ void GenerateCodeTree(treeNode *Node, std::ofstream &Fileout, bool PushParam)
             GenerateCodeTree(Node->GetChild(1), Fileout);
 
             Fileout << "* End of Compound " << std::endl;
+            TOFF = OldToff;
+            Fileout << "* TOFF = " << TOFF << std::endl;
 
+            break;
+        // Return*************
+        case ReturnK:
+            Fileout << "* RETURN" << std::endl;
+            Fileout << currentAddr++ << " : "
+                    << "LD " << AC1 << ",-1"
+                    << "(" << FRAMEPOINTER << ")"
+                    << "    Load return addr" << std::endl;
+            Fileout << currentAddr++ << " : "
+                    << "LD " << FRAMEPOINTER << ",0"
+                    << "(" << FRAMEPOINTER << ")"
+                    << "   Frame Pointer Adjusted" << std::endl;
+            Fileout << currentAddr++ << " : "
+                    << "JMP " << PC << ",0"
+                    << "(" << AC1 << ")"
+                    << " Return" << std::endl;
             break;
 
         default:
@@ -347,39 +242,458 @@ void GenerateCodeTree(treeNode *Node, std::ofstream &Fileout, bool PushParam)
     case ExpK:
         switch (Node->EKind())
         {
+        case OpK:
+            Fileout << "* OP " << std::endl;
+            OldToff = TOFF;
+            // Fileout << "* OR" << std::endl;
+            //  Store Left hand side in temp area
+            GenerateCodeTree(Node->GetChild(0), Fileout);
+            // Loading
+
+            Fileout << "* Loading Left Hand Side" << std::endl;
+
+            Fileout << currentAddr++ << " : "
+                    << "ST " << AC1 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                    << "    Loading LHS (var " << Node->GetChild(0)->token()->tokenstr << ")" << std::endl;
+            TOFF--;
+            Fileout << "* TOFF = " << TOFF << std::endl;
+
+            // Should be unnesscicary for unary ops, leaving for memes
+            GenerateCodeTree(Node->GetChild(1), Fileout);
+
+            TOFF = OldToff;
+            Fileout << "* TOFF = " << TOFF << std::endl;
+
+            // OR
+            if (strcmp(Node->token()->tokenstr, "or") == 0)
+            {
+                Fileout << currentAddr++ << " : "
+                        << "LD " << AC2 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "   Loading left into AC2" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "OR " << AC1 << "," << AC2 << "," << AC1 << "   OR op" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "ST " << AC1 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "   Storing Result" << std::endl;
+            }
+            // AND
+            else if (strcmp(Node->token()->tokenstr, "and") == 0)
+            {
+                Fileout << currentAddr++ << " : "
+                        << "LD " << AC2 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "   Loading left into AC2" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "AND " << AC1 << "," << AC2 << "," << AC1 << "   AND op" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "ST " << AC1 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "   Storing Result" << std::endl;
+            }
+            // Addition
+            else if (strcmp(Node->token()->tokenstr, "+") == 0)
+            {
+                Fileout << currentAddr++ << " : "
+                        << "LD " << AC2 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "   Loading left into AC2" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "ADD " << AC1 << "," << AC2 << "," << AC1 << "   ADD + op" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "ST " << AC1 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "   Storing Result" << std::endl;
+            }
+            // Subtraction
+            else if (strcmp(Node->token()->tokenstr, "-") == 0)
+            {
+                Fileout << currentAddr++ << " : "
+                        << "LD " << AC2 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "   Loading left into AC2" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "SUB " << AC1 << "," << AC2 << "," << AC1 << "   SUB - op" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "ST " << AC1 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "   Storing Result" << std::endl;
+            }
+            // Multiplication
+            else if (strcmp(Node->token()->tokenstr, "*") == 0)
+            {
+                Fileout << currentAddr++ << " : "
+                        << "LD " << AC2 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "   Loading left into AC2" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "MUL " << AC1 << "," << AC2 << "," << AC1 << "   MUL * op" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "ST " << AC1 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "   Storing Result" << std::endl;
+            }
+            // Div
+            else if (strcmp(Node->token()->tokenstr, "/") == 0)
+            {
+                Fileout << currentAddr++ << " : "
+                        << "LD " << AC2 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "   Loading left into AC2" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "DIV " << AC1 << "," << AC2 << "," << AC1 << "   DIV / op" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "ST " << AC1 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "   Storing Result" << std::endl;
+            }
+            // Mod
+            else if (strcmp(Node->token()->tokenstr, "%") == 0)
+            {
+                Fileout << currentAddr++ << " : "
+                        << "LD " << AC2 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "   Loading left into AC2" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "MOD " << AC1 << "," << AC2 << "," << AC1 << "   MOD %% op" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "ST " << AC1 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "   Storing Result" << std::endl;
+            }
+            // Equals
+            else if (strcmp(Node->token()->tokenstr, "==") == 0)
+            {
+                Fileout << currentAddr++ << " : "
+                        << "LD " << AC2 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "   Loading left into AC2" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "TEQ " << AC1 << "," << AC2 << "," << AC1 << "   == Equals op" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "ST " << AC1 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "   Storing Result" << std::endl;
+            }
+            // Not
+            else if (strcmp(Node->token()->tokenstr, "not") == 0)
+            {
+                Fileout << currentAddr++ << " : "
+                        << "LD " << AC2 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "   Loading left (only opperand?) into AC2" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "LDC " << AC1 << "," << 1 << "(0)"
+                        << "   Loading 1 into AC1" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "XOR " << AC1 << "," << AC2 << "," << AC1 << "   XPR not op" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "ST " << AC1 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "   Storing Result" << std::endl;
+            }
+            // Rand
+            else if (strcmp(Node->token()->tokenstr, "?") == 0)
+            {
+                Fileout << currentAddr++ << " : "
+                        << "LD " << AC2 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "   Loading left (only opperand?) into AC2" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "RND " << AC1 << "," << AC2 << "," << AC1 << "   ? RND op" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "ST " << AC1 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "   Storing Result" << std::endl;
+            }
+            else if (strcmp(Node->token()->tokenstr, "chsign") == 0)
+            {
+                Fileout << currentAddr++ << " : "
+                        << "LD " << AC2 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "   Loading left (only opperand?) into AC2" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "NEG " << AC1 << "," << AC2 << "," << AC1 << "   NEG chsign op" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "ST " << AC1 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "   Storing Result" << std::endl;
+            }
+            else if (strcmp(Node->token()->tokenstr, "[") == 0)
+            {
+                int LOC = Node->GetChild(0)->GetLoc();
+
+                Fileout << currentAddr++ << " : "
+                        << "LD " << AC2 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "   Loading left (???) into AC2" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "LDC " << AC4 << "," << LOC + 1 << "(0)  Array Base Address in AC4" << std::endl;
+                // Pus Location in AC4 in case next operation is assign
+                Fileout << currentAddr++ << " : "
+                        << "SUB" << AC4 << "," << AC4 << "," << AC1 << "    SUB Length to get right Location" << std::endl;
+
+                // Store value at array in case that is really whats wanted
+                // "Base Value"
+                if (Node->MEMTYPE == "Global" || Node->MEMTYPE == "LocalStatic")
+                {
+                    Fileout << "* Global or LocalStatic Array" << std::endl;
+                    Fileout << currentAddr++ << " : "
+                            << "LD " << AC1 << "," << LOC << "(" << GLOBAL << ")"
+                            << "    Load Array " << Node->GetChild(0)->token()->tokenstr << std::endl;
+                }
+                else 
+                {
+                    Fileout << "* Loacl Array" << std::endl;
+                    Fileout << currentAddr++ << " : "
+                            << "LD " << AC1 << "," << LOC << "(" << FRAMEPOINTER << ")"
+                            << "    Load Array " << Node->GetChild(0)->token()->tokenstr << std::endl;
+                }
+            }
+
+            TOFF--;
+            Fileout << "* TOFF = " << TOFF << std::endl;
+
+            break;
+        case AssingK:
+            if (PushParam == true)
+            {
+                TOFF--;
+                Fileout << "* TOFF =" << TOFF << std::endl;
+            }
+            Fileout << "* Assing Op" << std::endl;
+
+            OldToff = TOFF;
+            // Fileout << "* OR" << std::endl;
+            //  Store Left hand side in temp area
+            GenerateCodeTree(Node->GetChild(0), Fileout);
+            // Loading
+
+            Fileout << "* Loading Left Hand Side" << std::endl;
+
+            Fileout << currentAddr++ << " : "
+                    << "ST " << AC1 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                    << "    Loading LHS (var " << Node->GetChild(0)->token()->tokenstr << ")" << std::endl;
+            TOFF--;
+            Fileout << "* TOFF = " << TOFF << std::endl;
+
+            // Should be unnesscicary for unary ops, leaving for memes
+            // Right Hand Side
+            Fileout << "* Loading Right Hand Side" << std::endl;
+            GenerateCodeTree(Node->GetChild(1), Fileout);
+
+            TOFF = OldToff;
+            Fileout << "* TOFF = " << TOFF << std::endl;
+
+            if (strcmp(Node->token()->tokenstr, "+=") == 0)
+            {
+                Fileout << currentAddr++ << " : "
+                        << "LD " << AC2 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "   Loading left into AC2" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "ADD " << AC1 << "," << AC2 << "," << AC1 << "   ADD += op" << std::endl;
+            }
+            else if (strcmp(Node->token()->tokenstr, "-=") == 0)
+            {
+                Fileout << currentAddr++ << " : "
+                        << "LD " << AC2 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "   Loading left into AC2" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "SUB " << AC1 << "," << AC2 << "," << AC1 << "   ADD -= op" << std::endl;
+            }
+            else if (strcmp(Node->token()->tokenstr, "++") == 0)
+            {
+                Fileout << "* INC OPERATOR" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "LD " << AC2 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "   Loading left into AC2" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "LDC " << AC1 << "," << 1 << "(0)"
+                        << "   Loading 1 into AC1" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "ADD " << AC1 << "," << AC2 << "," << AC1 << "   ADD ++ op" << std::endl;
+            }
+            else if (strcmp(Node->token()->tokenstr, "--") == 0)
+            {
+                Fileout << "* DEC OPERATOR" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "LD " << AC2 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "   Loading left (only?) into AC2" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "LDC " << AC1 << "," << 1 << "(0)"
+                        << "   Loading 1 into AC1" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "SUB " << AC1 << "," << AC2 << "," << AC1 << "   SUB -- op" << std::endl;
+            }
+            else if (strcmp(Node->token()->tokenstr, "=") == 0)
+            {
+                // Do nothing because Right Hand side is in AC1
+            }
+
+            // Store Value in Left Child
+            Fileout << "* Variable" << Node->GetChild(0)->token()->tokenstr << " LOC is " << Node->GetChild(0)->GetLoc() << std::endl;
+            if (strcmp(Node->GetChild(0)->token()->tokenstr, "[") == 0)
+            {
+                Fileout << "* Assinging to array Location" << std::endl;
+                if (Node->GetChild(0)->MEMTYPE == "Global" || Node->GetChild(0)->MEMTYPE == "LocalStatic")
+                {
+                    Fileout << "* Global or LocalStatic Var" << std::endl;
+                    Fileout << currentAddr++ << " : "
+                            << "ST " << AC1 << "," << Node->GetChild(0)->GetLoc() << "(" << GLOBAL << ")"
+                            << "    Loading LHS (var " << Node->GetChild(0)->token()->tokenstr << ")" << std::endl;
+                }
+                else
+                {
+                    Fileout << "* Local or Parmaets Var" << std::endl;
+
+                    Fileout << currentAddr++ << " : "
+                            << "ST " << AC1 << "," << Node->GetChild(0)->GetLoc() << "(" << FRAMEPOINTER << ")"
+                            << "    Loading LHS (var " << Node->GetChild(0)->token()->tokenstr << ")" << std::endl;
+                }
+            }
+
+            if (Node->GetChild(0)->MEMTYPE == "Global" || Node->GetChild(0)->MEMTYPE == "LocalStatic")
+            {
+                Fileout << "* Global or LocalStatic Var" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "ST " << AC1 << "," << Node->GetChild(0)->GetLoc() << "(" << GLOBAL << ")"
+                        << "    Loading LHS (var " << Node->GetChild(0)->token()->tokenstr << ")" << std::endl;
+            }
+            else
+            {
+                Fileout << "* Local or Parmaets Var" << std::endl;
+
+                Fileout << currentAddr++ << " : "
+                        << "ST " << AC1 << "," << Node->GetChild(0)->GetLoc() << "(" << FRAMEPOINTER << ")"
+                        << "    Loading LHS (var " << Node->GetChild(0)->token()->tokenstr << ")" << std::endl;
+            }
+
+            //****Push Param
+            if (PushParam == true)
+            {
+                Fileout << currentAddr++ << " : "
+                        << "ST " << AC1 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "    Push Param" << std::endl;
+            }
+
+            break;
+
         case constantK:
             Fileout << "* CONST" << std::endl;
             // Load into AC1 (Might need to make a few diffrent ones?)
             switch (Node->EType())
             {
             case Integer:
+                // Dec TOFF to gve room for Param
+                if (PushParam == true)
+                {
+                    TOFF--;
+                    Fileout << "* TOFF =" << TOFF << std::endl;
+                }
                 Fileout << currentAddr++ << " : "
                         << "LDC " << AC1 << "," << Node->token()->nvalue << "(0)"
                         << "Load Integer Const" << std::endl;
+                // Push Param
                 if (PushParam == true)
                 {
                     Fileout << currentAddr++ << " : "
                             << "ST " << AC1 << "," << TOFF << "(" << FRAMEPOINTER << ")"
-                            << "Push Param" << std::endl;
+                            << "    Push Param" << std::endl;
                 }
                 break;
             case Char:
+                // Dec TOFF to gve room for Param
+                if (PushParam == true)
+                {
+                    TOFF--;
+                    Fileout << "* TOFF =" << TOFF << std::endl;
+                }
+                Fileout << currentAddr++ << " : "
+                        << "LDC " << AC1 << ","
+                        << "\'" << Node->token()->cvalue << "\'"
+                        << "(0)"
+                        << "Load Char Const" << std::endl;
+                // Push Param
+                if (PushParam == true)
+                {
+                    Fileout << currentAddr++ << " : "
+                            << "ST " << AC1 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                            << "    Push Param" << std::endl;
+                }
                 break;
             case boolean:
+                // Dec TOFF to gve room for Param
+                if (PushParam == true)
+                {
+                    TOFF--;
+                    Fileout << "* TOFF =" << TOFF << std::endl;
+                }
+                Fileout << currentAddr++ << " : "
+                        << "LDC " << AC1 << "," << Node->token()->nvalue << "(0)"
+                        << "Load BOOL Const" << std::endl;
+                // Push Param
+                if (PushParam == true)
+                {
+                    Fileout << currentAddr++ << " : "
+                            << "ST " << AC1 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                            << "    Push Param" << std::endl;
+                }
                 break;
 
             default:
                 break;
             }
+            Fileout << "* End CONST" << std::endl;
             break;
+        // IDs************
+        case IdK:
+            Fileout << "* ID" << std::endl;
+            // Load into AC1 (Might need to make a few diffrent ones?)
+
+            // Dec TOFF to gve room for Param
+            if (PushParam == true)
+            {
+                TOFF--;
+                Fileout << "* TOFF =" << TOFF << std::endl;
+            }
+            if (Node->MEMTYPE == "Global" || Node->MEMTYPE == "LocalStatic")
+            {
+                Fileout << "* Global or LocalStatic Var" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "LD " << AC1 << "," << Node->GetLoc() << "(" << GLOBAL << ")"
+                        << "    Load Variable " << Node->token()->tokenstr << std::endl;
+            }
+            else
+            {
+                Fileout << "* Local or Parm Var" << std::endl;
+                Fileout << currentAddr++ << " : "
+                        << "LD " << AC1 << "," << Node->GetLoc() << "(" << FRAMEPOINTER << ")"
+                        << "    Load Variable " << Node->token()->tokenstr << std::endl;
+            }
+            // Push Param
+            if (PushParam == true)
+            {
+                Fileout << currentAddr++ << " : "
+                        << "ST " << AC1 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                        << "    Push Param" << std::endl;
+            }
+
+            Fileout << "* End ID" << std::endl;
+            break;
+        // CALL*************
         case CallK:
             Fileout << "* CALL output" << std::endl;
             Fileout << currentAddr++ << " : "
                     << "ST " << FRAMEPOINTER << "," << TOFF << "(" << FRAMEPOINTER << ")"
                     << " FP in ghost frame for output" << std::endl;
+            // Save Old Toff
+            OldToff = TOFF;
             TOFF--;
             Fileout << "* TOFF =" << TOFF << std::endl;
+            // Load Params
+            Fileout << "* Loading Parms" << std::endl;
             GenerateCodeTree(Node->GetChild(0), Fileout, true);
+            // Jmp to Code
+            // activate ghost frame GIGAHAS
+            Fileout << currentAddr++ << " : "
+                    << "LDA " << FRAMEPOINTER << "," << OldToff << "(" << FRAMEPOINTER << ")"
+                    << "    Ghost Frame become new active frame" << std::endl;
+            Fileout << currentAddr++ << " : "
+                    << "LDA " << AC1 << ",1"
+                    << "(" << PC << ")"
+                    << "   Return addr in AC" << std::endl;
+            Fileout << "* Func addr: " << GetAddr(Node->token()->tokenstr) << std::endl;
+            Fileout << currentAddr++ << " : "
+                    << "JMP " << PC << ","
+                    << -1 * (currentAddr - GetAddr(Node->token()->tokenstr)) << "(" << PC << ")"
+                    << "    Call " << Node->token()->tokenstr << std::endl;
+            Fileout << currentAddr++ << " : "
+                    << "LDA " << AC1 << ",0"
+                    << "(" << RETURN << ")"
+                    << "  Save result in AC1" << std::endl;
+
+            Fileout << "* End Call" << std::endl;
+            TOFF = OldToff;
+            Fileout << "* TOFF = " << TOFF << std::endl;
+
             break;
         default:
             break;

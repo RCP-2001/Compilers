@@ -823,6 +823,7 @@ char *getMemType(treeNode *node, SymbolTable *symTbl)
     else if (node->Kind() == ExpK && node->EKind() == IdK)
     {
         treeNode *n = (treeNode *)symTbl->lookup(node->token()->tokenstr);
+        node->MEMTYPE = getMemType(n, symTbl);
         return getMemType(n, symTbl);
     }
     return (char *)"Something went Wrong HAHAHHA";

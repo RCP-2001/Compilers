@@ -72,18 +72,33 @@
 * TOFF = -2
 * CALL output
 40 : ST 1,-2(1) FP in ghost frame for output
+* TOFF =-3
+* CONST
+* TOFF =-4
+41 : LDC 3,'Y'(0)Load Char Const
+42 : ST 3,-4(1)    Push Param
+* End CONST
+43 : LDA 1,-2(1)    Ghost Frame become new active frame
+44 : LDA 3,1(7)   Return addr in AC
+* Func addr: 28
+45 : JMP 7,-18(7)    Call outputc
+46 : LDA 3,0(2)  Save result in AC1
+* End Call
+* TOFF = -2
 * End of Compound 
+* TOFF = -2
 * add Standard end in case of no return 
-41 : LDC 2,0(0)   Set Ret val to 0
-42 : LD 3,-1(1) Load Return addr
-43 : LD 1,0(1)   Adjust Frame Pointer 
-44 : JMP 7,0 (3)  Ret
+47 : LDC 2,0(0)   Set Ret val to 0
+48 : LD 3,-1(1) Load Return addr
+49 : LD 1,0(1)   Adjust Frame Pointer 
+50 : JMP 7,0 (3)  Ret
 * END OF FUNC main
 *INIT 
-0 : JMP 7,44(7)     Jmp to init 
-45 : LDA 1,0(0)  set frist frame
-46 : ST 1,0(1)   Store old fp (point to self?)
+0 : JMP 7,50(7)     Jmp to init 
+51 : LDA 1,0(0)  set frist frame (end of globals) 
+52 : ST 1,0(1)   Store old fp ()
 * GLOBLS + STATICS (idk how to do this KEKW)
-47 : LDA 3,1(7)  return addr in ac? 
-48 : JMP 7,-10(7)   Jump to main
-49 : HALT 0,0,0 DONE
+53 : LDA 3,1(7)  return addr in ac? 
+* Main ADDR 39
+54 : JMP 7,-16(7)   Jump to main
+55 : HALT 0,0,0 DONE
