@@ -686,6 +686,7 @@ void treeNode::printMemTree(int levels, int siblingNum, SymbolTable *symTbl)
             }
             if (n->ArrayIs() == true)
             {
+                isArray = true;
                 printf("Id: %s of%s array of type %s [mem: %s loc: %d size: %d] [line: %d]", attr->tokenstr, Stat, n->RetETYPE().c_str(), getMemType(this, symTbl), Loc, Size, attr->linenum);
             }
             else

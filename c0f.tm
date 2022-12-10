@@ -70,215 +70,252 @@
 39 : ST  3,-1(1) Store Ret Addr
 * COMPOUND
 * TOFF = -10
+40 : LDC 3,7(0)    LOAD SIZE of ARRAY
+41 : ST 3,-2(1) Save Array Size
 * Assing Op
+* Left hand side in AC1
 * OP 
 * ID
 * Local or Parm Var
-40 : LD 3,-3(1)    Load Variable x
+42 : LD 3,-3(1)    Load Variable x
 * End ID
 * Loading Left Hand Side
-41 : ST 3,-10(1)    Loading LHS (var x)
+43 : ST 3,-10(1)    Loading LHS (var x)
 * TOFF = -11
 * CONST
-42 : LDC 3,3(0)Load Integer Const
+44 : LDC 3,3(0)Load Integer Const
 * End CONST
 * TOFF = -10
+45 : LD 4,-10(1)   Loading left (?] into AC2
+* Loacl Array
+46 : LDA 6,-3(1)     Load address of base
+47 : SUB 6,6,3       Compute offset value
+48 : LD 3,0(6)   Storing Array Value in AC1
 * TOFF = -11
-* Loading Left Hand Side
-43 : ST 3,-11(1)    Loading LHS (var [)
+* Storing Left Hand Side
+49 : ST 3,-11(1)    Loading LHS (var [)
 * TOFF = -12
 * Loading Right Hand Side
 * CONST
-44 : LDC 3,1023(0)Load Integer Const
+50 : LDC 3,1023(0)Load Integer Const
 * End CONST
+* TOFF = -11
+* Assinging to array Location
+51 : ST 3,0(6) Store AC1 in array
 * TOFF = -10
-* Variable[ LOC is 0
-* Local or Parmaets Var
-45 : ST 3,0(1)    Loading LHS (var [)
+* End Assing Op
 * CALL output
-46 : ST 1,-10(1) FP in ghost frame for output
+52 : ST 1,-10(1) FP in ghost frame for output
 * TOFF =-11
 * Loading Parms
 * TOFF =-12
 * Assing Op
+* Left hand side in AC1
 * OP 
 * ID
 * Local or Parm Var
-47 : LD 3,-3(1)    Load Variable x
+53 : LD 3,-3(1)    Load Variable x
 * End ID
 * Loading Left Hand Side
-48 : ST 3,-12(1)    Loading LHS (var x)
+54 : ST 3,-12(1)    Loading LHS (var x)
 * TOFF = -13
 * CONST
-49 : LDC 3,3(0)Load Integer Const
+55 : LDC 3,3(0)Load Integer Const
 * End CONST
 * TOFF = -12
+56 : LD 4,-12(1)   Loading left (?] into AC2
+* Loacl Array
+57 : LDA 6,-3(1)     Load address of base
+58 : SUB 6,6,3       Compute offset value
+59 : LD 3,0(6)   Storing Array Value in AC1
 * TOFF = -13
-* Loading Left Hand Side
-50 : ST 3,-13(1)    Loading LHS (var [)
+* Storing Left Hand Side
+60 : ST 3,-13(1)    Loading LHS (var [)
 * TOFF = -14
 * Loading Right Hand Side
-* TOFF = -12
+* TOFF = -13
 * INC OPERATOR
-51 : LD 4,-12(1)   Loading left into AC2
-52 : LDC 3,1(0)   Loading 1 into AC1
-53 : ADD 3,4,3   ADD ++ op
-* Variable[ LOC is 0
-* Local or Parmaets Var
-54 : ST 3,0(1)    Loading LHS (var [)
-55 : ST 3,-12(1)    Push Param
-56 : LDA 1,-10(1)    Ghost Frame become new active frame
-57 : LDA 3,1(7)   Return addr in AC
+61 : LD 4,-13(1)   Loading left into AC2
+62 : LDC 3,1(0)   Loading 1 into AC1
+63 : ADD 3,4,3   ADD ++ op
+* Assinging to array Location
+64 : ST 3,0(6) Store AC1 in array
+* TOFF = -12
+65 : ST 3,-12(1)    Push Param
+* End Assing Op
+66 : LDA 1,-10(1)    Ghost Frame become new active frame
+67 : LDA 3,1(7)   Return addr in AC
 * Func addr: 6
-58 : JMP 7,-53(7)    Call output
-59 : LDA 3,0(2)  Save result in AC1
+68 : JMP 7,-63(7)    Call output
+69 : LDA 3,0(2)  Save result in AC1
 * End Call
 * TOFF = -10
 * CALL output
-60 : ST 1,-10(1) FP in ghost frame for output
+70 : ST 1,-10(1) FP in ghost frame for output
 * TOFF =-11
 * Loading Parms
-61 : LDA 1,-10(1)    Ghost Frame become new active frame
-62 : LDA 3,1(7)   Return addr in AC
+71 : LDA 1,-10(1)    Ghost Frame become new active frame
+72 : LDA 3,1(7)   Return addr in AC
 * Func addr: 34
-63 : JMP 7,-30(7)    Call outnl
-64 : LDA 3,0(2)  Save result in AC1
+73 : JMP 7,-40(7)    Call outnl
+74 : LDA 3,0(2)  Save result in AC1
 * End Call
 * TOFF = -10
 * CALL output
-65 : ST 1,-10(1) FP in ghost frame for output
+75 : ST 1,-10(1) FP in ghost frame for output
 * TOFF =-11
 * Loading Parms
 * OP 
+* TOFF =-12
 * ID
 * Local or Parm Var
-66 : LD 3,-3(1)    Load Variable x
+76 : LD 3,-3(1)    Load Variable x
 * End ID
 * Loading Left Hand Side
-67 : ST 3,-11(1)    Loading LHS (var x)
-* TOFF = -12
+77 : ST 3,-12(1)    Loading LHS (var x)
+* TOFF = -13
 * CONST
-68 : LDC 3,3(0)Load Integer Const
+78 : LDC 3,3(0)Load Integer Const
 * End CONST
-* TOFF = -11
 * TOFF = -12
-69 : LDA 1,-10(1)    Ghost Frame become new active frame
-70 : LDA 3,1(7)   Return addr in AC
+79 : LD 4,-12(1)   Loading left (?] into AC2
+* Loacl Array
+80 : LDA 6,-3(1)     Load address of base
+81 : SUB 6,6,3       Compute offset value
+82 : LD 3,0(6)   Storing Array Value in AC1
+83 : ST 3,-12(1)    Push Param
+* TOFF = -13
+84 : LDA 1,-10(1)    Ghost Frame become new active frame
+85 : LDA 3,1(7)   Return addr in AC
 * Func addr: 6
-71 : JMP 7,-66(7)    Call output
-72 : LDA 3,0(2)  Save result in AC1
+86 : JMP 7,-81(7)    Call output
+87 : LDA 3,0(2)  Save result in AC1
 * End Call
 * TOFF = -10
 * CALL output
-73 : ST 1,-10(1) FP in ghost frame for output
+88 : ST 1,-10(1) FP in ghost frame for output
 * TOFF =-11
 * Loading Parms
-74 : LDA 1,-10(1)    Ghost Frame become new active frame
-75 : LDA 3,1(7)   Return addr in AC
+89 : LDA 1,-10(1)    Ghost Frame become new active frame
+90 : LDA 3,1(7)   Return addr in AC
 * Func addr: 34
-76 : JMP 7,-43(7)    Call outnl
-77 : LDA 3,0(2)  Save result in AC1
+91 : JMP 7,-58(7)    Call outnl
+92 : LDA 3,0(2)  Save result in AC1
 * End Call
 * TOFF = -10
 * CALL output
-78 : ST 1,-10(1) FP in ghost frame for output
+93 : ST 1,-10(1) FP in ghost frame for output
 * TOFF =-11
 * Loading Parms
 * TOFF =-12
 * Assing Op
+* Left hand side in AC1
 * OP 
 * ID
 * Local or Parm Var
-79 : LD 3,-3(1)    Load Variable x
+94 : LD 3,-3(1)    Load Variable x
 * End ID
 * Loading Left Hand Side
-80 : ST 3,-12(1)    Loading LHS (var x)
+95 : ST 3,-12(1)    Loading LHS (var x)
 * TOFF = -13
 * CONST
-81 : LDC 3,3(0)Load Integer Const
+96 : LDC 3,3(0)Load Integer Const
 * End CONST
 * TOFF = -12
+97 : LD 4,-12(1)   Loading left (?] into AC2
+* Loacl Array
+98 : LDA 6,-3(1)     Load address of base
+99 : SUB 6,6,3       Compute offset value
+100 : LD 3,0(6)   Storing Array Value in AC1
 * TOFF = -13
-* Loading Left Hand Side
-82 : ST 3,-13(1)    Loading LHS (var [)
+* Storing Left Hand Side
+101 : ST 3,-13(1)    Loading LHS (var [)
 * TOFF = -14
 * Loading Right Hand Side
-* TOFF = -12
+* TOFF = -13
 * DEC OPERATOR
-83 : LD 4,-12(1)   Loading left (only?) into AC2
-84 : LDC 3,1(0)   Loading 1 into AC1
-85 : SUB 3,4,3   SUB -- op
-* Variable[ LOC is 0
-* Local or Parmaets Var
-86 : ST 3,0(1)    Loading LHS (var [)
-87 : ST 3,-12(1)    Push Param
-88 : LDA 1,-10(1)    Ghost Frame become new active frame
-89 : LDA 3,1(7)   Return addr in AC
+102 : LD 4,-13(1)   Loading left (only?) into AC2
+103 : LDC 3,1(0)   Loading 1 into AC1
+104 : SUB 3,4,3   SUB -- op
+* Assinging to array Location
+105 : ST 3,0(6) Store AC1 in array
+* TOFF = -12
+106 : ST 3,-12(1)    Push Param
+* End Assing Op
+107 : LDA 1,-10(1)    Ghost Frame become new active frame
+108 : LDA 3,1(7)   Return addr in AC
 * Func addr: 6
-90 : JMP 7,-85(7)    Call output
-91 : LDA 3,0(2)  Save result in AC1
+109 : JMP 7,-104(7)    Call output
+110 : LDA 3,0(2)  Save result in AC1
 * End Call
 * TOFF = -10
 * CALL output
-92 : ST 1,-10(1) FP in ghost frame for output
+111 : ST 1,-10(1) FP in ghost frame for output
 * TOFF =-11
 * Loading Parms
-93 : LDA 1,-10(1)    Ghost Frame become new active frame
-94 : LDA 3,1(7)   Return addr in AC
+112 : LDA 1,-10(1)    Ghost Frame become new active frame
+113 : LDA 3,1(7)   Return addr in AC
 * Func addr: 34
-95 : JMP 7,-62(7)    Call outnl
-96 : LDA 3,0(2)  Save result in AC1
+114 : JMP 7,-81(7)    Call outnl
+115 : LDA 3,0(2)  Save result in AC1
 * End Call
 * TOFF = -10
 * CALL output
-97 : ST 1,-10(1) FP in ghost frame for output
+116 : ST 1,-10(1) FP in ghost frame for output
 * TOFF =-11
 * Loading Parms
 * OP 
+* TOFF =-12
 * ID
 * Local or Parm Var
-98 : LD 3,-3(1)    Load Variable x
+117 : LD 3,-3(1)    Load Variable x
 * End ID
 * Loading Left Hand Side
-99 : ST 3,-11(1)    Loading LHS (var x)
-* TOFF = -12
+118 : ST 3,-12(1)    Loading LHS (var x)
+* TOFF = -13
 * CONST
-100 : LDC 3,3(0)Load Integer Const
+119 : LDC 3,3(0)Load Integer Const
 * End CONST
-* TOFF = -11
 * TOFF = -12
-101 : LDA 1,-10(1)    Ghost Frame become new active frame
-102 : LDA 3,1(7)   Return addr in AC
+120 : LD 4,-12(1)   Loading left (?] into AC2
+* Loacl Array
+121 : LDA 6,-3(1)     Load address of base
+122 : SUB 6,6,3       Compute offset value
+123 : LD 3,0(6)   Storing Array Value in AC1
+124 : ST 3,-12(1)    Push Param
+* TOFF = -13
+125 : LDA 1,-10(1)    Ghost Frame become new active frame
+126 : LDA 3,1(7)   Return addr in AC
 * Func addr: 6
-103 : JMP 7,-98(7)    Call output
-104 : LDA 3,0(2)  Save result in AC1
+127 : JMP 7,-122(7)    Call output
+128 : LDA 3,0(2)  Save result in AC1
 * End Call
 * TOFF = -10
 * CALL output
-105 : ST 1,-10(1) FP in ghost frame for output
+129 : ST 1,-10(1) FP in ghost frame for output
 * TOFF =-11
 * Loading Parms
-106 : LDA 1,-10(1)    Ghost Frame become new active frame
-107 : LDA 3,1(7)   Return addr in AC
+130 : LDA 1,-10(1)    Ghost Frame become new active frame
+131 : LDA 3,1(7)   Return addr in AC
 * Func addr: 34
-108 : JMP 7,-75(7)    Call outnl
-109 : LDA 3,0(2)  Save result in AC1
+132 : JMP 7,-99(7)    Call outnl
+133 : LDA 3,0(2)  Save result in AC1
 * End Call
 * TOFF = -10
 * End of Compound 
 * TOFF = -2
 * add Standard end in case of no return 
-110 : LDC 2,0(0)   Set Ret val to 0
-111 : LD 3,-1(1) Load Return addr
-112 : LD 1,0(1)   Adjust Frame Pointer 
-113 : JMP 7,0 (3)  Ret
+134 : LDC 2,0(0)   Set Ret val to 0
+135 : LD 3,-1(1) Load Return addr
+136 : LD 1,0(1)   Adjust Frame Pointer 
+137 : JMP 7,0 (3)  Ret
 * END OF FUNC main
 *INIT 
-0 : JMP 7,113(7)     Jmp to init 
-114 : LDA 1,0(0)  set frist frame (end of globals) 
-115 : ST 1,0(1)   Store old fp ()
+0 : JMP 7,137(7)     Jmp to init 
+138 : LDA 1,0(0)  set frist frame (end of globals) 
+139 : ST 1,0(1)   Store old fp ()
 * GLOBLS + STATICS (idk how to do this KEKW)
-116 : LDA 3,1(7)  return addr in ac? 
+140 : LDA 3,1(7)  return addr in ac? 
 * Main ADDR 39
-117 : JMP 7,-79(7)   Jump to main
-118 : HALT 0,0,0 DONE
+141 : JMP 7,-103(7)   Jump to main
+142 : HALT 0,0,0 DONE

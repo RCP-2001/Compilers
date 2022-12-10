@@ -71,11 +71,12 @@
 * COMPOUND
 * TOFF = -2
 * Assing Op
+* Left hand side in AC1
 * ID
 * Global or LocalStatic Var
 40 : LD 3,0(0)    Load Variable x
 * End ID
-* Loading Left Hand Side
+* Storing Left Hand Side
 41 : ST 3,-2(1)    Loading LHS (var x)
 * TOFF = -3
 * Loading Right Hand Side
@@ -86,12 +87,15 @@
 * Variablex LOC is 0
 * Global or LocalStatic Var
 43 : ST 3,0(0)    Loading LHS (var x)
+* TOFF = -2
+* End Assing Op
 * Assing Op
+* Left hand side in AC1
 * ID
 * Global or LocalStatic Var
 44 : LD 3,-1(0)    Load Variable y
 * End ID
-* Loading Left Hand Side
+* Storing Left Hand Side
 45 : ST 3,-2(1)    Loading LHS (var y)
 * TOFF = -3
 * Loading Right Hand Side
@@ -102,12 +106,14 @@
 * Variabley LOC is -1
 * Global or LocalStatic Var
 47 : ST 3,-1(0)    Loading LHS (var y)
+* TOFF = -2
+* End Assing Op
 * CALL output
 48 : ST 1,-2(1) FP in ghost frame for output
 * TOFF =-3
 * Loading Parms
 * ID
-* TOFF =-4
+* (ID) TOFF =-4
 * Global or LocalStatic Var
 49 : LD 3,0(0)    Load Variable x
 50 : ST 3,-4(1)    Push Param
@@ -124,7 +130,7 @@
 * TOFF =-3
 * Loading Parms
 * ID
-* TOFF =-4
+* (ID) TOFF =-4
 * Global or LocalStatic Var
 56 : LD 3,-1(0)    Load Variable y
 57 : ST 3,-4(1)    Push Param
@@ -142,20 +148,22 @@
 * Loading Parms
 * TOFF =-4
 * Assing Op
+* Left hand side in AC1
 * ID
 * Global or LocalStatic Var
 63 : LD 3,-2(0)    Load Variable z
 * End ID
-* Loading Left Hand Side
+* Storing Left Hand Side
 64 : ST 3,-4(1)    Loading LHS (var z)
 * TOFF = -5
 * Loading Right Hand Side
 * Assing Op
+* Left hand side in AC1
 * ID
 * Global or LocalStatic Var
 65 : LD 3,0(0)    Load Variable x
 * End ID
-* Loading Left Hand Side
+* Storing Left Hand Side
 66 : ST 3,-5(1)    Loading LHS (var x)
 * TOFF = -6
 * Loading Right Hand Side
@@ -167,11 +175,15 @@
 * Variablex LOC is 0
 * Global or LocalStatic Var
 68 : ST 3,0(0)    Loading LHS (var x)
+* TOFF = -5
+* End Assing Op
 * TOFF = -4
 * Variablez LOC is -2
 * Global or LocalStatic Var
 69 : ST 3,-2(0)    Loading LHS (var z)
+* TOFF = -4
 70 : ST 3,-4(1)    Push Param
+* End Assing Op
 71 : LDA 1,-2(1)    Ghost Frame become new active frame
 72 : LDA 3,1(7)   Return addr in AC
 * Func addr: 28
@@ -184,7 +196,7 @@
 * TOFF =-3
 * Loading Parms
 * ID
-* TOFF =-4
+* (ID) TOFF =-4
 * Global or LocalStatic Var
 76 : LD 3,0(0)    Load Variable x
 77 : ST 3,-4(1)    Push Param
@@ -201,7 +213,7 @@
 * TOFF =-3
 * Loading Parms
 * ID
-* TOFF =-4
+* (ID) TOFF =-4
 * Global or LocalStatic Var
 83 : LD 3,-1(0)    Load Variable y
 84 : ST 3,-4(1)    Push Param
@@ -218,7 +230,7 @@
 * TOFF =-3
 * Loading Parms
 * ID
-* TOFF =-4
+* (ID) TOFF =-4
 * Global or LocalStatic Var
 90 : LD 3,-2(0)    Load Variable z
 91 : ST 3,-4(1)    Push Param
