@@ -158,28 +158,33 @@ int main(int argc, char *argv[])
         }
     }
 
-    if (MemPrint == 1 && numErrors == 0)
+    if (numErrors == 0)
     {
-        if (GLOBAL_HEAD != NULL)
+        SymbolTable *Mem = new SymbolTable;
+        MemLocSet(GLOBAL_HEAD, Mem);
+        SymbolTable *PrintSymTbl = new SymbolTable;
+
+        if (MemPrint == 1)
         {
-            SymbolTable *Mem = new SymbolTable;
-            MemLocSet(GLOBAL_HEAD, Mem);
-            SymbolTable *PrintSymTbl = new SymbolTable;
-            if (SymDebug == 1)
+            if (GLOBAL_HEAD != NULL)
             {
-                PrintSymTbl->debug(true);
+
+                if (SymDebug == 1)
+                {
+                    PrintSymTbl->debug(true);
+                }
+                if (SymDebug == 1)
+                {
+                    //    Mem->debug(true);
+                }
+                // Add IO to new SymTbl
+                semanticAnalysis(PrintSymTbl, IOTree);
+                // PrintSymTbl->debug(true);
+                GLOBAL_HEAD->printMemTree(1, 1, PrintSymTbl);
+                printf("\n");
             }
-            if (SymDebug == 1)
-            {
-                //    Mem->debug(true);
-            }
-            // Add IO to new SymTbl
-            semanticAnalysis(PrintSymTbl, IOTree);
-            // PrintSymTbl->debug(true);
-            GLOBAL_HEAD->printMemTree(1, 1, PrintSymTbl);
-            printf("\n");
+            printf("Offset for end of global space: %d\n", goffset);
         }
-        printf("Offset for end of global space: %d\n", goffset);
     }
 
     printf("Number of warnings: %d\n", numWarnings);
@@ -189,7 +194,11 @@ int main(int argc, char *argv[])
     // note: Make sure the complier is 100% done done before doing this
     if (GLOBAL_HEAD != NULL)
     {
+        SymbolTable *AnotherOne = new SymbolTable;
+        GLOBAL_HEAD->FindMemLocs(1, 1, AnotherOne);
+
         std::string OutfileName = basename(argv[optind]);
+        // std::string OutfileName = argv[optind];
 
         // OutfileName = basename(argv[o]);
         OutfileName = OutfileName.substr(0, OutfileName.find_first_of("."));

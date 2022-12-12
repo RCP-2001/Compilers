@@ -740,7 +740,7 @@ void treeNode::printMemTree(int levels, int siblingNum, SymbolTable *symTbl)
             {
                 if (child[i]->nodeKind == StmtK && child[i]->subkind.stmt == CompoundK)
                 {
-                   // printf("Enter1");
+                    // printf("Enter1");
                     symTbl->enter("CompundStmt");
                 }
             }
@@ -773,7 +773,7 @@ void treeNode::printMemTree(int levels, int siblingNum, SymbolTable *symTbl)
 
     if (nodeKind == StmtK && (subkind.stmt == CompoundK))
     {
-       // printf("LEAxVE");
+        // printf("LEAxVE");
         symTbl->leave();
     }
 
@@ -781,7 +781,7 @@ void treeNode::printMemTree(int levels, int siblingNum, SymbolTable *symTbl)
     {
         if (sibling->Kind() == StmtK && (sibling->SKind() == CompoundK))
         {
-           // printf("Enter2");
+            // printf("Enter2");
 
             symTbl->enter("Compound Statement Or For Statement");
         }
@@ -849,4 +849,278 @@ int treeNode::SiblingSize()
         }
         return sibling->SiblingSize();
     }
+}
+
+//**************
+// Dumb thing i did becuase i am dumb
+
+void treeNode::FindMemLocs(int levels, int siblingNum, SymbolTable *symTbl)
+{
+    // printf("\n");
+    std::string opType;
+    treeNode *p;
+    treeNode *n;
+
+    char *Stat;
+    if (isStatic == true)
+    {
+        Stat = strdup(" static"); // sample output doesnt specify static this time i guess lol
+    }
+    else
+    {
+        Stat = strdup("\0");
+    }
+
+    // this will almost 100% be the print sturcture, just want to make sure i got the tree mostly right
+    switch (nodeKind)
+    {
+    case DeclK:
+        // printf("DeclNode, kind: %d , ETYPE= %d, [line: %d]", subkind.decl, expType, attr->linenum);
+        symTbl->insert(attr->tokenstr, this);
+
+        switch (subkind.decl)
+        {
+        case VarK:
+            if (isArray == true)
+            {
+                // printf("Var: %s of%s array of type %s [mem: %s loc: %d size: %d] [line: %d]", attr->svalue, Stat, RetETYPE().c_str(), getMemType(this, symTbl), Loc, Size, attr->linenum);
+                printf("");
+                getMemType(this, symTbl);
+            }
+            else
+            {
+                //   printf("Var: %s of%s type %s [mem: %s loc: %d size: %d] [line: %d]", attr->svalue, Stat, RetETYPE().c_str(), getMemType(this, symTbl), Loc, Size, attr->linenum);
+                printf("");
+
+                getMemType(this, symTbl);
+            }
+            break;
+        case FuncK:
+            symTbl->enter(attr->tokenstr);
+            if (isArray == true)
+            {
+                //   printf("Func: %s returns array type %s [mem: %s loc: %d size: %d] [line: %d]", attr->svalue, RetETYPE().c_str(), getMemType(this, symTbl), Loc, Size, attr->linenum); // dont know if nesscisary
+                printf("");
+
+                getMemType(this, symTbl);
+            }
+            else
+            {
+                //  printf("Func: %s returns type %s [mem: %s loc: %d size: %d] [line: %d]", attr->svalue, RetETYPE().c_str(), getMemType(this, symTbl), Loc, Size, attr->linenum);
+                printf("");
+
+                getMemType(this, symTbl);
+            }
+            break;
+        case ParamK:
+            if (isArray == true)
+            {
+                // printf("Parm: %s of%s array of type %s [mem: %s loc: %d size: %d] [line: %d]", attr->svalue, Stat, RetETYPE().c_str(), getMemType(this, symTbl), Loc, Size, attr->linenum);
+                printf("");
+
+                getMemType(this, symTbl);
+            }
+            else
+            {
+                //  printf("Parm: %s of%s type %s [mem: %s loc: %d size: %d] [line: %d]", attr->svalue, Stat, RetETYPE().c_str(), getMemType(this, symTbl), Loc, Size, attr->linenum);
+                printf("");
+
+                getMemType(this, symTbl);
+            }
+            break;
+        default:
+            // fprintf(stderr, "DECL error- no valid subkind");
+            break;
+        }
+
+        break;
+
+    case StmtK:
+        // printf("StmtNode, Kind: %d,  [line: %d]", subkind.stmt, attr->linenum);
+        switch (subkind.stmt)
+        {
+        case NullK:
+            // printf("Null [line: %d]", attr->linenum);
+            break;
+        case IfK:
+            // printf("If [line: %d]", attr->linenum);
+            break;
+        case WhileK:
+            //  printf("While [line: %d]", attr->linenum);
+            break;
+        case ForK:
+            //  printf("For [mem: None loc: %d size: %d] [line: %d]", Loc, Size, attr->linenum);
+            break;
+        case CompoundK:
+            //  printf("Compound [mem: None loc: %d size: %d] [line: %d]", Loc, Size, attr->linenum);
+            break;
+        case ReturnK:
+            // printf("Return [line: %d]", attr->linenum);
+            break;
+        case BreaK:
+            // printf("Break [line: %d]", attr->linenum);
+            break;
+        case RangeK:
+            // printf("Range [line: %d]", attr->linenum);
+            break;
+        default:
+            // fprintf(stderr, "STMTK error- no valid subkind");
+            break;
+        }
+        break;
+
+    case ExpK:
+        // printf("ExpNode, Kind: %d,  [line: %d]-- Testing something: %s", subkind.exp, attr->linenum, attr->tokenstr);
+
+        switch (subkind.exp)
+        {
+        case OpK:
+            opType = OpType(attr->tokenstr);
+            if (opType != "assign" && opType != "ArrayAcc")
+            {
+                //  printf("Op: %s of type %s [line: %d]", attr->tokenstr, opType.c_str(), attr->linenum);
+            }
+            else
+            {
+                n = CheckType(GetChild(0), symTbl);
+                // printf("Op: %s of type %s [line: %d]", attr->tokenstr, n->RetETYPE().c_str(), attr->linenum);
+            }
+            break;
+        case constantK:
+            if (isArray == true)
+            {
+                // printf("Const %s of array of type %s [mem: Global loc: %d size: %d] [line: %d]", StringVal().c_str(), RetETYPE().c_str(), Loc, Size, attr->linenum);
+            }
+            else
+            {
+                //  printf("Const %s of type %s [line: %d]", StringVal().c_str(), RetETYPE().c_str(), attr->linenum);
+            }
+            break;
+        case IdK:
+            n = (treeNode *)symTbl->lookup(attr->tokenstr);
+            if (n->StaticIs() == true)
+            {
+                free(Stat); // Free the earilier strdup of "\0" (hopfully this will be fine?)
+                Stat = NULL;
+                Stat = strdup(" static");
+            }
+            if (n->ArrayIs() == true)
+            {
+                isArray = true;
+                // printf("Id: %s of%s array of type %s [mem: %s loc: %d size: %d] [line: %d]", attr->tokenstr, Stat, n->RetETYPE().c_str(), getMemType(this, symTbl), Loc, Size, attr->linenum);
+                printf("");
+
+                getMemType(this, symTbl);
+            }
+            else
+            {
+                // printf("Id: %s of%s type %s [mem: %s loc: %d size: %d] [line: %d]", attr->tokenstr, Stat, n->RetETYPE().c_str(), getMemType(this, symTbl), Loc, Size, attr->linenum);
+                printf("");
+
+                getMemType(this, symTbl);
+            }
+            break;
+        case AssingK:
+            opType = OpType(attr->tokenstr);
+            if (opType != "assign" && opType != "ArrayAcc")
+            {
+                // printf("Assign: %s of type %s [line: %d]", attr->tokenstr, opType.c_str(), attr->linenum);
+            }
+            else
+            {
+                p = CheckType(GetChild(0), symTbl);
+                bool AA = FindArrayAccessorOp(GetChild(0));
+                n = (treeNode *)symTbl->lookup(p->token()->tokenstr);
+                if (n->ArrayIs() == true && AA == false)
+                {
+                    //  printf("Assign: %s of array of type %s [line: %d]", attr->tokenstr, n->RetETYPE().c_str(), attr->linenum);
+                }
+                else
+                {
+                    //  printf("Assign: %s of type %s [line: %d]", attr->tokenstr, n->RetETYPE().c_str(), attr->linenum);
+                }
+            }
+            break;
+        case InitK:
+            // printf("Init: %s [line: %d]", attr->tokenstr, attr->linenum);
+            break;
+        case CallK:
+            n = (treeNode *)symTbl->lookup(attr->tokenstr);
+            // printf("Call: %s of type %s [line: %d]", attr->tokenstr, n->RetETYPE().c_str(), attr->linenum);
+            break;
+        default:
+            break;
+        }
+        break;
+
+    default:
+        // fprintf(stderr, "WTF!! nodeKind = %d\n ", nodeKind);
+        break;
+    }
+
+    for (int i = 0; i < MAX_CHILDREN; i++)
+    {
+        if (child[i] != NULL)
+        {
+            if ((nodeKind == DeclK && subkind.decl != FuncK) || (nodeKind != DeclK))
+            {
+                if (child[i]->nodeKind == StmtK && child[i]->subkind.stmt == CompoundK)
+                {
+                    // printf("Enter1");
+                    symTbl->enter("CompundStmt");
+                }
+            }
+
+            //  printf("\n");
+            for (int j = 0; j < levels; j++)
+            {
+                //                printf(".   ");
+            }
+
+            // printf("Child: %d  ", i);
+            child[i]->FindMemLocs(levels + 1, 1, symTbl);
+
+            if ((nodeKind == DeclK && subkind.decl != FuncK) || (nodeKind != DeclK))
+            {
+                if (child[i]->nodeKind == StmtK && child[i]->subkind.stmt == CompoundK)
+
+                {
+                    //   printf("LeaveTest");
+                    // symTbl->leave();
+                }
+            }
+        }
+    }
+    if ((nodeKind == DeclK && subkind.decl == FuncK))
+    {
+        // printf("Leav3");
+        // symTbl->leave();
+    }
+
+    if (nodeKind == StmtK && (subkind.stmt == CompoundK))
+    {
+        // printf("LEAxVE");
+        symTbl->leave();
+    }
+
+    if (sibling != NULL)
+    {
+        if (sibling->Kind() == StmtK && (sibling->SKind() == CompoundK))
+        {
+            // printf("Enter2");
+
+            symTbl->enter("Compound Statement Or For Statement");
+        }
+
+        // printf("\n");
+        for (int i = 1; i < levels; i++)
+        {
+            //    printf(".   ");
+        }
+        // printf("Sibling: %d  ", siblingNum);
+        sibling->FindMemLocs(levels, siblingNum + 1, symTbl);
+    }
+
+    free(Stat);
+    Stat = NULL;
 }

@@ -237,6 +237,8 @@ public:
     int GetLoc(){return Loc;}
     int GetSize() {return Size;}
 
+    void FindMemLocs(int, int, SymbolTable*);
+
     std::string MEMTYPE;
 
     void SetIDKind(DeclKind type){IDKind = type;}

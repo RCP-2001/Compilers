@@ -267,8 +267,13 @@ void GenerateCodeTree(treeNode *Node, std::ofstream &Fileout, bool PushParam)
                 switch (Node->EKind())
                 {
                 case OpK:
+                        if (PushParam == true)
+                        {
+                                TOFF--;
+                                Fileout << "* TOFF =" << TOFF << std::endl;
+                        }
                         Fileout << "* OP " << std::endl;
-                        
+
                         OldToff = TOFF;
                         // Fileout << "* OR" << std::endl;
                         //  Store Left hand side in temp area
@@ -520,9 +525,18 @@ void GenerateCodeTree(treeNode *Node, std::ofstream &Fileout, bool PushParam)
                                         << "(" << AC4 << ")"
                                         << "   Storing Array Value in AC1" << std::endl;
                         }
-
                         TOFF--;
                         Fileout << "* TOFF = " << TOFF << std::endl;
+
+                        if (PushParam == true)
+                        {
+                                Fileout << currentAddr++ << " : "
+                                        << "ST " << AC1 << "," << TOFF << "(" << FRAMEPOINTER << ")"
+                                        << "    Push Param" << std::endl;
+                        }
+
+                        //TOFF--;
+                       // Fileout << "* TOFF = " << TOFF << std::endl;
 
                         break;
                 case AssingK:
