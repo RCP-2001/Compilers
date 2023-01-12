@@ -197,8 +197,8 @@ int main(int argc, char *argv[])
         SymbolTable *AnotherOne = new SymbolTable;
         GLOBAL_HEAD->FindMemLocs(1, 1, AnotherOne);
 
-        std::string OutfileName = basename(argv[optind]);
-        // std::string OutfileName = argv[optind];
+        // std::string OutfileName = basename(argv[optind]);
+        std::string OutfileName = argv[optind];
 
         // OutfileName = basename(argv[o]);
         OutfileName = OutfileName.substr(0, OutfileName.find_first_of("."));
